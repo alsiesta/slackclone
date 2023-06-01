@@ -14,11 +14,13 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthGuard } from './services/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
