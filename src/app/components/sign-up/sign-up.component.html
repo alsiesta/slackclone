@@ -1,0 +1,45 @@
+<div class="form-container mat-elevation-z5">
+    <h1>Sign Up a New User!</h1>
+    <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+
+
+        <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+            <mat-error *ngIf="name.errors?.['required']">Name is required</mat-error>
+
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <input matInput placeholder="Email address" formControlName="email">
+            <mat-error *ngIf="email.errors?.['required']">Email is required</mat-error>
+            <mat-error *ngIf="email.errors?.['email']">Please enter a correct email format!</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <input matInput type="password" placeholder="Password" formControlName="password" />
+            <mat-error *ngIf="password.errors?.['required']">
+                Password is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+            <mat-error *ngIf="confirmPassword.errors?.['required']">
+                Confirm Password is required
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Since the cross-validation of passwordsDontMatch relates to the whole form group, the error check has to be placed outside the mat-form-field -->
+        <mat-error *ngIf="signUpForm.errors?.['passwordsDontMatch']">
+            Passwords should match
+        </mat-error>
+
+        <br>
+
+        <div class="center margin-top">
+            <button mat-raised-button color="primary" type="submit">Sign Up!</button>
+        </div>
+
+    </form>
+</div>
