@@ -68,7 +68,7 @@ export class AuthService {
   };
 
   logOut() {
-    return this.auth.signOut(); //logging out via promise
+    return this.auth.signOut(); 
   }
 
   monitorAuthState = async () => {
