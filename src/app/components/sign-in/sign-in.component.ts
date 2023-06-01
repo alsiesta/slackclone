@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -6,5 +11,57 @@ import { Component } from '@angular/core';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+  });
+  constructor(
+    private authService: AuthService,
+    private userService: UsersService,
+    private router: Router,
+    private toast: HotToastService
+  ) { }
+  
+  userCredentials;
 
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  async submit() {
+    const { email, password } = this.loginForm.value; //destructure obj. first
+
+    if (!this.loginForm.valid) {
+      return;
+    }
+    try {
+      await this.authService.signIn(email,password);
+      this.router.navigate(['/home']);
+      // this.toast.observe({
+      //       success: 'Logged in successfully',
+      //       loading: 'Logging in...',
+      //       error:'There was an error'
+      //     })
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  monitorUser() {
+    console.log('Mein UserService: ', this.userService);
+  }
+  // // via Observable
+  // this.authService.login(email, password).pipe(
+  //   this.toast.observe({
+  //     success: 'Logged in successfully',
+  //     loading: 'Logging in...',
+  //     error:'There was an error'
+  //   })
+  // ).subscribe(() => {
+  //   this.router.navigate(['/home']);
+  // });
 }

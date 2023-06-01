@@ -1,5 +1,5 @@
-<div class="form-container mat-elevation-z5">
-    <h1>Sign Up a New User!</h1>
+<div class="form-container mat-elevation-z5 margin-top100">
+    <h1 class="text-center">New user sign-up</h1>
     <form [formGroup]="signUpForm" (ngSubmit)="submit()">
 
 
@@ -37,9 +37,9 @@
 
         <br>
 
-        <div class="center margin-top">
+        <div class="center margin-top16">
             <button mat-raised-button color="primary" type="submit">Sign Up!</button>
         </div>
-
+        <span class="center margin-top16">You are signed-in already<a class="sign-up-link" routerLink="/sign-in">Sign-in here!</a></span>
     </form>
 </div>

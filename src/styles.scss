@@ -5,3 +5,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mr-16 {
+  margin-right: 16px;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.mt-32 {
+  margin-top: 32px;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-center{
+  text-align: center;
+}

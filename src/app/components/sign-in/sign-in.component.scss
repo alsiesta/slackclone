@@ -1,0 +1,24 @@
+.form-container {
+  display: block;
+  max-width: 300px;
+  margin: auto;
+  background-color: rgb(226, 226, 226);
+  padding: 48px;
+  border-radius: 16px;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.sign-up-link {
+  font-size: 1.2rem;
+  margin-left: 8px;
+}
+
+.margin-top16 {
+  margin-top: 16px;
+}
+.margin-top100 {
+  margin-top: 100px;
+}
