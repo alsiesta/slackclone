@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
+import { FirestoreService } from './firestore.service';
+import { User } from '../models/user.class';
 import {
   Auth,
   UserCredential,
@@ -17,10 +19,12 @@ import {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: Auth, private toast: HotToastService, ) {
+  constructor(private firestoreService: FirestoreService,private auth: Auth, private toast: HotToastService, ) {
     // connectAuthEmulator(auth, 'http://localhost:9099'); //emmulating fire auth on local mashine
   }
   currentUser$ = authState(this.auth);
+  loading: boolean = false;
+  user = new User();
 
   ngOnInit() {
     console.log(this.currentUser$);
@@ -32,13 +36,18 @@ export class AuthService {
       email,
       password
     ).then((userCredentials) => {
-      console.log('Dieses sind sie: ', userCredentials);
-      console.log('Name ist: ', name);
+      const uid = userCredentials.providerId;
+      // console.log('UserCred: ', userCredentials);
+      // console.log('UID: ', userCredentials.user.uid);
+      // console.log('Name: ', name);
+      // console.log('displayName: ', this.user.displayName);
+      this.firestoreService.saveUser(userCredentials.user.uid, name);
     });
     this.toast.info('Your were successfully signed up');
 
     return userCredentials;
   };
+
 
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
