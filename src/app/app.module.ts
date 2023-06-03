@@ -4,11 +4,11 @@ import { MaterialModule } from './modules/material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideMessaging, getMessaging } from '@angular/fire/messaging';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HotToastModule } from '@ngneat/hot-toast';
@@ -19,6 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MainComponent } from './components/main/main.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { ChannelComponent } from './components/channel/channel.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ThreadsComponent } from './components/threads/threads.component';
     HeaderComponent,
     MainComponent,
     ThreadsComponent,
+    ChannelComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,11 +44,12 @@ import { ThreadsComponent } from './components/threads/threads.component';
     HotToastModule.forRoot({
       duration: 3000,
       position: 'top-center',
-      autoClose: true
+      autoClose: true,
     }),
-    FormsModule, ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

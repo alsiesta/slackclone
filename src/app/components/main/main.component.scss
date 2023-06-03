@@ -1,0 +1,10 @@
+.main-container {
+  display: flex;
+
+  // 64px is the height of the header, maybe we have to change it
+  min-height: calc(100vh - 64px);
+
+  app-channel {
+    width: 60%;
+  }
+}
