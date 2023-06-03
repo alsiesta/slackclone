@@ -21,11 +21,27 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
+  private collectionName: string = 'users';
 
   constructor(private firestore: Firestore) {
-    this.usersCollection = collection(this.firestore, 'users');
+    this.usersCollection = collection(this.firestore, this.collectionName);
   }
+
   user = new User();
+
+  addNewUser(uid: string, name, email, password) {
+    this.user.displayName = name;
+    this.user.email = email;
+    this.user.password = password;
+    const docRef = doc(this.usersCollection, uid);
+    setDoc(docRef, this.user.toJSON())
+      .then(() => {
+        console.log('Document has been added successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   getCollection(collectionName: string) {
     return collection(this.firestore, collectionName);
@@ -35,51 +51,36 @@ export class FirestoreService {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
   }
+  // getDocData(docRef) {
+  //   const userData = docData(docRef, {
+  //     idField: 'userId',
+  //   });
+  //   return userData;
+  // }
 
-  getDocData(docRef) {
-    const userData = docData(docRef, {
-      idField: 'userId',
-    });
-    return userData;
-  }
+  // updateDocument(id, user) {
+  //   updateDoc(this.getDocRef(id), user)
+  //     .then(() => {
+  //       console.log(
+  //         'A New Document Field has been added to an existing document'
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-  updateDocument(id, user) {
-    updateDoc(this.getDocRef(id), user)
-      .then(() => {
-        console.log(
-          'A New Document Field has been added to an existing document'
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // createDoc(user) {
+  //   return addDoc(this.usersCollection, user.toJSON()).then((result) => {
+  //     console.log(result);
+  //   });
+  // }
 
-  saveUser (uid, displayName) {
-    this.user.displayName = displayName;
-    this.user.city = 'City';
-    const docRef = doc(this.firestore, 'users', uid);
-    setDoc(docRef, this.user.toJSON())
-      .then(() => {
-          console.log("Document has been added successfully");
-      })
-      .catch(error => {
-          console.log(error);
-      })
-    };
-  
-
-  createDoc(user) {
-    return addDoc(this.usersCollection, user.toJSON()).then((result) => {
-      console.log(result);
-    });
-  }
-
-  getUsers$() {
-    return collectionData(this.usersCollection, {
-      idField: 'docId',
-    });
-  }
+  // getUsers$() {
+  //   return collectionData(this.usersCollection, {
+  //     idField: 'docId',
+  //   });
+  // }
 
   // getUsers = async () => {
   //   onSnapshot(this.usersCollection, (snapshot) => {

@@ -16,10 +16,14 @@ import {
 } from '@angular/fire/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  constructor(private firestoreService: FirestoreService,private auth: Auth, private toast: HotToastService, ) {
+  constructor(
+    private firestoreService: FirestoreService,
+    private auth: Auth,
+    private toast: HotToastService
+  ) {
     // connectAuthEmulator(auth, 'http://localhost:9099'); //emmulating fire auth on local mashine
   }
   currentUser$ = authState(this.auth);
@@ -36,18 +40,18 @@ export class AuthService {
       email,
       password
     ).then((userCredentials) => {
-      const uid = userCredentials.providerId;
-      // console.log('UserCred: ', userCredentials);
-      // console.log('UID: ', userCredentials.user.uid);
-      // console.log('Name: ', name);
-      // console.log('displayName: ', this.user.displayName);
-      this.firestoreService.saveUser(userCredentials.user.uid, name);
+      // const uid = userCredentials.providerId;
+      this.firestoreService.addNewUser(
+        userCredentials.user.uid,
+        name,
+        email,
+        password
+      );
     });
-    this.toast.info('Your were successfully signed up');
+    this.toast.info(`Hi ${name}. Your were successfully signed up`);
 
     return userCredentials;
   };
-
 
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
@@ -55,17 +59,17 @@ export class AuthService {
       email,
       password
     )
-      
-        // this.toast.info(`Hi ${userCredentials.user.displayName}! You are signed in.`);
-        // this.logUserDetails(userCredentials);
-    
+      // this.toast.info(`Hi ${userCredentials.user.displayName}! You are signed in.`);
+      // this.logUserDetails(userCredentials);
+
       .then((userCredentials) => {
-       this.currentUser$.subscribe((user => {
+        this.currentUser$.subscribe((user) => {
           console.log('Current User is: ', user?.displayName);
-          
-        }))
-        
-        this.toast.info(`Hi ${userCredentials.user.displayName}! You are signed in.`);
+        });
+
+        this.toast.info(
+          `Hi ${userCredentials.user.displayName}! You are signed in.`
+        );
         this.logUserDetails(userCredentials);
       })
       .catch((error) => {
@@ -77,7 +81,7 @@ export class AuthService {
   };
 
   logOut() {
-    return this.auth.signOut(); 
+    return this.auth.signOut();
   }
 
   monitorAuthState = async () => {
@@ -98,8 +102,7 @@ export class AuthService {
     console.log('Email verified?: ', userCredentials.user.emailVerified);
   }
 
-
-  isUserLoggedIn () {
+  isUserLoggedIn() {
     return true;
   }
 }
