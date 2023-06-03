@@ -20,6 +20,15 @@
                     <div class="posting-time">{{ post.time }}</div>
                 </div>
                 <div class="posting-content">{{ post.content }}</div>
+                <div *ngIf="post.threads.length > 0">
+                    <div class="posting-threads">
+                        <div class="posting-thread-preview" *ngFor="let thread of post.threads">
+                            <img src="{{ thread.image }}">
+                        </div>
+                        <span class="posting-thread-reply">{{ post.threads.length }} Antworten</span>
+                        <span class="posting-thread-last">Letzte Antwort am {{ post.threads[1].date }}</span>
+                    </div>
+                </div>
             </div>
         </div>
 

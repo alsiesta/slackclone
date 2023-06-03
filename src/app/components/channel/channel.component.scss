@@ -95,4 +95,45 @@
     font-weight: 300;
     color: $textgrey;
   }
+
+  .posting-threads {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    padding: 3px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transform: translateX(-3px);
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      background-color: $darkgrey;
+      border: 1px solid rgba($white, 0.1);
+    }
+
+    .posting-thread-preview {
+      img {
+        display: block;
+        width: 20px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    }
+
+    .posting-thread-reply {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: $blue;
+      margin-left: 3px;
+    }
+
+    .posting-thread-last {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: $textgrey;
+      margin-left: 3px;
+    }
+  }
 }
