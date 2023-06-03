@@ -1,20 +1,56 @@
+mat-card {
+    width: 100%;
+}
+
 .threads-container {
     padding: 48px;
-    border-bottom: 1px solid rgba(255,255,255,.2);
+    background-color: lightgray;
 }
 
 .title {
+    padding-bottom: 16px;
     font-size: 24px;
     margin-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .channel {
     font-size: 21px;
-    margin-bottom: 36px;
+    margin-bottom: 28px;
+    margin-top: 12px;
 }
 
-.user-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
+
+.user-message {
+    display: flex;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
+}
+
+.user-name-and-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.user-name {
+    font-weight: 800;
+    margin-right: 10px;
+}
+
+.user-name-and-time {
+    display: flex;
+}
+
+.time {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: gray;
 }
