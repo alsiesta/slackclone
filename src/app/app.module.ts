@@ -16,6 +16,8 @@ import { AuthGuard } from './services/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MainComponent } from './components/main/main.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 
 @NgModule({
@@ -24,6 +26,8 @@ import { ThreadsComponent } from './components/threads/threads.component';
     SignUpComponent,
     SignInComponent,
     HomeComponent,
+    HeaderComponent,
+    MainComponent,
     ThreadsComponent,
   ],
   imports: [
