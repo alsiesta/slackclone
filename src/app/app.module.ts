@@ -16,6 +16,7 @@ import { AuthGuard } from './services/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
+import { ThreadsComponent } from './threads/threads.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HomeComponent } from './components/home/home.component';
     SignUpComponent,
     SignInComponent,
     HomeComponent,
+    ThreadsComponent,
   ],
   imports: [
     BrowserModule,
