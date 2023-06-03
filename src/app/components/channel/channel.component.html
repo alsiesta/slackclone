@@ -1,3 +1,28 @@
 <div class="channel-container">
+    <div class="channel-top">
+        <h2>{{ this.channelService.channelInfo.channelName }}</h2>
+        <div><span class="channel-creator">{{ this.channelService.channelInfo.channelCreator }}</span> hat diesen
+            Channel am {{
+            this.channelService.channelInfo.channelDate }} erstellt.
+            Das ist der Anfang des Channels.</div>
+    </div>
+
+    <div *ngFor="let date of this.channelService.dates" class="channel-date-spacer">
+        <div class="channel-date">{{ date }}</div>
+
+        <div *ngFor="let post of this.channelService.postings" class="posting">
+            <div>
+                <img class="posting-image" src="{{ post.image }}">
+            </div>
+            <div class="posting-main">
+                <div class="posting-main-top">
+                    <div class="posting-user">{{ post.user }}</div>
+                    <div class="posting-time">{{ post.time }}</div>
+                </div>
+                <div class="posting-content">{{ post.content }}</div>
+            </div>
+        </div>
+
+    </div>
 
 </div>

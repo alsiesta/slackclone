@@ -5,5 +5,86 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  color: $white;
   background-color: $darkgrey;
+  padding-top: 24px;
+
+  .channel-top {
+    padding: 24px 24px 48px 24px;
+
+    .channel-creator {
+      color: blue;
+    }
+  }
+}
+
+.channel-date-spacer {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid rgba($white, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+
+  .channel-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 25px;
+    background-color: ($darkgrey);
+    border: 1px solid rgba($white, 0.1);
+    border-radius: 20px;
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+}
+
+.posting {
+  display: flex;
+  gap: 10px;
+  padding: 24px;
+  transition: all 125ms ease-in-out;
+
+  &:hover {
+    background-color: $grey;
+  }
+
+  .posting-image {
+    width: 35px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .posting-main-top {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 3px;
+
+    .posting-user {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .posting-time {
+      color: $lightgrey;
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+  }
+
+  .posting-topic {
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  .posting-content {
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
 }

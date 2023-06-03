@@ -1,10 +1,19 @@
-
-@use 'node_modules/@ngneat/hot-toast/src/styles/styles.scss';
+@use "node_modules/@ngneat/hot-toast/src/styles/styles.scss";
 
 @import "./styles/main";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .mr-16 {
   margin-right: 16px;
@@ -18,12 +27,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: 32px;
 }
 
-.center{
+.center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
