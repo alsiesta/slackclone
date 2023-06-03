@@ -42,22 +42,23 @@ export class FirestoreService {
         console.log(error);
       });
   }
-
-  getCollection(collectionName: string) {
-    return collection(this.firestore, collectionName);
-  }
-
+  
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
   }
+  
   // getDocData(docRef) {
   //   const userData = docData(docRef, {
   //     idField: 'userId',
   //   });
   //   return userData;
   // }
-
+  
+    // getCollection(collectionName: string) {
+    //   return collection(this.firestore, collectionName);
+    // }
+  
   // updateDocument(id, user) {
   //   updateDoc(this.getDocRef(id), user)
   //     .then(() => {

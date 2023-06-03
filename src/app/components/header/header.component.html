@@ -1,32 +1,30 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row class="example-sidenav-content">
-        <mat-icon class="menu-icon" >menu</mat-icon>
-        <input type="text">
-
-        <div >
-          <span>
-      <button mat-button [mat-menu-trigger-for]="userMenu">
+  <mat-toolbar-row class="example-sidenav-content">
+    <mat-icon class="menu-icon">menu</mat-icon>
+    <input type="text">
+    <div>
+      <span>
+        <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
-          <!-- {{user.displayName}}  -->
           <mat-icon>expand_more</mat-icon>
         </button>
       </span>
-        </div>
+    </div>
 
-        <ng-template #loginButton>
-          <button mat-button routerLink="login">
-            <mat-icon>login</mat-icon>Login
-          </button>
 
-        </ng-template>
-      </mat-toolbar-row>
-    </mat-toolbar>
 
-    <mat-menu #userMenu="matMenu">
-        <button mat-menu-item (click)="logOut()">Logout</button>
-      </mat-menu>
+    <ng-template #loginButton>
+      <button mat-button routerLink="login">
+        <mat-icon>login</mat-icon>Login
+      </button>
 
-    <!-- <button mat-icon-button (click)="logOut()" class="example-icon"
-            aria-label="Example icon-button with share icon">
-            <mat-icon>logout</mat-icon>Log-out
-        </button> -->
+
+
+    </ng-template>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item (click)="logOut()">Logout</button>
+  <button mat-menu-item (click)="logUser()">log User</button>
+</mat-menu>

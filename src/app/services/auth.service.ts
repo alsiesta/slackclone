@@ -29,6 +29,7 @@ export class AuthService {
   currentUser$ = authState(this.auth);
   loading: boolean = false;
   user = new User();
+  userId;
 
   ngOnInit() {
     console.log(this.currentUser$);
@@ -40,7 +41,9 @@ export class AuthService {
       email,
       password
     ).then((userCredentials) => {
-      // const uid = userCredentials.providerId;
+      // this.userId = userCredentials.providerId;
+      this.userId=userCredentials.user.uid;
+      
       this.firestoreService.addNewUser(
         userCredentials.user.uid,
         name,
@@ -52,6 +55,10 @@ export class AuthService {
 
     return userCredentials;
   };
+
+  getUserId () {
+    return this.userId
+  }
 
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
