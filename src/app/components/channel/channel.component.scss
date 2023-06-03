@@ -8,12 +8,19 @@
   color: $white;
   background-color: $darkgrey;
   padding-top: 24px;
+  transition: all 125ms ease-in-out;
 
   .channel-top {
     padding: 24px 24px 48px 24px;
 
     .channel-creator {
-      color: blue;
+      color: $blue;
+      background-color: rgba($blue, 0.1);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($blue, 0.2);
+      }
     }
   }
 }
@@ -72,7 +79,7 @@
     }
 
     .posting-time {
-      color: $lightgrey;
+      color: $silvergrey;
       font-size: 0.8rem;
       font-weight: 300;
     }
@@ -86,5 +93,6 @@
   .posting-content {
     font-size: 0.9rem;
     font-weight: 300;
+    color: $textgrey;
   }
 }
