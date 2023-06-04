@@ -5,6 +5,7 @@ import { doc, getDoc, onSnapshot, Firestore } from 'firebase/firestore';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import { User } from '../models/user.class';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,18 +15,30 @@ export class UsersService {
   $currentUserData: any;
 
   constructor(private firestoreService: FirestoreService) {}
+  
+   logUserId() {
+      return this.getCurrentUserId();
+    }
+  
+    logUserData () {
+      return this.getCurrentUserData()
+    }
 
   getCurrentUserId() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.uid);
+        console.log(user.uid );
+        return user.uid;
+      } else {
+        return null
       }
     });
   }
-
-  getCurrentUserData() {
-    this.$currentUserData = this.firestoreService.getDocData('V7yyPDgZtYepeluK89vlBHOPYIv1');
+  
+  getCurrentUserData () {
+    const id = this.getCurrentUserId()
+    this.$currentUserData = this.firestoreService.getDocData('3HCZenIKlFRjVUZHzoBVPrQe8El1');
 
     this.$currentUserData.subscribe((response: any) => {
       this.user.birthDate = response.birthDate;

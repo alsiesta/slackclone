@@ -22,11 +22,13 @@ export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new User();
+  // chat = new Chat();
   users: any = [];
   currentUserData: any;
 
   constructor (private firestore: Firestore,) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
+    // this.usersCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
 
 
