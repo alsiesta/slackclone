@@ -7,6 +7,7 @@
     height: calc(100vh - 64px);
     background-color: $grey;
     color: $white;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .title {
@@ -23,12 +24,53 @@
         display: flex;
         align-items: center;
         padding: 5px;
+        gap: 10px;
     }
 }
 
 .sidebar-drop-down-container {
-    display: flex;
-    align-items: center;
     padding: $spacingRegular;
+
+    .drop-down-button {
+        display: flex;
+        align-items: center;
+
+    }
+    .drop-down-content {
+        font-size: 14px;
+        margin-left: 25px;
+
+        .add-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            mat-icon {
+                transform: scale(0.6);
+            }
+        }
+    }
 }
 
+.message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+
+    .message-img {
+        height: 20px;
+        width: 20px;
+        border-radius: 5px;
+    }
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    mat-icon {
+        transform: scale(0.6);
+    }
+}
