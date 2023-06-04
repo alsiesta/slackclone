@@ -32,4 +32,9 @@ export class HeaderComponent {
     // return this.usersService.logUserRef();
     return this.usersService.getCurrentUserId();
   }
+
+  logUserData () {
+   return this.usersService.getCurrentUserData()
+    // return this.usersService.getCurrentUserData()
+  }
 }

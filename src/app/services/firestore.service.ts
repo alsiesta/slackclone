@@ -25,7 +25,7 @@ export class FirestoreService {
   users: any = [];
   currentUserData: any;
 
-  constructor(private firestore: Firestore,) {
+  constructor (private firestore: Firestore,) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
   }
 
@@ -51,12 +51,10 @@ export class FirestoreService {
     return this.docRef;
   }
   
-  // getDocData(docRef) {
-  //   const userData = docData(docRef, {
-  //     idField: 'userId',
-  //   });
-  //   return userData;
-  // }
+  getDocData(uid) {
+    const gameData = docData(this.getDocRef(uid));
+    return gameData;
+  }
   
     // getCollection(collectionName: string) {
     //   return collection(this.firestore, collectionName);
