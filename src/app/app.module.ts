@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MainComponent } from './components/main/main.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 import { ChannelComponent } from './components/channel/channel.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ChannelComponent } from './components/channel/channel.component';
     MainComponent,
     ThreadsComponent,
     ChannelComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
