@@ -5,6 +5,13 @@
     padding-bottom: 36px;
 }
 
+.post {
+    margin-top: 36px;
+    background-color: $white;
+    border-radius: 10px;
+    padding: 36px;
+}
+
 .title {
     color: $white;
     padding: 16px;
@@ -23,9 +30,6 @@
 
 .user-message {
     display: flex;
-    background-color: $white;
-    border-radius: 10px;
-    padding: 36px;
     margin-left: 16px;
     margin-right: 16px;
 
@@ -58,4 +62,25 @@
     align-items: center;
     font-size: 16px;
     color: $grey;
+}
+
+.comments {
+    margin-top: 12px;
+    margin-left: 14px;
+    font-size: 18px;
+    font-weight: 500;
+    color: $blue;
+}
+
+.user-message-more {
+    display: flex;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 16px;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
 }
