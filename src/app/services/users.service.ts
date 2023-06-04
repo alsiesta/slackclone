@@ -4,21 +4,23 @@ import { AuthService } from './auth.service';
 import { doc, getDoc } from "firebase/firestore";
 
 import { User } from '../models/user.class';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   currentUser$: User;
+  currentUserData: any;
 
-  constructor (private firestoreService: FirestoreService, private authService: AuthService) { }
+  constructor () { }
 
-  async logUserRef () {
-    const docRef = this.firestoreService.getDocRef(this.authService.getUserId());
-    const docSnap = await getDoc(docRef);
-    this.currentUser$ = docSnap.data();
-    console.log(docSnap.data());
-    console.log(this.currentUser$.displayName);
-    
+  getCurrentUserId() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user.uid);
+      }
+    });
   }
 
 }
