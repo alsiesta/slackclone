@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.class';
-
+import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
   collection,
@@ -21,13 +21,14 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
-  private collectionName: string = 'users';
+  user = new User();
+  users: any = [];
+  currentUserData: any;
 
-  constructor(private firestore: Firestore) {
-    this.usersCollection = collection(this.firestore, this.collectionName);
+  constructor(private firestore: Firestore,) {
+    this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
   }
 
-  user = new User();
 
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
@@ -43,6 +44,8 @@ export class FirestoreService {
       });
   }
   
+
+
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
