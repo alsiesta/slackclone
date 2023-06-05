@@ -1,6 +1,9 @@
 <div class="channel-container">
+    <div class="channelTitle">
+        <span (click)="this.channelService.channelDialogOpen()">{{ this.channelService.channelInfo.channelName }}</span>
+    </div>
     <div class="channel-top">
-        <h2>{{ this.channelService.channelInfo.channelName }}</h2>
+        <h1>{{ this.channelService.channelInfo.channelName }}</h1>
         <div><span class="channel-creator">@{{ this.channelService.channelInfo.channelCreator }}</span> hat diesen
             Channel am {{
             this.channelService.channelInfo.channelDate }} erstellt.
@@ -27,6 +30,7 @@
                         </div>
                         <span class="posting-thread-reply">{{ post.threads.length }} Antworten</span>
                         <span class="posting-thread-last">Letzte Antwort am {{ post.threads[1].date }}</span>
+                        <mat-icon class="posting-thread-navigate" fontIcon="navigate_next"></mat-icon>
                     </div>
                 </div>
             </div>

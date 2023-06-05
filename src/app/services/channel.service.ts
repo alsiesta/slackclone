@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +53,14 @@ export class ChannelService {
   // to be implemented by function
   dates: Array<any> = ['03.06.2023', '04.06.2023'];
 
-  constructor() {}
+  constructor(public channelDialog: MatDialog) {}
+
+  /**
+   * open the channel-info dialog
+   */
+  channelDialogOpen() {
+    const dialogRef = this.channelDialog.open(ChannelDialogComponent, {
+      maxWidth: '100vw',
+    });
+  }
 }

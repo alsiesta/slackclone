@@ -9,10 +9,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 
-const MaterialComponents = [    
+const MaterialComponents = [
   MatToolbarModule,
   MatFormFieldModule,
   MatIconModule,
@@ -24,11 +28,17 @@ const MaterialComponents = [
   MatListModule,
   FlexLayoutModule,
   MatProgressSpinnerModule,
-  ]
+  MatDialogModule,
+];
 
 @NgModule({
   imports: [MaterialComponents],
   exports: [MaterialComponents],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

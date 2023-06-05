@@ -7,8 +7,26 @@
   width: 100%;
   color: $white;
   background-color: $darkgrey;
-  padding-top: 24px;
   transition: all 125ms ease-in-out;
+  border-right: 1px solid rgba($white, 0.2);
+
+  .channelTitle {
+    height: 61px;
+    border-bottom: 1px solid rgba($white, 0.2);
+    padding: 16px;
+    cursor: pointer;
+
+    span {
+      font-size: $fonttitle;
+      font-weight: 500;
+      padding: 6px 8px;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: $grey;
+      }
+    }
+  }
 
   .channel-top {
     padding: 24px 24px 48px 24px;
@@ -47,7 +65,7 @@
     left: 50%;
     transform: translate(-50%, 0);
     font-weight: 300;
-    font-size: 0.8rem;
+    font-size: $small;
   }
 }
 
@@ -74,13 +92,13 @@
     margin-bottom: 3px;
 
     .posting-user {
-      font-size: 1rem;
+      font-size: $regular;
       font-weight: 500;
     }
 
     .posting-time {
       color: $silvergrey;
-      font-size: 0.8rem;
+      font-size: $small;
       font-weight: 300;
     }
   }
@@ -91,13 +109,15 @@
   }
 
   .posting-content {
-    font-size: 0.9rem;
+    font-size: $regular;
     font-weight: 300;
     color: $textgrey;
   }
 
   .posting-threads {
+    position: relative;
     display: flex;
+    width: 700px;
     align-items: center;
     gap: 5px;
     margin-top: 5px;
@@ -111,6 +131,10 @@
     &:hover {
       background-color: $darkgrey;
       border: 1px solid rgba($white, 0.1);
+
+      .posting-thread-navigate {
+        opacity: 1;
+      }
     }
 
     .posting-thread-preview {
@@ -123,17 +147,28 @@
     }
 
     .posting-thread-reply {
-      font-size: 0.7rem;
+      font-size: $small;
       font-weight: 400;
       color: $blue;
       margin-left: 3px;
     }
 
     .posting-thread-last {
-      font-size: 0.7rem;
+      font-size: $small;
       font-weight: 300;
       color: $textgrey;
       margin-left: 3px;
+    }
+
+    .posting-thread-navigate {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-33%);
+      right: 0;
+      opacity: 0;
+      font-size: $regular;
+      color: $textgrey;
+      transition: all 125ms ease-in-out;
     }
   }
 }
