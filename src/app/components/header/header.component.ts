@@ -23,6 +23,7 @@ export class HeaderComponent {
 
   logUserId() {this.usersService.logUserId()}
  
-  logUserData(){this.usersService.logUserData()}
+  logAllUsers(){this.usersService.getAllUsers()}
+  logCurrentUserData(){this.usersService.getCurrentUserData()}
 
 }

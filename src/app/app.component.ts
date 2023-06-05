@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private usersService: UsersService
+  ) {}
 
   title = 'SlackClone';
 
+  ngOnInit() {
+    this.usersService.keepUsersUptodate();
+  }
+  
   logOut() {
     //logging out via promise
     this.authService.logOut();
