@@ -1,4 +1,4 @@
-export class User {
+export class UserTemplate {
   uid: string;
   password?: string;
     displayName?: string;

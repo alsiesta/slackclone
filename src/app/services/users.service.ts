@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
-import { User } from '../models/user.class';
+import { UserTemplate } from '../models/usertemplate.class';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { BehaviorSubject, Observable, from, map, switchMap } from 'rxjs';
 import { collection, Firestore, collectionData, doc, getDoc } from '@angular/fire/firestore';
@@ -18,7 +18,7 @@ export class UsersService {
   
   currentUsers: any;
   $currentUserData: any;
-  user = new User();
+  user = new UserTemplate();
 
   // keepUsersUptodate() {
   //   // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
@@ -82,7 +82,7 @@ export class UsersService {
     return Promise.resolve(undefined);
   }
 
-  getCurrentUserData (): Observable<User> {
+  getCurrentUserData (): Observable<UserTemplate> {
     console.log('Inside getCurrentUserData()');
     return from(this.getCurrentUserId()).pipe(
       switchMap((value) => {

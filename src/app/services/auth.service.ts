@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { FirestoreService } from './firestore.service';
-import { User } from '../models/user.class';
+import { UserTemplate } from '../models/usertemplate.class';
 import {
   Auth,
   UserCredential,
@@ -28,7 +28,7 @@ export class AuthService {
   }
   currentUser$ = authState(this.auth);
   loading: boolean = false;
-  user = new User();
+  user = new UserTemplate();
   userId;
 
   ngOnInit() {
@@ -42,8 +42,8 @@ export class AuthService {
       password
     ).then((userCredentials) => {
       // this.userId = userCredentials.providerId;
-      this.userId=userCredentials.user.uid;
-      
+      this.userId = userCredentials.user.uid;
+
       this.firestoreService.addNewUser(
         userCredentials.user.uid,
         name,
@@ -56,8 +56,8 @@ export class AuthService {
     return userCredentials;
   };
 
-  getUserId () {
-    return this.userId
+  getUserId() {
+    return this.userId;
   }
 
   signIn = async (email: string, password: string) => {

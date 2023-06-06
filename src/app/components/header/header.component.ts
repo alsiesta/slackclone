@@ -10,7 +10,7 @@ import {
   doc,
 } from '@angular/fire/firestore';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { User } from 'src/app/models/user.class';
+import { UserTemplate } from 'src/app/models/usertemplate.class';
 
 @Component({
   selector: 'app-header',
@@ -25,13 +25,13 @@ export class HeaderComponent implements OnInit {
     public usersService: UsersService
   ) {}
   currentUserDisplayName: string | undefined;
-  user = new User();
+  user = new UserTemplate();
   currentUserDisplayName2: string | undefined;
 
   ngOnInit() {
     this.usersService.getCurrentUserId();
     console.log('ngOnInit() called');
-    this.usersService.getCurrentUserData().subscribe((user: User) => {
+    this.usersService.getCurrentUserData().subscribe((user: UserTemplate) => {
       this.user = user;
       console.log('this is my user:', this.user);
     });

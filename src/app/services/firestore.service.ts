@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.class';
+import { UserTemplate } from '../models/usertemplate.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
@@ -21,16 +21,15 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
-  user = new User();
+  user = new UserTemplate();
   // chat = new Chat();
   users: any = [];
   currentUserData: any;
 
-  constructor (private firestore: Firestore,) {
+  constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     // this.usersCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
-
 
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
@@ -45,23 +44,21 @@ export class FirestoreService {
         console.log(error);
       });
   }
-  
-
 
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
   }
-  
+
   getDocData(uid) {
     const gameData = docData(this.getDocRef(uid));
     return gameData;
   }
-  
-    // getCollection(collectionName: string) {
-    //   return collection(this.firestore, collectionName);
-    // }
-  
+
+  // getCollection(collectionName: string) {
+  //   return collection(this.firestore, collectionName);
+  // }
+
   // updateDocument(id, user) {
   //   updateDoc(this.getDocRef(id), user)
   //     .then(() => {
