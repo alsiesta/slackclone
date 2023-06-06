@@ -22,6 +22,7 @@ import { ThreadsComponent } from './components/threads/threads.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ChannelDialogComponent } from './components/channel-dialog/channel-dialog.component';
+import { CommentfieldComponent } from './components/commentfield/commentfield.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ChannelDialogComponent } from './components/channel-dialog/channel-dial
     ChannelComponent,
     SidebarComponent,
     ChannelDialogComponent,
+    CommentfieldComponent,
   ],
   imports: [
     BrowserModule,
