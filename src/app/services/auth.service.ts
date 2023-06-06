@@ -38,6 +38,7 @@ export class AuthService {
           password
         );
         this.setLocalUser();
+        this.firestoreService.addNewChannel('#musterchannel', null)
         this.updateAuthCredentials(name);
       }
     );
