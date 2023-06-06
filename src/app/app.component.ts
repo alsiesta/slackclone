@@ -18,7 +18,7 @@ export class AppComponent {
   title = 'SlackClone';
 
   ngOnInit() {
-    this.usersService.keepUsersUptodate();
+    // this.usersService.keepUsersUptodate();
   }
   
   logOut() {

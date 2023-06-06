@@ -23,6 +23,9 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ChannelDialogComponent } from './components/channel-dialog/channel-dialog.component';
 import { CommentfieldComponent } from './components/commentfield/commentfield.component';
+import { UsersService } from './services/users.service';
+import { FirestoreService } from './services/firestore.service'; 
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,7 @@ import { CommentfieldComponent } from './components/commentfield/commentfield.co
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,UsersService,FirestoreService,AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

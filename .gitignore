@@ -8,6 +8,7 @@
 
 #environments
 /src/environments
+/src/app/testing
 
 # Node
 /node_modules

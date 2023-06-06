@@ -3,6 +3,8 @@
     <mat-icon class="menu-icon">menu</mat-icon>
     <input type="text">
     <div>
+      Current User: {{ currentUserDisplayName }} ......... 
+      Current User2: {{ currentUserDisplayName2 }}
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
@@ -28,5 +30,6 @@
   <button mat-menu-item (click)="logOut()">Logout</button>
   <button mat-menu-item (click)="logUserId()">log User ID</button>
   <button mat-menu-item (click)="logAllUsers()">log all Users</button>
-  <button mat-menu-item (click)="logCurrentUserData()">log Current User Data</button>
+  <button mat-menu-item (click)="logCurrentUserData()">log Current User</button>
+  <button mat-menu-item (click)="logCurrentUserData2()">log Current User 2</button>
 </mat-menu>
