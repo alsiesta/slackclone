@@ -26,6 +26,7 @@ import { CommentfieldComponent } from './components/commentfield/commentfield.co
 import { UsersService } from './services/users.service';
 import { FirestoreService } from './services/firestore.service'; 
 import { AuthService } from './services/auth.service';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AuthService } from './services/auth.service';
     SidebarComponent,
     ChannelDialogComponent,
     CommentfieldComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

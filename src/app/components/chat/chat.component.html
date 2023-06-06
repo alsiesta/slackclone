@@ -1,0 +1,31 @@
+<div class="chat-container">
+    <div class="chat-partner">
+        <img src="{{ this.chatService.chatPartnerImage }}">
+        <span>{{ this.chatService.chatPartnerName }}</span>
+    </div>
+    <div class="chat-top">
+        <img src="{{ this.chatService.chatPartnerImage }}">
+        <span>{{ this.chatService.chatPartnerName }}</span>
+        <div>Diese Unterhaltung findet nur zwischen
+            <span class="channel-creator">@{{ this.chatService.chatPartnerName }}</span> und dir statt. Schaue dir das
+            Profil der Person an, um mehr über sie zu erfahren. Profil anzeigen
+        </div>
+
+        <div *ngFor="let date of this.chatService.chatDates" class="channel-date-spacer">
+            <div class="channel-date">{{ date }}</div>
+
+            <div *ngFor="let message of this.chatService.messages" class="posting">
+                <div>
+                    <img class="posting-image" src="{{ message.image }}">
+                </div>
+                <div class="posting-main">
+                    <div class="posting-main-top">
+                        <div class="posting-user">{{ message.user }}</div>
+                    </div>
+                    <div class="posting-content">{{ message.content }}</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
