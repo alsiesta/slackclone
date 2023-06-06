@@ -109,6 +109,7 @@
   }
 
   .posting-content {
+    width: 100%;
     font-size: $regular;
     font-weight: 300;
     color: $textgrey;
@@ -117,7 +118,8 @@
   .posting-threads {
     position: relative;
     display: flex;
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     align-items: center;
     gap: 5px;
     margin-top: 5px;
