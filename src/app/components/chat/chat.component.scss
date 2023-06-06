@@ -11,39 +11,44 @@
   border-right: 1px solid rgba($white, 0.2);
 
   .chat-partner {
-    img {
-      width: 35px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
     height: 61px;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
 
-    span {
-      font-size: $fonttitle;
-      font-weight: 500;
-      padding: 6px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $grey;
-      }
-    }
-  }
-
-  .chat-top {
-    padding: 24px 24px 48px 24px;
-
     img {
       width: 35px;
       object-fit: cover;
       border-radius: 6px;
     }
 
-    .channel-creator {
+    span {
+      font-size: $regular;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+  }
+
+  .chat-top {
+    padding: 48px 24px 48px 24px;
+
+    img {
+      width: 55px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    span {
+      font-size: $fontsubtitle;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+
+    .chat-subtext {
+      margin-top: 16px;
+    }
+
+    .chat-partner-blue {
+      margin-left: 0;
       color: $blue;
       background-color: rgba($blue, 0.1);
       cursor: pointer;
@@ -55,7 +60,7 @@
   }
 }
 
-.channel-date-spacer {
+.chat-date-spacer {
   position: relative;
   width: 100%;
   border-top: 1px solid rgba($white, 0.1);
@@ -63,7 +68,7 @@
   flex-direction: column;
   padding: 24px 0;
 
-  .channel-date {
+  .chat-date {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,7 +86,7 @@
   }
 }
 
-.posting {
+.message {
   display: flex;
   gap: 10px;
   padding: 24px;
@@ -91,96 +96,38 @@
     background-color: $grey;
   }
 
-  .posting-image {
+  .message-image {
     width: 35px;
     object-fit: cover;
     border-radius: 6px;
   }
 
-  .posting-main-top {
+  .message-main-top {
     display: flex;
     align-items: flex-end;
     gap: 10px;
     margin-bottom: 3px;
 
-    .posting-user {
+    .message-user {
       font-size: $regular;
       font-weight: 500;
     }
 
-    .posting-time {
+    .message-time {
       color: $silvergrey;
       font-size: $small;
       font-weight: 300;
     }
   }
 
-  .posting-topic {
+  .message-topic {
     font-weight: 400;
     margin-bottom: 8px;
   }
 
-  .posting-content {
+  .message-content {
     font-size: $regular;
     font-weight: 300;
     color: $textgrey;
-  }
-
-  .posting-threads {
-    position: relative;
-    display: flex;
-    width: 700px;
-    align-items: center;
-    gap: 5px;
-    margin-top: 5px;
-    padding: 3px;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    transform: translateX(-3px);
-    transition: all 125ms ease-in-out;
-
-    &:hover {
-      background-color: $darkgrey;
-      border: 1px solid rgba($white, 0.1);
-
-      .posting-thread-navigate {
-        opacity: 1;
-      }
-    }
-
-    .posting-thread-preview {
-      img {
-        display: block;
-        width: 20px;
-        object-fit: cover;
-        border-radius: 4px;
-      }
-    }
-
-    .posting-thread-reply {
-      font-size: $small;
-      font-weight: 400;
-      color: $blue;
-      margin-left: 3px;
-    }
-
-    .posting-thread-last {
-      font-size: $small;
-      font-weight: 300;
-      color: $textgrey;
-      margin-left: 3px;
-    }
-
-    .posting-thread-navigate {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-33%);
-      right: 0;
-      opacity: 0;
-      font-size: $regular;
-      color: $textgrey;
-      transition: all 125ms ease-in-out;
-    }
   }
 }
