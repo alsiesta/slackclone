@@ -4,61 +4,44 @@ import { FirestoreService } from './firestore.service';
 import { UserTemplate } from '../models/usertemplate.class';
 import {
   Auth,
-  UserCredential,
-  authState,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  connectAuthEmulator,
-  updateProfile,
-  getAuth,
-  user,
   onAuthStateChanged,
 } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
+  
 export class AuthService {
+  userData: import('@angular/fire/auth').User;
   constructor(
     private firestoreService: FirestoreService,
     private auth: Auth,
     private toast: HotToastService
-  ) {
-    // connectAuthEmulator(auth, 'http://localhost:9099'); //emmulating fire auth on local mashine
-  }
-  currentUser$ = authState(this.auth);
+  ) { }
+  
   loading: boolean = false;
   user = new UserTemplate();
   userId;
 
-  ngOnInit() {
-    console.log(this.currentUser$);
-  }
-
   signUp = async (email: string, password: string, name: any) => {
-    const userCredentials = await createUserWithEmailAndPassword(
+    await createUserWithEmailAndPassword(
       this.auth,
       email,
       password
     ).then((userCredentials) => {
-      // this.userId = userCredentials.providerId;
       this.userId = userCredentials.user.uid;
-
       this.firestoreService.addNewUser(
         userCredentials.user.uid,
         name,
         email,
         password
       );
+      this.setLocalUser();
     });
     this.toast.info(`Hi ${name}. Your were successfully signed up`);
-
-    return userCredentials;
   };
-
-  getUserId() {
-    return this.userId;
-  }
 
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
@@ -66,50 +49,37 @@ export class AuthService {
       email,
       password
     )
-      // this.toast.info(`Hi ${userCredentials.user.displayName}! You are signed in.`);
-      // this.logUserDetails(userCredentials);
-
       .then((userCredentials) => {
-        this.currentUser$.subscribe((user) => {
-          console.log('Current User is: ', user?.displayName);
-        });
-
+        this.setLocalUser();
         this.toast.info(
           `Hi ${userCredentials.user.displayName}! You are signed in.`
         );
-        this.logUserDetails(userCredentials);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log('Sign-in error', errorCode, errorMessage);
       });
 
     return userCredentials;
   };
 
+  setLocalUser () {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('SlackUser', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('SlackUser', 'null');
+        JSON.parse(localStorage.getItem('SlackUser')!);
+      }
+    });
+  }
+
   logOut() {
+    localStorage.removeItem('SlackUser');
     return this.auth.signOut();
   }
 
-  monitorAuthState = async () => {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        return user;
-      } else {
-        return null;
-      }
-    });
-  };
-
-  logUserDetails(userCredentials: UserCredential) {
-    console.log('Current User ID: ', userCredentials.user.uid);
-    console.log('Current User DisplayName: ', userCredentials.user.displayName);
-    console.log('Current User Email: ', userCredentials.user.email);
-    console.log('Email verified?: ', userCredentials.user.emailVerified);
-  }
-
-  isUserLoggedIn() {
-    return true;
-  }
 }
