@@ -3,8 +3,7 @@
     <mat-icon class="menu-icon">menu</mat-icon>
     <input type="text">
     <div>
-      Current User: {{ currentUserDisplayName }} ......... 
-      Current User2: {{ currentUserDisplayName2 }}
+      <span [style.displayName]="true">{{ currentUserDisplayName }} </span> 
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
@@ -28,8 +27,8 @@
 
 <mat-menu #userMenu="matMenu">
   <button mat-menu-item (click)="logOut()">Logout</button>
-  <button mat-menu-item (click)="logUserId()">log User ID</button>
-  <button mat-menu-item (click)="logAllUsers()">log all Users</button>
-  <button mat-menu-item (click)="logCurrentUserData()">log Current User</button>
-  <button mat-menu-item (click)="logCurrentUserData2()">log Current User 2</button>
+  <button mat-menu-item (click)="logFirebaseAuthCredentials()">log Firebase AuthCredentials</button>
+  <button mat-menu-item (click)="loglocalStorage()">log localStorage</button>
+  <!-- <button mat-menu-item (click)="logAllUsers()">log all Users</button> -->
+
 </mat-menu>
