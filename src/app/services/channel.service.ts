@@ -11,6 +11,8 @@ export class ChannelService {
     channelName: '# allgemein',
     channelCreator: 'Mike Meyer',
     channelDate: '03.06.2023',
+    channelInfo:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nunc aliquet nunc',
   };
 
   //posting object

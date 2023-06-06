@@ -1,0 +1,64 @@
+@import "../../../styles/main.scss";
+
+.dialog-container {
+  color: $white;
+  width: 600px;
+  position: relative;
+
+  mat-icon {
+    cursor: pointer;
+    color: $textgrey;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .dialog-top {
+    background-color: $darkgrey;
+    border-bottom: 1px solid rgba($textgrey, 0.2);
+    padding: 24px;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .dialog-main {
+    background-color: $grey;
+    padding: 32px;
+
+    .dialog-main-box {
+      border: 1px solid rgba($textgrey, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+
+      .inner-box {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid rgba($textgrey, 0.2);
+        background-color: $darkgrey;
+
+        &:hover {
+          background-color: $grey;
+        }
+
+        .inner-box-title {
+          margin-bottom: 8px;
+          font-size: $regular;
+        }
+
+        .inner-box-info {
+          font-size: $small;
+          font-weight: 400;
+          color: $textgrey;
+        }
+      }
+    }
+  }
+}

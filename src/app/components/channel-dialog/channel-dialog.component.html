@@ -1,1 +1,22 @@
-<p>Channel Info</p>
+<div class="dialog-container">
+    <mat-icon fontIcon="close" (click)="closeDialog()"></mat-icon>
+    <div class="dialog-top">
+        <h1>{{ this.channelService.channelInfo.channelName }}</h1>
+    </div>
+    <div class="dialog-main">
+        <div class="dialog-main-box">
+            <div class="inner-box">
+                <span class="inner-box-title">Info</span>
+                <span class="inner-box-info">{{ this.channelService.channelInfo.channelInfo }}</span>
+            </div>
+            <div class="inner-box">
+                <span class="inner-box-title">Created by</span>
+                <span class="inner-box-info">{{ this.channelService.channelInfo.channelCreator }}</span>
+            </div>
+            <div class="inner-box">
+                <span class="inner-box-title">Date of Creation</span>
+                <span class="inner-box-info">{{ this.channelService.channelInfo.channelDate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,13 +14,13 @@
     height: 61px;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
-    cursor: pointer;
 
     span {
       font-size: $fonttitle;
       font-weight: 500;
       padding: 6px 8px;
       border-radius: 6px;
+      cursor: pointer;
 
       &:hover {
         background-color: $grey;
