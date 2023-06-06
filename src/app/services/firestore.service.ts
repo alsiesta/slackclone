@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserTemplate } from '../models/usertemplate.class';
+import { Channel } from '../models/channel.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
@@ -20,15 +21,36 @@ import {
 })
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
+  private channelCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
+  channel = new Channel();
   // chat = new Chat();
   users: any = [];
   currentUserData: any;
 
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
-    // this.usersCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
+    this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
+    // this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
+  }
+
+
+
+  addNewChannel (uid: string, channel?: Channel) {
+    let dateTime = new Date()
+    this.channel.creationDate = dateTime;
+    this.channel.creator = 'current User';
+    this.channel.info = 'info';
+    this.channel.title = 'title';
+    const docRef = doc(this.channelCollection, uid);
+    setDoc(docRef, this.channel.toJSON())
+      .then(() => {
+        console.log('New Channel added to firestore');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   addNewUser(uid: string, name, email, password) {
@@ -38,7 +60,7 @@ export class FirestoreService {
     const docRef = doc(this.usersCollection, uid);
     setDoc(docRef, this.user.toJSON())
       .then(() => {
-        console.log('Document has been added successfully');
+        console.log('New Document added to firestore');
       })
       .catch((error) => {
         console.log(error);

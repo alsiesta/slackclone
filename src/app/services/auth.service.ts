@@ -52,6 +52,8 @@ export class AuthService {
     )
       .then((userCredentials) => {
         this.setLocalUser();
+        this.firestoreService.addNewChannel('#musterchannel', null)
+
         this.toast.info(
           `Hi ${userCredentials.user.displayName}! You are signed in.`
         );
