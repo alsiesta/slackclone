@@ -27,6 +27,7 @@ import { UsersService } from './services/users.service';
 import { FirestoreService } from './services/firestore.service'; 
 import { AuthService } from './services/auth.service';
 import { ChatComponent } from './components/chat/chat.component';
+import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ChatComponent } from './components/chat/chat.component';
     ChannelDialogComponent,
     CommentfieldComponent,
     ChatComponent,
+    DialogEditUserComponent,
   ],
   imports: [
     BrowserModule,
