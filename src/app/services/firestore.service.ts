@@ -35,7 +35,7 @@ export class FirestoreService {
     // this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
 
-
+readChannels(){}
 
   addNewChannel (uid: string, channel?: Channel) {
     let dateTime = new Date()
