@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChannelService {
-  //channel object
-  channelInfo: any = {
-    channelName: '# allgemein',
-    channelCreator: 'Mike Meyer',
-    channelDate: '03.06.2023',
-    channelInfo:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nunc aliquet nunc',
-  };
+  channelList: any;
+  activeChannel: any;
+  channelReady: boolean = false;
 
   //posting object
   postings: Array<any> = [
@@ -55,7 +51,10 @@ export class ChannelService {
   // to be implemented by function
   dates: Array<any> = ['03.06.2023', '04.06.2023'];
 
-  constructor(public channelDialog: MatDialog) {}
+  constructor(
+    public channelDialog: MatDialog,
+    public firestoreService: FirestoreService
+  ) {}
 
   /**
    * open the channel-info dialog
@@ -63,6 +62,30 @@ export class ChannelService {
   channelDialogOpen() {
     const dialogRef = this.channelDialog.open(ChannelDialogComponent, {
       maxWidth: '100vw',
+    });
+  }
+
+  /**
+   * load the channel content from firestore.service
+   */
+  async loadChannelContent(channelID: string) {
+    await this.firestoreService.readChannels().then(() => {
+      this.channelList = this.firestoreService.channelList;
+    });
+    this.findChannel(channelID);
+    console.log(this.activeChannel);
+    this.channelReady = true;
+  }
+
+  /**
+   * find the channel in channelList
+   * @param channelID - channel id from function loadChannelContent
+   */
+  findChannel(channelID: string) {
+    this.channelList.forEach((element: any) => {
+      if (element.id == channelID) {
+        this.activeChannel = element;
+      }
     });
   }
 }

@@ -27,6 +27,7 @@ export class FirestoreService {
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
+  channelList: any;
   // chat = new Chat();
   users: any = [];
   currentUserData: any;
@@ -36,16 +37,18 @@ export class FirestoreService {
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
   }
 
-  async readChannels () {
-    const querySnapshot = await getDocs(collection(this.firestore, "channels"));
-querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
-}
+  async readChannels() {
+    const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
+    this.channelList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Channel;
+      const id = doc.id;
+      return { id, ...data };
+    });
+    console.log(this.channelList);
+  }
 
-  addNewChannel (uid: string, channel?: Channel) {
-    let dateTime = new Date()
+  addNewChannel(uid: string, channel?: Channel) {
+    let dateTime = new Date();
     this.channel.creationDate = dateTime;
     this.channel.creator = 'current User';
     this.channel.info = 'info';
