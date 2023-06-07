@@ -18,11 +18,10 @@ export class AppComponent {
   title = 'SlackClone';
 
   ngOnInit() {
-    // this.usersService.keepUsersUptodate();
+    this.usersService.keepUsersUptodate();
   }
   
   logOut() {
-    //logging out via promise
     this.authService.logOut();
     this.router.navigate(['']);
   }

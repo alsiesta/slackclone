@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    public usersService: UsersService
+    public usersService: UsersService,
+    public firestore: FirestoreService
   ) { }
   
   currentUserDisplayName: string | undefined;
@@ -37,6 +39,10 @@ export class HeaderComponent {
 
   logFirebaseAuthCredentials () {
     this.authService.getAuthCredentials()
+  }
+
+  logChannels () {
+    this.firestore.readChannels();
   }
 
   

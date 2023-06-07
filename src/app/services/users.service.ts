@@ -20,15 +20,15 @@ export class UsersService {
   $currentUserData: any;
   user = new UserTemplate();
 
-  // keepUsersUptodate() {
-  //   // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
-  //   const users$ = collectionData(this.usersCollection, { idField: 'uid' });
-  //   users$.subscribe((_users) => {
-  //     this.usersCollListener.next({ users: _users });
-  //     console.log(_users);
-  //     this.currentUsers = _users;
-  //   });
-  // }
+  keepUsersUptodate() {
+    // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
+    const users$ = collectionData(this.usersCollection, { idField: 'uid' });
+    users$.subscribe((_users) => {
+      this.usersCollListener.next({ users: _users });
+      console.log(_users);
+      this.currentUsers = _users;
+    });
+  }
 
   logUserId() {
     return this.getCurrentUserId();

@@ -14,6 +14,8 @@ import {
   Firestore,
   updateDoc,
   setDoc,
+  getDoc,
+  getDocs,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -32,10 +34,15 @@ export class FirestoreService {
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
-    // this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
 
-readChannels(){}
+  async readChannels () {
+    const querySnapshot = await getDocs(collection(this.firestore, "channels"));
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+});
+}
 
   addNewChannel (uid: string, channel?: Channel) {
     let dateTime = new Date()
