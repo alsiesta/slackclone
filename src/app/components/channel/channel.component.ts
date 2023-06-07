@@ -10,6 +10,6 @@ export class ChannelComponent implements AfterViewInit {
   constructor(public channelService: ChannelService) {}
 
   ngAfterViewInit(): void {
-    this.channelService.loadChannelContent('#anderer_musterchannel');
+    this.channelService.loadChannelContent('#gruppe-576');
   }
 }

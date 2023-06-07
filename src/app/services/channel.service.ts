@@ -69,6 +69,7 @@ export class ChannelService {
    * load the channel content from firestore.service
    */
   async loadChannelContent(channelID: string) {
+    this.channelReady = false;
     await this.firestoreService.readChannels().then(() => {
       this.channelList = this.firestoreService.channelList;
     });
