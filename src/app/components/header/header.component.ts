@@ -24,23 +24,22 @@ export class HeaderComponent {
     public dialog: MatDialog
   ) {}
 
-  currentUserDisplayName2: string | undefined;
-  // loggedInUser;
-  currentUserDisplayName;
-
+  currentUserDisplayName: any;
   ngOnInit() {
-    this.loglocalStorage();
-    //this.loggedInUser = this.usersService.loggedInUser
+    // this.loglocalStorage();
   }
 
   
-  
+  get authUser$ () {
+    return this.authService.getAuthCredentials();
+  }
   get currentUserId$() {
     return this.usersService.currentUserId$;
   }
   get currentUserName$() {
     return this.usersService.currentUserName$;
   }
+  
 
   logOut() {
     this.authService.logOut();
@@ -51,10 +50,7 @@ export class HeaderComponent {
     this.usersService.getAllUsers();
   }
 
-  loglocalStorage() {
-    this.currentUserDisplayName2 = this.authService.getCurrentLocalUser();
-  }
-
+  
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
   }
@@ -75,8 +71,16 @@ export class HeaderComponent {
       width: '350px',
       position: { right: '50px', top: '74px' },
       data: {
-        displayName: this.currentUserName$,
+        displayName: this.authUser$.displayName,
+        email: this.authUser$.email,
+        photoUrl: this.authUser$.photoURL,
+        emailVerified: this.authUser$.emailVerified,
       },
     });
   }
+
+  
+  // loglocalStorage() {
+  //   this.currentUserDisplayName = this.authService.getCurrentLocalUser();
+  // }
 }

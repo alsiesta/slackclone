@@ -31,7 +31,6 @@ export class UsersService  {
   currentUserId$: any;
   currentUserName$: any;
   currentUserData$: any;
-
   currentUsers: any;
   user = new UserTemplate();
 
