@@ -3,7 +3,7 @@
     <mat-icon class="menu-icon">menu</mat-icon>
     <input type="text">
     <div>
-      <span [style.displayName]="true">{{ currentUserDisplayName }} </span> 
+      <span [style.displayName]="true"> {{currentUserName$}} ( {{currentUserId$}} )</span> 
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
@@ -30,6 +30,7 @@
   <button mat-menu-item (click)="openDialog()">Profile</button>
   <button mat-menu-item (click)="logFirebaseAuthCredentials()">log Firebase AuthCredentials</button>
   <button mat-menu-item (click)="loglocalStorage()">log localStorage</button>
+  <button mat-menu-item (click)="logUserData()">log UserData</button>
   <button mat-menu-item (click)="logChannels()">log channels</button>
   <button mat-menu-item (click)="logAllUsers()">log all Users</button>
 

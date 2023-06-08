@@ -24,10 +24,22 @@ export class HeaderComponent {
     public dialog: MatDialog
   ) {}
 
-  currentUserDisplayName: string | undefined;
+  currentUserDisplayName2: string | undefined;
+  // loggedInUser;
+  currentUserDisplayName;
 
   ngOnInit() {
     this.loglocalStorage();
+    //this.loggedInUser = this.usersService.loggedInUser
+  }
+
+  
+  
+  get currentUserId$() {
+    return this.usersService.currentUserId$;
+  }
+  get currentUserName$() {
+    return this.usersService.currentUserName$;
   }
 
   logOut() {
@@ -40,7 +52,7 @@ export class HeaderComponent {
   }
 
   loglocalStorage() {
-    this.currentUserDisplayName = this.authService.getCurrentLocalUser();
+    this.currentUserDisplayName2 = this.authService.getCurrentLocalUser();
   }
 
   logFirebaseAuthCredentials() {
@@ -50,14 +62,20 @@ export class HeaderComponent {
   logChannels() {
     this.firestore.readChannels();
   }
+
+  
+  logUserData () {
+    this.usersService.getCurrentUserData()
+  }
+
+  
   openDialog() {
     this.dialog.open(DialogEditUserComponent, {
       height: '350px',
       width: '350px',
       position: { right: '50px', top: '74px' },
       data: {
-        animal: 'unicorn',
-        displayName: this.currentUserDisplayName,
+        displayName: this.currentUserName$,
       },
     });
   }
