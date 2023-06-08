@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>Hallo <b>{{data.displayName}}</b></h1>
+<h1 mat-dialog-title><b>User Profile</b></h1>
 <div mat-dialog-content>
-  My favorite animal is:
   <ul>
-    <li>
-      <span *ngIf="data.animal === 'panda'">&#10003;</span> Panda
-    </li>
-    <li>
-      <span *ngIf="data.animal === 'unicorn'">&#10003;</span> Unicorn
-    </li>
-    <li>
-      <span *ngIf="data.animal === 'lion'">&#10003;</span> Lion
-    </li>
+    <p *ngIf="data.photoUrl"><img src="{{data.photoUrl}}"  class="profile-image" alt="Profile Image"></p>
+ 
+      <p *ngIf="data.displayName">Nickname: <b>{{data.displayName}}</b></p> 
+ 
+      <p *ngIf="data.email">Email: <b>{{data.email}}</b></p> 
+
+
+      <p *ngIf="data.emailVerified === true">Email verified: <b>Yes</b></p> 
+      <p *ngIf="data.emailVerified === false">Email verified: <b>No</b></p> 
+
   </ul>
 </div>

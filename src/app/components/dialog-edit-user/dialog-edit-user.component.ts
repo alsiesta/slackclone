@@ -4,8 +4,10 @@ import {NgIf} from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
   displayName;
+  email;
+  photoUrl;
+  emailVerified;
 }
 
 @Component({

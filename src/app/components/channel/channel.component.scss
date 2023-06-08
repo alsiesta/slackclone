@@ -83,6 +83,12 @@
     width: 35px;
     object-fit: cover;
     border-radius: 6px;
+    cursor: pointer;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .posting-main-top {
@@ -94,6 +100,12 @@
     .posting-user {
       font-size: $regular;
       font-weight: 500;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .posting-time {
