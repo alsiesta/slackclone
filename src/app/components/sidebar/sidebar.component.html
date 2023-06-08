@@ -19,10 +19,12 @@
     <!-- Channels -->
     <div class="sidebar-drop-down-container">
         <div class="drop-down-button">
-            <mat-icon>arrow_drop_down</mat-icon>
+            <mat-icon (click)="toggleDropdown('ch')" [ngClass]="channelsAreOpen ? '' : 'rotate90'">
+                arrow_drop_down
+            </mat-icon>
             <span>Channels</span>
         </div>
-        <div class="drop-down-content">
+        <div *ngIf="channelsAreOpen" class="drop-down-content">
             <div class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
                 <span>allgemein</span>
@@ -45,10 +47,12 @@
     <!-- Directmessages -->
     <div class="sidebar-drop-down-container">
         <div class="drop-down-button">
-            <mat-icon>arrow_drop_down</mat-icon>
+            <mat-icon (click)="toggleDropdown('dm')" [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
+                arrow_drop_down
+            </mat-icon>
             <span>Directmessages</span>
         </div>
-        <div class="drop-down-content">
+        <div *ngIf="directmessagesAreOpen" class="drop-down-content">
             <div class="drop-down-element">
                 <img class="drop-down-img" src="assets/img/threads/profile-picture.png">
                 <span>Max Mustermann</span>
