@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserTemplate } from '../models/usertemplate.class';
 import { Channel } from '../models/channel.class';
+import { Chat } from '../models/chat.class';
+import { Thread } from '../models/thread.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
@@ -27,6 +29,8 @@ export class FirestoreService {
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
+  chat = new Chat();
+
   channelList: any;
   // chat = new Chat();
   users: any = [];
@@ -47,7 +51,8 @@ export class FirestoreService {
     console.log(this.channelList);
   }
 
-  addNewChannel(uid: string, channel?: Channel) {
+  addNewChannel (uid: string, channel?: Channel) {
+    // check and avoid channel name doublication!!!
     let dateTime = new Date();
     this.channel.creationDate = dateTime;
     this.channel.creator = 'current User';
@@ -55,6 +60,22 @@ export class FirestoreService {
     this.channel.title = 'title';
     const docRef = doc(this.channelCollection, uid);
     setDoc(docRef, this.channel.toJSON())
+      .then(() => {
+        console.log('New Channel added to firestore');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  addNewChat (uid: string, chat?: Chat) {
+    // check and avoid channel name doublication!!!
+    let dateTime = new Date();
+    this.chat.chatId = chat.chatId;
+    this.chat.chatUsers = [];
+    this.chat.chat = [];
+    const docRef = doc(this.channelCollection, uid);
+    setDoc(docRef, this.chat.toJSON())
       .then(() => {
         console.log('New Channel added to firestore');
       })

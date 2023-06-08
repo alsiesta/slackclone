@@ -8,6 +8,7 @@ export interface DialogData {
   email;
   photoUrl;
   emailVerified;
+  uid;
 }
 
 @Component({

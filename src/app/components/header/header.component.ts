@@ -71,6 +71,7 @@ export class HeaderComponent {
       width: '350px',
       position: { right: '50px', top: '74px' },
       data: {
+        uid: this.authUser$.uid,
         displayName: this.authUser$.displayName,
         email: this.authUser$.email,
         photoUrl: this.authUser$.photoURL,
