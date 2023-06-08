@@ -70,8 +70,9 @@ export class ChannelService {
   /**
    * open the channel-info dialog
    */
-  messageDialogOpen() {
+  messageDialogOpen(user: string, image: string) {
     const dialogRef = this.messageDialog.open(DialogNewMessageComponent, {
+      data: { user: user, image: image },
       maxWidth: '100vw',
     });
   }

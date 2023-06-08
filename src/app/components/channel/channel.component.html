@@ -15,11 +15,13 @@
 
         <div *ngFor="let post of this.channelService.postings" class="posting">
             <div>
-                <img (click)="this.channelService.messageDialogOpen()" class="posting-image" src="{{ post.image }}">
+                <img (click)="this.channelService.messageDialogOpen(post.user, post.image)" class="posting-image"
+                    src="{{ post.image }}">
             </div>
             <div class="posting-main">
                 <div class="posting-main-top">
-                    <div class="posting-user" (click)="this.channelService.messageDialogOpen()">{{ post.user }}</div>
+                    <div class="posting-user" (click)="this.channelService.messageDialogOpen(post.user, post.image)">{{
+                        post.user }}</div>
                     <div class="posting-time">{{ post.time }}</div>
                 </div>
                 <div class="posting-content">{{ post.content }}</div>
