@@ -26,6 +26,7 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private channelCollection: CollectionReference<DocumentData>;
+  private chatCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
@@ -39,6 +40,7 @@ export class FirestoreService {
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
+    this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
 
   async readChannels() {
@@ -51,13 +53,13 @@ export class FirestoreService {
     console.log(this.channelList);
   }
 
-  addNewChannel (uid: string, channel?: Channel) {
+  addNewChannel(uid: string, channel) {
     // check and avoid channel name doublication!!!
     let dateTime = new Date();
     this.channel.creationDate = dateTime;
-    this.channel.creator = 'current User';
-    this.channel.info = 'info';
-    this.channel.title = 'title';
+    this.channel.creator = channel.creator;
+    this.channel.info = channel.info;
+    this.channel.title = channel.title;
     const docRef = doc(this.channelCollection, uid);
     setDoc(docRef, this.channel.toJSON())
       .then(() => {
@@ -68,20 +70,13 @@ export class FirestoreService {
       });
   }
 
-  addNewChat (uid: string, chat?: Chat) {
-    // check and avoid channel name doublication!!!
-    let dateTime = new Date();
-    this.chat.chatId = chat.chatId;
-    this.chat.chatUsers = [];
-    this.chat.chat = [];
-    const docRef = doc(this.channelCollection, uid);
-    setDoc(docRef, this.chat.toJSON())
-      .then(() => {
-        console.log('New Channel added to firestore');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  async addNewChat(chat?: Chat) {
+    const docRef = await addDoc(this.chatCollection, chat);
+    console.log('Chat was added to Firebase: ', docRef.id);
+    const chatRef = doc(this.chatCollection, docRef.id);
+    await updateDoc(chatRef, {
+      chatId: docRef.id,
+    });
   }
 
   addNewUser(uid: string, name, email, password) {

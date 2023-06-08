@@ -18,7 +18,7 @@ export class Thread {
     this.replies = obj ? obj.replies : '';
   }
 
-  public toJSON(): any {
+  public toJSON?(): any {
     return {
       threadId: this.threadId,
       user: this.user,

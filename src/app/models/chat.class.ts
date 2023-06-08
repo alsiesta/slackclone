@@ -9,7 +9,7 @@ export class Chat {
     this.chat = obj ? obj.chat : '';
   }
 
-  public toJSON(): any {
+  public toJSON?(): any {
     return {
       chatId: this.chatId,
       chatUser: this.chatUsers,

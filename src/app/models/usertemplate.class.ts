@@ -21,7 +21,7 @@ export class UserTemplate {
     this.city = obj ? obj.city : '';
   }
 
-  public toJSON(): any | undefined {
+  public toJSON?(): any {
     return {
       password: this.password,
       displayName: this.displayName,

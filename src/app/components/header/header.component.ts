@@ -29,6 +29,14 @@ export class HeaderComponent {
     // this.loglocalStorage();
   }
 
+    /// delete after chat form is finished /////////
+    mockChatData = {
+      chatId: 'Muster Chat ID', 
+      chatUsers: ['User 1', 'User 2', 'User 3'], 
+    chat: [{user:'User 1', date: new Date(), message:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt' }], 
+
+    }
+    //////////////////////////////////
   
   get authUser$ () {
     return this.authService.getAuthCredentials();
@@ -50,7 +58,10 @@ export class HeaderComponent {
     this.usersService.getAllUsers();
   }
 
-  
+  addNewChat () {
+    this.firestore.addNewChat(this.mockChatData);
+  }
+
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
   }
