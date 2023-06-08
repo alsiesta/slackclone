@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
+import { DialogNewMessageComponent } from '../components/dialog-new-message/dialog-new-message.component';
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,7 @@ export class ChannelService {
 
   constructor(
     public channelDialog: MatDialog,
+    public messageDialog: MatDialog,
     public firestoreService: FirestoreService
   ) {}
 
@@ -61,6 +63,15 @@ export class ChannelService {
    */
   channelDialogOpen() {
     const dialogRef = this.channelDialog.open(ChannelDialogComponent, {
+      maxWidth: '100vw',
+    });
+  }
+
+  /**
+   * open the channel-info dialog
+   */
+  messageDialogOpen() {
+    const dialogRef = this.messageDialog.open(DialogNewMessageComponent, {
       maxWidth: '100vw',
     });
   }

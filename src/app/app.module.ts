@@ -28,6 +28,7 @@ import { FirestoreService } from './services/firestore.service';
 import { AuthService } from './services/auth.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
+import { DialogNewMessageComponent } from './components/dialog-new-message/dialog-new-message.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-ed
     CommentfieldComponent,
     ChatComponent,
     DialogEditUserComponent,
+    DialogNewMessageComponent,
   ],
   imports: [
     BrowserModule,
