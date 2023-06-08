@@ -1,7 +1,15 @@
 <div class="message-container">
     <div class="message-container-top">
-        <img class="profil-image" src="{{ this.data.image }}">
-        <span class="profil-name">{{ this.data.user }}</span>
+        <div class="profil-box">
+            <img class="profil-image" src="{{ this.data.image }}">
+            <span class="profil-name">{{ this.data.user }}</span>
+        </div>
+
+        <div class="profil-time-box">
+            <mat-icon fontIcon="schedule"></mat-icon>
+            <span class="profil-time">{{ this.time.toLocaleTimeString([], {hour:
+                '2-digit', minute:'2-digit'}) }}h local time</span>
+        </div>
     </div>
     <div class="message-container-bottom">
         <div class="message-button"><mat-icon fontIcon="question_answer"></mat-icon>Message</div>
