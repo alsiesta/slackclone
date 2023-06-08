@@ -3,7 +3,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 250px;
     height: calc(100vh - $menuHeight);
     background-color: $grey;
     color: $white;
@@ -26,10 +26,20 @@
         align-items: center;
         height: 28px;
         padding: 0 $spacingRegular;
-        gap: 10px;
         border-radius: 5px;        
         cursor: pointer;
         transition: all 125ms ease-in-out;
+
+        mat-icon {
+            font-size: $fontsubtitle;
+            height: $fontsubtitle;
+            width: $fontsubtitle;
+            margin-right: 8px;
+        }
+
+        span {
+            font-size: $regular;
+        }
 
         &:hover {
             background-color: rgba(255,255,255,0.2);  
@@ -45,7 +55,7 @@
         align-items: center;
         font-size: $regular;
         
-        mat-icon {
+        .collapsIcon {
             cursor: pointer;
             border-radius: 5px;
             &:hover {
@@ -54,11 +64,22 @@
         }
 
         span {
+            display: flex;
+            align-items: center;
             cursor: pointer;
             border-radius: 5px;
             padding: 4px;
+
+            mat-icon {
+                opacity: 0;
+            }
+            
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2);
+                
+                mat-icon {
+                    opacity: 1;
+                }
             }
         }
 

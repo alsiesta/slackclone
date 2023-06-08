@@ -19,10 +19,13 @@
     <!-- Channels -->
     <div class="sidebar-drop-down-container">
         <div class="drop-down-button">
-            <mat-icon (click)="toggleDropdown('ch')" [ngClass]="channelsAreOpen ? '' : 'rotate90'">
+            <mat-icon (click)="toggleDropdown('ch')" class="collapsIcon" [ngClass]="channelsAreOpen ? '' : 'rotate90'">
                 arrow_drop_down
             </mat-icon>
-            <span>Channels</span>
+            <span>
+                Channels
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
             <div class="drop-down-element">
@@ -47,10 +50,13 @@
     <!-- Directmessages -->
     <div class="sidebar-drop-down-container">
         <div class="drop-down-button">
-            <mat-icon (click)="toggleDropdown('dm')" [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
+            <mat-icon (click)="toggleDropdown('dm')" class="collapsIcon" [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
                 arrow_drop_down
             </mat-icon>
-            <span>Directmessages</span>
+            <span>
+                Directmessages
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </span>
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">
             <div class="drop-down-element">
