@@ -4,8 +4,9 @@ export class Thread {
   date: Date; // date of creation
   time: Date; // time of creation
   content: string; // content of thread
-  channel: string; // channel id as recipient of thread -- (either or)
-  replies: string[]; // array of thread ids: message, uid, date, (nice-to-have: emoji)
+  channel: string; // channel id (#..........)
+  replies: { user: string; date: Date; message: string }[]; // stores reply objects
+  //(nice-to-have: emoji)
 
   constructor(obj?: any) {
     this.threadId = obj ? obj.threadId : '';
