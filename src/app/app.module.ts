@@ -24,9 +24,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ChannelDialogComponent } from './components/channel-dialog/channel-dialog.component';
 import { CommentfieldComponent } from './components/commentfield/commentfield.component';
 import { UsersService } from './services/users.service';
-import { FirestoreService } from './services/firestore.service'; 
+import { FirestoreService } from './services/firestore.service';
 import { AuthService } from './services/auth.service';
 import { ChatComponent } from './components/chat/chat.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -59,8 +60,9 @@ import { ChatComponent } from './components/chat/chat.component';
     }),
     FormsModule,
     ReactiveFormsModule,
+    QuillModule.forRoot()
   ],
-  providers: [AuthGuard,UsersService,FirestoreService,AuthService],
+  providers: [AuthGuard, UsersService, FirestoreService, AuthService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
