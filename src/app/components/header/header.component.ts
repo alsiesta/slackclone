@@ -29,14 +29,39 @@ export class HeaderComponent {
     // this.loglocalStorage();
   }
 
-    /// delete after chat form is finished /////////
-    mockChatData = {
-      chatId: 'Muster Chat ID', 
-      chatUsers: ['User 1', 'User 2', 'User 3'], 
-    chat: [{user:'User 1', date: new Date(), message:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt' }], 
+ /// delete after chat form is finished /////////
+ mockChatData = {
+  chatId: 'Muster Chat ID',
+  chatUsers: ['User 1', 'User 2', 'User 3'],
+  chat: [
+    {
+      user: 'User 1',
+      date: new Date(),
+      message:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+    },
+  ],
+};
+//////////////////////////////////
 
-    }
-    //////////////////////////////////
+/// delete after thread form is finished /////////
+mockThreadData = {
+  threadId: '',
+  user: 'User 1',
+  date: new Date(),
+  time: new Date(),
+  content:
+    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+  channel: 'Channel 1',
+  replies: [
+    {
+      user: 'User 1',
+      date: new Date(),
+      message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+    },
+  ],
+};
+//////////////////////////////////
   
   get authUser$ () {
     return this.authService.getAuthCredentials();
@@ -62,6 +87,11 @@ export class HeaderComponent {
     this.firestore.addNewChat(this.mockChatData);
   }
 
+  addNewThread() {
+    this.firestore.addNewThread(this.mockThreadData);
+  }
+
+  
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
   }

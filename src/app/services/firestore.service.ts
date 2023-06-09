@@ -27,11 +27,12 @@ export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private channelCollection: CollectionReference<DocumentData>;
   private chatCollection: CollectionReference<DocumentData>;
+  private threadCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
   chat = new Chat();
-
+  thread = new Thread();
   channelList: any;
   // chat = new Chat();
   users: any = [];
@@ -41,6 +42,7 @@ export class FirestoreService {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
+    this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
 
   async readChannels() {
@@ -79,6 +81,15 @@ export class FirestoreService {
     });
   }
 
+  async addNewThread(thread?: Thread) {
+    const docRef = await addDoc(this.threadCollection, thread);
+    console.log('Thread was added to Firebase: ', docRef.id);
+    const chatRef = doc(this.threadCollection, docRef.id);
+      await updateDoc(chatRef, {
+        threadId: docRef.id,
+      });
+  }
+  
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
     this.user.email = email;
