@@ -1,5 +1,5 @@
 export class Channel {
-  channelID: string; // firestore id
+  channelID: string; // firestore Custom id (#........)
   title: string; // channel name
   creator: string; // user id of creator
   creationDate: Date; // date of creation
@@ -13,7 +13,7 @@ export class Channel {
     this.info = obj ? obj.info : '';
   }
 
-  public toJSON(): any {
+  public toJSON?(): any {
     return {
       channelID: this.channelID,
       title: this.title,

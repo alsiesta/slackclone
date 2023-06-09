@@ -10,6 +10,7 @@ import {
   User,
   getAuth,
 } from '@angular/fire/auth';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,18 @@ export class AuthService {
   loading: boolean = false;
   user: User;
   userId;
+  channel: Channel = new Channel;
+
+  /// delete after channel form is finished /////////
+  date = new Date(); //mock date
+  testChannel = {
+  channelID: 'Muster Kanal', 
+  title: 'Titel', 
+  creator: 'Autor', 
+  creationDate: this.date,
+  info: 'Information', 
+  }
+  //////////////////////////////////
 
   signUp = async (email: string, password: string, name: any) => {
     await createUserWithEmailAndPassword(this.auth, email, password).then(
@@ -37,8 +50,8 @@ export class AuthService {
           email,
           password
         );
-        this.setLocalUser();
-        this.firestoreService.addNewChannel('#musterchannel', null)
+        // this.setLocalUser();
+        this.firestoreService.addNewChannel('#musterchannel', this.testChannel)
         this.updateAuthCredentials(name);
       }
     );
@@ -52,8 +65,8 @@ export class AuthService {
       password
     )
       .then((userCredentials) => {
-        this.setLocalUser();
-        this.firestoreService.addNewChannel('#musterchannel', null)
+        // this.setLocalUser();
+        this.firestoreService.addNewChannel('#neuer_musterchannel', this.testChannel)
 
         this.toast.info(
           `Hi ${userCredentials.user.displayName}! You are signed in.`
@@ -73,7 +86,7 @@ export class AuthService {
     const auth = getAuth();
     updateProfile(auth.currentUser, {
       displayName: dName,
-      photoURL: 'https://example.com/jane-q-user/profile.jpg',
+      photoURL: './assets/img/user/avatar3.png',
     })
       .then(() => {
         console.log(auth.currentUser);
@@ -97,35 +110,43 @@ export class AuthService {
       // this value to authenticate with your backend server, if
       // you have one. Use User.getToken() instead.
       const uid = user.uid;
-      console.log(displayName, email, photoURL,emailVerified, uid);
-    }
-  }
-
-  setLocalUser() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('SlackUser', JSON.stringify(this.userData));
-        // JSON.parse(localStorage.getItem('SlackUser')!);
-      } else {
-        localStorage.setItem('SlackUser', 'null');
-        // JSON.parse(localStorage.getItem('SlackUser')!);
-      }
-    });
-  }
-
-  getCurrentLocalUser() {
-    const user = JSON.parse(localStorage.getItem('SlackUser')!);
-    if (user) {
-      console.log('Authenticated User in local storage: ', user);
-      return user.displayName;
+    //   console.log('DisplayName: ', displayName,' \nEmail: ', email,' \nphotoURL: ', photoURL,' \nEmail verified: ', emailVerified,' \nUID: ', uid);
+    //  const authUser = [displayName,email,photoURL,emailVerified]
+    //   return authUser;
+      return user;
     } else {
-      console.log('No user in local storage');
+      throw new Error('There is no authenticated user in Firestore!');
     }
   }
+
+ 
 
   logOut() {
     localStorage.removeItem('SlackUser');
     return this.auth.signOut();
   }
+  
+  
+  // setLocalUser() {
+  //   onAuthStateChanged(this.auth, (user) => {
+  //     if (user) {
+  //       this.userData = user;
+  //       localStorage.setItem('SlackUser', JSON.stringify(this.userData));
+  //       // JSON.parse(localStorage.getItem('SlackUser')!);
+  //     } else {
+  //       localStorage.setItem('SlackUser', 'null');
+  //       // JSON.parse(localStorage.getItem('SlackUser')!);
+  //     }
+  //   });
+  // }
+
+  // getCurrentLocalUser() {
+  //   const user = JSON.parse(localStorage.getItem('SlackUser')!);
+  //   if (user) {
+  //     console.log('Authenticated User in local storage: ', user);
+  //     return user.displayName;
+  //   } else {
+  //     console.log('No user in local storage');
+  //   }
+  // }
 }

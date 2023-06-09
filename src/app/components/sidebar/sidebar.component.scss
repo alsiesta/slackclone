@@ -3,16 +3,17 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 200px;
-    height: calc(100vh - 64px);
+    width: 250px;
+    height: calc(100vh - $menuHeight);
     background-color: $grey;
     color: $white;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
+    
 }
 
 .title {
     padding: $spacingRegular;
-    font-size: 24px;
+    font-size: $fonttitle;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -23,8 +24,26 @@
     .shortcut {
         display: flex;
         align-items: center;
-        padding: 5px;
-        gap: 10px;
+        height: 28px;
+        padding: 0 $spacingRegular;
+        border-radius: 5px;        
+        cursor: pointer;
+        transition: all 125ms ease-in-out;
+
+        mat-icon {
+            font-size: $fontsubtitle;
+            height: $fontsubtitle;
+            width: $fontsubtitle;
+            margin-right: 8px;
+        }
+
+        span {
+            font-size: $regular;
+        }
+
+        &:hover {
+            background-color: rgba(255,255,255,0.2);  
+        }
     }
 }
 
@@ -34,43 +53,70 @@
     .drop-down-button {
         display: flex;
         align-items: center;
+        font-size: $regular;
+        
+        .collapsIcon {
+            cursor: pointer;
+            border-radius: 5px;
+            &:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+        }
 
-    }
-    .drop-down-content {
-        font-size: 14px;
-        margin-left: 25px;
-
-        .add-btn {
+        span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 4px;
 
             mat-icon {
-                transform: scale(0.6);
+                opacity: 0;
             }
+            
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                
+                mat-icon {
+                    opacity: 1;
+                }
+            }
+        }
+
+    }
+
+    .drop-down-content {
+        font-size: $small;
+
+        .drop-down-element {
+            display: flex;
+            align-items: center;
+            height: 28px;
+            padding: 0 $spacingRegular;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 125ms ease-in-out;
+        
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        
+            .drop-down-img {
+                font-size: $fontsubtitle;
+                height: $fontsubtitle;
+                width: $fontsubtitle;
+                margin-right: 8px;
+                border-radius: 5px;
+            }
+        }
+
+        .add-btn {
+            padding: 0 8px;
+            
         }
     }
 }
 
-.message {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 5px;
-
-    .message-img {
-        height: 20px;
-        width: 20px;
-        border-radius: 5px;
-    }
-}
-
-.channel {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-
-    mat-icon {
-        transform: scale(0.6);
-    }
+.rotate90 {
+    transform: rotate(-90deg);
 }

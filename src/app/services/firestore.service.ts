@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserTemplate } from '../models/usertemplate.class';
 import { Channel } from '../models/channel.class';
+import { Chat } from '../models/chat.class';
+import { Thread } from '../models/thread.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
@@ -14,6 +16,8 @@ import {
   Firestore,
   updateDoc,
   setDoc,
+  getDoc,
+  getDocs,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -22,9 +26,13 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private channelCollection: CollectionReference<DocumentData>;
+  private chatCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
+  chat = new Chat();
+
+  channelList: any;
   // chat = new Chat();
   users: any = [];
   currentUserData: any;
@@ -32,17 +40,26 @@ export class FirestoreService {
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
-    // this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
+    this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
   }
 
+  async readChannels() {
+    const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
+    this.channelList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Channel;
+      const id = doc.id;
+      return { id, ...data };
+    });
+    console.log(this.channelList);
+  }
 
-
-  addNewChannel (uid: string, channel?: Channel) {
-    let dateTime = new Date()
+  addNewChannel(uid: string, channel) {
+    // check and avoid channel name doublication!!!
+    let dateTime = new Date();
     this.channel.creationDate = dateTime;
-    this.channel.creator = 'current User';
-    this.channel.info = 'info';
-    this.channel.title = 'title';
+    this.channel.creator = channel.creator;
+    this.channel.info = channel.info;
+    this.channel.title = channel.title;
     const docRef = doc(this.channelCollection, uid);
     setDoc(docRef, this.channel.toJSON())
       .then(() => {
@@ -51,6 +68,15 @@ export class FirestoreService {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  async addNewChat(chat?: Chat) {
+    const docRef = await addDoc(this.chatCollection, chat);
+    console.log('Chat was added to Firebase: ', docRef.id);
+    const chatRef = doc(this.chatCollection, docRef.id);
+    await updateDoc(chatRef, {
+      chatId: docRef.id,
+    });
   }
 
   addNewUser(uid: string, name, email, password) {

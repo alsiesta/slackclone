@@ -1,0 +1,16 @@
+<h1 mat-dialog-title><b>User Profile</b></h1>
+<div mat-dialog-content>
+  <ul>
+    <p *ngIf="data.photoUrl"><img src="{{data.photoUrl}}"  class="profile-image" alt="Profile Image"></p>
+ 
+      <p *ngIf="data.displayName">Nickname: <b>{{data.displayName}}</b></p> 
+ 
+      <p *ngIf="data.email">Email: <b>{{data.email}}</b></p> 
+
+
+      <p *ngIf="data.emailVerified === true">Email verified: <b>Yes</b></p> 
+      <p *ngIf="data.emailVerified === false">Email verified: <b>No</b></p> 
+      <p *ngIf="data.uid">User ID: <b>{{data.uid}}</b></p> 
+
+  </ul>
+</div>

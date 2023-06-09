@@ -1,5 +1,5 @@
 export interface User {
-    uid: string;
+    uid: string; // firebase authentication auto-generated id
     email: string;
     displayName: string;
     status: boolean;

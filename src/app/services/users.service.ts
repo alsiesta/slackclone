@@ -1,114 +1,76 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import { UserTemplate } from '../models/usertemplate.class';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { BehaviorSubject, Observable, from, map, switchMap } from 'rxjs';
-import { collection, Firestore, collectionData, doc, getDoc } from '@angular/fire/firestore';
+import {
+  collection,
+  Firestore,
+  collectionData,
+  doc,
+  getDoc,
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UsersService {
-  constructor (private firestoreService: FirestoreService, private firestore: Firestore) { }
+export class UsersService  {
+  constructor(
+    private firestoreService: FirestoreService,
+    private firestore: Firestore,
+    private auth: Auth
+  ) {
+    this.getCurrentUserId();
+  }
+
+
   usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
-  currentUserDisplayName;
-  currenUserId;
   public usersCollListener = new BehaviorSubject<any>({ users: [] });
-  
+
+  currentUserId$: any;
+  currentUserName$: any;
+  currentUserData$: any;
   currentUsers: any;
-  $currentUserData: any;
-  user = new UserTemplate();
+  fsUser = new UserTemplate();
 
-  // keepUsersUptodate() {
-  //   // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
-  //   const users$ = collectionData(this.usersCollection, { idField: 'uid' });
-  //   users$.subscribe((_users) => {
-  //     this.usersCollListener.next({ users: _users });
-  //     console.log(_users);
-  //     this.currentUsers = _users;
-  //   });
-  // }
-
-  logUserId() {
-    return this.getCurrentUserId();
+  keepUsersUptodate() {
+    // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
+    const users$ = collectionData(this.usersCollection, { idField: 'uid' });
+    users$.subscribe((_users) => {
+      this.usersCollListener.next({ users: _users });
+      console.log(_users);
+      this.currentUsers = _users;
+    });
   }
 
-  getAllUsers () {
-    console.log(this.currentUsers)
+  getAllUsers() {
+    console.log(this.currentUsers);
   }
 
-  async getCurrentUserId(): Promise<string | null>  {
-    const auth = getAuth();
-    // await onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     console.log('received UID in users.service: ', user.uid);
-    //     this.currenUserId = user.uid;
-    //     return user.uid;
-    //   } else {
-    //     return null;
-    //   }
-    // });
-    const user = auth.currentUser;
-
-  if (user) {
-    console.log('Received UID in users.service:', user.uid);
-    this.currenUserId = user.uid;
-    return user.uid;
-  } else {
-    return null;
-  }
+  getCurrentUserId() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.currentUserId$ = user.uid;
+        this.currentUserName$ = user.displayName;
+        // return user.uid;  EINE CALL BACK FN KANN NICHTS RETURNEN
+      } else {
+        this.currentUserId$ = null;
+        // return null;   EINE CALL BACK FN KANN NICHTS RETURNEN
+      }
+    });
   }
 
-
-
-  getCurrentUserDisplayName2(): Promise<string | undefined> {
-    const auth = getAuth();
-    const tolleruser = auth.currentUser;
-
-    if (tolleruser) {
-      const docRef = doc(this.usersCollection, tolleruser.uid);
-
-      return getDoc(docRef).then(docSnapshot => {
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data();
-          console.log('From users.service: ', userData?.['displayName']);
-          return userData?.['displayName'];
-        }
-        return undefined;
-      });
+  async getCurrentUserData() {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log('No such document!');
+      //hier muss der Error noch abgefangen werden
+      return null;
     }
-
-    return Promise.resolve(undefined);
   }
-
-  getCurrentUserData (): Observable<UserTemplate> {
-    console.log('Inside getCurrentUserData()');
-    return from(this.getCurrentUserId()).pipe(
-      switchMap((value) => {
-        this.currenUserId = value;
-        console.log('Current user ID:', this.currenUserId);
-        return this.firestoreService.getDocData(this.currenUserId);
-      }),
-      map((response: any) => {
-        this.user.birthDate = response.birthDate;
-        this.user.city = response.city;
-        this.user.displayName = response.displayName;
-        this.user.email = response.email;
-        this.user.firstName = response.firstName;
-        this.user.lastName = response.lastName;
-        this.user.password = response.password;
-        this.user.street = response.birthstreetDate;
-        this.user.uid = response.uid;
-        this.user.zipCode = response.zipCod;
-        console.log('User object:', this.user.toJSON());
-        return this.user;
-      })
-    );
-  }
-
-
- 
 }
-
-

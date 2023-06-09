@@ -1,12 +1,12 @@
-<div class="channel-container">
+<div *ngIf="this.channelService.channelReady" class="channel-container">
     <div class="channelTitle">
-        <span (click)="this.channelService.channelDialogOpen()">{{ this.channelService.channelInfo.channelName }}</span>
+        <span (click)="this.channelService.channelDialogOpen()">{{ this.channelService.activeChannel.title }}</span>
     </div>
     <div class="channel-top">
-        <h1>{{ this.channelService.channelInfo.channelName }}</h1>
-        <div><span class="channel-creator">@{{ this.channelService.channelInfo.channelCreator }}</span> hat diesen
+        <h1>{{ this.channelService.activeChannel.title }}</h1>
+        <div><span class="channel-creator">@{{ this.channelService.activeChannel.creator }}</span> hat diesen
             Channel am {{
-            this.channelService.channelInfo.channelDate }} erstellt.
+            this.channelService.activeChannel.creationDate.toLocaleString() }} erstellt.
             Das ist der Anfang des Channels.</div>
     </div>
 
@@ -15,11 +15,13 @@
 
         <div *ngFor="let post of this.channelService.postings" class="posting">
             <div>
-                <img class="posting-image" src="{{ post.image }}">
+                <img (click)="this.channelService.messageDialogOpen(post.user, post.image)" class="posting-image"
+                    src="{{ post.image }}">
             </div>
             <div class="posting-main">
                 <div class="posting-main-top">
-                    <div class="posting-user">{{ post.user }}</div>
+                    <div class="posting-user" (click)="this.channelService.messageDialogOpen(post.user, post.image)">{{
+                        post.user }}</div>
                     <div class="posting-time">{{ post.time }}</div>
                 </div>
                 <div class="posting-content">{{ post.content }}</div>
