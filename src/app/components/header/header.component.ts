@@ -80,17 +80,17 @@ mockThreadData = {
   }
 
   logAllUsers() {
+    // this.firestore.getSpecificUser('FMwN9sisCSVKUdFtDzkDJmburvQ2')
     this.firestore.getAllUsers();
-    this.firestore.getSpecificUser('FMwN9sisCSVKUdFtDzkDJmburvQ2')
   }
 
-  addNewChat () {
+  logChats () {
     // this.firestore.addNewChat(this.mockChatData);
     // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
     this.firestore.getAllChats();
   }
 
-  addNewThread() {
+  logThreads() {
     // this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('85p9mK77UdCG4I8qRVe5');
     this.firestore.getAllThreads();
