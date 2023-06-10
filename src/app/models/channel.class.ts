@@ -18,7 +18,11 @@ export class Channel {
       channelID: this.channelID,
       title: this.title,
       creator: this.creator,
-      creationDate: this.creationDate,
+      creationDate: this.creationDate.toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
       info: this.info,
     };
   }

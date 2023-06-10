@@ -22,8 +22,15 @@ export class Thread {
     return {
       threadId: this.threadId,
       user: this.user,
-      date: this.date,
-      time: this.time,
+      date: this.date.toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+      time: this.time.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
       content: this.content,
       channel: this.channel,
       replies: this.replies,
