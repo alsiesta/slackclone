@@ -1,7 +1,7 @@
 export class UserTemplate {
   password?: string;
   displayName?: string;
-  photoURL: string;
+  photoURL?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
