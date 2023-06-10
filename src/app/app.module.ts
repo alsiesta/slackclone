@@ -29,6 +29,7 @@ import { AuthService } from './services/auth.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewMessageComponent } from './components/dialog-new-message/dialog-new-message.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DialogNewMessageComponent } from './components/dialog-new-message/dialo
     }),
     FormsModule,
     ReactiveFormsModule,
+    QuillModule.forRoot()
   ],
   providers: [AuthGuard, UsersService, FirestoreService, AuthService],
   bootstrap: [AppComponent],
