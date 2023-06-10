@@ -80,7 +80,7 @@ mockThreadData = {
   }
 
   logAllUsers() {
-    // this.firestore.getSpecificUser('FMwN9sisCSVKUdFtDzkDJmburvQ2')
+    // this.firestore.getSpecificUser('hRUJ0L1r6lc9eRBgng1g0YMOFZp1')
     this.firestore.getAllUsers();
   }
 
@@ -92,7 +92,7 @@ mockThreadData = {
 
   logThreads() {
     // this.firestore.addNewThread(this.mockThreadData);
-    // this.firestore.getSpecificThread('85p9mK77UdCG4I8qRVe5');
+    // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
     this.firestore.getAllThreads();
   }
 

@@ -100,12 +100,14 @@ export class FirestoreService {
   async getSpecificChat(id) {
     const docRef = doc(this.chatCollection, id);
     const docSnap = await getDoc(docRef);
-
+    const data = docSnap.data();
     if (docSnap.exists()) {
-      console.log('Document data of chat:', docSnap.data());
+      console.log('Document data of chat:', data);
+      return data;
     } else {
       // docSnap.data() will be undefined in this case
       console.log('No such document!');
+      return null;
     }
   }
 
@@ -132,12 +134,14 @@ export class FirestoreService {
   async getSpecificThread(id) {
     const docRef = doc(this.threadCollection, id);
     const docSnap = await getDoc(docRef);
-
+    const data = docSnap.data();
     if (docSnap.exists()) {
-      console.log('Document data of threads:', docSnap.data());
+      console.log('Document data of threads:', data);
+      return data
     } else {
       // docSnap.data() will be undefined in this case
       console.log('No such document!');
+      return null;
     }
   }
 
@@ -169,10 +173,13 @@ export class FirestoreService {
   async getSpecificUser(id) {
     const docRef = doc(this.usersCollection, id);
     const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
     if (docSnap.exists()) {
-      console.log('Document data of user:', docSnap.data());
+      console.log('Document data of user:', data);
+      return data;
     } else {
       console.log('No such document!');
+      return null;
     }
   }
 
