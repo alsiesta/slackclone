@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     padding: 12px;
-    background-color: rgb(123,123,123, 0.3);
+    background-color: rgb(123, 123, 123, 0.3);
     border-radius: 10px 10px 0 0;
     font-size: $fontsubtitle;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
@@ -55,8 +55,21 @@
 
 .send-icon {
     position: absolute;
-    bottom: 20px;
-    right: 10px;
+    bottom: 40px;
+    right: 15px;
     width: 25px;
     height: 25px;
+}
+
+.send-btn {
+    background-color: rgb(123, 123, 123, 0);
+    border: none;
+
+    img {
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 }

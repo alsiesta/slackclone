@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
 
 
@@ -7,7 +8,14 @@ import 'quill-emoji/dist/quill-emoji.js';
   templateUrl: './commentfield.component.html',
   styleUrls: ['./commentfield.component.scss']
 })
-export class CommentfieldComponent {
+export class CommentfieldComponent implements OnInit {
+
+  editorForm: FormGroup;
+  editorContent: string;
+
+  editorStyle ={
+    height: '150px'
+  }
   
   modules = {}
 
@@ -42,6 +50,25 @@ export class CommentfieldComponent {
         handlers: { 'emoji': function () { } }
       }
     }
+  }
+
+  ngOnInit(): void {
+    this.editorForm = new FormGroup({
+      'editor': new FormControl(null)
+    })
+  }
+
+  onSubmit() {
+    this.editorContent = this.editorForm.get('editor').value;
+    console.log(this.editorForm.get('editor').value);
+  }
+
+  maxLength(e) {
+    if(e.editor.getLength() > 1000) {
+      e.editor.deleteText(1000, e.editor.getLength());
+    };
+    
+
   }
   
 }
