@@ -74,9 +74,14 @@
   gap: 10px;
   padding: 24px;
   transition: all 125ms ease-in-out;
+  width: 100%;
 
   &:hover {
     background-color: $grey;
+  }
+
+  .posting-main {
+    width: 100%;
   }
 
   .posting-image {

@@ -96,6 +96,7 @@ export class ChannelService {
     this.findDates();
 
     console.log(this.channelThreads);
+    console.log(this.threadList);
 
     this.channelReady = true;
   }
