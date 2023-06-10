@@ -10,34 +10,41 @@
             Das ist der Anfang des Channels.</div>
     </div>
 
-    <div *ngFor="let date of this.channelService.dates" class="channel-date-spacer">
+    <div *ngFor="let date of this.channelService.dateList" class="channel-date-spacer">
         <div class="channel-date">{{ date }}</div>
 
-        <div *ngFor="let post of this.channelService.postings" class="posting">
+        <div *ngFor="let thread of this.channelService.channelThreads" class="posting">
+
+
             <div>
-                <img (click)="this.channelService.messageDialogOpen(post.user, post.image)" class="posting-image"
-                    src="{{ post.image }}">
+                <img (click)="this.channelService.messageDialogOpen(thread.user, 'assets/img/threads/profile-picture.png')"
+                    class="posting-image" src="assets/img/threads/profile-picture.png">
             </div>
             <div class="posting-main">
                 <div class="posting-main-top">
-                    <div class="posting-user" (click)="this.channelService.messageDialogOpen(post.user, post.image)">{{
-                        post.user }}</div>
-                    <div class="posting-time">{{ post.time }}</div>
+                    <div class="posting-user"
+                        (click)="this.channelService.messageDialogOpen(thread.user, 'assets/img/threads/profile-picture.png')">
+                        {{
+                        thread.user }}</div>
+                    <div class="posting-time">{{ thread.time }}</div>
                 </div>
-                <div class="posting-content">{{ post.content }}</div>
-                <div *ngIf="post.threads.length > 0">
+                <div class="posting-content">{{ thread.content }}</div>
+                <div *ngIf="thread.replies.length > 0">
                     <div class="posting-threads">
-                        <div class="posting-thread-preview" *ngFor="let thread of post.threads">
-                            <img src="{{ thread.image }}">
+                        <div class="posting-thread-preview" *ngFor="let reply of thread.replies">
+                            <img src="assets/img/threads/profile-picture.png">
                         </div>
-                        <span class="posting-thread-reply">{{ post.threads.length }} Antworten</span>
-                        <span class="posting-thread-last">Letzte Antwort am {{ post.threads[1].date }}</span>
+                        <span class="posting-thread-reply">{{ thread.replies.length }} Antworten</span>
+                        <span class="posting-thread-last">Letzte Antwort am {{ thread.replies[0].date }}</span>
                         <mat-icon class="posting-thread-navigate" fontIcon="navigate_next"></mat-icon>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
+
+
 
 </div>

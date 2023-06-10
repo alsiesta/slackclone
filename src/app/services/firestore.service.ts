@@ -34,6 +34,7 @@ export class FirestoreService {
   chat = new Chat();
   thread = new Thread();
   channelList: any;
+  threadList: any;
   users: any = [];
   currentUserData: any;
 
@@ -138,10 +139,12 @@ export class FirestoreService {
 
   async getAllThreads() {
     const querySnapshot = await getDocs(this.threadCollection);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+    this.threadList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Thread;
+      const id = doc.id;
+      return { id, ...data };
     });
+    console.log(this.threadList);
   }
 
   ///////////////// USER FUNKTIONEN ///////////////////

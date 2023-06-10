@@ -8,7 +8,10 @@ import { DialogNewMessageComponent } from '../components/dialog-new-message/dial
   providedIn: 'root',
 })
 export class ChannelService {
-  channelList: any;
+  channelList: Array<any>;
+  threadList: Array<any>;
+  dateList: Array<any> = [];
+  channelThreads: Array<any> = [];
   activeChannel: any;
   channelReady: boolean = false;
 
@@ -85,8 +88,15 @@ export class ChannelService {
     await this.firestoreService.readChannels().then(() => {
       this.channelList = this.firestoreService.channelList;
     });
+    await this.firestoreService.getAllThreads().then(() => {
+      this.threadList = this.firestoreService.threadList;
+    });
     this.findChannel(channelID);
-    console.log(this.activeChannel);
+    this.findThreads(channelID);
+    this.findDates();
+
+    console.log(this.channelThreads);
+
     this.channelReady = true;
   }
 
@@ -100,5 +110,49 @@ export class ChannelService {
         this.activeChannel = element;
       }
     });
+  }
+
+  /**
+   * find the threads in threadList for active channel
+   * @param channelID - channel id from function loadChannelContent
+   */
+  findThreads(channelID: string) {
+    this.threadList.forEach((element: any) => {
+      if (element.channel == channelID) {
+        this.channelThreads.push(element);
+      }
+    });
+  }
+
+  /**
+   * find the dates in channelThreads and push them to dateList
+   */
+  findDates() {
+    this.channelThreads.forEach((element: any) => {
+      this.dateList.push(element.date);
+    });
+    this.uniqueDateList();
+    this.sortingDateList();
+    console.log(this.dateList);
+  }
+
+  /**
+   * filter the dateList for unique dates and push them to dateList
+   */
+  uniqueDateList() {
+    let uniqueDateList = this.dateList.filter(
+      (value, index, array) => array.indexOf(value) === index
+    );
+    this.dateList = [];
+    uniqueDateList.forEach((element: any) => {
+      this.dateList.push(element);
+    });
+  }
+
+  /**
+   * sort the dateList
+   */
+  sortingDateList() {
+    this.dateList.sort((a, b) => a - b);
   }
 }
