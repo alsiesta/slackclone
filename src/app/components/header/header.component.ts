@@ -80,7 +80,8 @@ mockThreadData = {
   }
 
   logAllUsers() {
-    this.usersService.getAllUsers();
+    this.firestore.getAllUsers();
+    this.firestore.getSpecificUser('FMwN9sisCSVKUdFtDzkDJmburvQ2')
   }
 
   addNewChat () {

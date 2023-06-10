@@ -19,6 +19,7 @@ import {
   getDoc,
   getDocs,
 } from '@angular/fire/firestore';
+import { User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -33,11 +34,12 @@ export class FirestoreService {
   channel = new Channel();
   chat = new Chat();
   thread = new Thread();
+
+  usersList: any;
   channelList: any;
   threadList: any;
   chatList: any;
-  users: any = [];
-  currentUserData: any;
+  // users: any = [];
 
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
@@ -164,6 +166,28 @@ export class FirestoreService {
       });
   }
 
+  async getSpecificUser(id) {
+    const docRef = doc(this.usersCollection, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log('Document data of user:', docSnap.data());
+    } else {
+      console.log('No such document!');
+    }
+  }
+
+  async getAllUsers() {
+    const querySnapshot = await getDocs(this.usersCollection);
+    this.usersList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as UserTemplate;
+      return data
+    });
+    console.log(this.usersList);
+  }
+
+
+    ///////////////// HELPER FUNCTIONS ///////////////////
+
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
@@ -173,42 +197,4 @@ export class FirestoreService {
     const gameData = docData(this.getDocRef(uid));
     return gameData;
   }
-
-  // getCollection(collectionName: string) {
-  //   return collection(this.firestore, collectionName);
-  // }
-
-  // updateDocument(id, user) {
-  //   updateDoc(this.getDocRef(id), user)
-  //     .then(() => {
-  //       console.log(
-  //         'A New Document Field has been added to an existing document'
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
-  // createDoc(user) {
-  //   return addDoc(this.usersCollection, user.toJSON()).then((result) => {
-  //     console.log(result);
-  //   });
-  // }
-
-  // getUsers$() {
-  //   return collectionData(this.usersCollection, {
-  //     idField: 'docId',
-  //   });
-  // }
-
-  // getUsers = async () => {
-  //   onSnapshot(this.usersCollection, (snapshot) => {
-  //     snapshot.forEach((doc) => {
-  //       const user = doc.data();
-  //       this.users.push(user);
-  //     });
-  //   });
-  //   return this.users;
-  // };
 }
