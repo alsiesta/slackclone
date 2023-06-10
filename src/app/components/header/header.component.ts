@@ -84,11 +84,15 @@ mockThreadData = {
   }
 
   addNewChat () {
-    this.firestore.addNewChat(this.mockChatData);
+    // this.firestore.addNewChat(this.mockChatData);
+    // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
+    this.firestore.getAllChats();
   }
 
   addNewThread() {
-    this.firestore.addNewThread(this.mockThreadData);
+    // this.firestore.addNewThread(this.mockThreadData);
+    // this.firestore.getSpecificThread('85p9mK77UdCG4I8qRVe5');
+    this.firestore.getAllThreads();
   }
 
   
