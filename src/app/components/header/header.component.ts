@@ -62,6 +62,15 @@ mockThreadData = {
   ],
 };
 //////////////////////////////////
+/// delete after thread form is finished /////////
+  mockChannelData = {
+    channelID:'',
+    title:'',
+    creator: '',
+    creationDate:new Date(),
+    info:'',
+  }
+  ////////////////////////////
   
   get authUser$ () {
     return this.authService.getAuthCredentials();
@@ -102,7 +111,9 @@ mockThreadData = {
   }
 
   logChannels() {
-    this.firestore.readChannels();
+    // this.firestore.readChannels();
+    this.firestore.addNewChannel('#MusterChannel2', this.mockChannelData);
+    // this.firestore.getSpecificChannel('#gruppe-576');
   }
 
   

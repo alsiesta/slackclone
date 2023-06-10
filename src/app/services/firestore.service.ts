@@ -69,23 +69,47 @@ export class FirestoreService {
     console.log(this.channelList);
   }
 
-  addNewChannel(uid: string, channel) {
+ async addNewChannel(uid: string, channel: Channel) {
     // check and avoid channel name doublication!!!
-    let dateTime = new Date();
-    this.channel.creationDate = dateTime;
-    this.channel.creator = channel.creator;
-    this.channel.info = channel.info;
-    this.channel.title = channel.title;
-    const docRef = doc(this.channelCollection, uid);
-    setDoc(docRef, this.channel.toJSON())
+   const ref = doc(this.channelCollection, uid);
+   await setDoc(ref, channel)
       .then(() => {
-        console.log('New Channel added to firestore');
+        console.log('New Channel added to firestore', uid);
       })
       .catch((error) => {
         console.log(error);
       });
+   await updateDoc(ref, {
+     channelID: uid,
+   });
+
+    // let dateTime = new Date();
+    // this.channel.creationDate = dateTime;
+    // this.channel.creator = channel.creator;
+    // this.channel.info = channel.info;
+    // this.channel.title = channel.title;
+    // const docRef = doc(this.channelCollection, uid);
+    // setDoc(docRef, this.channel.toJSON())
+    //   .then(() => {
+    //     console.log('New Channel added to firestore');
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
+  async getSpecificChannel(id) {
+    const docRef = doc(this.channelCollection, id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    if (docSnap.exists()) {
+      console.log('Document data of chat:', data);
+      return data;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  }
     ///////////////// CHAT FUNKTIONEN ///////////////////
 
   async addNewChat(chat?: Chat) {
@@ -105,7 +129,6 @@ export class FirestoreService {
       console.log('Document data of chat:', data);
       return data;
     } else {
-      // docSnap.data() will be undefined in this case
       console.log('No such document!');
       return null;
     }
@@ -139,7 +162,6 @@ export class FirestoreService {
       console.log('Document data of threads:', data);
       return data
     } else {
-      // docSnap.data() will be undefined in this case
       console.log('No such document!');
       return null;
     }
