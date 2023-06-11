@@ -45,6 +45,7 @@ export class FirestoreService {
       return { id, ...data };
     });
     console.log(this.channelList);
+    return this.channelList;
   }
 
   addNewChannel(uid: string, channel?: Channel) {

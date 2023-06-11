@@ -28,17 +28,9 @@
             </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
-            <div class="drop-down-element">
+            <div *ngFor="let channel of channels; let i = index" class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
-                <span>allgemein</span>
-            </div>
-            <div class="drop-down-element">
-                <mat-icon class="drop-down-img">numbers</mat-icon>
-                <span>angular</span>
-            </div>
-            <div class="drop-down-element">
-                <mat-icon class="drop-down-img">numbers</mat-icon>
-                <span>javascript</span>
+                <span>{{ channel.title }}</span>
             </div>
             <div class="drop-down-element add-btn">
                 <mat-icon class="drop-down-img">add_box</mat-icon>

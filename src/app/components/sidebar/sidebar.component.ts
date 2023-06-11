@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Channel } from 'src/app/models/channel.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
+
+
+
+
 
 @Component({
   selector: 'app-sidebar',
@@ -8,9 +14,13 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
   channelsAreOpen = true;
   directmessagesAreOpen = true;
+  channels: Channel[] = [];
 
-  ngOnInit(): void {
-    
+  constructor(private firestoreService: FirestoreService) {}
+
+  async ngOnInit() {
+    this.channels = await this.firestoreService.readChannels();
+    console.log('Channels', this.channels)
   }
 
   toggleDropdown(key) {
@@ -27,4 +37,5 @@ export class SidebarComponent implements OnInit {
         break;
     }
   }
+
 }
