@@ -30,6 +30,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewMessageComponent } from './components/dialog-new-message/dialog-new-message.component';
 import { QuillModule } from 'ngx-quill';
+import { DialogCreateNewChannelComponent } from './components/dialog-create-new-channel/dialog-create-new-channel.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { QuillModule } from 'ngx-quill';
     ChatComponent,
     DialogEditUserComponent,
     DialogNewMessageComponent,
+    DialogCreateNewChannelComponent,
   ],
   imports: [
     BrowserModule,

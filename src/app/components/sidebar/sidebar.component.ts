@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
+import { ChannelService } from 'src/app/services/channel.service';
+import { DialogCreateNewChannelComponent } from '../dialog-create-new-channel/dialog-create-new-channel.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -16,7 +18,10 @@ export class SidebarComponent implements OnInit {
   directmessagesAreOpen = true;
   channels: Channel[] = [];
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService,
+    private channelService: ChannelService,
+    public createChannelDialog: MatDialog,
+    ) {}
 
   async ngOnInit() {
     this.channels = await this.firestoreService.readChannels();
@@ -36,6 +41,12 @@ export class SidebarComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  openCreateChannelDialog() {
+    const dialogRef = this.createChannelDialog.open(DialogCreateNewChannelComponent, {
+      maxWidth: '100vw',
+    });
   }
 
 }
