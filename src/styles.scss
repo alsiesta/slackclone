@@ -1,6 +1,5 @@
 @use "node_modules/@ngneat/hot-toast/src/styles/styles.scss";
 @import "./styles/main";
-@import '~quill/dist/quill.bubble.css'; 
 @import '~quill/dist/quill.snow.css';
 
 * {
@@ -41,4 +40,22 @@ body {
 
 .d-none {
   display: none;
+}
+
+//Emoji
+
+.ql-toolbar.ql-snow {
+  background-color: rgb(123, 123, 123, 0.3);
+  border-radius: 10px 10px 0 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+}
+
+.ng-star-inserted.ql-container.ql-snow {
+  background-color: white;
+  border-radius: 0 0 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -60px inset;
+}
+
+.ql-editor.ql-blank::before {
+  color: grey;
 }

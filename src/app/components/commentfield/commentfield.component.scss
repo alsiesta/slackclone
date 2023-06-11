@@ -6,53 +6,6 @@
     margin-left: 16px;
 }
 
-.features {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background-color: rgb(123, 123, 123, 0.3);
-    border-radius: 10px 10px 0 0;
-    font-size: $fontsubtitle;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-
-    img {
-        width: 20px;
-        height: 20px;
-    }
-}
-
-.textfield {
-    border-radius: 0 0 10px 10px;
-    resize: none;
-    padding-left: 12px;
-    padding-top: 12px;
-    outline: none;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -60px inset;
-}
-
-.mr-18 {
-    margin-right: 18px;
-}
-
-.ml-18 {
-    margin-left: 18px;
-}
-
-.line {
-    height: 25px;
-    width: 0px;
-    border: 1px solid $line;
-}
-
-.crossed-out-icon {
-    width: 15px !important;
-    height: 15px !important;
-}
-
-.list-icon {
-    height: 30px !important;
-}
-
 .send-icon {
     position: absolute;
     bottom: 40px;
