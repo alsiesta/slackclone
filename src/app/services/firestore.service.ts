@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserTemplate } from '../models/usertemplate.class';
 import { Channel } from '../models/channel.class';
+import { Chat } from '../models/chat.class';
+import { Thread } from '../models/thread.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
@@ -17,6 +19,7 @@ import {
   getDoc,
   getDocs,
 } from '@angular/fire/firestore';
+import { User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -24,19 +27,38 @@ import {
 export class FirestoreService {
   private usersCollection: CollectionReference<DocumentData>;
   private channelCollection: CollectionReference<DocumentData>;
+  private chatCollection: CollectionReference<DocumentData>;
+  private threadCollection: CollectionReference<DocumentData>;
   private docRef: DocumentReference<any>;
   user = new UserTemplate();
   channel = new Channel();
+  chat = new Chat();
+  thread = new Thread();
+
+  usersList: any;
   channelList: any;
-  // chat = new Chat();
-  users: any = [];
-  currentUserData: any;
+  threadList: any;
+  chatList: any;
+  // users: any = [];
 
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
+    this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
+    this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
 
+  /////// diese Funktion muss noch fertig geschrieben werden, um den Code UNTEN zu minimieren
+  // async addNewDocToCollection(collection, item: any) {
+  //   // const docRef = await addDoc(this.threadCollection, thread);
+  //   const docRef = await addDoc(collection, item);
+  //   // console.log('Thread was added to Firebase: ', docRef.id);
+  //   console.log(
+  //     `Doc with ID ${docRef.id} was added to Collection: ${collection}`
+  //   );
+  // }
+
+  ///////////////// CHANNEL FUNKTIONEN ///////////////////
   async readChannels() {
     const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
     this.channelList = querySnapshot.docs.map((doc) => {
@@ -48,21 +70,114 @@ export class FirestoreService {
     return this.channelList;
   }
 
-  addNewChannel(uid: string, channel?: Channel) {
+ async addNewChannel(uid: string, channel: Channel) {
+    // check and avoid channel name doublication!!!
     let dateTime = new Date();
     this.channel.creationDate = dateTime;
-    this.channel.creator = 'current User';
-    this.channel.info = 'info';
-    this.channel.title = 'title';
-    const docRef = doc(this.channelCollection, uid);
-    setDoc(docRef, this.channel.toJSON())
+    this.channel.creator = channel.creator;
+    this.channel.info = channel.info;
+    this.channel.title = channel.title;
+   const ref = doc(this.channelCollection, uid);
+   await setDoc(ref, this.channel.toJSON())
       .then(() => {
-        console.log('New Channel added to firestore');
+        console.log('New Channel added to firestore', uid);
       })
       .catch((error) => {
         console.log(error);
       });
+   await updateDoc(ref, {
+     channelID: uid,
+   });
   }
+
+  async getSpecificChannel(id) {
+    const docRef = doc(this.channelCollection, id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    if (docSnap.exists()) {
+      console.log('Document data of chat:', data);
+      return data;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  }
+    ///////////////// CHAT FUNKTIONEN ///////////////////
+
+  async addNewChat(chat?: Chat) {
+    const docRef = await addDoc(this.chatCollection, chat);
+    console.log('Chat was added to Firebase: ', docRef.id);
+    const ref = doc(this.chatCollection, docRef.id);
+    await updateDoc(ref, {
+      chatId: docRef.id,
+    });
+  }
+
+  async getSpecificChat(id) {
+    const docRef = doc(this.chatCollection, id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    if (docSnap.exists()) {
+      console.log('Document data of chat:', data);
+      return data;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  }
+
+  
+  async getAllChats() {
+    const querySnapshot = await getDocs(this.chatCollection);
+    this.chatList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Chat;
+      return data
+    });
+    console.log(this.chatList);
+  }
+  ///////////////// THREAD FUNKTIONEN ///////////////////
+
+  async addNewThread (thread?: Thread) {
+    let dateTime = new Date();
+    this.thread.date = dateTime;
+    this.thread.user = thread.user;
+    this.thread.time = thread.time;
+    this.thread.content = thread.content;
+    this.thread.channel = thread.channel;
+    this.thread.replies = thread.replies;
+
+   const docRef = await addDoc(this.threadCollection, this.thread.toJSON());
+    
+    console.log('Thread was added to Firebase: ', docRef.id);
+    const ref = doc(this.threadCollection, docRef.id);
+      await updateDoc(ref, {
+        threadId: docRef.id,
+      });
+  }
+
+  async getSpecificThread(id) {
+    const docRef = doc(this.threadCollection, id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    if (docSnap.exists()) {
+      console.log('Document data of threads:', data);
+      return data
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  }
+
+  async getAllThreads() {
+    const querySnapshot = await getDocs(this.threadCollection);
+    this.threadList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Thread;
+      return data
+    });
+    console.log(this.threadList);
+  }
+
+  ///////////////// USER FUNKTIONEN ///////////////////
 
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
@@ -78,6 +193,31 @@ export class FirestoreService {
       });
   }
 
+  async getSpecificUser(id) {
+    const docRef = doc(this.usersCollection, id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    if (docSnap.exists()) {
+      console.log('Document data of user:', data);
+      return data;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  }
+
+  async getAllUsers() {
+    const querySnapshot = await getDocs(this.usersCollection);
+    this.usersList = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as UserTemplate;
+      return data
+    });
+    console.log(this.usersList);
+  }
+
+
+    ///////////////// HELPER FUNCTIONS ///////////////////
+
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
@@ -87,42 +227,4 @@ export class FirestoreService {
     const gameData = docData(this.getDocRef(uid));
     return gameData;
   }
-
-  // getCollection(collectionName: string) {
-  //   return collection(this.firestore, collectionName);
-  // }
-
-  // updateDocument(id, user) {
-  //   updateDoc(this.getDocRef(id), user)
-  //     .then(() => {
-  //       console.log(
-  //         'A New Document Field has been added to an existing document'
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
-  // createDoc(user) {
-  //   return addDoc(this.usersCollection, user.toJSON()).then((result) => {
-  //     console.log(result);
-  //   });
-  // }
-
-  // getUsers$() {
-  //   return collectionData(this.usersCollection, {
-  //     idField: 'docId',
-  //   });
-  // }
-
-  // getUsers = async () => {
-  //   onSnapshot(this.usersCollection, (snapshot) => {
-  //     snapshot.forEach((doc) => {
-  //       const user = doc.data();
-  //       this.users.push(user);
-  //     });
-  //   });
-  //   return this.users;
-  // };
 }

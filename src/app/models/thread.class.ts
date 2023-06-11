@@ -1,12 +1,12 @@
 export class Thread {
-  threadId: string; // firestore id
+  threadId: string; // firestore id firestore auto-generated id
   user: string; // creator user id to get name and image
   date: Date; // date of creation
   time: Date; // time of creation
   content: string; // content of thread
-  channel: string; // channel id as recipient of thread -- (either or)
-  chat: string; // chat id as recipient of thread -- (either or)
-  replies: string[]; // array of thread ids
+  channel: string; // channel id (#..........)
+  replies: { user: string; date?: Date; message: string }[]; // stores reply objects
+  //(nice-to-have: emoji)
 
   constructor(obj?: any) {
     this.threadId = obj ? obj.threadId : '';
@@ -15,19 +15,25 @@ export class Thread {
     this.time = obj ? obj.time : '';
     this.content = obj ? obj.content : '';
     this.channel = obj ? obj.channel : '';
-    this.chat = obj ? obj.chat : '';
+    // this.replies = obj ? obj.replies : '';
     this.replies = obj ? obj.replies : '';
   }
 
-  public toJSON(): any {
+  public toJSON?(): any {
     return {
       threadId: this.threadId,
       user: this.user,
-      date: this.date,
-      time: this.time,
+      date: this.date.toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+      time: this.time.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
       content: this.content,
       channel: this.channel,
-      chat: this.chat,
       replies: this.replies,
     };
   }

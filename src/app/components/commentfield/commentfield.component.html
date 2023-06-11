@@ -1,26 +1,11 @@
 <div class="box">
-    <div class="features">
-        <div class="mr-18">B</div>
-        <div class="mr-18">I</div>
-        <div class="mr-18">U</div>
-        <div>
-            <img class="crossed-out-icon" src="assets/img/commentfield/crossed-out-icon.png">
-        </div>
-        <div class="line mr-18 ml-18"></div>
-        <div class="mr-18">
-            <img src="assets/img/commentfield/number-list.png">
-        </div>
-        <div>
-            <img class="list-icon" src="assets/img/commentfield/list-icon.png">
-        </div>
-        <div class="line mr-18 ml-18"></div>
-        <div>
-            <img src="assets/img/commentfield/emoji-icon.png">
-        </div>
+    <form [formGroup]="editorForm" (submit)="onSubmit()">
+        <quill-editor placeholder="Antworten ..." [style]="editorStyle" [modules]="modules" (onContentChanged)="maxLength($event)" formControlName="editor">
 
-    </div>
-    <textarea class="textfield" placeholder="Antworten ..." rows="7" cols="60"></textarea>
-    <div>
-        <img class="send-icon" src="assets/img/commentfield/send-icon.png">
-    </div>
+        </quill-editor>
+        <div>
+            <button class="send-btn"><img class="send-icon" src="assets/img/commentfield/send-icon.png"></button>
+        </div>
+    </form>
+    <div [innerHTML]="editorContent"></div>
 </div>

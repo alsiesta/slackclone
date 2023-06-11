@@ -29,6 +29,53 @@ export class HeaderComponent {
     // this.loglocalStorage();
   }
 
+ /// delete after chat form is finished /////////
+ mockChatData = {
+  chatId: 'Muster Chat ID',
+  chatUsers: ['User 1', 'User 2', 'User 3'],
+  chat: [
+    {
+      user: 'User 1',
+      date: new Date(),
+      message:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+    },
+  ],
+};
+//////////////////////////////////
+
+/// delete after thread form is finished /////////
+mockThreadData = {
+  threadId: '',
+  user: 'User 33',
+  date: new Date(),
+  time: new Date(),
+  content:
+    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+  channel: 'Channel 2',
+  replies: [
+    {
+      user: 'User 33',
+      date: new Date(),
+      message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+    },
+    {
+      user: 'User 55',
+      date: new Date(),
+      message: 'Lorem ipsum',
+    },
+  ],
+};
+//////////////////////////////////
+/// delete after thread form is finished /////////
+  mockChannelData = {
+    channelID:'',
+    title:'Ein toller Titel',
+    creator: 'Aljoscha Schönfeld',
+    creationDate: new Date(),
+    info: 'Test Channel, nichts weiter.',
+  }
+  ////////////////////////////
   
   get authUser$ () {
     return this.authService.getAuthCredentials();
@@ -47,7 +94,20 @@ export class HeaderComponent {
   }
 
   logAllUsers() {
-    this.usersService.getAllUsers();
+    // this.firestore.getSpecificUser('hRUJ0L1r6lc9eRBgng1g0YMOFZp1')
+    this.firestore.getAllUsers();
+  }
+
+  logChats () {
+    // this.firestore.addNewChat(this.mockChatData);
+    // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
+    this.firestore.getAllChats();
+  }
+
+  logThreads() {
+    this.firestore.addNewThread(this.mockThreadData);
+    // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
+    // this.firestore.getAllThreads();
   }
 
   
@@ -56,7 +116,10 @@ export class HeaderComponent {
   }
 
   logChannels() {
-    this.firestore.readChannels();
+    this.firestore.addNewChannel('#MusterChannel4', this.mockChannelData);
+    // this.firestore.readChannels();
+    // this.firestore.getSpecificChannel('#MusterChannel4');
+    // this.firestore.getSpecificChannel('#gruppe-576');
   }
 
   
@@ -71,6 +134,7 @@ export class HeaderComponent {
       width: '350px',
       position: { right: '50px', top: '74px' },
       data: {
+        uid: this.authUser$.uid,
         displayName: this.authUser$.displayName,
         email: this.authUser$.email,
         photoUrl: this.authUser$.photoURL,

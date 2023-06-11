@@ -32,7 +32,7 @@ export class UsersService  {
   currentUserName$: any;
   currentUserData$: any;
   currentUsers: any;
-  user = new UserTemplate();
+  fsUser = new UserTemplate();
 
   keepUsersUptodate() {
     // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);

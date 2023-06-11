@@ -11,7 +11,7 @@
   border-right: 1px solid rgba($white, 0.2);
 
   .channelTitle {
-    height: 61px;
+    height: 58px;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
 
@@ -74,9 +74,14 @@
   gap: 10px;
   padding: 24px;
   transition: all 125ms ease-in-out;
+  width: 100%;
 
   &:hover {
     background-color: $grey;
+  }
+
+  .posting-main {
+    width: 100%;
   }
 
   .posting-image {

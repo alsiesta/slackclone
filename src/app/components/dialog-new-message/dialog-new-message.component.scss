@@ -1,0 +1,70 @@
+@import "../../../styles/main.scss";
+
+.message-container {
+  color: $white;
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+  background-color: $darkgrey;
+
+  .message-container-top {
+    border-bottom: 1px solid rgba($textgrey, 0.2);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: $fonttitle;
+
+    .profil-box {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .profil-image {
+        width: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 16px;
+      }
+    }
+
+    .profil-time-box {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .profil-time {
+        color: $textgrey;
+        font-size: $small;
+      }
+    }
+  }
+
+  .message-container-bottom {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .message-button {
+      border: 1px solid rgba($textgrey, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      background-color: $darkgrey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        background-color: $grey;
+      }
+
+      mat-icon {
+        color: $textgrey;
+        margin-right: 8px;
+      }
+    }
+  }
+}
