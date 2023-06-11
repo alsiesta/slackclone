@@ -5,7 +5,7 @@ export class Thread {
   time: Date; // time of creation
   content: string; // content of thread
   channel: string; // channel id (#..........)
-  replies: { user: string; date: Date; message: string }[]; // stores reply objects
+  replies: { user: string; date?: Date; message: string }[]; // stores reply objects
   //(nice-to-have: emoji)
 
   constructor(obj?: any) {
@@ -15,6 +15,7 @@ export class Thread {
     this.time = obj ? obj.time : '';
     this.content = obj ? obj.content : '';
     this.channel = obj ? obj.channel : '';
+    // this.replies = obj ? obj.replies : '';
     this.replies = obj ? obj.replies : '';
   }
 

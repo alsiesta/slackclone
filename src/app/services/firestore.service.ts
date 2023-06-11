@@ -71,8 +71,13 @@ export class FirestoreService {
 
  async addNewChannel(uid: string, channel: Channel) {
     // check and avoid channel name doublication!!!
+    let dateTime = new Date();
+    this.channel.creationDate = dateTime;
+    this.channel.creator = channel.creator;
+    this.channel.info = channel.info;
+    this.channel.title = channel.title;
    const ref = doc(this.channelCollection, uid);
-   await setDoc(ref, channel)
+   await setDoc(ref, this.channel.toJSON())
       .then(() => {
         console.log('New Channel added to firestore', uid);
       })
@@ -82,20 +87,6 @@ export class FirestoreService {
    await updateDoc(ref, {
      channelID: uid,
    });
-
-    // let dateTime = new Date();
-    // this.channel.creationDate = dateTime;
-    // this.channel.creator = channel.creator;
-    // this.channel.info = channel.info;
-    // this.channel.title = channel.title;
-    // const docRef = doc(this.channelCollection, uid);
-    // setDoc(docRef, this.channel.toJSON())
-    //   .then(() => {
-    //     console.log('New Channel added to firestore');
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
   async getSpecificChannel(id) {
@@ -145,8 +136,17 @@ export class FirestoreService {
   }
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
-  async addNewThread(thread?: Thread) {
-    const docRef = await addDoc(this.threadCollection, thread);
+  async addNewThread (thread?: Thread) {
+    let dateTime = new Date();
+    this.thread.date = dateTime;
+    this.thread.user = thread.user;
+    this.thread.time = thread.time;
+    this.thread.content = thread.content;
+    this.thread.channel = thread.channel;
+    this.thread.replies = thread.replies;
+
+   const docRef = await addDoc(this.threadCollection, this.thread.toJSON());
+    
     console.log('Thread was added to Firebase: ', docRef.id);
     const ref = doc(this.threadCollection, docRef.id);
       await updateDoc(ref, {

@@ -47,17 +47,22 @@ export class HeaderComponent {
 /// delete after thread form is finished /////////
 mockThreadData = {
   threadId: '',
-  user: 'User 1',
+  user: 'User 33',
   date: new Date(),
   time: new Date(),
   content:
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
-  channel: 'Channel 1',
+  channel: 'Channel 2',
   replies: [
     {
-      user: 'User 1',
+      user: 'User 33',
       date: new Date(),
       message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+    },
+    {
+      user: 'User 55',
+      date: new Date(),
+      message: 'Lorem ipsum',
     },
   ],
 };
@@ -65,10 +70,10 @@ mockThreadData = {
 /// delete after thread form is finished /////////
   mockChannelData = {
     channelID:'',
-    title:'',
-    creator: '',
-    creationDate:new Date(),
-    info:'',
+    title:'Ein toller Titel',
+    creator: 'Aljoscha Schönfeld',
+    creationDate: new Date(),
+    info: 'Test Channel, nichts weiter.',
   }
   ////////////////////////////
   
@@ -100,9 +105,9 @@ mockThreadData = {
   }
 
   logThreads() {
-    // this.firestore.addNewThread(this.mockThreadData);
+    this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    this.firestore.getAllThreads();
+    // this.firestore.getAllThreads();
   }
 
   
@@ -111,8 +116,9 @@ mockThreadData = {
   }
 
   logChannels() {
+    this.firestore.addNewChannel('#MusterChannel4', this.mockChannelData);
     // this.firestore.readChannels();
-    this.firestore.addNewChannel('#MusterChannel2', this.mockChannelData);
+    // this.firestore.getSpecificChannel('#MusterChannel4');
     // this.firestore.getSpecificChannel('#gruppe-576');
   }
 
