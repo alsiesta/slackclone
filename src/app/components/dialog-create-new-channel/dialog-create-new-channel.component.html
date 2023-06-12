@@ -12,7 +12,7 @@
             </div>
             <p class="dialog-description">Channels are conversations around a topic. Use a name that is easy to find and understand.</p>
             <div mat-dialog-actions class="btn-container">
-                <button mat-button [disabled]="!channelName" class="btn">Weiter</button>
+                <button mat-button [disabled]="!channelName" class="btn" (click)="createChannel()">Weiter</button>
             </div>
         </div>
     </div>

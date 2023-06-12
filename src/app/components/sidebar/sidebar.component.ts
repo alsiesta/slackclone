@@ -49,4 +49,8 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  renderChannel(channel) {
+    this.channelService.loadChannelContent(channel.id);
+  }
+
 }

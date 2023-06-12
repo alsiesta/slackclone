@@ -22,13 +22,13 @@
             <mat-icon (click)="toggleDropdown('ch')" class="collapsIcon" [ngClass]="channelsAreOpen ? '' : 'rotate90'">
                 arrow_drop_down
             </mat-icon>
-            <span>
+            <span (click)="openCreateChannelDialog()">
                 Channels
-                <mat-icon>keyboard_arrow_down</mat-icon>
+                <mat-icon>add icon</mat-icon>
             </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
-            <div *ngFor="let channel of channels; let i = index" class="drop-down-element">
+            <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)" class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
                 <span>{{ channel.title }}</span>
             </div>
@@ -47,7 +47,7 @@
             </mat-icon>
             <span>
                 Directmessages
-                <mat-icon>keyboard_arrow_down</mat-icon>
+                <mat-icon>add icon</mat-icon>
             </span>
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">

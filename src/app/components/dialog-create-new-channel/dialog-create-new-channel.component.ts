@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class DialogCreateNewChannelComponent {
   channelName: string = "";
 
-  
+  createChannel() {
+    console.log('create')
+  }
 
 }
