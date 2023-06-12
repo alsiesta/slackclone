@@ -15,11 +15,10 @@ export class Thread {
     this.time = obj ? obj.time : '';
     this.content = obj ? obj.content : '';
     this.channel = obj ? obj.channel : '';
-    // this.replies = obj ? obj.replies : '';
     this.replies = obj ? obj.replies : '';
   }
 
-
+//// prior code //////////
   // public toJSON?(): any {
   //   return {
   //     threadId: this.threadId,

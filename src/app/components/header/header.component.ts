@@ -64,6 +64,21 @@ mockThreadData = {
       date: new Date(),
       message: 'Lorem ipsum',
     },
+    {
+      user: 'User 23',
+      date: new Date(),
+      message: 'Lorem ipsum',
+    },
+    {
+      user: 'User 12',
+      date: new Date(),
+      message: 'Lorem ipsum',
+    },
+    {
+      user: 'User 3',
+      date: new Date(),
+      message: 'Lorem ipsum',
+    },
   ],
 };
 //////////////////////////////////
@@ -101,7 +116,9 @@ mockThreadData = {
   logChats () {
     // this.firestore.addNewChat(this.mockChatData);
     // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
-    this.firestore.getAllChats();
+    // this.firestore.getAllChats();
+    // this.firestore.addUserToChat('B6qjUoa1QtupHldw0Pf0','User 4');
+    this.firestore.addChatMessage('B6qjUoa1QtupHldw0Pf0','User 4','hey there!');
   }
 
   logThreads() {
@@ -116,8 +133,8 @@ mockThreadData = {
   }
 
   logChannels() {
-    this.firestore.addNewChannel('#MusterChannel4', this.mockChannelData);
-    // this.firestore.readChannels();
+    // this.firestore.addNewChannel('#MusterChannel4', this.mockChannelData);
+    this.firestore.readChannels();
     // this.firestore.getSpecificChannel('#MusterChannel4');
     // this.firestore.getSpecificChannel('#gruppe-576');
   }

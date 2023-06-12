@@ -18,6 +18,7 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  arrayUnion,
 } from '@angular/fire/firestore';
 import { User } from 'firebase/auth';
 
@@ -125,6 +126,26 @@ export class FirestoreService {
       return null;
     }
   }
+
+  async addUserToChat (chatId:string, newUser:string) {
+    const chatRef = doc(this.chatCollection, chatId);
+    await updateDoc(chatRef, {
+      chatUsers: arrayUnion(newUser)
+    });
+  }
+
+  async addChatMessage (chatId, user, message) {
+    const date = new Date();
+    const arg = {
+      'chat.user': user,
+      'chat.date': date,
+      'chat.message':message,
+    };
+    const chatRef = doc(this.chatCollection, chatId);
+    await updateDoc(chatRef,{
+      chat: arrayUnion(arg)
+    }
+  )}
 
   
   async getAllChats() {

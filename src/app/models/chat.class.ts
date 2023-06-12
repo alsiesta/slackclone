@@ -12,8 +12,12 @@ export class Chat {
   public toJSON?(): any {
     return {
       chatId: this.chatId,
-      chatUser: this.chatUsers,
+      chatUsers: this.chatUsers,
       chat: this.chat,
     };
+  }
+
+  public addUser(userId: string): void {
+    this.chatUsers.push(userId);
   }
 }
