@@ -71,24 +71,24 @@ export class FirestoreService {
     return this.channelList;
   }
 
- async addNewChannel(uid: string, channel: Channel) {
+  async addNewChannel(uid: string, channel: Channel) {
     // check and avoid channel name doublication!!!
     let dateTime = new Date();
     this.channel.creationDate = dateTime;
     this.channel.creator = channel.creator;
     this.channel.info = channel.info;
     this.channel.title = channel.title;
-   const ref = doc(this.channelCollection, uid);
-   await setDoc(ref, this.channel.toJSON())
+    const ref = doc(this.channelCollection, uid);
+    await setDoc(ref, this.channel.toJSON())
       .then(() => {
         console.log('New Channel added to firestore', uid);
       })
       .catch((error) => {
         console.log(error);
       });
-   await updateDoc(ref, {
-     channelID: uid,
-   });
+    await updateDoc(ref, {
+      channelID: uid,
+    });
   }
 
   async getSpecificChannel(id) {
@@ -103,7 +103,7 @@ export class FirestoreService {
       return null;
     }
   }
-    ///////////////// CHAT FUNKTIONEN ///////////////////
+  ///////////////// CHAT FUNKTIONEN ///////////////////
 
   async addNewChat(chat?: Chat) {
     const docRef = await addDoc(this.chatCollection, chat);
@@ -127,14 +127,14 @@ export class FirestoreService {
     }
   }
 
-  async addUserToChat (chatId:string, newUser:string) {
+  async addUserToChat(chatId: string, newUser: string) {
     const chatRef = doc(this.chatCollection, chatId);
     await updateDoc(chatRef, {
-      chatUsers: arrayUnion(newUser)
+      chatUsers: arrayUnion(newUser),
     });
   }
 
-  async addChatMessage (chatId, user, message) {
+  async addChatMessage(chatId, user, message) {
     const date = new Date();
     const formdate = date.toLocaleDateString('de-DE', {
       year: 'numeric',
@@ -144,26 +144,25 @@ export class FirestoreService {
     const arg = {
       'chat.user': user,
       'chat.date': formdate,
-      'chat.message':message,
+      'chat.message': message,
     };
     const chatRef = doc(this.chatCollection, chatId);
-    await updateDoc(chatRef,{
-      chat: arrayUnion(arg)
-    }
-  )}
+    await updateDoc(chatRef, {
+      chat: arrayUnion(arg),
+    });
+  }
 
-  
   async getAllChats() {
     const querySnapshot = await getDocs(this.chatCollection);
     this.chatList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Chat;
-      return data
+      return data;
     });
     console.log(this.chatList);
   }
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
-  async addNewThread (thread?: Thread) {
+  async addNewThread(thread?: Thread) {
     let dateTime = new Date();
     this.thread.date = dateTime;
     this.thread.user = thread.user;
@@ -172,13 +171,13 @@ export class FirestoreService {
     this.thread.channel = thread.channel;
     this.thread.replies = thread.replies;
 
-   const docRef = await addDoc(this.threadCollection, this.thread.toJSON());
-    
+    const docRef = await addDoc(this.threadCollection, this.thread.toJSON());
+
     console.log('Thread was added to Firebase: ', docRef.id);
     const ref = doc(this.threadCollection, docRef.id);
-      await updateDoc(ref, {
-        threadId: docRef.id,
-      });
+    await updateDoc(ref, {
+      threadId: docRef.id,
+    });
   }
 
   async getSpecificThread(id) {
@@ -187,7 +186,7 @@ export class FirestoreService {
     const data = docSnap.data();
     if (docSnap.exists()) {
       console.log('Document data of threads:', data);
-      return data
+      return data;
     } else {
       console.log('No such document!');
       return null;
@@ -198,7 +197,7 @@ export class FirestoreService {
     const querySnapshot = await getDocs(this.threadCollection);
     this.threadList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Thread;
-      return data
+      return data;
     });
     console.log(this.threadList);
   }
@@ -232,17 +231,32 @@ export class FirestoreService {
     }
   }
 
+  async updateSpecificUser(id, data: UserTemplate) {
+    const docRef = doc(this.usersCollection, id);
+    await updateDoc(docRef, {
+      password: data.password,
+      displayName: data.displayName,
+      photoURL: data.photoURL,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      birthDate: data.birthDate,
+      street: data.street,
+      zipCode: data.zipCode,
+      city: data.city,
+    });
+  }
+
   async getAllUsers() {
     const querySnapshot = await getDocs(this.usersCollection);
     this.usersList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as UserTemplate;
-      return { id: doc.id, ...data }
+      return { id: doc.id, ...data };
     });
     console.log(this.usersList);
   }
 
-
-    ///////////////// HELPER FUNCTIONS ///////////////////
+  ///////////////// HELPER FUNCTIONS ///////////////////
 
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);

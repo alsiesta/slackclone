@@ -10,6 +10,7 @@ import {
   collectionData,
   doc,
   getDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -72,5 +73,61 @@ export class UsersService  {
       //hier muss der Error noch abgefangen werden
       return null;
     }
+  }
+
+
+  async updateDisplayName(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      displayName: arg,
+    });
+  }
+  async updatePhotoUrl(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      photoURL: arg,
+    });
+  }
+  async updateFirstName(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      firstName: arg,
+    });
+  }
+  async updateLastName(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      lastName: arg,
+    });
+  }
+  async updateEmail(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      email: arg,
+    });
+  }
+  async updateBirthdate(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      birthDate: arg,
+    });
+  }
+  async updateStreet(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      street: arg,
+    });
+  }
+  async updateZipCode(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      zipCode: arg,
+    });
+  }
+  async updateCity(arg) {
+    const docRef = doc(this.usersCollection, this.currentUserId$);
+    await updateDoc(docRef, {
+      city: arg,
+    });
   }
 }

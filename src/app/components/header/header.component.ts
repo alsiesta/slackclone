@@ -141,7 +141,8 @@ mockThreadData = {
 
   
   logUserData () {
-    this.usersService.getCurrentUserData()
+    // this.usersService.getCurrentUserData()
+    this.usersService.updateCity('Sagehorn')
   }
 
   
