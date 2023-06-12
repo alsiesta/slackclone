@@ -16,46 +16,6 @@ export class ChannelService {
   activeChannel: any;
   channelReady: boolean = false;
 
-  //posting object
-  postings: Array<any> = [
-    {
-      user: 'John Doe',
-      image: 'assets/img/threads/profile-picture.png',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nunc aliquet nunc',
-      date: '03.06.2023',
-      time: '16:25',
-      id: '1234567890',
-      threads: [],
-    },
-    {
-      user: 'Joana Denver',
-      image: 'assets/img/threads/profile-picture.png',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nunc aliquet nunc',
-      date: '04.06.2023',
-      time: '18:25',
-      id: '1234567891',
-      threads: [
-        {
-          user: 'John Doe',
-          image: 'assets/img/threads/profile-picture.png',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          date: '04.06.2023',
-        },
-        {
-          user: 'Maxi Muster',
-          image: 'assets/img/threads/profile-picture.png',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          date: '04.06.2023',
-        },
-      ],
-    },
-  ];
-
-  // to be implemented by function
-  dates: Array<any> = ['03.06.2023', '04.06.2023'];
-
   constructor(
     public channelDialog: MatDialog,
     public messageDialog: MatDialog,
@@ -101,8 +61,6 @@ export class ChannelService {
     this.findDates();
     this.setUserInChannelThreads();
 
-    console.log(this.channelThreads);
-
     this.channelReady = true;
   }
 
@@ -141,7 +99,6 @@ export class ChannelService {
     });
     this.uniqueDateList();
     this.sortingDateList();
-    console.log(this.dateList);
   }
 
   /**
@@ -164,6 +121,9 @@ export class ChannelService {
     this.dateList.sort((a, b) => a - b);
   }
 
+  /**
+   * add user data in channelThreads
+   */
   setUserInChannelThreads() {
     this.channelThreads.forEach((thread: any) => {
       this.userList.forEach((user: any) => {

@@ -5,7 +5,10 @@
             this.channelService.activeChannel.title }}</span>
     </div>
     <div class="channel-top">
-        <h1># {{ this.channelService.activeChannel.title }}</h1>
+        <div class="channel-top-header">
+            <mat-icon>numbers</mat-icon>
+            <h1>{{ this.channelService.activeChannel.title }}</h1>
+        </div>
         <div><span class="channel-creator">@{{ this.channelService.activeChannel.creator }}</span> hat diesen
             Channel am {{
             this.channelService.activeChannel.creationDate.toLocaleString() }} erstellt.

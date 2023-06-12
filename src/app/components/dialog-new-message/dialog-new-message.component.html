@@ -2,9 +2,11 @@
     <div class="message-container-top">
         <div class="profil-box">
             <img class="profil-image" src="{{ this.data.image }}">
-            <span class="profil-name">{{ this.data.user }}</span>
+            <div class="profil-name-box">
+                <span class="profil-name">{{ this.data.user }}</span>
+                <span class="profil-email">{{ this.data.email }}</span>
+            </div>
         </div>
-        <span class="profil-email">{{ this.data.email }}</span>
         <div class="profil-time-box">
             <mat-icon fontIcon="schedule"></mat-icon>
             <span class="profil-time">{{ this.time.toLocaleTimeString([], {hour:

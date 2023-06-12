@@ -33,6 +33,18 @@
   .channel-top {
     padding: 24px 24px 48px 24px;
 
+    .channel-top-header {
+      display: flex;
+      align-items: center;
+
+      mat-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 32px;
+        margin-right: 4px;
+      }
+    }
+
     .channel-creator {
       color: $blue;
       background-color: rgba($blue, 0.1);
