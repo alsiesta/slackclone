@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogNewMessageComponent {
   time = new Date();
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { user: string; image: string }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { user: string; image: string; email: string }
   ) {}
 }

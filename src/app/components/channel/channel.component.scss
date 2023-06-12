@@ -14,11 +14,13 @@
     height: 58px;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
+    display: flex;
+    align-items: center;
 
     span {
       font-size: $fonttitle;
       font-weight: 500;
-      padding: 6px 8px;
+      padding: 6px 1px;
       border-radius: 6px;
       cursor: pointer;
 

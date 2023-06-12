@@ -10,6 +10,7 @@ import { DialogNewMessageComponent } from '../components/dialog-new-message/dial
 export class ChannelService {
   channelList: Array<any>;
   threadList: Array<any>;
+  userList: Array<any> = [];
   dateList: Array<any> = [];
   channelThreads: Array<any> = [];
   activeChannel: any;
@@ -73,9 +74,9 @@ export class ChannelService {
   /**
    * open the channel-info dialog
    */
-  messageDialogOpen(user: string, image: string) {
+  messageDialogOpen(user: string, image: string, email: string) {
     const dialogRef = this.messageDialog.open(DialogNewMessageComponent, {
-      data: { user: user, image: image },
+      data: { user: user, image: image, email: email },
       maxWidth: '100vw',
     });
   }
@@ -91,12 +92,16 @@ export class ChannelService {
     await this.firestoreService.getAllThreads().then(() => {
       this.threadList = this.firestoreService.threadList;
     });
+    await this.firestoreService.getAllUsers().then(() => {
+      this.userList = this.firestoreService.usersList;
+    });
+
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
+    this.setUserInChannelThreads();
 
     console.log(this.channelThreads);
-    console.log(this.threadList);
 
     this.channelReady = true;
   }
@@ -155,5 +160,22 @@ export class ChannelService {
    */
   sortingDateList() {
     this.dateList.sort((a, b) => a - b);
+  }
+
+  setUserInChannelThreads() {
+    this.channelThreads.forEach((thread: any) => {
+      this.userList.forEach((user: any) => {
+        if (thread.user == user.id) {
+          thread.user = {
+            id: user.id,
+            name: user.displayName,
+            image: user.photoURL
+              ? user.photoURL
+              : 'assets/img/threads/profile-picture.png',
+            email: user.email,
+          };
+        }
+      });
+    });
   }
 }

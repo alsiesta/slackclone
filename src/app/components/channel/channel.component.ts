@@ -10,7 +10,7 @@ export class ChannelComponent implements AfterViewInit, OnDestroy {
   constructor(public channelService: ChannelService) {}
 
   ngAfterViewInit(): void {
-    this.channelService.loadChannelContent('#gruppe-576');
+    this.channelService.loadChannelContent('gruppe-576');
   }
 
   ngOnDestroy(): void {
