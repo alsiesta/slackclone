@@ -116,9 +116,9 @@ mockThreadData = {
   logChats () {
     // this.firestore.addNewChat(this.mockChatData);
     // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
-    // this.firestore.getAllChats();
+    this.firestore.getAllChats();
     // this.firestore.addUserToChat('B6qjUoa1QtupHldw0Pf0','User 4');
-    this.firestore.addChatMessage('B6qjUoa1QtupHldw0Pf0','User 4','hey there!');
+    // this.firestore.addChatMessage('B6qjUoa1QtupHldw0Pf0','User 5','hey there!?$');
   }
 
   logThreads() {
