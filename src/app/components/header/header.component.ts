@@ -52,7 +52,7 @@ mockThreadData = {
   time: new Date(),
   content:
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
-  channel: 'Channel 2',
+  channel: 'Channel 4',
   replies: [
     {
       user: 'User 33',
@@ -105,9 +105,9 @@ mockThreadData = {
   }
 
   logThreads() {
-    this.firestore.addNewThread(this.mockThreadData);
+    // this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    // this.firestore.getAllThreads();
+    this.firestore.getAllThreads();
   }
 
   
