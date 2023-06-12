@@ -123,6 +123,7 @@ export class ChannelService {
    * @param channelID - channel id from function loadChannelContent
    */
   findThreads(channelID: string) {
+    this.channelThreads = [];
     this.threadList.forEach((element: any) => {
       if (element.channel == channelID) {
         this.channelThreads.push(element);
@@ -134,6 +135,7 @@ export class ChannelService {
    * find the dates in channelThreads and push them to dateList
    */
   findDates() {
+    this.dateList = [];
     this.channelThreads.forEach((element: any) => {
       this.dateList.push(element.date);
     });
