@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog-create-new-channel.component.scss']
 })
 export class DialogCreateNewChannelComponent {
+  channelName: string = "";
+
+  
 
 }
