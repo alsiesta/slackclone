@@ -110,7 +110,10 @@ mockThreadData = {
 
   logAllUsers() {
     // this.firestore.getSpecificUser('hRUJ0L1r6lc9eRBgng1g0YMOFZp1')
-    this.firestore.getAllUsers();
+    // this.firestore.getAllUsers();
+    // this.usersService.updateUserFieldValue('lastName', 'Schönfeld');
+    // console.log('change Field Value');
+    
   }
 
   logChats () {
@@ -141,8 +144,8 @@ mockThreadData = {
 
   
   logUserData () {
-    // this.usersService.getCurrentUserData()
-    this.usersService.updateCity('Sagehorn')
+    this.usersService.getCurrentUserData()
+    // this.usersService.updateUserFieldValue('city', 'Oyten')
   }
 
   

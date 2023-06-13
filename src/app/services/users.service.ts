@@ -76,58 +76,64 @@ export class UsersService  {
   }
 
 
-  async updateDisplayName(arg) {
+  async updateUserFieldValue(field,arg) {
     const docRef = doc(this.usersCollection, this.currentUserId$);
     await updateDoc(docRef, {
-      displayName: arg,
+      [field]: arg,
     });
   }
-  async updatePhotoUrl(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      photoURL: arg,
-    });
-  }
-  async updateFirstName(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      firstName: arg,
-    });
-  }
-  async updateLastName(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      lastName: arg,
-    });
-  }
-  async updateEmail(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      email: arg,
-    });
-  }
-  async updateBirthdate(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      birthDate: arg,
-    });
-  }
-  async updateStreet(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      street: arg,
-    });
-  }
-  async updateZipCode(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      zipCode: arg,
-    });
-  }
-  async updateCity(arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    await updateDoc(docRef, {
-      city: arg,
-    });
-  }
+  // async updateDisplayName(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     displayName: arg,
+  //   });
+  // }
+  // async updatePhotoUrl(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     photoURL: arg,
+  //   });
+  // }
+  // async updateFirstName(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     firstName: arg,
+  //   });
+  // }
+  // async updateLastName(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     lastName: arg,
+  //   });
+  // }
+  // async updateEmail(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     email: arg,
+  //   });
+  // }
+  // async updateBirthdate(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     birthDate: arg,
+  //   });
+  // }
+  // async updateStreet(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     street: arg,
+  //   });
+  // }
+  // async updateZipCode(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     zipCode: arg,
+  //   });
+  // }
+  // async updateCity(arg) {
+  //   const docRef = doc(this.usersCollection, this.currentUserId$);
+  //   await updateDoc(docRef, {
+  //     city: arg,
+  //   });
+  // }
 }
