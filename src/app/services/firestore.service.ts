@@ -155,7 +155,7 @@ export class FirestoreService {
     const querySnapshot = await getDocs(this.chatCollection);
     this.chatList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Chat;
-      this.chatList = data;
+      return data;
     });
     return this.chatList;
   }
@@ -201,6 +201,7 @@ export class FirestoreService {
     return this.threadList;
   }
 
+  
   ///////////////// USER FUNKTIONEN ///////////////////
 
   addNewUser(uid: string, name, email, password) {
