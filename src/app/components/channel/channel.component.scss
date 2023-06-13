@@ -1,6 +1,7 @@
 @import "../../../styles/main.scss";
 
 .channel-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -28,6 +29,14 @@
         background-color: $grey;
       }
     }
+  }
+
+  .channel-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 50px;
   }
 
   .channel-top {
