@@ -11,9 +11,15 @@ export class ChannelComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.channelService.loadChannelContent('gruppe-576');
+    this.scrollToBottomOfContent();
   }
 
   ngOnDestroy(): void {
     this.channelService.channelReady = false;
+  }
+
+  scrollToBottomOfContent(): void {
+    let content = document.getElementById('channel-content');
+    content.scrollTo(0, content.scrollHeight);
   }
 }
