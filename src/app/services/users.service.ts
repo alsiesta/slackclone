@@ -40,13 +40,12 @@ export class UsersService  {
     const users$ = collectionData(this.usersCollection, { idField: 'uid' });
     users$.subscribe((_users) => {
       this.usersCollListener.next({ users: _users });
-      console.log(_users);
       this.currentUsers = _users;
     });
   }
 
   getAllUsers() {
-    console.log(this.currentUsers);
+    return this.currentUsers;
   }
 
   getCurrentUserId() {
@@ -66,10 +65,11 @@ export class UsersService  {
     const docRef = doc(this.usersCollection, this.currentUserId$);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data());
-      return docSnap.data();
+      this.currentUserData$ = docSnap.data();
+      // return docSnap.data();
+      return this.currentUserData$;
     } else {
-      console.log('No such document!');
+      console.log('No such User in Firestore!');
       //hier muss der Error noch abgefangen werden
       return null;
     }

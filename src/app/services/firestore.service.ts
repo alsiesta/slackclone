@@ -67,7 +67,6 @@ export class FirestoreService {
       const id = doc.id;
       return { id, ...data };
     });
-    console.log(this.channelList);
     return this.channelList;
   }
 
@@ -156,9 +155,9 @@ export class FirestoreService {
     const querySnapshot = await getDocs(this.chatCollection);
     this.chatList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Chat;
-      return data;
+      this.chatList = data;
     });
-    console.log(this.chatList);
+    return this.chatList;
   }
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
@@ -199,7 +198,6 @@ export class FirestoreService {
       const data = doc.data() as Thread;
       return data;
     });
-    console.log(this.threadList);
     return this.threadList;
   }
 
@@ -254,7 +252,6 @@ export class FirestoreService {
       const data = doc.data() as UserTemplate;
       return { id: doc.id, ...data };
     });
-    console.log(this.usersList);
   }
 
   ///////////////// HELPER FUNCTIONS ///////////////////
