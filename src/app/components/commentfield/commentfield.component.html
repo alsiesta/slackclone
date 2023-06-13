@@ -1,6 +1,6 @@
 <div class="box">
     <form [formGroup]="editorForm" (submit)="onSubmit()">
-        <quill-editor placeholder="Antworten ..." [style]="editorStyle" [modules]="modules" (onContentChanged)="maxLength($event)" formControlName="editor">
+        <quill-editor class="quill-text-editor" placeholder="Antworten ..." [style]="editorStyle" [modules]="modules" (onContentChanged)="maxLength($event)" formControlName="editor">
 
         </quill-editor>
         <div>

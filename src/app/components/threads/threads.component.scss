@@ -7,8 +7,8 @@
 
 .post {
     margin-top: 36px;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
     background-color: $threadgray;
     border-radius: 10px;
     padding: 36px;
@@ -32,13 +32,22 @@
 
 .user-message {
     display: flex;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 12px;
+
+    &:hover {
+        background:rgba(255,255,255, 0.2);
+    }
 
     img {
         width: 50px;
         height: 50px;
         border-radius: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 
@@ -53,6 +62,11 @@
 .user-name {
     font-weight: 800;
     margin-right: 10px;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 }
 
 .user-name-and-time {
@@ -68,21 +82,35 @@
 
 .comments {
     margin-top: 12px;
-    margin-left: 14px;
+    margin-left: 16px;
     font-size: $fontsubtitle;
     font-weight: 500;
     color: $blue;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 }
 
 .user-message-more {
     display: flex;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
     margin-top: 16px;
+    padding: 12px;
+
+    &:hover {
+        background:rgba(255,255,255, 0.2);
+    }
 
     img {
         width: 50px;
         height: 50px;
         border-radius: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
