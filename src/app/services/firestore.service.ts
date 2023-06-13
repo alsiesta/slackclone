@@ -193,13 +193,14 @@ export class FirestoreService {
     }
   }
 
-  async getAllThreads() {
+  async getAllThreads () {
     const querySnapshot = await getDocs(this.threadCollection);
     this.threadList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Thread;
       return data;
     });
     console.log(this.threadList);
+    return this.threadList;
   }
 
   ///////////////// USER FUNKTIONEN ///////////////////

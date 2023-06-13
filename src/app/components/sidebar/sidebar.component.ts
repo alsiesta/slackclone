@@ -4,6 +4,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { DialogCreateNewChannelComponent } from '../dialog-create-new-channel/dialog-create-new-channel.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Thread } from 'src/app/models/thread.class';
 
 
 
@@ -17,6 +18,7 @@ export class SidebarComponent implements OnInit {
   channelsAreOpen = true;
   directmessagesAreOpen = true;
   channels: Channel[] = [];
+  threads: Thread[] = [];
 
   constructor(private firestoreService: FirestoreService,
     private channelService: ChannelService,
@@ -25,7 +27,9 @@ export class SidebarComponent implements OnInit {
 
   async ngOnInit() {
     this.channels = await this.firestoreService.readChannels();
+    this.threads = await this.firestoreService.getAllThreads();
     console.log('Channels', this.channels)
+    console.log('Threads', this.threads)
   }
 
   toggleDropdown(key) {
@@ -51,6 +55,12 @@ export class SidebarComponent implements OnInit {
 
   renderChannel(channel) {
     this.channelService.loadChannelContent(channel.id);
+  }
+
+  logThreads() {
+    // this.firestore.addNewThread(this.mockThreadData);
+    // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
+    this.firestoreService.getAllThreads();
   }
 
 }
