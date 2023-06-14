@@ -169,26 +169,24 @@ export class FirestoreService {
 
   ///// LISTENER AS OBSERVABLE listening to THREADS CHANGE
 
-  // getThreadList(): Observable<any[]> {
-  //   const q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
-  
-  //   return new Observable<any[]>((observer) => {
-  //     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-  //       const threads = [];
-  //       querySnapshot.forEach((doc) => {
-  //         threads.push(doc.data());
-  //       });
-  //       observer.next(this.threadList = threads);
-  //     });
-  
-  //     // Cleanup function to unsubscribe when the Observable is unsubscribed
-  //     return () => {
-  //       unsubscribe();
-  //     };
-  //   });
-  // }
+  getThreadList(): Observable<any[]> {
+    const q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
 
-  
+    return new Observable<any[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const threads = [];
+        querySnapshot.forEach((doc) => {
+          threads.push(doc.data());
+        });
+        observer.next((this.threadList = threads));
+      });
+
+      //Cleanup function to unsubscribe when the Observable is unsubscribed
+      return () => {
+        unsubscribe();
+      };
+    });
+  }
 
   async addNewThread(thread?: Thread) {
     let dateTime = new Date();

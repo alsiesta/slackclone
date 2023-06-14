@@ -4,13 +4,15 @@ import { ChannelDialogComponent } from '../components/channel-dialog/channel-dia
 import { FirestoreService } from './firestore.service';
 import { DialogNewMessageComponent } from '../components/dialog-new-message/dialog-new-message.component';
 import { GlobalService } from './global.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChannelService {
   channelList: Array<any>;
-  threadList: Array<any>;
+  observerThreadList: Observable<any>;
+  threadList: Array<any> = [];
   userList: Array<any> = [];
   dateList: Array<any> = [];
   channelThreads: Array<any> = [];
@@ -22,7 +24,14 @@ export class ChannelService {
     public messageDialog: MatDialog,
     public firestoreService: FirestoreService,
     public globalService: GlobalService
-  ) {}
+  ) {
+    this.observerThreadList = this.firestoreService.getThreadList();
+    this.observerThreadList.subscribe((threads) => {
+      this.threadList = threads;
+      this.updateChannelContent();
+      console.log('threadList updated');
+    });
+  }
 
   /**
    * open the channel-info dialog
@@ -51,9 +60,6 @@ export class ChannelService {
     await this.firestoreService.readChannels().then(() => {
       this.channelList = this.firestoreService.channelList;
     });
-    await this.firestoreService.getAllThreads().then(() => {
-      this.threadList = this.firestoreService.threadList;
-    });
     await this.firestoreService.getAllUsers().then(() => {
       this.userList = this.firestoreService.usersList;
     });
@@ -65,6 +71,14 @@ export class ChannelService {
     this.setUserInChannelThreads();
 
     this.channelReady = true;
+  }
+
+  updateChannelContent() {
+    this.findChannel('gruppe-576');
+    this.findThreads('gruppe-576');
+    this.findDates();
+    this.sortThreadsByTime();
+    this.setUserInChannelThreads();
   }
 
   /**
@@ -81,7 +95,7 @@ export class ChannelService {
    * @param channelID - channel id from function loadChannelContent
    */
   findChannel(channelID: string) {
-    this.channelList.forEach((element: any) => {
+    this.channelList?.forEach((element: any) => {
       if (element.id == channelID) {
         this.activeChannel = element;
       }

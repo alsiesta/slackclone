@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-channel',
@@ -26,7 +27,6 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     try {
       content.scrollTo(0, content.scrollHeight);
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 }
