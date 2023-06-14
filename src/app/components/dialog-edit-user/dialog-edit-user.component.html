@@ -20,27 +20,45 @@
 <div class="dialog-container">
   <mat-icon class="close-icon" mat-button mat-dialog-close>close</mat-icon>
   <div class="dialog-top">
-   <span class="title">Your Profile </span><span *ngIf="currentUserData$.displayName"><b>{{currentUserData$.displayName}}</b></span>
+    <span class="title">Your Profile </span><span
+      *ngIf="currentUserData$?.displayName"><b>{{currentUserData$?.displayName}}</b></span>
   </div>
   <div class="dialog-main table-grid">
 
-    <div *ngIf="currentUserData$.photoURL"><img src="./assets/img/user/profile-picture.png" class="profile-image" alt="Profile Image"></div>
-    <div *ngIf="currentUserData$.displayName"><span class="field-name">Display Name:</span> <span class="material-symbols-sharp">
-      edit
-      </span><br><b>{{currentUserData$.displayName}}</b> </div>
- <div *ngIf="currentUserData$.firstName"><span class="field-name">Firstname:</span> <br><b>{{currentUserData$.firstName}}</b></div>
-    <div *ngIf="currentUserData$.lastName"><span class="field-name">Lastname:</span> <br><b>{{currentUserData$.lastName}}</b></div>
-    <div *ngIf="currentUserData$.email"><span class="field-name">Email:</span> <br><b>{{currentUserData$.email}}</b></div>
-   <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b></div>
+    <div *ngIf="currentUserData$?.photoURL"><img src="{{currentUserData$?.photoURL}}" class="profile-image"
+        alt="Profile Image"></div>
+    <div *ngIf="currentUserData$?.displayName && !isEditing"><span class="field-name">Display Name:</span> 
+      <span  (click)="startEdit()" class="material-symbols-sharp">edit</span><br><b>{{currentUserData$?.displayName}}</b>
+    </div>
+    <div *ngIf="currentUserData$?.displayName && isEditing"><span class="field-name">Display Name:</span><br>
+      <b><input type="text" placeholder="{{currentUserData$?.displayName}}"></b><span (click)="updateUserProperty('displayName','Aljoscha')" class="material-symbols-sharp">done</span>  <span class="material-symbols-sharp" (click)="cancelEdit()">close</span>
+    </div>
+    <div *ngIf="currentUserData$?.firstName"><span class="field-name">Firstname:</span>
+      <br><b>{{currentUserData$?.firstName}}</b>
+    </div>
+    <div *ngIf="currentUserData$?.lastName"><span class="field-name">Lastname:</span>
+      <br><b>{{currentUserData$?.lastName}}</b>
+    </div>
+    <div *ngIf="currentUserData$?.email"><span class="field-name">Email:</span> <br><b>{{currentUserData$?.email}}</b>
+    </div>
+    <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b>
+    </div>
     <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span><br>
       <b>No</b>
     </div>
-    
-    <div *ngIf="currentUserData$.street"><span class="field-name">Street:</span> <br><b>{{currentUserData$.street}}</b></div>
-    <div *ngIf="currentUserData$.city"><span class="field-name">City:</span> <br><b>{{currentUserData$.city}}</b></div>
-    <div *ngIf="currentUserData$.zipCode"><span class="field-name">Zip-Code:</span> <br><b>{{currentUserData$.zipCode}}</b></div>
-    
-    <div *ngIf="currentUserData$.birthDate"><span class="field-name">Birthdate:</span> <br><b>{{currentUserData$.birthDate}}</b></div>
+
+    <div *ngIf="currentUserData$?.street"><span class="field-name">Street:</span>
+      <br><b>{{currentUserData$?.street}}</b>
+    </div>
+    <div *ngIf="currentUserData$?.city"><span class="field-name">City:</span> <br><b>{{currentUserData$?.city}}</b>
+    </div>
+    <div *ngIf="currentUserData$?.zipCode"><span class="field-name">Zip-Code:</span>
+      <br><b>{{currentUserData$?.zipCode}}</b>
+    </div>
+
+    <div *ngIf="currentUserData$?.birthDate"><span class="field-name">Birthdate:</span>
+      <br><b>{{currentUserData$?.birthDate}}</b>
+    </div>
 
 
 
