@@ -4,56 +4,59 @@
         <span (click)="this.channelService.channelDialogOpen()">{{
             this.channelService.activeChannel.title }}</span>
     </div>
-    <div class="channel-top">
-        <div class="channel-top-header">
-            <mat-icon>numbers</mat-icon>
-            <h1>{{ this.channelService.activeChannel.title }}</h1>
+
+    <div id="channel-content" class="channel-content">
+
+        <div class="channel-top">
+            <div class="channel-top-header">
+                <mat-icon>numbers</mat-icon>
+                <h1>{{ this.channelService.activeChannel.title }}</h1>
+            </div>
+            <div><span class="channel-creator">@{{ this.channelService.activeChannel.creator }}</span> hat diesen
+                Channel am {{
+                this.channelService.activeChannel.creationDate.toLocaleString() }} erstellt.
+                Das ist der Anfang des Channels.</div>
         </div>
-        <div><span class="channel-creator">@{{ this.channelService.activeChannel.creator }}</span> hat diesen
-            Channel am {{
-            this.channelService.activeChannel.creationDate.toLocaleString() }} erstellt.
-            Das ist der Anfang des Channels.</div>
-    </div>
 
-    <div *ngFor="let date of this.channelService.dateList" class="channel-date-spacer">
-        <div class="channel-date">{{ date | date: 'dd.MM.yyyy' }}</div>
+        <div *ngFor="let date of this.channelService.dateList" class="channel-date-spacer">
+            <div class="channel-date">{{ date | date: 'dd.MM.yyyy' }}</div>
 
-        <ng-container *ngFor="let thread of this.channelService.channelThreads">
+            <ng-container *ngFor="let thread of this.channelService.channelThreads">
 
-            <div *ngIf="thread.date == date" class="posting">
+                <div *ngIf="thread.date == date" class="posting">
 
-                <div>
-                    <img (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)"
-                        class="posting-image" src="{{ thread.user.image }}">
-                </div>
-                <div class="posting-main">
-                    <div class="posting-main-top">
-                        <div class="posting-user"
-                            (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)">
-                            {{
-                            thread.user.name }}</div>
-                        <div class="posting-time">{{ thread.time }}</div>
+                    <div>
+                        <img (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)"
+                            class="posting-image" src="{{ thread.user.image }}">
                     </div>
-                    <div class="posting-content">{{ thread.content }}</div>
-                    <div *ngIf="thread.replies.length > 0">
-                        <div class="posting-threads">
-                            <div class="posting-thread-preview" *ngFor="let reply of thread.replies">
-                                <img src="{{ thread.user.image }}">
+                    <div class="posting-main">
+                        <div class="posting-main-top">
+                            <div class="posting-user"
+                                (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)">
+                                {{
+                                thread.user.name }}</div>
+                            <div class="posting-time">{{ thread.time }}</div>
+                        </div>
+                        <div class="posting-content">{{ thread.content }}</div>
+                        <div *ngIf="thread.replies.length > 0">
+                            <div class="posting-threads">
+                                <div class="posting-thread-preview" *ngFor="let reply of thread.replies">
+                                    <img src="{{ thread.user.image }}">
+                                </div>
+                                <span class="posting-thread-reply">{{ thread.replies.length }} Antworten</span>
+                                <span class="posting-thread-last">Letzte Antwort am {{ thread.replies[0].date | date:
+                                    'dd.MM.yyyy' }}</span>
+                                <mat-icon class="posting-thread-navigate" fontIcon="navigate_next"></mat-icon>
                             </div>
-                            <span class="posting-thread-reply">{{ thread.replies.length }} Antworten</span>
-                            <span class="posting-thread-last">Letzte Antwort am {{ thread.replies[0].date | date:
-                                'dd.MM.yyyy' }}</span>
-                            <mat-icon class="posting-thread-navigate" fontIcon="navigate_next"></mat-icon>
                         </div>
                     </div>
+
                 </div>
 
-            </div>
+            </ng-container>
 
-        </ng-container>
+        </div>
 
     </div>
-
-
 
 </div>

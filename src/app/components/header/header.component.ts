@@ -47,14 +47,14 @@ export class HeaderComponent {
 /// delete after thread form is finished /////////
 mockThreadData = {
   threadId: '',
-  user: 'User 33',
+  user: 'KeejR8OjlSYfGHpGq2XV3bNytTH2',
   date: new Date(),
   time: new Date(),
   content:
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
-  channel: 'Channel 4',
+  channel: 'gruppe-576',
   replies: [
-    {
+    /*{
       user: 'User 33',
       date: new Date(),
       message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
@@ -78,7 +78,7 @@ mockThreadData = {
       user: 'User 3',
       date: new Date(),
       message: 'Lorem ipsum',
-    },
+    },*/
   ],
 };
 //////////////////////////////////

@@ -40,11 +40,7 @@ export class Thread {
 
   public toJSON?(): any {
     const formattedReplies = this.replies.map(reply => {
-      const formattedDate = reply.date ? reply.date.toLocaleDateString('de-DE', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }) : undefined;
+      const formattedDate = reply.date ? reply.date.toISOString().split('T')[0] : '';
       return {
         user: reply.user,
         date: formattedDate,
@@ -55,11 +51,7 @@ export class Thread {
     return {
       threadId: this.threadId,
       user: this.user,
-      date: this.date.toLocaleDateString('de-DE', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-            }),
+      date: this.date.toISOString().split('T')[0],
       time: this.time.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',

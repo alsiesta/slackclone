@@ -59,9 +59,17 @@ export class ChannelService {
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
+    this.sortThreadsByTime();
     this.setUserInChannelThreads();
 
     this.channelReady = true;
+  }
+
+  /**
+   * sort the channelThreads by time
+   */
+  sortThreadsByTime() {
+    this.channelThreads.sort((a, b) => a.time.localeCompare(b.time));
   }
 
   /**
@@ -118,7 +126,7 @@ export class ChannelService {
    * sort the dateList
    */
   sortingDateList() {
-    this.dateList.sort((a, b) => a - b);
+    this.dateList.sort((a, b) => a.localeCompare(b));
   }
 
   /**
