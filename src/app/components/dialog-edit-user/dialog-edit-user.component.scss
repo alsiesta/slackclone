@@ -1,5 +1,174 @@
-.profile-image{
-    width: 100px;
-    object-fit: cover;
-    border-radius: 100%;
+@import "../../../styles/main.scss";
+
+.profile-image {
+  width: 100px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+
+.dialog-container {
+  color: $white;
+  width: 600px;
+  position: relative;
+
+  .close-icon {
+    cursor: pointer;
+    color: $textgrey;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .title{
+    color: rgba($textgrey, 0.5);
+  }
+
+  .dialog-top {
+    background-color: $darkgrey;
+    border-bottom: 1px solid rgba($textgrey, 0.5);
+    padding: 24px;
+
+  font-size: $fonttitle;
+  font-weight: 400;
+  }
+
+  .field-name{
+    color: rgba($textgrey, 0.5);
+  }
+  .material-symbols-sharp {
+    cursor: pointer;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 200,
+    'GRAD' 200,
+    'opsz' 30
+  }
+  .table-grid{
+    display: grid;
+    gap: 1rem;
+    align-content: flex-start;
+    grid-auto-columns: 1fr;
+    grid-template-areas: 
+    "one two"
+    "three seven"
+    "four eight"
+    "five nine"
+    "six ten"
+    "six ten";
+    
+    
+    :nth-child(1) {
+      grid-area: one;
+    }
+  
+    :nth-child(2) {
+      grid-area: two;
+    }
+    :nth-child(3) {
+      grid-area: three;
+    }
+    :nth-child(4) {
+      grid-area: four;
+    }
+    :nth-child(5) {
+      grid-area: five;
+    }
+    :nth-child(6) {
+      grid-area: six;
+    }
+    :nth-child(7) {
+      grid-area: seven;
+    }
+    :nth-child(8) {
+      grid-area: eight;
+    }
+    :nth-child(9) {
+      grid-area: nine;
+    }
+    :nth-child(10) {
+      grid-area: ten;
+    }
+  }
+
+  .dialog-main {
+    background-color: $grey;
+    padding: 32px;
+    font-size: $regular;
+
+    .dialog-main-box {
+      border: 1px solid rgba($textgrey, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+
+      h4 {
+        color: #d1d2d3;
+        margin: 0 !important;
+        padding: 20px 28px;
+      }
+
+      .create-channel-input {
+        display: block;
+        height: 44px;
+        margin: 0 28px;
+        border: 1px solid rgba(232, 232, 232, 0.3);
+        border-radius: 5px;
+        position: relative;
+        transition: all 125ms ease-in-out;
+
+        mat-icon {
+          font-size: 18px;
+          height: 18px;
+          width: 18px;
+          color: gray;
+          position: absolute;
+          left: 12px;
+          top: 12px;
+        }
+
+        .channel-input {
+          box-sizing: border-box;
+          border: none;
+          background-color: transparent;
+          padding: 4px 46px 4px 36px;
+          height: 100%;
+          left: 0;
+          line-height: 1.5;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          color: #fff;
+          font-size: 18px;
+          border-radius: 5px;
+          transition: all 125ms ease-in-out;
+        }
+      }
+
+      .dialog-description {
+        padding: 6px 28px 0;
+        color: gray;
+        font-size: 13px;
+      }
+
+      .btn-container {
+        justify-content: flex-end;
+        padding: 20px 28px;
+
+        .btn {
+          padding: 12px;
+          background-color: #3f51b5;
+          color: white;
+
+          &:disabled {
+            background-color: #35373b;
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,17 +1,58 @@
-<h1 mat-dialog-title><b>User Profile</b></h1>
-<div mat-dialog-content>
-  <mat-icon mat-dialog-close>close</mat-icon>
-  <ul>
-    <p *ngIf="data.photoUrl"><img src="{{data.photoUrl}}"  class="profile-image" alt="Profile Image"></p>
- 
-      <p *ngIf="data.displayName">Nickname: <b>{{data.displayName}}</b></p> 
- 
-      <p *ngIf="data.email">Email: <b>{{data.email}}</b></p> 
+<!-- <div>
+  <h1 class="dialog-top" mat-dialog-title><b>User Profile</b></h1>
+  <div mat-dialog-content>
+    <mat-icon mat-dialog-close>close</mat-icon>
+    <ul>
+      <p *ngIf="data.photoUrl"><img src="{{data.photoUrl}}" class="profile-image" alt="Profile Image"></p>
+
+      <p *ngIf="data.displayName">Nickname: <b>{{data.displayName}}</b></p>
+
+      <p *ngIf="data.email">Email: <b>{{data.email}}</b></p>
 
 
-      <p *ngIf="data.emailVerified === true">Email verified: <b>Yes</b></p> 
-      <p *ngIf="data.emailVerified === false">Email verified: <b>No</b></p> 
-      <p *ngIf="data.uid">User ID: <b>{{data.uid}}</b></p> 
+      <p *ngIf="data.emailVerified === true">Email verified: <b>Yes</b></p>
+      <p *ngIf="data.emailVerified === false">Email verified: <b>No</b></p>
+      <p *ngIf="data.uid">User ID: <b>{{data.uid}}</b></p>
 
-  </ul>
+    </ul>
+  </div>
+</div> -->
+<div class="dialog-container">
+  <mat-icon class="close-icon" mat-button mat-dialog-close>close</mat-icon>
+  <div class="dialog-top">
+   <span class="title">Your Profile </span><span *ngIf="currentUserData$.displayName"><b>{{currentUserData$.displayName}}</b></span>
+  </div>
+  <div class="dialog-main table-grid">
+
+    <div *ngIf="currentUserData$.photoURL"><img src="./assets/img/user/profile-picture.png" class="profile-image" alt="Profile Image"></div>
+    <div *ngIf="currentUserData$.displayName"><span class="field-name">Display Name:</span> <span class="material-symbols-sharp">
+      edit
+      </span><br><b>{{currentUserData$.displayName}}</b> </div>
+ <div *ngIf="currentUserData$.firstName"><span class="field-name">Firstname:</span> <br><b>{{currentUserData$.firstName}}</b></div>
+    <div *ngIf="currentUserData$.lastName"><span class="field-name">Lastname:</span> <br><b>{{currentUserData$.lastName}}</b></div>
+    <div *ngIf="currentUserData$.email"><span class="field-name">Email:</span> <br><b>{{currentUserData$.email}}</b></div>
+   <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b></div>
+    <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span><br>
+      <b>No</b>
+    </div>
+    
+    <div *ngIf="currentUserData$.street"><span class="field-name">Street:</span> <br><b>{{currentUserData$.street}}</b></div>
+    <div *ngIf="currentUserData$.city"><span class="field-name">City:</span> <br><b>{{currentUserData$.city}}</b></div>
+    <div *ngIf="currentUserData$.zipCode"><span class="field-name">Zip-Code:</span> <br><b>{{currentUserData$.zipCode}}</b></div>
+    
+    <div *ngIf="currentUserData$.birthDate"><span class="field-name">Birthdate:</span> <br><b>{{currentUserData$.birthDate}}</b></div>
+
+
+
+    <!-- <div class="create-channel-input">
+        <mat-icon>numbers</mat-icon>
+        <input class="channel-input" type="text" placeholder="z. B. community">
+      </div>
+      <p class="dialog-description">Channels are conversations around a topic. Use a name that is easy to find and
+        understand.</p>
+      <div mat-dialog-actions class="btn-container">
+        <button mat-button class="btn">Weiter</button>
+      </div> -->
+
+  </div>
 </div>
