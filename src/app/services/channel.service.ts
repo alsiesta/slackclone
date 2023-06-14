@@ -5,6 +5,8 @@ import { FirestoreService } from './firestore.service';
 import { DialogNewMessageComponent } from '../components/dialog-new-message/dialog-new-message.component';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
+import { Thread } from '../models/thread.class';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +20,14 @@ export class ChannelService {
   channelThreads: Array<any> = [];
   activeChannel: any;
   channelReady: boolean = false;
+  message = new Thread();
 
   constructor(
     public channelDialog: MatDialog,
     public messageDialog: MatDialog,
     public firestoreService: FirestoreService,
-    public globalService: GlobalService
+    public globalService: GlobalService,
+    public userService: UsersService
   ) {
     this.observerThreadList = this.firestoreService.getThreadList();
     this.observerThreadList.subscribe((threads) => {
@@ -145,5 +149,18 @@ export class ChannelService {
         }
       });
     });
+  }
+
+  addNewMessage(content: string) {
+    this.message = {
+      channel: this.activeChannel.id,
+      content: content,
+      date: new Date(),
+      replies: [],
+      threadId: '',
+      time: new Date(),
+      user: this.userService.currentUserId$,
+    }
+    this.firestoreService.addNewThread(this.message);
   }
 }

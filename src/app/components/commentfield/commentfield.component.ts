@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
+import { ChannelService } from 'src/app/services/channel.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class CommentfieldComponent implements OnInit {
   
   modules = {}
 
-  constructor() {
+  constructor(public channelService: ChannelService) {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
@@ -61,6 +62,7 @@ export class CommentfieldComponent implements OnInit {
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     console.log(this.editorForm.get('editor').value);
+    this.channelService.addNewMessage(this.editorContent); 
   }
 
   maxLength(e) {
