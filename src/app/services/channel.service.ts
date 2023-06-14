@@ -33,7 +33,6 @@ export class ChannelService {
     this.observerThreadList.subscribe((threads) => {
       this.threadList = threads;
       this.updateChannelContent();
-      console.log('threadList updated');
     });
   }
 
@@ -77,6 +76,9 @@ export class ChannelService {
     this.channelReady = true;
   }
 
+  /**
+   * update the channel content when a new thread is added
+   */
   updateChannelContent() {
     this.findChannel('gruppe-576');
     this.findThreads('gruppe-576');
@@ -151,6 +153,10 @@ export class ChannelService {
     });
   }
 
+  /**
+   * creating new thread in firestore
+   * @param content - message content from text editor
+   */
   addNewMessage(content: string) {
     this.message = {
       channel: this.activeChannel.id,
@@ -160,7 +166,7 @@ export class ChannelService {
       threadId: '',
       time: new Date(),
       user: this.userService.currentUserId$,
-    }
+    };
     this.firestoreService.addNewThread(this.message);
   }
 }
