@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
 import { DialogNewMessageComponent } from '../components/dialog-new-message/dialog-new-message.component';
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class ChannelService {
   constructor(
     public channelDialog: MatDialog,
     public messageDialog: MatDialog,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public globalService: GlobalService
   ) {}
 
   /**
@@ -69,7 +71,9 @@ export class ChannelService {
    * sort the channelThreads by time
    */
   sortThreadsByTime() {
-    this.channelThreads.sort((a, b) => a.time.localeCompare(b.time));
+    this.channelThreads = this.globalService.sortThreadsByTime(
+      this.channelThreads
+    );
   }
 
   /**
@@ -105,28 +109,8 @@ export class ChannelService {
     this.channelThreads.forEach((element: any) => {
       this.dateList.push(element.date);
     });
-    this.uniqueDateList();
-    this.sortingDateList();
-  }
-
-  /**
-   * filter the dateList for unique dates and push them to dateList
-   */
-  uniqueDateList() {
-    let uniqueDateList = this.dateList.filter(
-      (value, index, array) => array.indexOf(value) === index
-    );
-    this.dateList = [];
-    uniqueDateList.forEach((element: any) => {
-      this.dateList.push(element);
-    });
-  }
-
-  /**
-   * sort the dateList
-   */
-  sortingDateList() {
-    this.dateList.sort((a, b) => a.localeCompare(b));
+    this.dateList = this.globalService.uniqueDateList(this.dateList);
+    this.dateList = this.globalService.sortingDateList(this.dateList);
   }
 
   /**

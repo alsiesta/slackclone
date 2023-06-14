@@ -17,7 +17,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: $darkgrey;
+    padding: 0 16px;
+    color: #000000;
   }
 
   .channelTitle {
@@ -44,12 +45,12 @@
 
   .channel-content {
     position: absolute;
-    height: calc(100% - 58px);
+    max-height: calc(100% - 58px);
     bottom: 0;
     left: 0;
     right: 0;
     padding-top: 100px;
-    padding-bottom: 250px;
+    padding-bottom: 200px;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
