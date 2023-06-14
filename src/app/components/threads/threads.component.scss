@@ -3,6 +3,8 @@
 .threads-container {
     background-color: $darkgrey;
     padding-bottom: 36px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
 }
 
 .post {

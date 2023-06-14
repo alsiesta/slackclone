@@ -11,6 +11,15 @@
   transition: all 125ms ease-in-out;
   border-right: 1px solid rgba($white, 0.2);
 
+  .text-editor {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $darkgrey;
+  }
+
   .channelTitle {
     height: 58px;
     border-bottom: 1px solid rgba($white, 0.2);
@@ -39,7 +48,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 100px 0;
+    padding-top: 100px;
+    padding-bottom: 250px;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -53,7 +63,6 @@
       background: $lightgrey;
       border-radius: 10px;
     }
-    padding: 100px 0;
   }
 
   .channel-top {
