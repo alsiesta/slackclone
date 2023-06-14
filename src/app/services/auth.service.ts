@@ -50,8 +50,6 @@ export class AuthService {
           email,
           password
         );
-        // this.setLocalUser();
-        this.firestoreService.addNewChannel('#musterchannel', this.testChannel)
         this.updateAuthCredentials(name);
       }
     );
@@ -65,9 +63,6 @@ export class AuthService {
       password
     )
       .then((userCredentials) => {
-        // this.setLocalUser();
-        this.firestoreService.addNewChannel('#neuer_musterchannel', this.testChannel)
-
         this.toast.info(
           `Hi ${userCredentials.user.displayName}! You are signed in.`
         );

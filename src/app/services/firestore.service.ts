@@ -19,8 +19,11 @@ import {
   getDoc,
   getDocs,
   arrayUnion,
+  query,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { User } from 'firebase/auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +43,6 @@ export class FirestoreService {
   channelList: any;
   threadList: any;
   chatList: any;
-  // users: any = [];
 
   constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
@@ -48,16 +50,6 @@ export class FirestoreService {
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
     this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
-
-  /////// diese Funktion muss noch fertig geschrieben werden, um den Code UNTEN zu minimieren
-  // async addNewDocToCollection(collection, item: any) {
-  //   // const docRef = await addDoc(this.threadCollection, thread);
-  //   const docRef = await addDoc(collection, item);
-  //   // console.log('Thread was added to Firebase: ', docRef.id);
-  //   console.log(
-  //     `Doc with ID ${docRef.id} was added to Collection: ${collection}`
-  //   );
-  // }
 
   ///////////////// CHANNEL FUNKTIONEN ///////////////////
   async readChannels() {
@@ -161,6 +153,43 @@ export class FirestoreService {
   }
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
+  ///// LISTENER listening to THREADS CHANGE
+  // q = query(collection(this.firestore, "cities"), where("state", "==", "CA"));
+  q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
+  unsubscribe = onSnapshot(this.q, (querySnapshot) => {
+    const threads = [];
+    querySnapshot.forEach((doc) => {
+      //  threads.push(doc.data()['channel']);
+      threads.push(doc.data());
+    });
+    this.threadList = threads;
+    console.log('Thread changed: ', this.threadList);
+    return this.threadList;
+  });
+
+  ///// LISTENER AS OBSERVABLE listening to THREADS CHANGE
+
+  // getThreadList(): Observable<any[]> {
+  //   const q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
+  
+  //   return new Observable<any[]>((observer) => {
+  //     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //       const threads = [];
+  //       querySnapshot.forEach((doc) => {
+  //         threads.push(doc.data());
+  //       });
+  //       observer.next(this.threadList = threads);
+  //     });
+  
+  //     // Cleanup function to unsubscribe when the Observable is unsubscribed
+  //     return () => {
+  //       unsubscribe();
+  //     };
+  //   });
+  // }
+
+  
+
   async addNewThread(thread?: Thread) {
     let dateTime = new Date();
     this.thread.date = dateTime;
@@ -192,7 +221,7 @@ export class FirestoreService {
     }
   }
 
-  async getAllThreads () {
+  async getAllThreads() {
     const querySnapshot = await getDocs(this.threadCollection);
     this.threadList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Thread;
@@ -201,7 +230,6 @@ export class FirestoreService {
     return this.threadList;
   }
 
-  
   ///////////////// USER FUNKTIONEN ///////////////////
 
   addNewUser(uid: string, name, email, password) {

@@ -6,6 +6,11 @@
 /out-tsc
 /bazel-out
 
+#firestore tester
+/src/app/firestoretester
+/src/app/models/city.class.ts
+/src/app/components/threads/test.threads.component.ts
+
 #environments
 /src/environments
 /src/app/testing
