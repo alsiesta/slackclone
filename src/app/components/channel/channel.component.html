@@ -37,7 +37,7 @@
                                 thread.user.name }}</div>
                             <div class="posting-time">{{ thread.time }}</div>
                         </div>
-                        <div class="posting-content">{{ thread.content }}</div>
+                        <div class="posting-content" [innerHTML]="thread.content"></div>
                         <div *ngIf="thread.replies.length > 0">
                             <div class="posting-threads">
                                 <div class="posting-thread-preview" *ngFor="let reply of thread.replies">
