@@ -30,6 +30,9 @@
                             class="posting-image" src="{{ thread.user.image }}">
                     </div>
                     <div class="posting-main">
+                        <div class="posting-menu">
+                            <mat-icon fontIcon="reply_all"></mat-icon>
+                        </div>
                         <div class="posting-main-top">
                             <div class="posting-user"
                                 (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)">

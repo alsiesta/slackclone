@@ -120,14 +120,42 @@
 }
 
 .posting {
+  position: relative;
   display: flex;
   gap: 10px;
   padding: 24px;
   transition: all 125ms ease-in-out;
   width: 100%;
 
+  .posting-menu {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    opacity: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba($white, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    background-color: $darkgrey;
+    color: $textgrey;
+    cursor: pointer;
+
+    mat-icon {
+      transform: scaleX(-1);
+    }
+
+    &:hover {
+      background-color: $grey;
+    }
+  }
+
   &:hover {
     background-color: $grey;
+
+    .posting-menu {
+      opacity: 1;
+    }
   }
 
   .posting-main {
