@@ -2,5 +2,5 @@
     <app-sidebar></app-sidebar>
     <app-channel></app-channel>
     <app-chat class="d-none"></app-chat>
-    <app-threads></app-threads>
+    <app-threads *ngIf="this.channelService.threadsOpen"></app-threads>
 </div>

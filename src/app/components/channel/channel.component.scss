@@ -123,7 +123,7 @@
   position: relative;
   display: flex;
   gap: 10px;
-  padding: 24px;
+  padding: 16px 24px;
   transition: all 125ms ease-in-out;
   width: 100%;
 
@@ -195,6 +195,7 @@
       color: $silvergrey;
       font-size: $small;
       font-weight: 300;
+      transform: translateY(-1px);
     }
   }
 

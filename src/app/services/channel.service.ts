@@ -17,9 +17,11 @@ export class ChannelService {
   dateList: Array<any> = [];
   channelThreads: Array<any> = [];
   activeChannel: any;
-  defaultChannelId: string = 'gruppe-576';
+  defaultChannelId: string = 'gruppe-576'; //to be changed to #allgemein?
   channelReady: boolean = false;
   message = new Thread();
+  activeThread = new Thread();
+  threadsOpen: boolean = false;
 
   constructor(
     public channelDialog: MatDialog,
@@ -162,5 +164,11 @@ export class ChannelService {
       user: this.userService.currentUserId$,
     };
     this.firestoreService.addNewThread(this.message);
+  }
+
+  openThread(thread: any) {
+    this.activeThread = thread;
+    this.threadsOpen = true;
+    console.log(this.activeChannel.title, this.activeThread);
   }
 }
