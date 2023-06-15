@@ -17,6 +17,7 @@ export class ChannelService {
   dateList: Array<any> = [];
   channelThreads: Array<any> = [];
   activeChannel: any;
+  defaultChannelId: string = 'gruppe-576';
   channelReady: boolean = false;
   message = new Thread();
 
@@ -50,7 +51,8 @@ export class ChannelService {
   /**
    * load the channel content from firestore.service
    */
-  async loadChannelContent(channelID: string) {
+  async loadChannelContent(channelID?: string) {
+    channelID = channelID ? channelID : this.defaultChannelId;
     this.channelReady = false;
     await this.firestoreService.readChannels().then(() => {
       this.channelList = this.firestoreService.channelList;
@@ -64,7 +66,6 @@ export class ChannelService {
     this.findDates();
     this.sortThreadsByTime();
     this.setUserInChannelThreads();
-
     this.channelReady = true;
   }
 
@@ -72,8 +73,8 @@ export class ChannelService {
    * update the channel content when a new thread is added
    */
   updateChannelContent() {
-    this.findChannel('gruppe-576');
-    this.findThreads('gruppe-576');
+    this.findChannel(this.defaultChannelId);
+    this.findThreads(this.defaultChannelId);
     this.findDates();
     this.sortThreadsByTime();
     this.setUserInChannelThreads();
@@ -96,6 +97,7 @@ export class ChannelService {
     this.channelList?.forEach((element: any) => {
       if (element.id == channelID) {
         this.activeChannel = element;
+        this.defaultChannelId = this.activeChannel.id;
       }
     });
   }

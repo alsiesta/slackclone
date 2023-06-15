@@ -23,7 +23,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.channelService.loadChannelContent('gruppe-576');
+    this.channelService.loadChannelContent();
   }
 
   ngAfterViewChecked(): void {
