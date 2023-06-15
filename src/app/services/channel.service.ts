@@ -166,6 +166,9 @@ export class ChannelService {
     this.firestoreService.addNewThread(this.message);
   }
 
+  /**
+   * open thread component and set active thread
+   */
   openThread(thread: any) {
     this.activeThread = thread;
     this.threadsOpen = true;
