@@ -4,7 +4,6 @@ import { ChannelDialogComponent } from '../components/channel-dialog/channel-dia
 import { FirestoreService } from './firestore.service';
 import { DialogNewMessageComponent } from '../components/dialog-new-message/dialog-new-message.component';
 import { GlobalService } from './global.service';
-import { Observable } from 'rxjs';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 
@@ -13,7 +12,6 @@ import { UsersService } from './users.service';
 })
 export class ChannelService {
   channelList: Array<any>;
-  observerThreadList: Observable<any>;
   threadList: Array<any> = [];
   userList: Array<any> = [];
   dateList: Array<any> = [];
@@ -28,13 +26,7 @@ export class ChannelService {
     public firestoreService: FirestoreService,
     public globalService: GlobalService,
     public userService: UsersService
-  ) {
-    this.observerThreadList = this.firestoreService.getThreadList();
-    this.observerThreadList.subscribe((threads) => {
-      this.threadList = threads;
-      this.updateChannelContent();
-    });
-  }
+  ) {}
 
   /**
    * open the channel-info dialog

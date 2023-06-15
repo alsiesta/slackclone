@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -8,7 +9,18 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./channel.component.scss'],
 })
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewChecked {
-  constructor(public channelService: ChannelService) {}
+  observerThreadList: Observable<any>;
+
+  constructor(
+    public channelService: ChannelService,
+    public firestoreService: FirestoreService
+  ) {
+    this.observerThreadList = this.firestoreService.getThreadList();
+    this.observerThreadList.subscribe((threads) => {
+      this.channelService.threadList = threads;
+      this.channelService.updateChannelContent();
+    });
+  }
 
   ngOnInit(): void {
     this.channelService.loadChannelContent('gruppe-576');
