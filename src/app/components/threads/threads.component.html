@@ -18,16 +18,16 @@
                 <div [innerHTML]="this.channelService.activeThread.content"></div>
             </div>
         </div>
-        <div class="comments">5 weitere Kommentare anzeigen</div>
+        <div *ngIf="moreThanFive" class="comments">5 weitere Kommentare anzeigen</div>
 
-        <div class="user-message-more">
+        <div *ngFor="let reply of allReplies; index as i" class="user-message-more">
             <img src="assets/img/threads/profile-picture.png">
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
                     <div class="user-name">Peter</div>
                     <div class="time">vor 1 Tag</div>
                 </div>
-                <div>Hi, herzlich Willkommen :)</div>
+                <div>{{ this.reply.message }}</div>
             </div>
         </div>
         <app-commentfield></app-commentfield>

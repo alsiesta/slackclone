@@ -15,8 +15,10 @@ export class ThreadsComponent implements OnInit {
   currentUserData: any = [];
   allThreads: Thread[] = [];
   allUser: any = [];
+  allReplies: any = [];
   threadsFromCurrentUser: Thread[] = [];
   name: string;
+  moreThanFive: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -32,6 +34,7 @@ export class ThreadsComponent implements OnInit {
     this.getCurrentUserId();
     this.getThreadsFromCurrentUser();
     this.getAllUser();
+    this.getAllReplies();
   }
 
   async getAllThreads() {
@@ -62,5 +65,16 @@ export class ThreadsComponent implements OnInit {
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
     console.log('All Users comes from thread component:', this.allUser);
+  }
+
+  getAllReplies() {
+    this.allReplies = this.channelService.activeThread.replies;
+    console.log('All replies from thread component:', this.allReplies); 
+
+    if(this.allReplies.length > 5) {
+      this.moreThanFive = true;
+    } else {
+      this.moreThanFive = false;
+    }
   }
 }
