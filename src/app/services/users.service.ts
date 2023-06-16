@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
 import { UserTemplate } from '../models/usertemplate.class';
@@ -11,6 +11,10 @@ import {
   doc,
   getDoc,
   updateDoc,
+  query,
+  onSnapshot,
+  DocumentReference,
+  docData,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -24,16 +28,30 @@ export class UsersService  {
   ) {
     this.getCurrentUserId();
   }
+  ngOnInit () {
+    this.keepUsersUptodate();
+    this.observCurrentUser().subscribe((data) => {
+      this.currentUserData$ = data;
+    });
+}
 
+// ngAfterViewChecked(): void {
+//   this.getCurrentUserId();
 
+// }
   usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
   public usersCollListener = new BehaviorSubject<any>({ users: [] });
-
+  public userListener = new BehaviorSubject<any>({ user: UserTemplate });
+  
+  $currentUserData: UserTemplate;
   currentUserId$: any;
   currentUserName$: any;
   currentUserData$: any;
   currentUsers: any;
   fsUser = new UserTemplate();
+  
+  currentUserRef = collection(this.firestore, GLOBAL_VARS.USERS, );
+  
 
   keepUsersUptodate() {
     // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
@@ -44,9 +62,30 @@ export class UsersService  {
     });
   }
 
+  observCurrentUser (): Observable<any[]> {
+      const q = query(this.usersCollection);
+  
+      return new Observable<any[]>((observer) => {
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const user = [];
+          querySnapshot.forEach((doc) => {
+            user.push(doc.data());
+          });
+          observer.next((this.currentUserData$ = user));
+        });
+  
+        //Cleanup function to unsubscribe when the Observable is unsubscribed
+        return () => {
+          unsubscribe();
+        };
+      });
+    }
+  
+
   getAllUsers() {
     return this.currentUsers;
   }
+  
 
   getCurrentUserId() {
     onAuthStateChanged(this.auth, (user) => {
@@ -59,8 +98,11 @@ export class UsersService  {
         // return null;   EINE CALL BACK FN KANN NICHTS RETURNEN
       }
     });
+    return this.currentUserId$
   }
 
+
+  // AS PROMISE
   async getCurrentUserData() {
     const docRef = doc(this.usersCollection, this.currentUserId$);
     const docSnap = await getDoc(docRef);
@@ -74,7 +116,13 @@ export class UsersService  {
       return null;
     }
   }
-
+  
+  // AS OBSERVABLE
+  getUserById$(userId: string): Observable<any> {
+    const usersDocRef: DocumentReference = doc(this.usersCollection, userId);
+    return docData(usersDocRef, { idField: 'UserId' }) as Observable<any>;
+  }
+  
   async updateUserFieldValue(field,arg) {
     const docRef = doc(this.usersCollection, this.currentUserId$);
     await updateDoc(docRef, {

@@ -6,7 +6,6 @@
   border-radius: 100%;
 }
 
-
 .dialog-container {
   color: $white;
   width: 600px;
@@ -25,48 +24,52 @@
     }
   }
 
-  .title{
+  .title {
     color: rgba($textgrey, 0.5);
   }
+
 
   .dialog-top {
     background-color: $darkgrey;
     border-bottom: 1px solid rgba($textgrey, 0.5);
     padding: 24px;
 
-  font-size: $fonttitle;
-  font-weight: 400;
+    font-size: $fonttitle;
+    font-weight: 400;
   }
 
-  .field-name{
+  .field-name {
     color: rgba($textgrey, 0.5);
+    margin-bottom: 15px;
+  }
+
+  .field-value{
+    line-height: 32px;
+  }
+  .field-value-form{
+    line-height: 32px;
   }
   .material-symbols-sharp {
     cursor: pointer;
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 200,
-    'GRAD' 200,
-    'opsz' 30
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 200, "opsz" 30;
   }
-  .table-grid{
+  .table-grid {
     display: grid;
     gap: 1rem;
     align-content: flex-start;
     grid-auto-columns: 1fr;
-    grid-template-areas: 
-    "one two"
-    "three seven"
-    "four eight"
-    "five nine"
-    "six ten"
-    "six ten";
-    
-    
+    grid-template-areas:
+      "one two"
+      "three seven"
+      "four eight"
+      "five nine"
+      "six ten"
+      "six ten";
+
     :nth-child(1) {
       grid-area: one;
     }
-  
+
     :nth-child(2) {
       grid-area: two;
     }

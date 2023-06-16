@@ -7,8 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Thread } from 'src/app/models/thread.class';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { UsersService } from 'src/app/services/users.service';
-import { User } from 'firebase/auth';
+import {  User } from 'firebase/auth';
 import { Chat } from 'src/app/models/chat.class';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -26,6 +27,7 @@ export class SidebarComponent implements OnInit {
   allUsers: UserTemplate[] = [];
   currentUser: User[] = [];
   allChats: Chat[] = [];
+  userId$: any;
 
   constructor(private firestoreService: FirestoreService,
     private channelService: ChannelService,
@@ -33,17 +35,19 @@ export class SidebarComponent implements OnInit {
     public createChannelDialog: MatDialog,
     ) {}
 
-  async ngOnInit() {
-    this.channels = await this.firestoreService.readChannels();
-    this.threads = await this.firestoreService.getAllThreads();
-    this.allUsers = await this.usersService.getAllUsers();
-    this.currentUser = await this.usersService.getCurrentUserData();
-    this.allChats = await this.firestoreService.getAllChats();
-    console.log('Current User: ', this.currentUser)
-    console.log('Channels: ', this.channels)
-    console.log('Threads: ', this.threads)
-    console.log('All Users: ', this.allUsers)
-    console.log('All Chats: ', this.allChats)
+  async ngOnInit () {
+    // this.channels = await this.firestoreService.readChannels();
+    // this.threads = await this.firestoreService.getAllThreads();
+    // this.allUsers = await this.usersService.getAllUsers();
+    // this.currentUser = await this.usersService.getCurrentUserData();
+    // this.allChats = await this.firestoreService.getAllChats();
+    // this.userId$ = this.usersService.getCurrentUserId();
+    // console.log('Current User ID: ',this.userId$);
+    // console.log('Current User: ', this.currentUser)
+    // console.log('Channels: ', this.channels)
+    // console.log('Threads: ', this.threads)
+    // console.log('All Users: ', this.allUsers)
+    // console.log('All Chats: ', this.allChats)
   }
 
   toggleDropdown(key) {

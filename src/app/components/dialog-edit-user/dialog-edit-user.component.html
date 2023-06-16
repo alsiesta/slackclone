@@ -1,76 +1,100 @@
-<!-- <div>
-  <h1 class="dialog-top" mat-dialog-title><b>User Profile</b></h1>
-  <div mat-dialog-content>
-    <mat-icon mat-dialog-close>close</mat-icon>
-    <ul>
-      <p *ngIf="data.photoUrl"><img src="{{data.photoUrl}}" class="profile-image" alt="Profile Image"></p>
-
-      <p *ngIf="data.displayName">Nickname: <b>{{data.displayName}}</b></p>
-
-      <p *ngIf="data.email">Email: <b>{{data.email}}</b></p>
-
-
-      <p *ngIf="data.emailVerified === true">Email verified: <b>Yes</b></p>
-      <p *ngIf="data.emailVerified === false">Email verified: <b>No</b></p>
-      <p *ngIf="data.uid">User ID: <b>{{data.uid}}</b></p>
-
-    </ul>
-  </div>
-</div> -->
 <div class="dialog-container">
   <mat-icon class="close-icon" mat-button mat-dialog-close>close</mat-icon>
   <div class="dialog-top">
-    <span class="title">Your Profile </span><span
-      *ngIf="currentUserData$?.displayName"><b>{{currentUserData$?.displayName}}</b></span>
+    <span class="title">View and edit your profile </span>
+    <span *ngIf="!isEditing" (click)="startEdit()" class="material-symbols-sharp">edit</span>
+    <span *ngIf="isEditing" (click)="cancelEdit()" class="material-symbols-sharp">close</span>
   </div>
   <div class="dialog-main table-grid">
+    <div>{{currentUser?.email}}</div>
 
-    <div *ngIf="currentUserData$?.photoURL"><img src="{{currentUserData$?.photoURL}}" class="profile-image"
-        alt="Profile Image"></div>
-    <div *ngIf="currentUserData$?.displayName && !isEditing"><span class="field-name">Display Name:</span> 
-      <span  (click)="startEdit()" class="material-symbols-sharp">edit</span><br><b>{{currentUserData$?.displayName}}</b>
+    <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
     </div>
-    <div *ngIf="currentUserData$?.displayName && isEditing"><span class="field-name">Display Name:</span><br>
-      <b><input type="text" placeholder="{{currentUserData$?.displayName}}"></b><span (click)="updateUserProperty('displayName','Aljoscha')" class="material-symbols-sharp">done</span>  <span class="material-symbols-sharp" (click)="cancelEdit()">close</span>
-    </div>
-    <div *ngIf="currentUserData$?.firstName"><span class="field-name">Firstname:</span>
-      <br><b>{{currentUserData$?.firstName}}</b>
-    </div>
-    <div *ngIf="currentUserData$?.lastName"><span class="field-name">Lastname:</span>
-      <br><b>{{currentUserData$?.lastName}}</b>
-    </div>
-    <div *ngIf="currentUserData$?.email"><span class="field-name">Email:</span> <br><b>{{currentUserData$?.email}}</b>
-    </div>
-    <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b>
-    </div>
-    <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span><br>
-      <b>No</b>
+    <div *ngIf="!currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
     </div>
 
-    <div *ngIf="currentUserData$?.street"><span class="field-name">Street:</span>
-      <br><b>{{currentUserData$?.street}}</b>
-    </div>
-    <div *ngIf="currentUserData$?.city"><span class="field-name">City:</span> <br><b>{{currentUserData$?.city}}</b>
-    </div>
-    <div *ngIf="currentUserData$?.zipCode"><span class="field-name">Zip-Code:</span>
-      <br><b>{{currentUserData$?.zipCode}}</b>
-    </div>
-
-    <div *ngIf="currentUserData$?.birthDate"><span class="field-name">Birthdate:</span>
-      <br><b>{{currentUserData$?.birthDate}}</b>
-    </div>
-
-
-
-    <!-- <div class="create-channel-input">
-        <mat-icon>numbers</mat-icon>
-        <input class="channel-input" type="text" placeholder="z. B. community">
+    <div>
+      <span class="field-name">Display Name:</span>
+      <div *ngIf="!isEditing">
+        <span><b>{{currentUser?.displayName}}</b></span>
       </div>
-      <p class="dialog-description">Channels are conversations around a topic. Use a name that is easy to find and
-        understand.</p>
-      <div mat-dialog-actions class="btn-container">
-        <button mat-button class="btn">Weiter</button>
-      </div> -->
+      <div *ngIf="isEditing">
+        <input #displayname type="text" value="{{currentUser?.displayName}}">
+        <span *ngIf="isEditing" (click)="updateUserProperty('displayName', displayname.value)"
+          class="material-symbols-sharp">done</span>
+      </div>
+    </div>
+
+
+    <div>
+      <span class="field-name">Firstname:</span>
+      <div *ngIf="!isEditing">
+        <span><br><b>{{currentUser?.firstName}}</b></span>
+      </div>
+      <div *ngIf="isEditing">
+        <input type="text" #firstname value="{{currentUser?.firstName}}">
+        <span *ngIf="isEditing" (click)="updateUserProperty('firstName', firstname.value)"
+          class="material-symbols-sharp">done</span>
+      </div>
+    </div>
+
+
+    <div>
+      <span class="field-name">Lastname:</span>
+      <div *ngIf="!isEditing">
+        <span><br><b>{{currentUser?.lastName}}</b></span>
+      </div>
+      <div *ngIf="isEditing">
+        <input type="text" #lastName value="{{currentUser?.lastName}}">
+        <span *ngIf="isEditing" (click)="updateUserProperty('lastName', lastName.value)"
+          class="material-symbols-sharp">done</span>
+      </div>
+    </div>
+
+
+    <div>
+      <span class="field-name">Email:</span>
+      <div *ngIf="!isEditing">
+        <span> <br><b>{{currentUser?.email}}</b></span>
+      </div>
+      <div *ngIf="isEditing">
+        <input type="text" #email value="{{currentUser?.email}}">
+        <span *ngIf="isEditing" (click)="updateUserProperty('email', email.value)"
+          class="material-symbols-sharp">done</span>
+      </div>
+    </div>
+
+
+    <div>
+      <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b>
+      </div>
+      <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span><br>
+        <b>No</b>
+      </div>
+    </div>
+    <div *ngIf="currentUser?.street"><span class="field-name">Street:</span>
+      <br><b>{{currentUser?.street}}</b>
+    </div>
+
+
+    <div>
+      <div *ngIf="currentUser?.city"><span class="field-name">City:</span> <br><b>{{currentUser?.city}}</b>
+      </div>
+    </div>
+
+
+    <div>
+      <div *ngIf="currentUser?.zipCode"><span class="field-name">Zip-Code:</span>
+        <br><b>{{currentUser?.zipCode}}</b>
+      </div>
+    </div>
+
+    
+    <div>
+      <div *ngIf="currentUser?.birthDate"><span class="field-name">Birthdate:</span>
+        <br><b>{{currentUser?.birthDate}}</b>
+      </div>
+    </div>
 
   </div>
 </div>

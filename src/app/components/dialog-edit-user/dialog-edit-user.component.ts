@@ -1,14 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import {
-  MatDialogRef,
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-} from '@angular/material/dialog';
-import { NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/users.service';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
+import { Observable } from 'rxjs';
 
 export interface DialogData {
   displayName;
@@ -16,6 +10,13 @@ export interface DialogData {
   photoUrl;
   emailVerified;
   uid;
+}
+export interface IsEditing {
+  displayName?:boolean;
+  email?:boolean;
+  photoUrl?:boolean;
+  emailVerified?:boolean;
+  uid?:boolean;
 }
 
 @Component({
@@ -31,30 +32,51 @@ export class DialogEditUserComponent {
 
   currentUserData$: UserTemplate;
   isEditing = false;
-  currentUserId$: string = this.usersService.currentUserId$
+  currentUser$: any;
+  currentUserId$: string;
+  currentUser: UserTemplate;
+  counter: number = 0;
 
   ngOnInit() {
-    this.getCurrentUserData();
-
-
+    this.currentUserId$ = this.usersService.getCurrentUserId();
+    this.observable.subscribe(this.subscriber);
   }
 
-  getCurrentUserData () {
-    return this.usersService.getCurrentUserData().then((data) => {
-      this.currentUserData$ = data;
-      console.log(this.currentUserData$);
-    });
-  }
-  getCurrentUserId () {
-    return this.usersService.getCurrentUserData().then((data) => {
-      this.currentUserData$ = data;
-      this.currentUserId$ = data
-      console.log(this.currentUserData$);
-    });
-  }
-  
-  updateUserProperty (field,value) {
-    this.usersService.updateUserFieldValue(field,value)
+  observable = new Observable((subscriber) => {
+    subscriber.next(this.currentUserId$);
+    subscriber.next(
+      (this.currentUser$ = this.usersService.getUserById$(this.currentUserId$))
+    );
+    subscriber.next(
+      this.currentUser$.subscribe((data) => {
+        this.currentUser = data;
+      })
+    );
+    // subscriber.error();
+    subscriber.complete();
+  });
+
+  subscriber = {
+    next: (data) => {
+      this.counter++;
+      console.log(
+        `${
+          this.counter
+        }.) Subscriber received \"${typeof data}\" with this data:`,
+        data
+      );
+    },
+    error: (error) => {
+      console.error('An error occurred:', error);
+    },
+    complete: () => {
+      console.log('Subscriber Complete');
+    },
+  };
+
+  updateUserProperty(field, value) {
+    this.usersService.updateUserFieldValue(field, value);
+    this.isEditing = false;    
   }
 
   cancelEdit() {
@@ -64,5 +86,4 @@ export class DialogEditUserComponent {
   startEdit() {
     this.isEditing = true;
   }
-
 }

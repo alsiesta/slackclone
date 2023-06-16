@@ -1,3 +1,4 @@
+
 export class UserTemplate {
   password?: string;
   displayName?: string;
@@ -9,6 +10,7 @@ export class UserTemplate {
   street?: string;
   zipCode?: number;
   city?: string;
+  isOnline?: boolean;
 
   constructor(obj?: any) {
     this.password = obj ? obj.password : '';
