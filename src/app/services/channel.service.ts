@@ -172,6 +172,6 @@ export class ChannelService {
   openThread(thread: any) {
     this.activeThread = thread;
     this.threadsOpen = true;
-    console.log(this.activeChannel.title, this.activeThread);
+    console.log('I come from channel service:', this.activeChannel.title, this.activeThread);
   }
 }

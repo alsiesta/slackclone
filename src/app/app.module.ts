@@ -31,6 +31,7 @@ import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-ed
 import { DialogNewMessageComponent } from './components/dialog-new-message/dialog-new-message.component';
 import { QuillModule } from 'ngx-quill';
 import { DialogCreateNewChannelComponent } from './components/dialog-create-new-channel/dialog-create-new-channel.component';
+import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DialogCreateNewChannelComponent } from './components/dialog-create-new-
     DialogEditUserComponent,
     DialogNewMessageComponent,
     DialogCreateNewChannelComponent,
+    ThreadsShortcutComponent,
   ],
   imports: [
     BrowserModule,

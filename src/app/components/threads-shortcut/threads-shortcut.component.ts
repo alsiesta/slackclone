@@ -1,16 +1,15 @@
-import { Component, OnInit} from '@angular/core';
-import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { UsersService } from 'src/app/services/users.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { Component } from '@angular/core';
+import { Thread } from 'src/app/models/thread.class';
 
 @Component({
-  selector: 'app-threads',
-  templateUrl: './threads.component.html',
-  styleUrls: ['./threads.component.scss']
+  selector: 'app-threads-shortcut',
+  templateUrl: './threads-shortcut.component.html',
+  styleUrls: ['./threads-shortcut.component.scss']
 })
-export class ThreadsComponent implements OnInit {
-
+export class ThreadsShortcutComponent {
   currentUserId: string;
   currentUserData: any = [];
   allThreads: Thread[] = [];

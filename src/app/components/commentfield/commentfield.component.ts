@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
+import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class CommentfieldComponent implements OnInit {
   
   modules = {}
 
-  constructor(public channelService: ChannelService) {
+  constructor(public channelService: ChannelService, public firestoreService: FirestoreService) {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
@@ -62,15 +64,12 @@ export class CommentfieldComponent implements OnInit {
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     console.log(this.editorForm.get('editor').value);
-    this.channelService.addNewMessage(this.editorContent); 
+    //this.channelService.addNewMessage(this.editorContent);
   }
 
   maxLength(e) {
     if(e.editor.getLength() > 1000) {
       e.editor.deleteText(1000, e.editor.getLength());
     };
-    
-
-  }
-  
+  } 
 }
