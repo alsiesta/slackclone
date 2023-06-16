@@ -40,7 +40,7 @@
                     <div class="user-name">Mark</div>
                     <div class="time">{{ this.channelService.activeThread.date }}</div>
                 </div>
-                <div>{{ this.channelService.activeThread.content}}</div>
+                <div [innerHTML]="this.channelService.activeThread.content"></div>
             </div>
         </div>
         <div class="comments">5 weitere Kommentare anzeigen</div>
