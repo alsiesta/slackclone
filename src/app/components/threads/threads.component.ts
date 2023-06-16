@@ -14,6 +14,7 @@ export class ThreadsComponent implements OnInit {
   currentUserId: string;
   currentUserData: any = [];
   allThreads: Thread[] = [];
+  allUser: any = [];
   threadsFromCurrentUser: Thread[] = [];
   name: string;
 
@@ -30,6 +31,7 @@ export class ThreadsComponent implements OnInit {
     this.getCurrentUserData();
     this.getCurrentUserId();
     this.getThreadsFromCurrentUser();
+    this.getAllUser();
   }
 
   async getAllThreads() {
@@ -55,5 +57,10 @@ export class ThreadsComponent implements OnInit {
       i++;
     }
     console.log('Threads from current User', this.threadsFromCurrentUser);
+  }
+
+  getAllUser() {
+    this.allUser = this.usersService.getAllUsers();
+    console.log('All Users comes from thread component:', this.allUser);
   }
 }

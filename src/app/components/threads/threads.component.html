@@ -1,35 +1,10 @@
 <div class="threads-container">
-    <div class="title-and-channel ">
-        <div class="title">Threads</div>
-        <div class="channel"># {{ this.channelService.activeChannel.title}}</div>
-    </div>
-
-    <div *ngFor="let threadCurrentUser of threadsFromCurrentUser; index as i" class="post">
-        <div class="user-message">
-            <img src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name">{{ currentUserData.displayName }}</div>
-                    <div class="time">{{ threadCurrentUser.date }}</div>
-                </div>
-                <div>{{ threadCurrentUser.content }}</div>
-            </div>
+    <div class="title-channel-and-close-container">
+        <div class="title-and-channel">
+            <div class="title">Threads</div>
+            <div class="channel"># {{ this.channelService.activeChannel.title}}</div>
         </div>
-        <app-commentfield></app-commentfield>
-    </div>
-
-    <div class="post">
-        <div class="user-message">
-            <img src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name">Mark</div>
-                    <div class="time">vor 1 Tag</div>
-                </div>
-                <div>Hallo zusammen :)</div>
-            </div>
-        </div>
-        <app-commentfield></app-commentfield>
+        <div class="close"><img src="assets/img/threads/close.png"></div>
     </div>
 
     <div class="post">
@@ -53,17 +28,6 @@
                     <div class="time">vor 1 Tag</div>
                 </div>
                 <div>Hi, herzlich Willkommen :)</div>
-            </div>
-        </div>
-
-        <div class="user-message-more">
-            <img src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name">Nico</div>
-                    <div class="time">vor 1 Tag</div>
-                </div>
-                <div>Auch von meiner Seite ein herzliches Willkommen :)</div>
             </div>
         </div>
         <app-commentfield></app-commentfield>
