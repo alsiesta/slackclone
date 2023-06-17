@@ -1,5 +1,6 @@
-import { Component, Inject, InjectionToken } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-dialog-new-message',
@@ -10,6 +11,8 @@ export class DialogNewMessageComponent {
   time = new Date();
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { user: string; image: string; email: string }
+    public data: { user: string; image: string; email: string; id: string },
+    public chatService: ChatService,
+    public dialogRef: MatDialogRef<DialogNewMessageComponent>
   ) {}
 }

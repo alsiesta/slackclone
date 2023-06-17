@@ -26,7 +26,7 @@
                 <div *ngIf="thread.date == date" class="posting">
 
                     <div>
-                        <img (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)"
+                        <img (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email, thread.user.id)"
                             class="posting-image" src="{{ thread.user.image }}">
                     </div>
                     <div class="posting-main">
@@ -35,7 +35,7 @@
                         </div>
                         <div class="posting-main-top">
                             <div class="posting-user"
-                                (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email)">
+                                (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email, thread.user.id)">
                                 {{
                                 thread.user.name }}</div>
                             <div class="posting-time">{{ thread.time }}</div>

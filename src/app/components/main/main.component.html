@@ -1,6 +1,6 @@
 <div class="main-container">
     <app-sidebar></app-sidebar>
-    <app-channel></app-channel>
-    <app-chat class="d-none"></app-chat>
+    <app-channel *ngIf="!this.chatService.chatOpen"></app-channel>
+    <app-chat *ngIf="this.chatService.chatOpen"></app-chat>
     <app-threads *ngIf="this.channelService.threadsOpen"></app-threads>
 </div>

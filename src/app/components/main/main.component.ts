@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-main',
@@ -7,5 +8,8 @@ import { ChannelService } from 'src/app/services/channel.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-  constructor(public channelService: ChannelService) {}
+  constructor(
+    public channelService: ChannelService,
+    public chatService: ChatService
+  ) {}
 }

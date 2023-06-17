@@ -41,11 +41,11 @@ export class ChannelService {
   }
 
   /**
-   * open the channel-info dialog
+   * open the user-info dialog
    */
-  messageDialogOpen(user: string, image: string, email: string) {
+  messageDialogOpen(user: string, image: string, email: string, id: string) {
     const dialogRef = this.messageDialog.open(DialogNewMessageComponent, {
-      data: { user: user, image: image, email: email },
+      data: { user: user, image: image, email: email, id: id },
       maxWidth: '100vw',
     });
   }

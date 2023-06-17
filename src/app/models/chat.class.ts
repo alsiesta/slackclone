@@ -17,7 +17,7 @@ export class Chat {
     };
   }
 
-  public addUser(userId: string): void {
-    this.chatUsers.push(userId);
-  }
+  // public addUser(userId: string): void {
+  //   this.chatUsers.push(userId);
+  // }
 }
