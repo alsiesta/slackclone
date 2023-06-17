@@ -1,6 +1,7 @@
 @import "../../../styles/main.scss";
 
 .chat-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -10,10 +11,24 @@
   transition: all 125ms ease-in-out;
   border-right: 1px solid rgba($white, 0.2);
 
+  .text-editor {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 16px;
+    color: #000000;
+  }
+
   .chat-partner {
-    height: 61px;
+    height: 58px;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
+    display: flex;
+    align-items: center;
+    background-color: $darkgrey;
+    z-index: 1;
 
     img {
       width: 35px;
@@ -22,9 +37,39 @@
     }
 
     span {
-      font-size: $regular;
+      font-size: $fonttitle;
       font-weight: 500;
+      padding: 6px 1px;
+      border-radius: 6px;
       margin-left: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $grey;
+      }
+    }
+  }
+
+  .chat-content {
+    position: absolute;
+    max-height: calc(100% - 58px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: 100px;
+    padding-bottom: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background: transparent;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $lightgrey;
+      border-radius: 10px;
     }
   }
 
@@ -89,7 +134,7 @@
 .message {
   display: flex;
   gap: 10px;
-  padding: 24px;
+  padding: 16px 24px;
   transition: all 125ms ease-in-out;
 
   &:hover {

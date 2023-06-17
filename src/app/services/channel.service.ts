@@ -6,6 +6,7 @@ import { DialogNewMessageComponent } from '../components/dialog-new-message/dial
 import { GlobalService } from './global.service';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,8 @@ export class ChannelService {
     public messageDialog: MatDialog,
     public firestoreService: FirestoreService,
     public globalService: GlobalService,
-    public userService: UsersService
+    public userService: UsersService,
+    public chatService: ChatService
   ) {}
 
   /**
@@ -62,7 +64,7 @@ export class ChannelService {
     await this.firestoreService.getAllUsers().then(() => {
       this.userList = this.firestoreService.usersList;
     });
-
+    this.chatService.chatOpen = false;
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
@@ -125,7 +127,7 @@ export class ChannelService {
     this.channelThreads.forEach((element: any) => {
       this.dateList.push(element.date);
     });
-    this.dateList = this.globalService.uniqueDateList(this.dateList);
+    this.dateList = this.globalService.uniqueList(this.dateList);
     this.dateList = this.globalService.sortingDateList(this.dateList);
   }
 

@@ -9,15 +9,15 @@ export class GlobalService {
   /**
    * returns a list of unique dates
    */
-  uniqueDateList(dateList: Array<any>) {
-    let uniqueDateList = dateList.filter(
+  uniqueList(list: Array<any>) {
+    let uniqueList = list.filter(
       (value, index, array) => array.indexOf(value) === index
     );
-    dateList = [];
-    uniqueDateList.forEach((element: any) => {
-      dateList.push(element);
+    list = [];
+    uniqueList.forEach((element: any) => {
+      list.push(element);
     });
-    return dateList;
+    return list;
   }
 
   /**

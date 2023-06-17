@@ -1,32 +1,47 @@
-<div class="chat-container">
-    <div class="chat-partner">
-        <img src="{{ this.chatService.chatPartnerImage }}">
-        <span>{{ this.chatService.chatPartnerName }}</span>
-    </div>
-    <div class="chat-top">
-        <img src="{{ this.chatService.chatPartnerImage }}">
-        <span>{{ this.chatService.chatPartnerName }}</span>
-        <div class="chat-subtext">Diese Unterhaltung findet nur zwischen <span class="chat-partner-blue">@{{
-                this.chatService.chatPartnerName }}</span> und dir statt. Schaue dir das Profil der Person an, um mehr
-            über sie zu erfahren.
-        </div>
+<div *ngIf="this.chatService.chatReady" class="chat-container">
+    <div *ngFor="let partner of this.chatService.activeChatPartnerList" class="chat-partner">
+        <img src="{{ partner.image }}">
+        <span>{{ partner.name }}</span>
     </div>
 
-    <div *ngFor="let date of this.chatService.chatDates" class="chat-date-spacer">
-        <div class="chat-date">{{ date }}</div>
+    <div id="chat-content" class="chat-content">
 
-        <div *ngFor="let message of this.chatService.messages" class="message">
-            <div>
-                <img class="message-image" src="{{ message.image }}">
+        <div *ngFor="let partner of this.chatService.activeChatPartnerList" class="chat-top">
+            <img src="{{ partner.image }}">
+            <span>{{ partner.name }}</span>
+            <div class="chat-subtext">Diese Unterhaltung findet nur zwischen <span class="chat-partner-blue">@{{
+                    partner.name }}</span> und dir statt. Schaue dir das Profil der Person an, um mehr
+                über sie zu erfahren.
             </div>
-            <div class="message-main">
-                <div class="message-main-top">
-                    <div class="message-user">{{ message.user }}</div>
+        </div>
+
+        <div *ngFor="let date of this.chatService.dateList" class="chat-date-spacer">
+            <div class="chat-date">{{ date | date: 'dd.MM.yyyy' }}</div>
+
+            <ng-container *ngFor="let message of this.chatService.chatHistory">
+
+                <div *ngIf="message.date == date" class="message">
+
+                    <div>
+                        <img class="message-image" src="{{ message.user.image }}">
+                    </div>
+                    <div class="message-main">
+                        <div class="message-main-top">
+                            <div class="message-user">{{ message.user.name }}</div>
+                        </div>
+                        <div class="message-content">{{ message.message }}</div>
+                    </div>
+
                 </div>
-                <div class="message-content">{{ message.content }}</div>
-            </div>
+
+            </ng-container>
+
         </div>
 
+    </div>
+
+    <div class="text-editor">
+        <app-commentfield></app-commentfield>
     </div>
 
 

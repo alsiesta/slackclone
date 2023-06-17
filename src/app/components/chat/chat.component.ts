@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -6,6 +6,26 @@ import { ChatService } from 'src/app/services/chat.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent {
+export class ChatComponent implements AfterViewChecked, OnDestroy, OnInit {
   constructor(public chatService: ChatService) {}
+
+  ngOnInit(): void {
+    //this.chatService.loadChannelContent();
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottomOfContent();
+  }
+
+  ngOnDestroy(): void {
+    this.chatService.chatReady = false;
+  }
+
+  scrollToBottomOfContent(): void {
+    let content = document.getElementById('chat-content') || undefined;
+
+    try {
+      content.scrollTo(0, content.scrollHeight);
+    } catch (error) {}
+  }
 }

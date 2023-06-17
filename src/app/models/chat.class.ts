@@ -10,10 +10,21 @@ export class Chat {
   }
 
   public toJSON?(): any {
+    const formattedChat = this.chat.map((chat) => {
+      const formattedDate = chat.date
+        ? chat.date.toISOString().split('T')[0]
+        : '';
+      return {
+        user: chat.user,
+        date: formattedDate,
+        message: chat.message,
+      };
+    });
+
     return {
       chatId: this.chatId,
       chatUsers: this.chatUsers,
-      chat: this.chat,
+      chat: formattedChat,
     };
   }
 
