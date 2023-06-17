@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class ChatComponent implements AfterViewChecked, OnDestroy, OnInit {
   constructor(public chatService: ChatService) {}
 
   ngOnInit(): void {
-    //this.chatService.loadChannelContent();
+    //this.chatService.loadChatContent();
   }
 
   ngAfterViewChecked(): void {
