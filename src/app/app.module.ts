@@ -32,6 +32,7 @@ import { DialogNewMessageComponent } from './components/dialog-new-message/dialo
 import { QuillModule } from 'ngx-quill';
 import { DialogCreateNewChannelComponent } from './components/dialog-create-new-channel/dialog-create-new-channel.component';
 import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-
     DialogNewMessageComponent,
     DialogCreateNewChannelComponent,
     ThreadsShortcutComponent,
+    DateAgoPipe,
   ],
   imports: [
     BrowserModule,

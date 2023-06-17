@@ -37,6 +37,7 @@ export class ThreadsComponent implements OnInit {
     this.getCurrentUserId();
     this.getThreadsFromCurrentUser();
     this.getAllUser();
+    this.calculateDate();
   }
 
   async getAllThreads() {
@@ -67,5 +68,19 @@ export class ThreadsComponent implements OnInit {
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
     console.log('All Users comes from thread component:', this.allUser);
+  }
+
+  calculateDate() {
+    const dateOfPostModified = new Date(this.channelService.activeThread.date);
+    const currentDateModified = new Date();
+
+    console.log('Date of the Post:', dateOfPostModified);
+    console.log('Current Date:', currentDateModified);
+
+    const time = currentDateModified.getTime() - dateOfPostModified.getTime();
+    console.log('Time is:', time);
+    
+    
+    
   }
 }
