@@ -10,7 +10,7 @@ export class DateAgoPipe implements PipeTransform {
         if (value) {
             const seconds = Math.floor((+new Date() - +new Date(value)) / 1000);
             if (seconds < 29) // less than 30 seconds ago will show as 'Just now'
-                return 'vor einige Sekunden';
+                return 'vor wenigen Sekunden';
             const intervals = {
                 'Jahr': 31536000,
                 'Monat': 2592000,
