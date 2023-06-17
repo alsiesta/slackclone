@@ -61,16 +61,27 @@
 
     .message-button {
       border: 1px solid rgba($textgrey, 0.2);
+      color: $textgrey;
+      outline: none;
       border-radius: 8px;
       padding: 8px 16px;
       background-color: $darkgrey;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       transition: all 125ms ease-in-out;
 
+      &:disabled {
+        opacity: 0.2;
+
+        &:hover {
+          background-color: $darkgrey;
+          cursor: auto;
+        }
+      }
+
       &:hover {
+        cursor: pointer;
         background-color: $grey;
       }
 

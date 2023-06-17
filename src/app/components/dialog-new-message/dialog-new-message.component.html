@@ -13,7 +13,9 @@
                 '2-digit', minute:'2-digit'}) }} Uhr Ortszeit</span>
         </div>
     </div>
-    <div class="message-container-bottom" (click)="this.chatService.openChat(this.data.id); dialogRef.close();">
-        <div class="message-button"><mat-icon fontIcon="question_answer"></mat-icon>Message</div>
+    <div class="message-container-bottom">
+        <button class="message-button" (click)="this.chatService.openChat(this.data.id); dialogRef.close();"
+            [disabled]="this.data.id == this.userSevice.currentUserId$">
+            <mat-icon fontIcon="question_answer"></mat-icon>Message</button>
     </div>
 </div>
