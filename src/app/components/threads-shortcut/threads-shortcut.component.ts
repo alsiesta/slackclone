@@ -3,6 +3,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Component } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-threads-shortcut',
@@ -15,16 +16,22 @@ export class ThreadsShortcutComponent {
   allThreads: Thread[] = [];
   threadsFromCurrentUser: Thread[] = [];
   name: string;
+  observerThreadList: Observable<any>;
 
   constructor(
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService
   ) {
-
+    this.observerThreadList = this.firestoreService.getThreadList();
+    this.observerThreadList.subscribe((threads) => {
+      this.channelService.threadList = threads;
+      console.log('What I get here', this.channelService.threadList);
+      // this.channelService.updateChannelContent();
+    });
   }
 
-  async ngOnInit(): Promise <void> {
+  async ngOnInit(): Promise<void> {
     await this.getAllThreads();
     this.getCurrentUserData();
     this.getCurrentUserId();
@@ -42,13 +49,13 @@ export class ThreadsShortcutComponent {
   }
 
   async getCurrentUserData() {
-   this.currentUserData = await this.usersService.getCurrentUserData(); 
-   console.log('Current user data comes from the thread component', this.currentUserData);
+    this.currentUserData = await this.usersService.getCurrentUserData();
+    console.log('Current user data comes from the thread component', this.currentUserData);
   }
 
   getThreadsFromCurrentUser() {
-    for(let i = 0; i < this.allThreads.length; i++) {
-      if(this.allThreads[i]['user'] == this.currentUserId) {
+    for (let i = 0; i < this.allThreads.length; i++) {
+      if (this.allThreads[i]['user'] == this.currentUserId) {
         this.threadsFromCurrentUser.push(this.allThreads[i]);
       }
       i++;

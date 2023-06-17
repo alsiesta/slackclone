@@ -12,7 +12,7 @@
             <img src="assets/img/threads/profile-picture.png">
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
-                    <div class="user-name">Mark</div>
+                    <div class="user-name">{{ this.channelService.activeThread.user['name'] }}</div>
                     <div class="time">{{ this.channelService.activeThread.date }}</div>
                 </div>
                 <div [innerHTML]="this.channelService.activeThread.content"></div>
@@ -20,12 +20,12 @@
         </div>
         <div *ngIf="moreThanFive" class="comments">5 weitere Kommentare anzeigen</div>
 
-        <div *ngFor="let reply of allReplies; index as i" class="user-message-more">
+        <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
             <img src="assets/img/threads/profile-picture.png">
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
                     <div class="user-name">Peter</div>
-                    <div class="time">vor 1 Tag</div>
+                    <div class="time">{{ this.reply.date }}</div>
                 </div>
                 <div>{{ this.reply.message }}</div>
             </div>
