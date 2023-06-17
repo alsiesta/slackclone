@@ -47,8 +47,11 @@
     line-height: 32px;
   }
   .field-value-form{
-    line-height: 32px;
+    line-height: 16px;
+    background-color: tan;
   }
+
+  
   .material-symbols-sharp {
     cursor: pointer;
     font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 200, "opsz" 30;
@@ -113,43 +116,6 @@
         color: #d1d2d3;
         margin: 0 !important;
         padding: 20px 28px;
-      }
-
-      .create-channel-input {
-        display: block;
-        height: 44px;
-        margin: 0 28px;
-        border: 1px solid rgba(232, 232, 232, 0.3);
-        border-radius: 5px;
-        position: relative;
-        transition: all 125ms ease-in-out;
-
-        mat-icon {
-          font-size: 18px;
-          height: 18px;
-          width: 18px;
-          color: gray;
-          position: absolute;
-          left: 12px;
-          top: 12px;
-        }
-
-        .channel-input {
-          box-sizing: border-box;
-          border: none;
-          background-color: transparent;
-          padding: 4px 46px 4px 36px;
-          height: 100%;
-          left: 0;
-          line-height: 1.5;
-          position: absolute;
-          top: 0;
-          width: 100%;
-          color: #fff;
-          font-size: 18px;
-          border-radius: 5px;
-          transition: all 125ms ease-in-out;
-        }
       }
 
       .dialog-description {

@@ -94,8 +94,28 @@ export class FirestoreService {
       return null;
     }
   }
-  ///////////////// CHAT FUNKTIONEN ///////////////////
 
+
+  ngOnInit () {
+    // this.unsub();
+  }
+
+  ///////////////// CHAT FUNKTIONEN ///////////////////
+  
+ ///// LISTENER to CHATS CHANGE
+  unsub = onSnapshot(collection(this.firestore, GLOBAL_VARS.CHATS), (doc) => {
+  doc.forEach(doc => {
+    console.log('Chat Data changed: ',doc.data());
+  });
+});
+
+///// OBSERVABLE to CHATS CHANGE
+// observable = new Observable((subscriber) => {
+//   subscriber.next(this.chatList =);
+  
+
+
+// }
   async addNewChat(chat?: Chat) {
     const docRef = await addDoc(this.chatCollection, chat);
     console.log('Chat was added to Firebase: ', docRef.id);
@@ -154,7 +174,6 @@ export class FirestoreService {
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
   ///// LISTENER listening to THREADS CHANGE
-  // q = query(collection(this.firestore, "cities"), where("state", "==", "CA"));
   q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
   unsubscribe = onSnapshot(this.q, (querySnapshot) => {
     const threads = [];
