@@ -136,17 +136,33 @@ export class ChannelService {
     this.channelThreads.forEach((thread: any) => {
       this.userList.forEach((user: any) => {
         if (thread.user == user.id) {
-          thread.user = {
-            id: user.id,
-            name: user.displayName,
-            image: user.photoURL
-              ? user.photoURL
-              : 'assets/img/threads/profile-picture.png',
-            email: user.email,
-          };
+          this.setUserDataInThreads(thread, user);
+        }
+        if (thread.replies.length > 0) {
+          thread.replies.forEach((reply: any) => {
+            if (reply.user == user.id) {
+              this.setUserDataInThreads(reply, user);
+            }
+          });
         }
       });
     });
+  }
+
+  /**
+   * sets the user data in thread or reply
+   * @param threadObject - thread or reply from channelThreads
+   * @param user - user from userList
+   */
+  setUserDataInThreads(threadObject: any, user: any) {
+    threadObject.user = {
+      id: user.id,
+      name: user.displayName,
+      image: user.photoURL
+        ? user.photoURL
+        : 'assets/img/threads/profile-picture.png',
+      email: user.email,
+    };
   }
 
   /**
@@ -172,6 +188,10 @@ export class ChannelService {
   openThread(thread: any) {
     this.activeThread = thread;
     this.threadsOpen = true;
-    console.log('I come from channel service:', this.activeChannel.title, this.activeThread);
+    console.log(
+      'I come from channel service:',
+      this.activeChannel.title,
+      this.activeThread
+    );
   }
 }
