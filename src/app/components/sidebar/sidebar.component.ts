@@ -36,7 +36,7 @@ export class SidebarComponent implements OnInit {
     ) {}
 
   async ngOnInit () {
-    // this.channels = await this.firestoreService.readChannels();
+    this.channels = await this.firestoreService.readChannels();
     // this.threads = await this.firestoreService.getAllThreads();
     // this.allUsers = await this.usersService.getAllUsers();
     // this.currentUser = await this.usersService.getCurrentUserData();
