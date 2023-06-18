@@ -16,10 +16,10 @@ export class ThreadsComponent implements OnInit {
   currentUserData: any = [];
   allThreads: Thread[] = [];
   allUser: any = [];
-  allReplies: any = [];
   threadsFromCurrentUser: Thread[] = [];
   name: string;
   moreThanFive: boolean = false;
+  currentUser;
 
 
 
@@ -67,5 +67,31 @@ export class ThreadsComponent implements OnInit {
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
     console.log('All Users comes from thread component:', this.allUser);
+  }
+
+  getUserInformation() {
+    let curentUserId = this.channelService.activeThread.user['id'];
+    this.openProfileDetail(curentUserId);
+  }
+
+  getUserInformationFromReplies(user) {
+    let curentUserId = user['id'];
+    this.openProfileDetail(curentUserId);
+  }
+
+  openProfileDetail(currentUserId) {
+    for(let i = 0; i < this.allUser.length; i++) {
+      if(currentUserId == this.allUser[i].uid) {
+        this.currentUser = this.allUser[i];
+      }
+    }
+    let name = this.currentUser.displayName;
+    let image = this.currentUser.photoURL;
+    let email = this.currentUser.email;
+    this.channelService.messageDialogOpen(name, image, email, this.currentUserId);
+  }
+
+  closeThread() {
+    this.channelService.threadsOpen = false;
   }
 }
