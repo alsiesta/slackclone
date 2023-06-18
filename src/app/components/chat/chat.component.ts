@@ -1,6 +1,8 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,7 +10,16 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements AfterViewChecked, OnDestroy, OnInit {
-  constructor(public chatService: ChatService) {}
+    observerChatList: Observable<any>;
+
+
+  constructor(public chatService: ChatService, public firestoreservice: FirestoreService) {
+    this.observerChatList = this.firestoreservice.observeChat$;
+    this.observerChatList.subscribe((chats) => {
+      this.chatService.chatList = chats;
+      this.chatService.updateChatContent();
+    });
+  }
 
   ngOnInit(): void {
     //this.chatService.loadChatContent();

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
 import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 
@@ -12,7 +13,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./commentfield.component.scss']
 })
 export class CommentfieldComponent implements OnInit {
-
+  @Input() parentName: string;
   editorForm: FormGroup;
   editorContent: string;
 
@@ -22,7 +23,7 @@ export class CommentfieldComponent implements OnInit {
   
   modules = {}
 
-  constructor(public channelService: ChannelService, public firestoreService: FirestoreService) {
+  constructor(public channelService: ChannelService, public firestoreService: FirestoreService, public chatService: ChatService) {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
@@ -62,9 +63,16 @@ export class CommentfieldComponent implements OnInit {
   }
 
   onSubmit() {
+    //console.log(this.editorForm.get('editor').value);
+
     this.editorContent = this.editorForm.get('editor').value;
-    console.log(this.editorForm.get('editor').value);
-    this.channelService.addNewMessage(this.editorContent);
+    if (this.parentName == 'channel') {
+        this.channelService.addNewMessage(this.editorContent);
+    } else if (this.parentName == 'chat') {
+        this.chatService.sendChatMessage(this.editorContent);
+    } else {
+        //update thread function
+    }
   }
 
   maxLength(e) {

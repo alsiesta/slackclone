@@ -99,6 +99,14 @@ export class ChatService {
     this.chatReady = true;
   }
 
+  updateChatContent() {    
+    this.checkIfChatExists(this.activeChatPartnerList[0].id);
+    this.setChatHistory();
+    this.findDates();
+    this.setUserInChatHistory(this.activeChatPartnerList[0].id);
+    this.editChatPartnerList();
+  }
+
   /**
    * set the chat history from the chat object
    */
@@ -124,7 +132,7 @@ export class ChatService {
   /**
    * set the user data in the chat history
    */
-  setUserInChatHistory(chatPartner: string) {
+  setUserInChatHistory(chatPartner?: string) {
     if (this.chatHistory.length > 0) {
       this.chatHistory.forEach((chat: any) => {
         this.userList.forEach((user: any) => {
@@ -188,5 +196,13 @@ export class ChatService {
       email: userList.email,
     };
     this.activeChatPartnerList.push(chatPartner);
+  }
+
+  sendChatMessage(content: string) {
+    const user = this.userService.currentUserId$;
+    const message = content;
+    console.log(this.chat, user, message);
+    
+    this.firestoreService.addChatMessage(this.chat.chatId, user, message);
   }
 }

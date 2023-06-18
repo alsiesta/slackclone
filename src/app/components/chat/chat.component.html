@@ -29,7 +29,7 @@
                         <div class="message-main-top">
                             <div class="message-user">{{ message.user.name }}</div>
                         </div>
-                        <div class="message-content">{{ message.message }}</div>
+                        <div class="message-content" [innerHTML]="message.message"></div>
                     </div>
 
                 </div>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="text-editor">
-        <app-commentfield></app-commentfield>
+        <app-commentfield [parentName]="'chat'"></app-commentfield>
     </div>
 
 

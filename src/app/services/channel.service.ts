@@ -184,7 +184,7 @@ export class ChannelService {
       threadId: '',
       time: new Date(),
       user: this.userService.currentUserId$,
-    };
+    };    
     this.firestoreService.addNewThread(this.message);
   }
 
