@@ -184,7 +184,7 @@ export class ChannelService {
       threadId: '',
       time: new Date(),
       user: this.userService.currentUserId$,
-    };    
+    };
     this.firestoreService.addNewThread(this.message);
   }
 
@@ -204,7 +204,7 @@ export class ChannelService {
   }
 
   noComment() {
-    if(this.activeThread.replies.length == 0) {
+    if (this.activeThread.replies.length == 0) {
       this.show = false;
     } else {
       this.show = true;
@@ -212,7 +212,7 @@ export class ChannelService {
   }
 
   getAmountReplies() {
-    this.noComment()
+    this.noComment();
     if (this.activeThread.replies.length == 1) {
       this.single = true;
       this.plural = false;

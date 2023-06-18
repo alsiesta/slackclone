@@ -99,7 +99,7 @@ export class ChatService {
     this.chatReady = true;
   }
 
-  updateChatContent() {    
+  updateChatContent() {
     this.checkIfChatExists(this.activeChatPartnerList[0].id);
     this.setChatHistory();
     this.findDates();
@@ -202,7 +202,7 @@ export class ChatService {
     const user = this.userService.currentUserId$;
     const message = content;
     console.log(this.chat, user, message);
-    
+
     this.firestoreService.addChatMessage(this.chat.chatId, user, message);
   }
 }
