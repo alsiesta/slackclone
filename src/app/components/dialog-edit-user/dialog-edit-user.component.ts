@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/users.service';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { Observable } from 'rxjs';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { and } from 'firebase/firestore';
 
 export interface DialogData {
   displayName;
@@ -27,7 +29,7 @@ export interface IsEditing {
 export class DialogEditUserComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public usersService: UsersService
+    public usersService: UsersService, public firestoreService: FirestoreService,
   ) {}
 
   currentUserData$: UserTemplate;
@@ -36,14 +38,18 @@ export class DialogEditUserComponent {
   currentUserId$: string;
   currentUser: UserTemplate;
   counter: number = 0;
-
+  chat: any;
+  
   ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
     this.observable.subscribe(this.subscriber);
+    this.firestoreService.observeChat$.subscribe((data) => {console.log(data); this.chat = data;});
+    
   }
 
+  
   observable = new Observable((subscriber) => {
-    subscriber.next(this.currentUserId$);
+    // subscriber.next(this.currentUserId$);
     subscriber.next(
       (this.currentUser$ = this.usersService.getUserById$(this.currentUserId$))
     );
@@ -55,6 +61,8 @@ export class DialogEditUserComponent {
     // subscriber.error();
     subscriber.complete();
   });
+
+
 
   subscriber = {
     next: (data) => {

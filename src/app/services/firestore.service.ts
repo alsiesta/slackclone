@@ -24,6 +24,7 @@ import {
 } from '@angular/fire/firestore';
 import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
+import { where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -95,27 +96,59 @@ export class FirestoreService {
     }
   }
 
-
-  ngOnInit () {
-    // this.unsub();
-  }
+  ngOnInit() {  }
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
   
- ///// LISTENER to CHATS CHANGE
-  unsub = onSnapshot(collection(this.firestore, GLOBAL_VARS.CHATS), (doc) => {
-  doc.forEach(doc => {
-    console.log('Chat Data changed: ',doc.data());
-  });
+  /**
+   * 
+   * @returns Observable that listens to changes in the chats collection
+   */
+  chatListener = () => {
+    const q = query(collection(this.firestore, GLOBAL_VARS.CHATS));
+
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const chats = [];
+        querySnapshot.forEach((doc) => {
+          console.log('Change occured in this chat: ',doc.data()); // Specific doc that changed
+          chats.push(doc.data());
+        });
+        console.log('Current chats: ', chats); // All chats as an array
+        
+        subscriber.next(chats); // Emit the chats data to the subscriber
+      });
+      // Return the subscriber method
+      return {
+        unsubscribe() {
+          unsubscribe();
+        },
+      };
+    });
+  };
+
+ /**
+  *   Observable that listens to changes in the chats collection
+  */
+  observeChat$ = this.chatListener();
+
+/** 
+ * Subscription to the observable
+ */
+ subscription = this.observeChat$.subscribe((chats) => {
+  console.log('Received chats in subscription:', chats); // All chats as an array
 });
 
-///// OBSERVABLE to CHATS CHANGE
-// observable = new Observable((subscriber) => {
-//   subscriber.next(this.chatList =);
-  
+/**
+ * Unsubscribe from the observable
+ */
+// subscription.unsubscribe ();
 
 
-// }
+/**
+ * adding a new chat to the firestore
+ * @param chat 
+ */
   async addNewChat(chat?: Chat) {
     const docRef = await addDoc(this.chatCollection, chat);
     console.log('Chat was added to Firebase: ', docRef.id);
@@ -174,8 +207,8 @@ export class FirestoreService {
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
   ///// LISTENER listening to THREADS CHANGE
-  q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
-  unsubscribe = onSnapshot(this.q, (querySnapshot) => {
+  query = query(collection(this.firestore, GLOBAL_VARS.THREADS));
+  uunsubscribe = onSnapshot(this.query, (querySnapshot) => {
     const threads = [];
     querySnapshot.forEach((doc) => {
       //  threads.push(doc.data()['channel']);
