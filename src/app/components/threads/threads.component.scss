@@ -149,9 +149,10 @@
     display: flex;
 }
 
-.line {
+.comment-line {
     width: 55%;
     height: 0;
-    border: 1px solid rgba(209, 192, 192, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     margin-left: 16px;
 }
+
