@@ -64,7 +64,7 @@ export class CommentfieldComponent implements OnInit {
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     console.log(this.editorForm.get('editor').value);
-    //this.channelService.addNewMessage(this.editorContent);
+    this.channelService.addNewMessage(this.editorContent);
   }
 
   maxLength(e) {
