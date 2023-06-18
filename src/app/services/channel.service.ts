@@ -23,6 +23,10 @@ export class ChannelService {
   message = new Thread();
   activeThread = new Thread();
   threadsOpen: boolean = false;
+  amountReplies: number;
+  show: boolean = true;
+  single: boolean;
+  plural: boolean;
 
   constructor(
     public channelDialog: MatDialog,
@@ -190,10 +194,32 @@ export class ChannelService {
   openThread(thread: any) {
     this.activeThread = thread;
     this.threadsOpen = true;
+    this.getAmountReplies();
+
     console.log(
       'I come from channel service:',
       this.activeChannel.title,
       this.activeThread
     );
+  }
+
+  noComment() {
+    if(this.activeThread.replies.length == 0) {
+      this.show = false;
+    } else {
+      this.show = true;
+    }
+  }
+
+  getAmountReplies() {
+    this.noComment()
+    if (this.activeThread.replies.length == 1) {
+      this.single = true;
+      this.plural = false;
+    } else {
+      this.single = false;
+      this.plural = true;
+    }
+    this.amountReplies = this.activeThread.replies.length;
   }
 }

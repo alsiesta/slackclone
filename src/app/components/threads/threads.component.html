@@ -12,21 +12,26 @@
             <img (click)="getUserInformation()" src="assets/img/threads/profile-picture.png">
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
-                    <div class="user-name"
-                        (click)="getUserInformation()">
+                    <div class="user-name" (click)="getUserInformation()">
                         {{ this.channelService.activeThread.user['name'] }}</div>
                     <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
                 </div>
                 <div [innerHTML]="this.channelService.activeThread.content"></div>
             </div>
         </div>
-        <div *ngIf="moreThanFive" class="comments">5 weitere Kommentare anzeigen</div>
 
+        <div *ngIf="this.channelService.show" class="amount-comments">
+            <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
+            <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
+            <div class="line"></div>
+        </div>
+        
         <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
             <img (click)="getUserInformationFromReplies(this.reply.user)" src="assets/img/threads/profile-picture.png">
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
-                    <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{ this.reply.user['name'] }}</div>
+                    <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
+                        this.reply.user['name'] }}</div>
                     <div class="time">{{ this.reply.date | dateAgo }}</div>
                 </div>
                 <div>{{ this.reply.message }}</div>

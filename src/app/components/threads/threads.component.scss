@@ -138,3 +138,20 @@
         }
     }
 }
+
+.amount-comments {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+}
+
+.replies {
+    display: flex;
+}
+
+.line {
+    width: 55%;
+    height: 0;
+    border: 1px solid rgba(209, 192, 192, 0.8);
+    margin-left: 16px;
+}

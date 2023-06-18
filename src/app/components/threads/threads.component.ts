@@ -18,7 +18,6 @@ export class ThreadsComponent implements OnInit {
   allUser: any = [];
   threadsFromCurrentUser: Thread[] = [];
   name: string;
-  moreThanFive: boolean = false;
   currentUser;
 
 
@@ -80,8 +79,8 @@ export class ThreadsComponent implements OnInit {
   }
 
   openProfileDetail(currentUserId) {
-    for(let i = 0; i < this.allUser.length; i++) {
-      if(currentUserId == this.allUser[i].uid) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      if (currentUserId == this.allUser[i].uid) {
         this.currentUser = this.allUser[i];
       }
     }
