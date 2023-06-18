@@ -26,7 +26,7 @@ export class AuthService {
 
   loading: boolean = false;
   user: User;
-  userId;
+  userId: string = '';
   channel: Channel = new Channel;
 
   /// delete after channel form is finished /////////

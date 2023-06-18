@@ -25,6 +25,10 @@ import {
 import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { where } from 'firebase/firestore';
+import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +48,9 @@ export class FirestoreService {
   channelList: any;
   threadList: any;
   chatList: any;
+  currentUserId: string;
 
-  constructor(private firestore: Firestore) {
+  constructor (private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
@@ -96,12 +101,12 @@ export class FirestoreService {
     }
   }
 
-  ngOnInit() {  }
+  ngOnInit() {}
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
-  
+
   /**
-   * 
+   *
    * @returns Observable that listens to changes in the chats collection
    */
   chatListener = () => {
@@ -111,11 +116,11 @@ export class FirestoreService {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const chats = [];
         querySnapshot.forEach((doc) => {
-          console.log('Change occured in this chat: ',doc.data()); // Specific doc that changed
+          console.log('Change occured in this chat: ', doc.data()); // Specific doc that changed
           chats.push(doc.data());
         });
         console.log('Current chats: ', chats); // All chats as an array
-        
+
         subscriber.next(chats); // Emit the chats data to the subscriber
       });
       // Return the subscriber method
@@ -127,28 +132,27 @@ export class FirestoreService {
     });
   };
 
- /**
-  *   Observable that listens to changes in the chats collection
-  */
+  /**
+   *   Observable that listens to changes in the chats collection
+   */
   observeChat$ = this.chatListener();
 
-/** 
- * Subscription to the observable
- */
- subscription = this.observeChat$.subscribe((chats) => {
-  console.log('Received chats in subscription:', chats); // All chats as an array
-});
+  /**
+   * Subscription to the observable
+   */
+  subscription = this.observeChat$.subscribe((chats) => {
+    console.log('Received chats in subscription:', chats); // All chats as an array
+  });
 
-/**
- * Unsubscribe from the observable
- */
-// subscription.unsubscribe ();
+  /**
+   * Unsubscribe from the observable
+   */
+  // subscription.unsubscribe ();
 
-
-/**
- * adding a new chat to the firestore
- * @param chat 
- */
+  /**
+   * adding a new chat to the firestore
+   * @param chat
+   */
   async addNewChat(chat?: Chat) {
     const docRef = await addDoc(this.chatCollection, chat);
     console.log('Chat was added to Firebase: ', docRef.id);
@@ -278,6 +282,22 @@ export class FirestoreService {
       return data;
     });
     return this.threadList;
+  }
+
+
+  async updateSpecificThread(threadId:string, message:string, currentUserId:string) {
+    const date = new Date();
+    const formattedDate = date.toISOString().split('T')[0];
+    const arg = {
+      user: currentUserId,
+      date: formattedDate,
+      message: message,
+    };
+
+    const ref = doc(this.threadCollection, threadId);
+    await updateDoc(ref, {
+      replies: arrayUnion(arg),
+    });
   }
 
   ///////////////// USER FUNKTIONEN ///////////////////

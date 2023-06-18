@@ -29,42 +29,42 @@ export class HeaderComponent {
     // this.loglocalStorage();
   }
 
- /// delete after chat form is finished /////////
- mockChatData = {
-  chatId: 'Muster Chat ID',
-  chatUsers: ['User 1', 'User 2', 'User 3'],
-  chat: [
-    {
-      user: 'User 1',
-      date: new Date(),
-      message:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
-    },
-  ],
-};
-//////////////////////////////////
+  /// delete after chat form is finished /////////
+  mockChatData = {
+    chatId: 'Muster Chat ID',
+    chatUsers: ['User 1', 'User 2', 'User 3'],
+    chat: [
+      {
+        user: 'User 1',
+        date: new Date(),
+        message:
+          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+      },
+    ],
+  };
+  //////////////////////////////////
 
-/// delete after thread form is finished /////////
-mockThreadData = {
-  threadId: '',
-  user: 'KeejR8OjlSYfGHpGq2XV3bNytTH2',
-  date: new Date(),
-  time: new Date(),
-  content:
-    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
-  channel: 'gruppe-576',
-  replies: [
-    /*{
-      user: 'User 33',
-      date: new Date(),
-      message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
-    },
-    {
-      user: 'User 55',
-      date: new Date(),
-      message: 'Lorem ipsum',
-    },
-    {
+  /// delete after thread form is finished /////////
+  mockThreadData = {
+    threadId: '',
+    user: 'KeejR8OjlSYfGHpGq2XV3bNytTH2',
+    date: new Date(),
+    time: new Date(),
+    content:
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+    channel: 'gruppe-576',
+    replies: [
+      {
+        user: 'User 33',
+        date: new Date(),
+        message: 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+      },
+      {
+        user: 'User 55',
+        date: new Date(),
+        message: 'Lorem ipsum',
+      },
+      /* {
       user: 'User 23',
       date: new Date(),
       message: 'Lorem ipsum',
@@ -79,20 +79,22 @@ mockThreadData = {
       date: new Date(),
       message: 'Lorem ipsum',
     },*/
-  ],
-};
-//////////////////////////////////
-/// delete after thread form is finished /////////
+    ],
+  };
+
+
+  //////////////////////////////////
+  /// delete after thread form is finished /////////
   mockChannelData = {
-    channelID:'',
-    title:'Ein toller Titel',
+    channelID: '',
+    title: 'Ein toller Titel',
     creator: 'Aljoscha Schönfeld',
     creationDate: new Date(),
     info: 'Test Channel, nichts weiter.',
-  }
+  };
   ////////////////////////////
-  
-  get authUser$ () {
+
+  get authUser$() {
     return this.authService.getAuthCredentials();
   }
   get currentUserId$() {
@@ -101,7 +103,6 @@ mockThreadData = {
   get currentUserName$() {
     return this.usersService.currentUserName$;
   }
-  
 
   logOut() {
     this.authService.logOut();
@@ -113,10 +114,9 @@ mockThreadData = {
     // this.firestore.getAllUsers();
     // this.usersService.updateUserFieldValue('lastName', 'Schönfeld');
     // console.log('change Field Value');
-    
   }
 
-  logChats () {
+  logChats() {
     this.firestore.addNewChat(this.mockChatData);
     // this.firestore.getSpecificChat('hnaMoTLKFwDYuvYjNgQN');
     // this.firestore.getAllChats();
@@ -127,10 +127,10 @@ mockThreadData = {
   logThreads() {
     // this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    this.firestore.getAllThreads();
+    this.firestore.updateSpecificThread('2OwuPNOKF0m54z4AnPET','Lore fdsa dolor sit saffcing','JZqJhIAsqZbU4mw4gCfs00KdJHV2');
+    // this.firestore.getAllThreads();
   }
 
-  
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
   }
@@ -142,16 +142,13 @@ mockThreadData = {
     // this.firestore.getSpecificChannel('#gruppe-576');
   }
 
-  
-  logUserData () {
-    this.usersService.getCurrentUserData()
+  logUserData() {
+    this.usersService.getCurrentUserData();
     // this.usersService.updateUserFieldValue('city', 'Oyten')
   }
 
-  
   openDialog() {
     this.dialog.open(DialogEditUserComponent, {
-      
       // height: '350px',
       // width: '400px',
       // position: { right: '50px', top: '74px' },
@@ -164,7 +161,6 @@ mockThreadData = {
     });
   }
 
-  
   // loglocalStorage() {
   //   this.currentUserDisplayName = this.authService.getCurrentLocalUser();
   // }
