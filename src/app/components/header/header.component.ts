@@ -37,6 +37,7 @@ export class HeaderComponent {
       {
         user: 'User 1',
         date: new Date(),
+        time: new Date(),
         message:
           'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
       },

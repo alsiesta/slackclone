@@ -185,9 +185,14 @@ export class FirestoreService {
   async addChatMessage(chatId, user, message) {
     const date = new Date();
     const formdate = date.toISOString().split('T')[0];
+    const formtime = date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
     const arg = {
       user: user,
       date: formdate,
+      time: formtime,
       message: message,
     };
     const chatRef = doc(this.chatCollection, chatId);
