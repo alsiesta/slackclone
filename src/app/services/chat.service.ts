@@ -17,6 +17,7 @@ export class ChatService {
   chatPartnerList: Array<any> = [];
   activeChatPartnerList: Array<any> = [];
   chatHistory: Array<any> = [];
+  chatPartner: any;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -29,17 +30,23 @@ export class ChatService {
    * @param chatPartner - the user to open a chat with
    */
   async openChat(chatPartner: string) {
+    this.chatPartner = chatPartner;
+    await this.loadChatListFromFirestore();
+    if (!this.checkIfChatExists(this.chatPartner)) {
+      await this.addNewChat(this.chatPartner);
+    }
+    this.checkIfChatExists(this.chatPartner);
+    this.loadChatContent();
+    this.chatOpen = true;
+  }
+
+  /**
+   * load the chat list from firestore.service
+   */
+  async loadChatListFromFirestore() {
     await this.firestoreService.getAllChats().then(() => {
       this.chatList = this.firestoreService.chatList;
     });
-
-    if (this.chatList.length > 0 && this.checkIfChatExists(chatPartner)) {
-      this.openExistingChat();
-    } else {
-      this.addNewChat(chatPartner);
-    }
-    this.chatOpen = true;
-    this.loadChatContent(chatPartner);
   }
 
   /**
@@ -71,39 +78,36 @@ export class ChatService {
       chatUsers: [this.userService.currentUserId$, chatPartner],
     };
     await this.firestoreService.addNewChat(this.chat);
+    await this.loadChatListFromFirestore();
+    this.checkIfChatExists(chatPartner);
   }
-
-  /**
-   * open an existing chat with the chatPartner
-   */
-  openExistingChat() {}
 
   /**
    * load the chat content from firestore.service
    * @param chatPartner - the user to open a chat with
    */
-  async loadChatContent(chatPartner: string) {
+  async loadChatContent() {
     this.chatReady = false;
-    await this.firestoreService.getAllChats().then(() => {
-      this.chatList = this.firestoreService.chatList;
-    });
     await this.firestoreService.getAllUsers().then(() => {
       this.userList = this.firestoreService.usersList;
     });
-
-    this.checkIfChatExists(chatPartner);
     this.setChatHistory();
     this.findDates();
-    this.setUserInChatHistory(chatPartner);
+    this.setUserInChatHistory();
+    this.setChatPartnerList();
     this.editChatPartnerList();
     this.chatReady = true;
   }
 
+  /**
+   * update the chat content after a new message was sent
+   */
   updateChatContent() {
-    this.checkIfChatExists(this.activeChatPartnerList[0].id);
+    this.checkIfChatExists(this.chatPartner);
     this.setChatHistory();
     this.findDates();
-    this.setUserInChatHistory(this.activeChatPartnerList[0].id);
+    this.setUserInChatHistory();
+    this.setChatPartnerList();
     this.editChatPartnerList();
   }
 
@@ -132,18 +136,15 @@ export class ChatService {
   /**
    * set the user data in the chat history
    */
-  setUserInChatHistory(chatPartner?: string) {
+  setUserInChatHistory() {
     if (this.chatHistory.length > 0) {
       this.chatHistory.forEach((chat: any) => {
         this.userList.forEach((user: any) => {
           if (chat.user === user.id) {
-            this.chatPartnerList.push(chat.user);
             this.setUserDataInChat(chat, user);
           }
         });
       });
-    } else {
-      this.chatPartnerList.push(chatPartner);
     }
   }
 
@@ -164,6 +165,16 @@ export class ChatService {
   }
 
   /**
+   * set the chat partner list from the chat object
+   */
+  setChatPartnerList() {
+    this.chatPartnerList = [];
+    for (let user of this.chat.chatUsers) {
+      this.chatPartnerList.push(user);
+    }
+  }
+
+  /**
    * edit the chat partner list to a unique list and remove the current user
    */
   editChatPartnerList() {
@@ -173,9 +184,9 @@ export class ChatService {
     );
 
     this.chatPartnerList.forEach((user: any) => {
-      this.userList.forEach((userList: any) => {
-        if (user === userList.id) {
-          this.setActiveChatPartnerList(userList);
+      this.userList.forEach((userData: any) => {
+        if (user === userData.id) {
+          this.setActiveChatPartnerList(userData);
         }
       });
     });
@@ -198,6 +209,10 @@ export class ChatService {
     this.activeChatPartnerList.push(chatPartner);
   }
 
+  /**
+   * send a chat message - update chat in firestore
+   * @param content - the content of the chat message
+   */
   sendChatMessage(content: string) {
     const user = this.userService.currentUserId$;
     const message = content;
