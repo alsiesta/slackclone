@@ -34,9 +34,11 @@
                         this.reply.user['name'] }}</div>
                     <div class="time">{{ this.reply.date | dateAgo }}</div>
                 </div>
-                <div>{{ this.reply.message }}</div>
+                <div [innerHTML]="this.reply.message "></div>
             </div>
         </div>
-        <app-commentfield [parentName]="'thread'"></app-commentfield>
+        <div class="box--text-editor">
+            <app-commentfield [parentName]="'thread'"></app-commentfield>
+        </div>
     </div>
 </div>

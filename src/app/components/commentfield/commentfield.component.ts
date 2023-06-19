@@ -70,8 +70,8 @@ export class CommentfieldComponent implements OnInit {
         this.channelService.addNewMessage(this.editorContent);
     } else if (this.parentName == 'chat') {
         this.chatService.sendChatMessage(this.editorContent);
-    } else {
-        //update thread function
+    } else if(this.parentName == 'thread') {
+      //add new reply in specific thread
     }
   }
 

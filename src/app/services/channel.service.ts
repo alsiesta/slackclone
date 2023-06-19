@@ -35,7 +35,7 @@ export class ChannelService {
     public globalService: GlobalService,
     public userService: UsersService,
     public chatService: ChatService
-  ) {}
+  ) { }
 
   /**
    * open the channel-info dialog
@@ -193,8 +193,8 @@ export class ChannelService {
    */
   openThread(thread: any) {
     this.activeThread = thread;
-    this.threadsOpen = true;
     this.getAmountReplies();
+    this.threadsOpen = true;
 
     console.log(
       'I come from channel service:',

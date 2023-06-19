@@ -50,7 +50,7 @@ export class FirestoreService {
   chatList: any;
   currentUserId: string;
 
-  constructor (private firestore: Firestore) {
+  constructor(private firestore: Firestore) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
@@ -101,7 +101,7 @@ export class FirestoreService {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
 
@@ -281,7 +281,7 @@ export class FirestoreService {
   }
 
 
-  async updateSpecificThread(threadId:string, message:string, currentUserId:string) {
+  async updateSpecificThread(threadId: string, message: string, currentUserId: string) {
     const date = new Date();
     const formattedDate = date.toISOString().split('T')[0];
     const arg = {
