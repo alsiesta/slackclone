@@ -27,6 +27,8 @@ export class ChannelService {
   show: boolean = true;
   single: boolean;
   plural: boolean;
+  newReplies: any = [];
+  allUsers: any = [];
 
   constructor(
     public channelDialog: MatDialog,
@@ -195,12 +197,33 @@ export class ChannelService {
     this.activeThread = thread;
     this.getAmountReplies();
     this.threadsOpen = true;
+    this.getUserName();
 
     console.log(
       'I come from channel service:',
       this.activeChannel.title,
       this.activeThread
     );
+  }
+
+  async updateThread() {
+    this.newReplies = await this.firestoreService.getSpecificThread(this.activeThread.threadId);
+    this.allUsers = await this.userService.getAllUsers();
+    this.activeThread.replies = this.newReplies.replies;
+    console.log('updateThread', this.activeThread.replies);
+    console.log('allUsers:', this.allUsers);
+  }
+
+  getUserName() {
+    for (let i = 0; i < this.activeThread.replies.length; i++) {
+      for (let j = 0; j < this.allUsers.length; j++) {
+        if (this.activeThread.replies[i]['user'] == this.allUsers[j]['userId']) {
+          this.activeThread.user['name'] = this.allUsers[i].displayName;
+          console.log('Name:', this.allUsers[i].displayName);
+          console.log('Name:', this.activeThread.user['name']);
+        }
+      }
+    }
   }
 
   noComment() {

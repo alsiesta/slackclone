@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
-import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -13,6 +12,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./commentfield.component.scss']
 })
 export class CommentfieldComponent implements OnInit {
+  @ViewChild("textEditor") textEditor: ElementRef;
   @Input() parentName: string;
   editorForm: FormGroup;
   editorContent: string;
@@ -63,16 +63,16 @@ export class CommentfieldComponent implements OnInit {
   }
 
   onSubmit() {
-    //console.log(this.editorForm.get('editor').value);
-
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
         this.channelService.addNewMessage(this.editorContent);
     } else if (this.parentName == 'chat') {
         this.chatService.sendChatMessage(this.editorContent);
     } else if(this.parentName == 'thread') {
-      //add new reply in specific thread
+      this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.channelService.activeThread.user['id']);
+      this.channelService.updateThread();
     }
+    //this.textEditor.nativeElement.setContents([{ insert: '\n' }]);
   }
 
   maxLength(e) {
