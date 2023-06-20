@@ -11,6 +11,8 @@ export class UserTemplate {
   zipCode?: number;
   city?: string;
   isOnline?: boolean;
+  uid: string;
+
 
   constructor(obj?: any) {
     this.password = obj ? obj.password : '';
@@ -23,6 +25,7 @@ export class UserTemplate {
     this.street = obj ? obj.street : '';
     this.zipCode = obj ? obj.zipCode : '';
     this.city = obj ? obj.city : '';
+    this.uid = obj ? obj.uid : '';
   }
 
   public toJSON?(): any {
