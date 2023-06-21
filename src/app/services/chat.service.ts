@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Chat } from '../models/chat.class';
 import { UsersService } from './users.service';
@@ -18,6 +18,7 @@ export class ChatService {
   activeChatPartnerList: Array<any> = [];
   chatHistory: Array<any> = [];
   chatPartner: any;
+  scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public firestoreService: FirestoreService,
@@ -97,6 +98,9 @@ export class ChatService {
     this.setChatPartnerList();
     this.editChatPartnerList();
     this.chatReady = true;
+    setTimeout(() => {
+      this.scrollStatus.emit(false);
+    }, 500);
   }
 
   /**
@@ -218,6 +222,10 @@ export class ChatService {
     const message = content;
     console.log(this.chat, user, message);
 
-    this.firestoreService.addChatMessage(this.chat.chatId, user, message);
+    this.firestoreService
+      .addChatMessage(this.chat.chatId, user, message)
+      .then(() => {
+        this.scrollStatus.emit(true);
+      });
   }
 }

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -8,8 +8,9 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements AfterViewChecked, OnDestroy, OnInit {
+export class ChatComponent implements OnDestroy, OnInit {
   observerChatList: Observable<any>;
+  scrollStatus = this.chatService.scrollStatus;
 
   constructor(
     public chatService: ChatService,
@@ -20,25 +21,25 @@ export class ChatComponent implements AfterViewChecked, OnDestroy, OnInit {
       this.chatService.chatList = chats;
       this.chatService.updateChatContent();
     });
+    this.scrollStatus.subscribe((status) => {
+      if (status) {
+        this.scrollToBottomOfContent('smooth');
+      } else if (!status) {
+        this.scrollToBottomOfContent('instant');
+      }
+    });
   }
 
   ngOnInit(): void {
     //this.chatService.loadChatContent();
   }
 
-  ngAfterViewChecked(): void {
-    this.scrollToBottomOfContent();
-  }
-
   ngOnDestroy(): void {
     this.chatService.chatReady = false;
   }
 
-  scrollToBottomOfContent(): void {
+  scrollToBottomOfContent(style: any): void {
     let content = document.getElementById('chat-content') || undefined;
-
-    try {
-      content.scrollTo(0, content.scrollHeight);
-    } catch (error) {}
+    content.scrollTo({ top: content.scrollHeight, behavior: style });
   }
 }
