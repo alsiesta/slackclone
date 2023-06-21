@@ -102,6 +102,18 @@
     }
   }
 
+  input[type=text], select {
+    width: 100%;
+    color: $white;
+    padding: 4px 4px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid $silvergrey;
+    border-radius: 4px;
+    background-color: $darkgrey;
+    box-sizing: border-box;
+  }
+
   .dialog-main {
     background-color: $grey;
     padding: 32px;
