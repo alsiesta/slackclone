@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Channel } from '../../models/channel.class';
 import { UsersService } from 'src/app/services/users.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-dialog-create-new-channel',
   templateUrl: './dialog-create-new-channel.component.html',
@@ -12,9 +13,8 @@ export class DialogCreateNewChannelComponent {
 
   constructor(
     private usersService: UsersService,
-    private firestoreService: FirestoreService) {
-
-  }
+    private firestoreService: FirestoreService,
+    private dialogRef: MatDialogRef<DialogCreateNewChannelComponent>){}
 
   /**
    * creates a new channel class and added it to firestore.
@@ -27,6 +27,11 @@ export class DialogCreateNewChannelComponent {
     channel.creator = this.usersService.currentUserName$;
     
     this.firestoreService.addNewChannel(this.channelName, channel);
+    this.closeDialog();
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
 }
