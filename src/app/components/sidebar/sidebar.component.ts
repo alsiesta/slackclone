@@ -11,6 +11,8 @@ import {  User } from 'firebase/auth';
 import { Chat } from 'src/app/models/chat.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { ChatService } from 'src/app/services/chat.service';
+import { DialogCreateNewChatComponent } from '../dialog-create-new-chat/dialog-create-new-chat.component';
 
 
 
@@ -25,6 +27,7 @@ export class SidebarComponent implements OnInit {
   directmessagesAreOpen = true;
   observerChannelList: Observable<any>;
   channels: Channel[] = [];
+  chats: any;
 
   threads: Thread[] = [];
   allUsers: UserTemplate[] = [];
@@ -34,6 +37,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(private firestoreService: FirestoreService,
     private channelService: ChannelService,
+    private chatService: ChatService,
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
     ) 
@@ -41,6 +45,10 @@ export class SidebarComponent implements OnInit {
       this.firestoreService.getChannelList().subscribe((channels) => {
         this.channels = channels;
       });
+      // this.chatService.loadPersonalChatList(this.usersService.currentUserId$).then(() => {
+      //   this.chats = this.chatService.personalChatList;
+      // });
+      // console.log('Chats',this.chats)
     }
 
   ngOnInit () {
@@ -73,7 +81,13 @@ export class SidebarComponent implements OnInit {
   }
 
   openCreateChannelDialog() {
-    const dialogRef = this.createChannelDialog.open(DialogCreateNewChannelComponent, {
+    this.createChannelDialog.open(DialogCreateNewChannelComponent, {
+      maxWidth: '100vw',
+    });
+  }
+
+  openCreateChatDialog() {
+    this.createChannelDialog.open(DialogCreateNewChatComponent, {
       maxWidth: '100vw',
     });
   }

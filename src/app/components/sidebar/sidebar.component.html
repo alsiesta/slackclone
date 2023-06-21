@@ -45,7 +45,7 @@
             <mat-icon (click)="toggleDropdown('dm')" class="collapsIcon" [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
                 arrow_drop_down
             </mat-icon>
-            <span>
+            <span (click)="openCreateChatDialog()">
                 Directmessages
                 <mat-icon>add icon</mat-icon>
             </span>
@@ -59,9 +59,9 @@
                 <img class="drop-down-img" src="assets/img/threads/profile-picture.png">
                 <span>Max Mustermann</span>
             </div>
-            <div class="drop-down-element add-btn">
+            <div class="drop-down-element add-btn" (click)="openCreateChatDialog()">
                 <mat-icon class="drop-down-img">add_box</mat-icon>
-                <span (click)="logThreads()">Add Colleagues</span>
+                <span>Add Colleagues</span>
             </div>
         </div>
     </div>

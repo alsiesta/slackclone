@@ -33,6 +33,7 @@ import { QuillModule } from 'ngx-quill';
 import { DialogCreateNewChannelComponent } from './components/dialog-create-new-channel/dialog-create-new-channel.component';
 import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { DialogCreateNewChatComponent } from './components/dialog-create-new-chat/dialog-create-new-chat.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     DialogCreateNewChannelComponent,
     ThreadsShortcutComponent,
     DateAgoPipe,
+    DialogCreateNewChatComponent,
   ],
   imports: [
     BrowserModule,
