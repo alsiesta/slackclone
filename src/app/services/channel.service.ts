@@ -27,8 +27,9 @@ export class ChannelService {
   show: boolean = true;
   single: boolean;
   plural: boolean;
-  newReplies: any = [];
+  specificThread: any = [];
   allUsers: any = [];
+  name: string;
 
   constructor(
     public channelDialog: MatDialog,
@@ -197,8 +198,8 @@ export class ChannelService {
     this.activeThread = thread;
     this.getAmountReplies();
     this.threadsOpen = true;
-    this.getUserName();
-
+    this.getNameOpenThread();
+    this.getUserNameReplies();
     console.log(
       'I come from channel service:',
       this.activeChannel.title,
@@ -207,21 +208,54 @@ export class ChannelService {
   }
 
   async updateThread() {
-    this.newReplies = await this.firestoreService.getSpecificThread(this.activeThread.threadId);
-    this.allUsers = await this.userService.getAllUsers();
-    this.activeThread.replies = this.newReplies.replies;
-    console.log('updateThread', this.activeThread.replies);
-    console.log('allUsers:', this.allUsers);
+    this.specificThread = await this.firestoreService.getSpecificThread(this.activeThread.threadId);
+    this.activeThread = this.specificThread;
+    this.getNameOpenThreadAfterUpdate();
+    this.getUserNameRepliesAfterUpdate();
+    this.getAmountReplies();
   }
 
-  getUserName() {
+  async getUserNameReplies() {
+    this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
+      //i = 3
       for (let j = 0; j < this.allUsers.length; j++) {
-        if (this.activeThread.replies[i]['user'] == this.allUsers[j]['userId']) {
-          this.activeThread.user['name'] = this.allUsers[i].displayName;
-          console.log('Name:', this.allUsers[i].displayName);
-          console.log('Name:', this.activeThread.user['name']);
+        // j = 5
+        if (this.activeThread.replies[i].user['id'] == this.allUsers[j].uid) {
+          //this.activeThread.user['name'] = this.allUsers[j].displayName;
         }
+      }
+    }
+  }
+
+  async getUserNameRepliesAfterUpdate() {
+    this.allUsers = await this.userService.getAllUsers();
+    for (let i = 0; i < this.activeThread.replies.length; i++) {
+      //i = 3
+      for (let j = 0; j < this.allUsers.length; j++) {
+        // j = 5
+        if (this.activeThread.replies[i].user == this.allUsers[j].uid) {
+          this.setUserDataInThreads(this.activeThread.replies[i], this.allUsers[j]);
+          //this.activeThread.user['name'] = this.allUsers[j].displayName;
+        }
+      }
+    }
+  }
+
+  async getNameOpenThread() {
+    this.allUsers = await this.userService.getAllUsers();
+    for (let i = 0; i < this.allUsers.length; i++) {
+      if(this.activeThread.user['id'] == this.allUsers[i].uid) {
+        this.name = this.allUsers[i].displayName;
+      }
+    }
+  }
+
+  async getNameOpenThreadAfterUpdate() {
+    this.allUsers = await this.userService.getAllUsers();
+    for (let i = 0; i < this.allUsers.length; i++) {
+      if(this.activeThread.user == this.allUsers[i].uid) {
+        this.name = this.allUsers[i].displayName;
       }
     }
   }

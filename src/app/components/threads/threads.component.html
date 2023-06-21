@@ -13,7 +13,7 @@
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
                     <div class="user-name" (click)="getUserInformation()">
-                        {{ this.channelService.activeThread.user['name'] }}</div>
+                        {{ this.channelService.name }}</div>
                     <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
                 </div>
                 <div [innerHTML]="this.channelService.activeThread.content"></div>
@@ -31,7 +31,7 @@
             <div class="user-name-and-message">
                 <div class="user-name-and-time">
                     <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
-                        this.channelService.activeThread.user['name'] }}</div>
+                        this.reply.user['name'] }}</div>
                     <div class="time">{{ this.reply.date | dateAgo }}</div>
                 </div>
                 <div [innerHTML]="this.reply.message"></div>

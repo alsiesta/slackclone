@@ -1,3 +1,4 @@
+import { UsersService } from './../../services/users.service';
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
@@ -23,7 +24,7 @@ export class CommentfieldComponent implements OnInit {
   
   modules = {}
 
-  constructor(public channelService: ChannelService, public firestoreService: FirestoreService, public chatService: ChatService) {
+  constructor(public channelService: ChannelService, public firestoreService: FirestoreService, public chatService: ChatService, public usersService: UsersService) {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
@@ -69,7 +70,7 @@ export class CommentfieldComponent implements OnInit {
     } else if (this.parentName == 'chat') {
         this.chatService.sendChatMessage(this.editorContent);
     } else if(this.parentName == 'thread') {
-      this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.channelService.activeThread.user['id']);
+      this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.currentUserId$);
       this.channelService.updateThread();
     }
     //this.textEditor.nativeElement.setContents([{ insert: '\n' }]);
@@ -80,4 +81,8 @@ export class CommentfieldComponent implements OnInit {
       e.editor.deleteText(1000, e.editor.getLength());
     };
   } 
+
+  get currentUserId$() {
+    return this.usersService.currentUserId$;
+  }
 }
