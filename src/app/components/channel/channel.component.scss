@@ -52,18 +52,6 @@
     padding-top: 100px;
     padding-bottom: 200px;
     overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background: transparent;
-    }
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: $lightgrey;
-      border-radius: 10px;
-    }
   }
 
   .channel-top {
