@@ -26,7 +26,7 @@ export class DialogCreateNewChannelComponent {
     channel.title = this.channelName;
     channel.creator = this.usersService.currentUserName$;
     
-    this.firestoreService.addNewChannel(this.usersService.currentUserId$, channel);
+    this.firestoreService.addNewChannel(this.channelName, channel);
   }
 
 }

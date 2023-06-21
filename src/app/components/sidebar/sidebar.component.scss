@@ -5,6 +5,7 @@
     flex-direction: column;
     width: 250px;
     height: calc(100vh - $menuHeight);
+    overflow-y: scroll;
     background-color: $grey;
     color: $white;
     border-right: 1px solid rgba(255, 255, 255, 0.2);

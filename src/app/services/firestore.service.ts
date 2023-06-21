@@ -68,23 +68,42 @@ export class FirestoreService {
     return this.channelList;
   }
 
-  async addNewChannel(uid: string, channel: Channel) {
+  getChannelList(): Observable<any[]> {
+    const q = query(collection(this.firestore, GLOBAL_VARS.CHANNELS));
+
+    return new Observable<any[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const channels = [];
+        querySnapshot.forEach((doc) => {
+          channels.push(doc.data());
+        });
+        observer.next((this.channelList = channels));
+      });
+
+      //Cleanup function to unsubscribe when the Observable is unsubscribed
+      return () => {
+        unsubscribe();
+      };
+    });
+  }
+
+  async addNewChannel(cid: string, channel: Channel) {
     // check and avoid channel name doublication!!!
     let dateTime = new Date();
     this.channel.creationDate = dateTime;
     this.channel.creator = channel.creator;
     this.channel.info = channel.info;
     this.channel.title = channel.title;
-    const ref = doc(this.channelCollection, uid);
+    const ref = doc(this.channelCollection, cid);
     await setDoc(ref, this.channel.toJSON())
       .then(() => {
-        console.log('New Channel added to firestore', uid);
+        console.log('New Channel added to firestore', cid);
       })
       .catch((error) => {
         console.log(error);
       });
     await updateDoc(ref, {
-      channelID: uid,
+      channelID: cid,
     });
   }
 

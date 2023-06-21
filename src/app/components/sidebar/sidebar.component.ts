@@ -10,6 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
 import {  User } from 'firebase/auth';
 import { Chat } from 'src/app/models/chat.class';
 import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -22,7 +23,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SidebarComponent implements OnInit {
   channelsAreOpen = true;
   directmessagesAreOpen = true;
+  observerChannelList: Observable<any>;
   channels: Channel[] = [];
+
   threads: Thread[] = [];
   allUsers: UserTemplate[] = [];
   currentUser: User[] = [];
@@ -33,10 +36,14 @@ export class SidebarComponent implements OnInit {
     private channelService: ChannelService,
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
-    ) {}
+    ) 
+    {
+      this.firestoreService.getChannelList().subscribe((channels) => {
+        this.channels = channels;
+      });
+    }
 
-  async ngOnInit () {
-    this.channels = await this.firestoreService.readChannels();
+  ngOnInit () {
     // this.threads = await this.firestoreService.getAllThreads();
     // this.allUsers = await this.usersService.getAllUsers();
     // this.currentUser = await this.usersService.getCurrentUserData();
