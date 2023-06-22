@@ -34,6 +34,7 @@ import { DialogCreateNewChannelComponent } from './components/dialog-create-new-
 import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DialogCreateNewChatComponent } from './components/dialog-create-new-chat/dialog-create-new-chat.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { DialogCreateNewChatComponent } from './components/dialog-create-new-cha
     }),
     FormsModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     QuillModule.forRoot()
   ],
   providers: [AuthGuard, UsersService, FirestoreService, AuthService],

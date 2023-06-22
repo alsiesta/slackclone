@@ -41,28 +41,16 @@ export class SidebarComponent implements OnInit {
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
     ) 
-    {
-      this.firestoreService.getChannelList().subscribe((channels) => {
-        this.channels = channels;
-      });
-      // this.chatService.loadPersonalChatList(this.usersService.currentUserId$).then(() => {
-      //   this.chats = this.chatService.personalChatList;
-      // });
-      // console.log('Chats',this.chats)
-    }
+    {}
 
   ngOnInit () {
-    // this.threads = await this.firestoreService.getAllThreads();
-    // this.allUsers = await this.usersService.getAllUsers();
-    // this.currentUser = await this.usersService.getCurrentUserData();
-    // this.allChats = await this.firestoreService.getAllChats();
-    // this.userId$ = this.usersService.getCurrentUserId();
-    // console.log('Current User ID: ',this.userId$);
-    // console.log('Current User: ', this.currentUser)
-    // console.log('Channels: ', this.channels)
-    // console.log('Threads: ', this.threads)
-    // console.log('All Users: ', this.allUsers)
-    // console.log('All Chats: ', this.allChats)
+    this.firestoreService.getChannelList().subscribe((channels) => {
+      this.channels = channels;
+    });
+    this.chatService.loadPersonalChatList(this.usersService.currentUserId$).then(() => {
+      this.chats = this.chatService.personalChatList;
+    });
+    console.log('Chats',this.chats)
   }
 
   toggleDropdown(key) {
@@ -94,12 +82,6 @@ export class SidebarComponent implements OnInit {
 
   renderChannel(channel) {
     this.channelService.loadChannelContent(channel.id);
-  }
-
-  logThreads() {
-    // this.firestore.addNewThread(this.mockThreadData);
-    // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    this.firestoreService.getAllThreads();
   }
 
 }

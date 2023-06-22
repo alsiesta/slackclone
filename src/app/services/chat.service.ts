@@ -12,6 +12,7 @@ export class ChatService {
   chatOpen: boolean = false;
   chatReady: boolean = false;
   chatList: Array<any> = [];
+  personalChatList: Array<any> = [];
   userList: Array<any> = [];
   dateList: Array<any> = [];
   chatPartnerList: Array<any> = [];
@@ -48,6 +49,16 @@ export class ChatService {
     await this.firestoreService.getAllChats().then(() => {
       this.chatList = this.firestoreService.chatList;
     });
+  }
+
+  async loadPersonalChatList(userID: string) {
+    await this.loadChatListFromFirestore();
+    this.chatList.forEach(chat => {
+      if(chat.chatUsers[0] == userID) {
+        this.personalChatList.push(chat)
+      }
+    });
+    return this.personalChatList;
   }
 
   /**

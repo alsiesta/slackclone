@@ -1,17 +1,28 @@
-  <div class="dialog-container">
+<div class="dialog-container">
     <mat-icon class="close-icon" fontIcon="close" mat-button mat-dialog-close></mat-icon>
     <div class="dialog-top">
         <h1>Invite People to a Chat</h1>
     </div>
     <div class="dialog-main">
         <div class="dialog-main-box">
-            <h4>An:</h4>
-            <div class="create-chat-input">
-                <input class="chat-input" type="text" placeholder="name*">
-            </div>
-            <p class="dialog-description">Suche nach Leuten und lade Sie zu einer Unterhaltung ein.</p>
+            <h4>To:</h4>
+            <form (ngSubmit)="onSubmit()" [formGroup]="dmForm" id="dm-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input type="text" placeholder="Pick one" aria-label="Name" matInput formControlName="displayName"
+                        [matAutocomplete]="auto" required (input)="filterUsers()" />
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option (click)="selectUser(user)" *ngFor="let user of filteredUsers" 
+                            [value]="user.displayName">
+                            {{ user.displayName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+            <mat-error *ngIf="isButtonDisabled">No matching user found.</mat-error>
+            <p class="dialog-description">Search for people and invite them to a conversation.</p>
             <div mat-dialog-actions class="btn-container">
-                <button mat-button [disabled]="" class="btn">Weiter</button>
+                <button form="dm-form" mat-button [disabled]="isButtonDisabled" class="btn">Create</button>
             </div>
         </div>
     </div>
