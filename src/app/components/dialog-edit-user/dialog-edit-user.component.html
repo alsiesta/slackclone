@@ -2,12 +2,9 @@
   <mat-icon class="close-icon" mat-button mat-dialog-close>close</mat-icon>
   <div class="dialog-top">
     <span class="title">View and edit your profile </span>
-    <span *ngIf="!isEditing" (click)="startEdit()" class="material-symbols-sharp">edit</span>
-    <span *ngIf="isEditing" (click)="cancelEdit()" class="material-symbols-sharp">close</span>
   </div>
-  <div class="dialog-main table-grid">
-    <div>{{currentUser?.email}}</div>
 
+  <div class="dialog-main table-grid">
     <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
     </div>
     <div *ngIf="!currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
@@ -15,14 +12,15 @@
 
     <div>
       <span class="field-name">Display Name:</span>
-      <div *ngIf="!isEditing">
+      <div *ngIf="!isEditing.displayName">
         <span><b>{{currentUser?.displayName}}</b></span>
+        <span (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
       </div>
-      <div *ngIf="isEditing">
-        <input class="field-value-form"  #displayname type="text" value="{{currentUser?.displayName}}">
-        <span *ngIf="isEditing" (click)="updateUserProperty('displayName', displayname.value)"
-          class="material-symbols-sharp">done</span>
-        <span *ngIf="isEditing" (click)="cancelEdit()" class="material-symbols-sharp">close</span>
+      <div *ngIf="isEditing.displayName">
+        <input (keyup.enter)="updateUserProperty('displayName', displayName.value)" class="field-value-form" type="text"
+          #displayName value="{{currentUser?.displayName}}">
+        <span (click)="updateUserProperty('displayName', displayName.value)" class="material-symbols-sharp">done</span>
+        <span (click)="cancelEdit('displayName')" class="material-symbols-sharp">close</span>
 
       </div>
     </div>
@@ -30,39 +28,50 @@
 
     <div>
       <span class="field-name">Firstname:</span>
-      <div *ngIf="!isEditing">
+      <div *ngIf="!isEditing.firstName">
         <span><br><b>{{currentUser?.firstName}}</b></span>
+        <span (click)="startEdit('firstName')" class="material-symbols-sharp">edit</span>
       </div>
-      <div *ngIf="isEditing">
-        <input class="field-value-form"  type="text" #firstname value="{{currentUser?.firstName}}">
-        <span *ngIf="isEditing" (click)="updateUserProperty('firstName', firstname.value)"
-          class="material-symbols-sharp">done</span>
+
+      <div *ngIf="isEditing.firstName">
+        <input (keyup.enter)="updateUserProperty('firstName', firstname.value)" class="field-value-form" type="text"
+          #firstname value="{{currentUser?.firstName}}">
+        <span (click)="updateUserProperty('firstName', firstname.value)" class="material-symbols-sharp">done</span>
+        <span (click)="cancelEdit('firstName')" class="material-symbols-sharp">close</span>
       </div>
     </div>
 
 
     <div>
       <span class="field-name">Lastname:</span>
-      <div *ngIf="!isEditing">
+      <div *ngIf="!isEditing.lastName">
         <span><br><b>{{currentUser?.lastName}}</b></span>
+        <span (click)="startEdit('lastName')" class="material-symbols-sharp">edit</span>
+
       </div>
-      <div *ngIf="isEditing">
-        <input class="field-value-form"  type="text" #lastName value="{{currentUser?.lastName}}">
-        <span *ngIf="isEditing" (click)="updateUserProperty('lastName', lastName.value)"
-          class="material-symbols-sharp">done</span>
+      <div *ngIf="isEditing.lastName">
+        <input (keyup.enter)="updateUserProperty('lastName', lastName.value)" class="field-value-form" type="text"
+          #lastName value="{{currentUser?.lastName}}">
+        <span (click)="updateUserProperty('lastName', lastName.value)" class="material-symbols-sharp">done</span>
+        <span (click)="cancelEdit('lastName')" class="material-symbols-sharp">close</span>
+
       </div>
     </div>
 
 
     <div>
       <span class="field-name">Email:</span>
-      <div *ngIf="!isEditing">
+      <div *ngIf="!isEditing.email">
         <span> <br><b>{{currentUser?.email}}</b></span>
+        <span (click)="startEdit('email')" class="material-symbols-sharp">edit</span>
+
       </div>
-      <div *ngIf="isEditing">
-        <input class="field-value-form"  type="text" #email value="{{currentUser?.email}}">
-        <span *ngIf="isEditing" (click)="updateUserProperty('email', email.value)"
-          class="material-symbols-sharp">done</span>
+      <div *ngIf="isEditing.email">
+        <input (keyup.enter)="updateUserProperty('email', email.value)" class="field-value-form" type="text" #email
+          value="{{currentUser?.email}}">
+        <span (click)="updateUserProperty('email', email.value)" class="material-symbols-sharp">done</span>
+        <span (click)="cancelEdit('email')" class="material-symbols-sharp">close</span>
+
       </div>
     </div>
 
@@ -78,13 +87,17 @@
 
     <div>
       <span class="field-name">City:</span>
-      <div *ngIf="!isEditing">
+      <div *ngIf="!isEditing.city">
         <br><b>{{currentUser?.city}}</b>
+        <span (click)="startEdit('city')" class="material-symbols-sharp">edit</span>
+
       </div>
-      <div *ngIf="isEditing">
-        <input class="field-value-form"  type="text" #city value="{{currentUser?.street}}">
-        <span *ngIf="isEditing" (click)="updateUserProperty('city', city.value)"
-          class="material-symbols-sharp">done</span>
+      <div *ngIf="isEditing.city">
+        <input (keyup.enter)="updateUserProperty('email', city.value)" class="field-value-form" type="text" #city
+          value="{{currentUser?.city}}">
+        <span (click)="updateUserProperty('city', city.value)" class="material-symbols-sharp">done</span>
+        <span (click)="cancelEdit('city')" class="material-symbols-sharp">close</span>
+
       </div>
     </div>
 
@@ -92,15 +105,19 @@
     <div>
       <span class="field-name">Street:</span>
       <div>
-        <div *ngIf="!isEditing">
+        <div *ngIf="!isEditing.street">
           <br><b>{{currentUser?.street}}</b>
+          <span (click)="startEdit('street')" class="material-symbols-sharp">edit</span>
+
         </div>
       </div>
       <div>
-        <div *ngIf="isEditing">
-          <input class="field-value-form"  type="text" #street value="{{currentUser?.street}}">
-          <span *ngIf="isEditing" (click)="updateUserProperty('street', street.value)"
-            class="material-symbols-sharp">done</span>
+        <div *ngIf="isEditing.street">
+          <input (keyup.enter)="updateUserProperty('street', street.value)" class="field-value-form" type="text" #street
+            value="{{currentUser?.street}}">
+          <span (click)="updateUserProperty('street', street.value)" class="material-symbols-sharp">done</span>
+          <span (click)="cancelEdit('street')" class="material-symbols-sharp">close</span>
+
         </div>
       </div>
     </div>
@@ -110,15 +127,19 @@
     <div>
       <span class="field-name">Zip-Code:</span>
       <div>
-        <div *ngIf="!isEditing">
+        <div *ngIf="!isEditing.zipCode">
           <br><b>{{currentUser?.zipCode}}</b>
+          <span (click)="startEdit('zipCode')" class="material-symbols-sharp">edit</span>
+
         </div>
       </div>
       <div>
-        <div *ngIf="isEditing">
-          <input class="field-value-form"  type="text" #zipCode value="{{currentUser?.zipCode}}">
-          <span *ngIf="isEditing" (click)="updateUserProperty('zipCode', zipCode.value)"
-            class="material-symbols-sharp">done</span>
+        <div *ngIf="isEditing.zipCode">
+          <input (keyup.enter)="updateUserProperty('zipCode', zipCode.value)" class="field-value-form" type="text"
+            #zipCode value="{{currentUser?.zipCode}}">
+          <span (click)="updateUserProperty('zipCode', zipCode.value)" class="material-symbols-sharp">done</span>
+          <span (click)="cancelEdit('zipCode')" class="material-symbols-sharp">close</span>
+
         </div>
       </div>
     </div>
@@ -128,15 +149,19 @@
     <div>
       <span class="field-name">Birthdate:</span>
       <div>
-        <div *ngIf="!isEditing">
+        <div *ngIf="!isEditing.birthDate">
           <br><b>{{currentUser?.birthDate}}</b>
+          <span (click)="startEdit('birthDate')" class="material-symbols-sharp">edit</span>
+
         </div>
       </div>
       <div>
-        <div *ngIf="isEditing">
-          <input class="field-value-form" type="text" #birthDate value="{{currentUser?.birthDate}}">
-          <span *ngIf="isEditing" (click)="updateUserProperty('birthDate', birthDate.value)"
-            class="material-symbols-sharp">done</span>
+        <div *ngIf="isEditing.birthDate">
+          <input (keyup.enter)="updateUserProperty('birthDate', birthDate.value)" class="field-value-form" type="text"
+            #birthDate value="{{currentUser?.birthDate}}">
+          <span (click)="updateUserProperty('birthDate', birthDate.value)" class="material-symbols-sharp">done</span>
+          <span (click)="cancelEdit('birthDate')" class="material-symbols-sharp">close</span>
+
         </div>
       </div>
     </div>

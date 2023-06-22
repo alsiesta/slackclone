@@ -73,7 +73,8 @@ export class CommentfieldComponent implements OnInit {
       this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.currentUserId$);
       this.channelService.updateThread();
     }
-    //this.textEditor.nativeElement.setContents([{ insert: '\n' }]);
+    // Clear the editor content
+  this.editorForm.get('editor').setValue(null);
   }
 
   maxLength(e) {

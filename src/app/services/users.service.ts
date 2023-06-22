@@ -35,10 +35,7 @@ export class UsersService  {
     });
 }
 
-// ngAfterViewChecked(): void {
-//   this.getCurrentUserId();
 
-// }
   usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
   public usersCollListener = new BehaviorSubject<any>({ users: [] });
   public userListener = new BehaviorSubject<any>({ user: UserTemplate });
@@ -86,7 +83,12 @@ export class UsersService  {
     return this.currentUsers;
   }
   
-
+  
+  /**
+   * 1. get current user from firebase auth
+   * 2. set local properties to user data (id, name)
+   * @returns current user data from firebase auth
+   */
   getCurrentUserId() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -101,6 +103,14 @@ export class UsersService  {
     return this.currentUserId$
   }
 
+
+  // setAuthDisplayName (displayName: string) {
+  //   this.auth.currentUser.then((user) => {
+  //     user.updateProfile({
+  //       displayName: displayName,
+  //     });
+  //   });
+  // }
 
   // AS PROMISE
   async getCurrentUserData() {

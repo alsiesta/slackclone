@@ -29,7 +29,7 @@ export class HeaderComponent {
     // this.loglocalStorage();
   }
 
-  /// delete after chat form is finished /////////
+  /// delete from here  /////////
   mockChatData = {
     chatId: 'Muster Chat ID',
     chatUsers: ['User 1', 'User 2', 'User 3'],
@@ -65,25 +65,8 @@ export class HeaderComponent {
         date: new Date(),
         message: 'Lorem ipsum',
       },
-      /* {
-      user: 'User 23',
-      date: new Date(),
-      message: 'Lorem ipsum',
-    },
-    {
-      user: 'User 12',
-      date: new Date(),
-      message: 'Lorem ipsum',
-    },
-    {
-      user: 'User 3',
-      date: new Date(),
-      message: 'Lorem ipsum',
-    },*/
     ],
   };
-
-
   //////////////////////////////////
   /// delete after thread form is finished /////////
   mockChannelData = {
@@ -93,7 +76,7 @@ export class HeaderComponent {
     creationDate: new Date(),
     info: 'Test Channel, nichts weiter.',
   };
-  ////////////////////////////
+  /// till here  ///////////////////
 
   get authUser$() {
     return this.authService.getAuthCredentials();
@@ -128,12 +111,13 @@ export class HeaderComponent {
   logThreads() {
     // this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    this.firestore.updateSpecificThread('2OwuPNOKF0m54z4AnPET','Lore fdsa dolor sit saffcing','JZqJhIAsqZbU4mw4gCfs00KdJHV2');
+    // this.firestore.updateSpecificThread('2OwuPNOKF0m54z4AnPET','Lore fdsa dolor sit','JZqJhIAsqZbU4mw4gCfs00KdJHV2');
     // this.firestore.getAllThreads();
   }
 
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
+    this.authService.updateAuthCredentials('Donja Stinki'); 
   }
 
   logChannels() {

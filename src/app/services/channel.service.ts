@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
@@ -30,6 +30,7 @@ export class ChannelService {
   specificThread: any = [];
   allUsers: any = [];
   name: string;
+  scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public channelDialog: MatDialog,
@@ -38,7 +39,7 @@ export class ChannelService {
     public globalService: GlobalService,
     public userService: UsersService,
     public chatService: ChatService
-  ) { }
+  ) {}
 
   /**
    * open the channel-info dialog
@@ -78,6 +79,9 @@ export class ChannelService {
     this.sortThreadsByTime();
     this.setUserInChannelThreads();
     this.channelReady = true;
+    setTimeout(() => {
+      this.scrollStatus.emit(false);
+    }, 500);
   }
 
   /**
@@ -188,7 +192,9 @@ export class ChannelService {
       time: new Date(),
       user: this.userService.currentUserId$,
     };
-    this.firestoreService.addNewThread(this.message);
+    this.firestoreService.addNewThread(this.message).then(() => {
+      this.scrollStatus.emit(true);
+    });
   }
 
   /**
@@ -208,7 +214,9 @@ export class ChannelService {
   }
 
   async updateThread() {
-    this.specificThread = await this.firestoreService.getSpecificThread(this.activeThread.threadId);
+    this.specificThread = await this.firestoreService.getSpecificThread(
+      this.activeThread.threadId
+    );
     this.activeThread = this.specificThread;
     this.getNameOpenThreadAfterUpdate();
     this.getUserNameRepliesAfterUpdate();
@@ -235,7 +243,10 @@ export class ChannelService {
       for (let j = 0; j < this.allUsers.length; j++) {
         // j = 5
         if (this.activeThread.replies[i].user == this.allUsers[j].uid) {
-          this.setUserDataInThreads(this.activeThread.replies[i], this.allUsers[j]);
+          this.setUserDataInThreads(
+            this.activeThread.replies[i],
+            this.allUsers[j]
+          );
           //this.activeThread.user['name'] = this.allUsers[j].displayName;
         }
       }
@@ -245,7 +256,7 @@ export class ChannelService {
   async getNameOpenThread() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
-      if(this.activeThread.user['id'] == this.allUsers[i].uid) {
+      if (this.activeThread.user['id'] == this.allUsers[i].uid) {
         this.name = this.allUsers[i].displayName;
       }
     }
@@ -254,7 +265,7 @@ export class ChannelService {
   async getNameOpenThreadAfterUpdate() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
-      if(this.activeThread.user == this.allUsers[i].uid) {
+      if (this.activeThread.user == this.allUsers[i].uid) {
         this.name = this.allUsers[i].displayName;
       }
     }

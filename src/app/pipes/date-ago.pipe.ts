@@ -26,9 +26,9 @@ export class DateAgoPipe implements PipeTransform {
                 if (counter > 0)
                     if (counter === 1) {
                         return 'vor ' + counter + ' ' + i;
-                    } if(counter > 1 && (i == 'Jahr' || i == 'Monat' || i == 'Tag')) {
+                    } else if(counter > 1 && (i == 'Jahr' || i == 'Monat' || i == 'Tag')) {
                         return 'vor ' + counter + ' ' + i + 'en'; 
-                    } if(counter > 1 && (i == 'Woche' || i == 'Minute' || i == 'Sekunde')) {
+                    } else if(counter > 1 && (i == 'Woche' || i == 'Minute' || i == 'Sekunde' || i == 'Stunde')) {
                       return 'vor ' + counter + ' ' + i + 'n';
                   }
             }
