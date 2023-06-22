@@ -128,7 +128,7 @@ export class HeaderComponent {
   logThreads() {
     // this.firestore.addNewThread(this.mockThreadData);
     // this.firestore.getSpecificThread('9yuMwkxvzhfhM8QEn8qm');
-    this.firestore.updateSpecificThread('2OwuPNOKF0m54z4AnPET','Lore fdsa dolor sit','JZqJhIAsqZbU4mw4gCfs00KdJHV2');
+    // this.firestore.updateSpecificThread('2OwuPNOKF0m54z4AnPET','Lore fdsa dolor sit','JZqJhIAsqZbU4mw4gCfs00KdJHV2');
     // this.firestore.getAllThreads();
   }
 
