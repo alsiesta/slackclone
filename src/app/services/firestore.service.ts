@@ -135,10 +135,10 @@ export class FirestoreService {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const chats = [];
         querySnapshot.forEach((doc) => {
-          console.log('Change occured in this chat: ', doc.data()); // Specific doc that changed
+          // console.log('Change occured in this chat: ', doc.data()); // Specific doc that changed
           chats.push(doc.data());
         });
-        console.log('Current chats: ', chats); // All chats as an array
+        // console.log('Current chats: ', chats); // All chats as an array
 
         subscriber.next(chats); // Emit the chats data to the subscriber
       });
