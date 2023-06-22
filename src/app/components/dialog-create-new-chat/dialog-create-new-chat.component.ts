@@ -32,8 +32,11 @@ export class DialogCreateNewChatComponent {
       displayName: ''
     });
 
-     // Retrieve the user list from the usersService, initialize the filteredUsers array with the user list
+     // Retrieve the user list from the usersService and deletes the currentUser from it.
     this.userList = this.usersService.currentUsers;
+    let currentUser = this.usersService.currentUserId$;
+    this.userList = this.userList.filter(user => user.uid !== currentUser);
+    // initialize the filteredUsers array with the user list
     this.filteredUsers = this.userList;
   }
 
@@ -62,6 +65,10 @@ export class DialogCreateNewChatComponent {
     this.isButtonDisabled = !this.filteredUsers.some(user => user.displayName.toLowerCase() == searchValue);
   }
 
+  /**
+   * OnSubmit Method. Opens or creates a chat with the selected user depending if there is already an existing one.
+   * 
+   */
   onSubmit() {
     this.chatService.openChat(this.dmForm.value.uid);
     this.closeDialog();
