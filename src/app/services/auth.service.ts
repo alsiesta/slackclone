@@ -107,8 +107,9 @@ export class AuthService {
       const uid = user.uid;
     //   console.log('DisplayName: ', displayName,' \nEmail: ', email,' \nphotoURL: ', photoURL,' \nEmail verified: ', emailVerified,' \nUID: ', uid);
     //  const authUser = [displayName,email,photoURL,emailVerified]
+
     //   return authUser;
-      console.log('Authenticated User in Firestore: ', user);
+      // console.log('Authenticated User in Firestore: ', user);
       
       return user;
     } else {
