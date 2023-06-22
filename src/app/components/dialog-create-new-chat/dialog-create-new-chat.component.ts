@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -19,7 +21,12 @@ export class DialogCreateNewChatComponent {
    * @param formBuilder - FormBuilder instance used to create the form group.
    * @param usersService - UsersService instance used to retrieve the user list.
    */
-  constructor(private formBuilder: FormBuilder, private usersService: UsersService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private usersService: UsersService,
+    private chatService: ChatService,
+    private dialogRef: MatDialogRef<DialogCreateNewChatComponent>)
+    {
     // Create the form group using the formBuilder
     this.dmForm = this.formBuilder.group({
       displayName: ''
@@ -37,6 +44,7 @@ export class DialogCreateNewChatComponent {
    */
   selectUser(user: any) {
     this.dmForm.value.displayName = user.displayName;
+    this.dmForm.value.uid = user.uid;
     this.isButtonDisabled = false;
   }
 
@@ -55,6 +63,11 @@ export class DialogCreateNewChatComponent {
   }
 
   onSubmit() {
-    console.log('Button',this.dmForm.value.displayName);
+    this.chatService.openChat(this.dmForm.value.uid);
+    this.closeDialog();
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }
