@@ -5,6 +5,7 @@ import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { and } from 'firebase/firestore';
+import { AuthService } from 'src/app/services/auth.service';
 
 export interface DialogData {
   displayName;
@@ -36,7 +37,8 @@ export class DialogEditUserComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public usersService: UsersService,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public authService: AuthService
   ) {}
 
   currentUserData$: UserTemplate;
@@ -56,7 +58,7 @@ export class DialogEditUserComponent {
   };
 
   currentUser$: any;
-  currentUserId$: string;
+  currentUserId$: any;
   currentUser: UserTemplate;
   counter: number = 0;
   chat: any;
@@ -102,8 +104,18 @@ export class DialogEditUserComponent {
     },
   };
 
+  /**
+   * // update user property in specific field in firebase firestore.
+   * // update displayName in firebase auth in case it was changed.
+   * @param field 
+   * @param value 
+   */
   updateUserProperty(field, value) {
     this.usersService.updateUserFieldValue(field, value);
+    if (field === 'displayName') {
+      this.authService.updateAuthCredentials(value);
+    }
+    this.authService.getAuthCredentials();
     this.cancelEdit(field);
   }
 

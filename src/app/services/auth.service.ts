@@ -108,6 +108,8 @@ export class AuthService {
     //   console.log('DisplayName: ', displayName,' \nEmail: ', email,' \nphotoURL: ', photoURL,' \nEmail verified: ', emailVerified,' \nUID: ', uid);
     //  const authUser = [displayName,email,photoURL,emailVerified]
     //   return authUser;
+      console.log('Authenticated User in Firestore: ', user);
+      
       return user;
     } else {
       throw new Error('There is no authenticated user in Firestore!');
