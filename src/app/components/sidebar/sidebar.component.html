@@ -6,10 +6,12 @@
 
     <!-- Shortcuts -->
     <div class="shortcuts-container">
-        <div class="shortcut">
-            <mat-icon>chat</mat-icon>
-            <span>Threads</span>
-        </div>
+        <a routerLink="thread">
+            <div class="shortcut">
+                <mat-icon>chat</mat-icon>
+                <span>Threads</span>
+            </div>
+        </a>
         <div class="shortcut">
             <mat-icon>group</mat-icon>
             <span>Users</span>
@@ -28,7 +30,8 @@
             </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
-            <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)" class="drop-down-element">
+            <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)"
+                class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
                 <span>{{ channel.title }}</span>
             </div>
@@ -42,7 +45,8 @@
     <!-- Directmessages -->
     <div class="sidebar-drop-down-container">
         <div class="drop-down-button">
-            <mat-icon (click)="toggleDropdown('dm')" class="collapsIcon" [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
+            <mat-icon (click)="toggleDropdown('dm')" class="collapsIcon"
+                [ngClass]="directmessagesAreOpen ? '' : 'rotate90'">
                 arrow_drop_down
             </mat-icon>
             <span (click)="openCreateChatDialog()">

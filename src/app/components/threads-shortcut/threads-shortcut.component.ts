@@ -27,7 +27,7 @@ export class ThreadsShortcutComponent {
     this.observerThreadList.subscribe((threads) => {
       this.channelService.threadList = threads;
       console.log('What I get here', this.channelService.threadList);
-      // this.channelService.updateChannelContent();
+      // updateThreads
     });
   }
 
