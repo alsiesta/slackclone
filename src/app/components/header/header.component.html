@@ -4,7 +4,8 @@
     <mat-icon class="menu-icon">menu</mat-icon>
     <input type="text">
     <div>
-      <span [style.displayName]="true">{{currentUserName$}}</span> 
+      <span [style.displayName]="true">{{currentUserName$}}</span>  
+      <span [style.displayName]="true">|  Name: {{authUser$.displayName}}</span> 
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>

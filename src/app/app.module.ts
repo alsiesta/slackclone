@@ -26,6 +26,8 @@ import { CommentfieldComponent } from './components/commentfield/commentfield.co
 import { UsersService } from './services/users.service';
 import { FirestoreService } from './services/firestore.service';
 import { AuthService } from './services/auth.service';
+import { provideStorage, getStorage} from '@angular/fire/storage'; 
+
 import { ChatComponent } from './components/chat/chat.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewMessageComponent } from './components/dialog-new-message/dialog-new-message.component';
@@ -65,6 +67,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideMessaging(() => getMessaging()),
+    provideStorage(() => getStorage()),
     BrowserAnimationsModule,
     HotToastModule.forRoot({
       duration: 3000,

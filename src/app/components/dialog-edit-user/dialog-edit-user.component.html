@@ -5,9 +5,14 @@
   </div>
 
   <div class="dialog-main table-grid">
-    <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
+
+    <input type="file" (change)="onFileSelected($event)" />
+    <button (click)="onUpload()" [disabled]="!selectedFile">Upload</button>
+    
+
+    <div *ngIf="currentUser?.photoURL"><img src="https://firebasestorage.googleapis.com/v0/b/slackclone-a5cb0.appspot.com/o/alexander_schoenfeld_bw%20large.jpg?alt=media&token=15dda780-0d1d-4ae1-98ea-1a3d5d0c4b6b" class="profile-image" alt="Profile Image">
     </div>
-    <div *ngIf="!currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image" alt="Profile Image">
+    <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image" alt="Profile Image">
     </div>
 
     <div>

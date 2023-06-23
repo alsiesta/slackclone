@@ -117,7 +117,6 @@ export class HeaderComponent {
 
   logFirebaseAuthCredentials() {
     this.authService.getAuthCredentials();
-    this.authService.updateAuthCredentials('Donja Stinki'); 
   }
 
   logChannels() {

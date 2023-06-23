@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { and } from 'firebase/firestore';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { Storage , ref, uploadBytesResumable,getDownloadURL, uploadBytes, getStorage} from '@angular/fire/storage';
+import { state } from '@angular/animations';
 export interface DialogData {
   displayName;
   email;
@@ -34,12 +35,45 @@ export interface IsEditing {
   styleUrls: ['./dialog-edit-user.component.scss'],
 })
 export class DialogEditUserComponent {
-  constructor(
+  constructor (
+    public storage: Storage,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public usersService: UsersService,
     public firestoreService: FirestoreService,
     public authService: AuthService
   ) {}
+
+  selectedFile: File;
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  async onUpload(): Promise<void> {
+    if (!this.selectedFile) {
+      return;
+    }
+    const storage = getStorage();
+    const storageRef = ref(storage, this.selectedFile.name);
+    await uploadBytes(storageRef, this.selectedFile);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log('File available at: ', downloadURL);
+    // Do something with the download URL, e.g., save it in your database
+  }
+
+
+  // addData () {
+  //   const storageRef = ref(this.storage, this.file.name);
+  //   const uploadTask = uploadBytesResumable(storageRef, this.file);
+  //   uploadTask.on('state_changed', (snapshot) => {
+  //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //     console.log('Upload is ' + progress + '% done');
+  //   },() => {
+  //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //       console.log('File available at', downloadURL);
+  //     });
+  //   });
+  // }
 
   currentUserData$: UserTemplate;
 
@@ -110,8 +144,9 @@ export class DialogEditUserComponent {
    * @param field 
    * @param value 
    */
-  updateUserProperty(field, value) {
+  updateUserProperty (field, value) {
     this.usersService.updateUserFieldValue(field, value);
+    console.log(this.usersService.currentUserName$)
     if (field === 'displayName') {
       this.authService.updateAuthCredentials(value);
     }
