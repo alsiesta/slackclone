@@ -50,7 +50,7 @@ export class AuthService {
           email,
           password
         );
-        this.updateAuthCredentials(name);
+        this.updateAuthdisplayName(name);
       }
     );
     this.toast.info(`Hi ${name}. Your were successfully signed up`);
@@ -76,12 +76,24 @@ export class AuthService {
     return userCredentials;
   };
 
-  updateAuthCredentials(dName) {
+  updateAuthdisplayName(dName) {
     console.log('update Profile Name');
     const auth = getAuth();
     updateProfile(auth.currentUser, {
       displayName: dName,
-      photoURL: './assets/img/user/avatar3.png',
+    })
+      .then(() => {
+        console.log(auth.currentUser);
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+  }
+  updateAuthPhoto(photoName) {
+    console.log('update Profile Name');
+    const auth = getAuth();
+    updateProfile(auth.currentUser, {
+      photoURL: photoName,
     })
       .then(() => {
         console.log(auth.currentUser);
@@ -109,7 +121,7 @@ export class AuthService {
     //  const authUser = [displayName,email,photoURL,emailVerified]
 
     //   return authUser;
-      // console.log('Authenticated User in Firestore: ', user);
+      console.log('Authenticated User in Firestore: ', user);
       
       return user;
     } else {

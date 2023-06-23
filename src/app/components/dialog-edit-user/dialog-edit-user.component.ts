@@ -58,8 +58,7 @@ export class DialogEditUserComponent {
 
     const downloadURL = await getDownloadURL(storageRef);
     console.log('File available at: ', downloadURL);
-    // Do something with the download URL, e.g., save it in your database
-  }
+    this.updateUserProperty ('photoURL', downloadURL)   }
 
 
   // addData () {
@@ -148,9 +147,11 @@ export class DialogEditUserComponent {
     this.usersService.updateUserFieldValue(field, value);
     console.log(this.usersService.currentUserName$)
     if (field === 'displayName') {
-      this.authService.updateAuthCredentials(value);
+      this.authService.updateAuthdisplayName(value);
+    } else if (field === 'photoURL') {
+      this.authService.updateAuthPhoto(value);
     }
-    this.authService.getAuthCredentials();
+    // this.authService.getAuthCredentials();
     this.cancelEdit(field);
   }
 
