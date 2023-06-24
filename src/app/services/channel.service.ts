@@ -78,10 +78,10 @@ export class ChannelService {
     this.findDates();
     this.sortThreadsByTime();
     this.setUserInChannelThreads();
-    this.channelReady = true;
     setTimeout(() => {
       this.scrollStatus.emit(false);
-    }, 500);
+    }, 10);
+    this.channelReady = true;
   }
 
   /**
