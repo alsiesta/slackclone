@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -9,6 +9,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +17,20 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  public searchText: string;
+
   constructor(
     public authService: AuthService,
     private router: Router,
     public usersService: UsersService,
     public firestore: FirestoreService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public globalService: GlobalService
   ) {}
 
   currentUserDisplayName: any;
   ngOnInit() {
+    this.startSearchEvent();
     // this.loglocalStorage();
   }
 
@@ -148,4 +153,15 @@ export class HeaderComponent {
   // loglocalStorage() {
   //   this.currentUserDisplayName = this.authService.getCurrentLocalUser();
   // }
+
+  startSearchEvent() {
+    const searchbar = document.getElementById('searchbar');
+    searchbar.addEventListener('keyup', ()  =>{
+      this.searchComponent(this.searchText)
+    });
+  }
+
+  searchComponent(searchText: string) {
+    this.globalService.searchChannels(searchText);
+  }
 }

@@ -35,4 +35,8 @@ export class GlobalService {
     threadList.sort((a, b) => a.time.localeCompare(b.time));
     return threadList;
   }
+
+  searchChannels(searchTerm: string) {
+    console.log(searchTerm);
+  }
 }
