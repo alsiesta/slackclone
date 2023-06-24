@@ -112,6 +112,7 @@ export class ChatService {
       this.scrollStatus.emit(false);
     }, 10);
     this.chatReady = true;
+    console.log(this.activeChatPartnerList);
   }
 
   /**

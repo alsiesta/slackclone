@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -14,7 +15,8 @@ export class ChatComponent implements OnDestroy, OnInit {
 
   constructor(
     public chatService: ChatService,
-    public firestoreservice: FirestoreService
+    public firestoreservice: FirestoreService,
+    public channelService: ChannelService
   ) {
     this.observerChatList = this.firestoreservice.observeChat$;
     this.observerChatList.subscribe((chats) => {
