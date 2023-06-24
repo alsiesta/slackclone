@@ -152,6 +152,7 @@
 
   .posting-image {
     width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 6px;
     cursor: pointer;
@@ -227,6 +228,7 @@
       img {
         display: block;
         width: 20px;
+        height: 20px;
         object-fit: cover;
         border-radius: 4px;
       }
