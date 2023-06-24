@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -9,7 +9,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
-import { GlobalService } from 'src/app/services/global.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +25,7 @@ export class HeaderComponent {
     public usersService: UsersService,
     public firestore: FirestoreService,
     public dialog: MatDialog,
-    public globalService: GlobalService
+    public searchService: SearchService
   ) {}
 
   currentUserDisplayName: any;
@@ -154,14 +154,23 @@ export class HeaderComponent {
   //   this.currentUserDisplayName = this.authService.getCurrentLocalUser();
   // }
 
+  /**
+   * start search event after 1 second (to prevent errors)
+   */
   startSearchEvent() {
-    const searchbar = document.getElementById('searchbar');
-    searchbar.addEventListener('keyup', ()  =>{
-      this.searchComponent(this.searchText)
-    });
+    setTimeout(() => {
+      const searchbar = document.getElementById('searchbar');
+      searchbar.addEventListener('keyup', () => {
+        this.searchingComponents(this.searchText);
+      });
+    }, 1000);
   }
 
-  searchComponent(searchText: string) {
-    this.globalService.searchChannels(searchText);
+  /**
+   * search function for channel and chat
+   * @param searchText - the search text from input field
+   */
+  searchingComponents(searchText: string) {
+    this.searchService.searchingFunction(searchText);
   }
 }
