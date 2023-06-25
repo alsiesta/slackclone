@@ -32,8 +32,15 @@
 
     img {
       width: 35px;
+      height: 35px;
       object-fit: cover;
       border-radius: 6px;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     span {
@@ -66,14 +73,27 @@
 
     img {
       width: 55px;
+      height: 55px;
       object-fit: cover;
       border-radius: 6px;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     span {
       font-size: $fontsubtitle;
       font-weight: 500;
       margin-left: 8px;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .chat-subtext {
@@ -131,8 +151,15 @@
 
   .message-image {
     width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 6px;
+    cursor: pointer;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .message-main-top {
@@ -144,6 +171,12 @@
     .message-user {
       font-size: $regular;
       font-weight: 500;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .message-time {

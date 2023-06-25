@@ -19,7 +19,7 @@
 }
 
 .post {
-    margin-top: 36px;
+    margin-top: 24px;
     margin-left: 8px;
     margin-right: 8px;
     background-color: $threadgray;
@@ -46,7 +46,7 @@
     padding: 12px;
 
     &:hover {
-        background:rgba(255,255,255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
     }
 
     img {
@@ -95,6 +95,7 @@
     font-size: $fontsubtitle;
     font-weight: 500;
     color: $blue;
+    margin-bottom: 32px;
 
     &:hover {
         text-decoration: underline;
@@ -110,7 +111,7 @@
     padding: 12px;
 
     &:hover {
-        background:rgba(255,255,255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
     }
 
     img {

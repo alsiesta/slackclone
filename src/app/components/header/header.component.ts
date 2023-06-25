@@ -9,6 +9,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +17,20 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  public searchText: string;
+
   constructor(
     public authService: AuthService,
     private router: Router,
     public usersService: UsersService,
     public firestore: FirestoreService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public searchService: SearchService
   ) {}
 
   currentUserDisplayName: any;
   ngOnInit() {
+    this.startSearchEvent();
     // this.loglocalStorage();
   }
 
@@ -148,4 +153,24 @@ export class HeaderComponent {
   // loglocalStorage() {
   //   this.currentUserDisplayName = this.authService.getCurrentLocalUser();
   // }
+
+  /**
+   * start search event after 1 second (to prevent errors)
+   */
+  startSearchEvent() {
+    setTimeout(() => {
+      const searchbar = document.getElementById('searchbar');
+      searchbar.addEventListener('keyup', () => {
+        this.searchingComponents(this.searchText);
+      });
+    }, 1000);
+  }
+
+  /**
+   * search function for channel and chat
+   * @param searchText - the search text from input field
+   */
+  searchingComponents(searchText: string) {
+    this.searchService.searchingFunction(searchText);
+  }
 }

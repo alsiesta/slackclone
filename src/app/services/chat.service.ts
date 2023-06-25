@@ -53,9 +53,9 @@ export class ChatService {
 
   async loadPersonalChatList(userID: string) {
     await this.loadChatListFromFirestore();
-    this.chatList.forEach(chat => {
-      if(chat.chatUsers[0] == userID) {
-        this.personalChatList.push(chat)
+    this.chatList.forEach((chat) => {
+      if (chat.chatUsers[0] == userID) {
+        this.personalChatList.push(chat);
       }
     });
     return this.personalChatList;
@@ -108,10 +108,11 @@ export class ChatService {
     this.setUserInChatHistory();
     this.setChatPartnerList();
     this.editChatPartnerList();
-    this.chatReady = true;
     setTimeout(() => {
       this.scrollStatus.emit(false);
-    }, 500);
+    }, 10);
+    this.chatReady = true;
+    console.log(this.activeChatPartnerList);
   }
 
   /**

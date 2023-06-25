@@ -7,6 +7,7 @@ import { GlobalService } from './global.service';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 import { ChatService } from './chat.service';
+import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root',
@@ -76,12 +77,12 @@ export class ChannelService {
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
-    this.sortThreadsByTime();
+    this.sortThreads();
     this.setUserInChannelThreads();
-    this.channelReady = true;
     setTimeout(() => {
       this.scrollStatus.emit(false);
-    }, 500);
+    }, 10);
+    this.channelReady = true;
   }
 
   /**
@@ -91,14 +92,14 @@ export class ChannelService {
     this.findChannel(this.defaultChannelId);
     this.findThreads(this.defaultChannelId);
     this.findDates();
-    this.sortThreadsByTime();
+    this.sortThreads();
     this.setUserInChannelThreads();
   }
 
   /**
    * sort the channelThreads by time
    */
-  sortThreadsByTime() {
+  sortThreads() {
     this.channelThreads = this.globalService.sortThreadsByTime(
       this.channelThreads
     );

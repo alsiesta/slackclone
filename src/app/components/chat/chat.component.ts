@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +16,9 @@ export class ChatComponent implements OnDestroy, OnInit {
 
   constructor(
     public chatService: ChatService,
-    public firestoreservice: FirestoreService
+    public firestoreservice: FirestoreService,
+    public channelService: ChannelService,
+    public searchService: SearchService
   ) {
     this.observerChatList = this.firestoreservice.observeChat$;
     this.observerChatList.subscribe((chats) => {
@@ -38,8 +42,15 @@ export class ChatComponent implements OnDestroy, OnInit {
     this.chatService.chatReady = false;
   }
 
+  /**
+   * scroll to the bottom of the chat-content
+   * @param style - smooth or instant
+   */
   scrollToBottomOfContent(style: any): void {
     let content = document.getElementById('chat-content') || undefined;
     content.scrollTo({ top: content.scrollHeight, behavior: style });
+    this.searchService.activeChannel = '';
+    this.searchService.activeChat = 'chat';
+    this.searchService.findActiveComponent();
   }
 }
