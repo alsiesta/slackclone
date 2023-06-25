@@ -35,7 +35,6 @@ export class ThreadsShortcutComponent {
 
   async ngOnInit(): Promise<void> {
     await this.getAllThreads();
-    this.getAllUser();
   }
 
   async getAllThreads() {
@@ -47,8 +46,10 @@ export class ThreadsShortcutComponent {
   }
 
   getAllUser() {
-    this.allUser = this.usersService.getAllUsers();
-    console.log('All Users comes from thread-shortcut component:', this.allUser);
+    this.firestoreService.getAllUsers().then((users) => {
+      console.log('All Users', users);
+      this.allUser = users;
+    });
   }
 
   getCurrentUserId() {
@@ -72,15 +73,16 @@ export class ThreadsShortcutComponent {
   }
 
   getNameOfReply() {
+    this.getAllUser();
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
       this.reply = this.threadsFromCurrentUser[i].replies;
-      console.log('Reply', this.reply);
+      console.log('reply from threads of the currentUser:', this.reply);
       
-      console.log('threadsFromCurrentUser', this.threadsFromCurrentUser);
       for (let n = 0; n < this.reply.length; n++) {
         for (let j = 0; j < this.allUser.length; j++) {
           if (this.reply[n].user == this.allUser[j].uid) {
             this.name = this.allUser[j].displayName;
+            console.log(n + '. name:', this.name);
           }
         }
       }

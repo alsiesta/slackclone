@@ -50,11 +50,7 @@ export class SidebarComponent implements OnInit {
     this.chatService.loadPersonalChatList(this.usersService.currentUserId$).then(() => {
       this.chats = this.chatService.personalChatList;
     });
-    console.log('Chats', this.chats)
-    this.firestoreService.getAllUsers().then((users) => {
-      console.log('All Users', users);
-      this.allUsers = users;
-    });
+    console.log('Chats', this.chats);
   }
 
   toggleDropdown(key) {
