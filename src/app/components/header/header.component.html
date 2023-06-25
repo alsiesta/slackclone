@@ -5,7 +5,8 @@
     <input id="searchbar" type="text" [(ngModel)]="searchText" [placeholder]="this.searchService.activeComponent">
     <div>
       <span [style.displayName]="true">{{currentUserName$}}</span>
-      <span [style.displayName]="true">| Name: {{authUser$.displayName}}</span>
+      <!-- The inclusion of authUser$ needs some fixing -->
+      <!-- <span [style.displayName]="true">| Name: {{authUser$.displayName}}</span> -->
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
