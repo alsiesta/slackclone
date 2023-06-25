@@ -43,36 +43,7 @@ export class DialogEditUserComponent {
     public authService: AuthService
   ) {}
 
-  selectedFile: File;
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
-
-  async onUpload(): Promise<void> {
-    if (!this.selectedFile) {
-      return;
-    }
-    const storage = getStorage();
-    const storageRef = ref(storage, this.selectedFile.name);
-    await uploadBytes(storageRef, this.selectedFile);
-
-    const downloadURL = await getDownloadURL(storageRef);
-    console.log('File available at: ', downloadURL);
-    this.updateUserProperty ('photoURL', downloadURL)   }
-
-
-  // addData () {
-  //   const storageRef = ref(this.storage, this.file.name);
-  //   const uploadTask = uploadBytesResumable(storageRef, this.file);
-  //   uploadTask.on('state_changed', (snapshot) => {
-  //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //     console.log('Upload is ' + progress + '% done');
-  //   },() => {
-  //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //       console.log('File available at', downloadURL);
-  //     });
-  //   });
-  // }
+ 
 
   currentUserData$: UserTemplate;
 
@@ -139,7 +110,7 @@ export class DialogEditUserComponent {
 
   /**
    * // update user property in specific field in firebase firestore.
-   * // update displayName in firebase auth in case it was changed.
+   * // updates displayName OR photoURL in firebase auth in case it was changed.
    * @param field 
    * @param value 
    */
@@ -155,6 +126,25 @@ export class DialogEditUserComponent {
     this.cancelEdit(field);
   }
 
+  selectedFile: File;
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onUpload();
+  }
+
+  async onUpload(): Promise<void> {
+    if (!this.selectedFile) {
+      return;
+    }
+    const storage = getStorage();
+    const storageRef = ref(storage, this.selectedFile.name);
+    await uploadBytes(storageRef, this.selectedFile);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log('File available at: ', downloadURL);
+    this.updateUserProperty ('photoURL', downloadURL)   }
+
+  
   log(displayName) {
     console.log(displayName);
   }

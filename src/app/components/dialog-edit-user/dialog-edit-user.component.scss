@@ -1,7 +1,12 @@
 @import "../../../styles/main.scss";
 
+// .fab-button {
+//   background-color: #3f51b5;
+// }
+
 .profile-image {
   width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 100%;
 }
@@ -28,7 +33,6 @@
     color: rgba($textgrey, 0.5);
   }
 
-
   .dialog-top {
     background-color: $darkgrey;
     border-bottom: 1px solid rgba($textgrey, 0.5);
@@ -40,18 +44,18 @@
 
   .field-name {
     color: rgba($textgrey, 0.5);
-    margin-bottom: 15px;
   }
 
-  .field-value{
-    line-height: 32px;
+  .field-value {
+    line-height: 0px;
+    margin-bottom: 20px;
   }
-  .field-value-form{
+  
+  .field-value-form {
     line-height: 16px;
     background-color: tan;
   }
 
-  
   .material-symbols-sharp {
     cursor: pointer;
     font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 200, "opsz" 30;
@@ -102,7 +106,8 @@
     }
   }
 
-  input[type=text], select {
+  input[type="text"],
+  select {
     width: 100%;
     color: $white;
     padding: 4px 4px;

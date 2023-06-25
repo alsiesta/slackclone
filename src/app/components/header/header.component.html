@@ -5,7 +5,7 @@
     <input type="text">
     <div>
       <span [style.displayName]="true">{{currentUserName$}}</span>  
-      <span [style.displayName]="true">|  Name: {{authUser$.displayName}}</span> 
+      <!-- <span [style.displayName]="true">|  Name: {{authUser$.displayName}}</span>  -->
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <mat-icon>account_circle</mat-icon>
@@ -31,8 +31,8 @@
   <button mat-menu-item (click)="logOut()">Logout</button>
   <button mat-menu-item (click)="openDialog()">Profile</button>
   <button mat-menu-item (click)="logFirebaseAuthCredentials()">log Auth Credits</button>
-  <!-- <button mat-menu-item (click)="logAllUsers()">log all Users</button>
-  <button mat-menu-item (click)="logUserData()">log UserData</button>
+  <button mat-menu-item (click)="logAllUsers()">log all Users</button>
+ <!--  <button mat-menu-item (click)="logUserData()">log UserData</button>
   <button mat-menu-item (click)="logChannels()">log Channels</button> -->
    <!-- <button mat-menu-item (click)="logChats()">log Chats</button>  -->
  <!-- <button mat-menu-item (click)="logThreads()">log Threads</button> -->

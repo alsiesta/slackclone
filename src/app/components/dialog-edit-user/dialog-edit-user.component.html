@@ -6,13 +6,14 @@
 
   <div class="dialog-main table-grid">
 
-    <input type="file" (change)="onFileSelected($event)" />
-    <button (click)="onUpload()" [disabled]="!selectedFile">Upload</button>
-    
-
-    <div *ngIf="currentUser?.photoURL"><img src="https://firebasestorage.googleapis.com/v0/b/slackclone-a5cb0.appspot.com/o/alexander_schoenfeld_bw%20large.jpg?alt=media&token=15dda780-0d1d-4ae1-98ea-1a3d5d0c4b6b" class="profile-image" alt="Profile Image">
+    <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image">
+      <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
+      <span class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
-    <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image" alt="Profile Image">
+
+    <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image">
+      <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
+      <span class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
     <div>
@@ -33,7 +34,7 @@
 
     <div>
       <span class="field-name">Firstname:</span>
-      <div *ngIf="!isEditing.firstName">
+      <div class="field-value" *ngIf="!isEditing.firstName">
         <span><br><b>{{currentUser?.firstName}}</b></span>
         <span (click)="startEdit('firstName')" class="material-symbols-sharp">edit</span>
       </div>
@@ -49,7 +50,7 @@
 
     <div>
       <span class="field-name">Lastname:</span>
-      <div *ngIf="!isEditing.lastName">
+      <div class="field-value" *ngIf="!isEditing.lastName">
         <span><br><b>{{currentUser?.lastName}}</b></span>
         <span (click)="startEdit('lastName')" class="material-symbols-sharp">edit</span>
 
@@ -66,7 +67,7 @@
 
     <div>
       <span class="field-name">Email:</span>
-      <div *ngIf="!isEditing.email">
+      <div class="field-value" *ngIf="!isEditing.email">
         <span> <br><b>{{currentUser?.email}}</b></span>
         <span (click)="startEdit('email')" class="material-symbols-sharp">edit</span>
 
@@ -92,7 +93,7 @@
 
     <div>
       <span class="field-name">City:</span>
-      <div *ngIf="!isEditing.city">
+      <div class="field-value" *ngIf="!isEditing.city">
         <br><b>{{currentUser?.city}}</b>
         <span (click)="startEdit('city')" class="material-symbols-sharp">edit</span>
 
@@ -110,7 +111,7 @@
     <div>
       <span class="field-name">Street:</span>
       <div>
-        <div *ngIf="!isEditing.street">
+        <div class="field-value" *ngIf="!isEditing.street">
           <br><b>{{currentUser?.street}}</b>
           <span (click)="startEdit('street')" class="material-symbols-sharp">edit</span>
 
@@ -132,7 +133,7 @@
     <div>
       <span class="field-name">Zip-Code:</span>
       <div>
-        <div *ngIf="!isEditing.zipCode">
+        <div class="field-value" *ngIf="!isEditing.zipCode">
           <br><b>{{currentUser?.zipCode}}</b>
           <span (click)="startEdit('zipCode')" class="material-symbols-sharp">edit</span>
 
@@ -154,7 +155,7 @@
     <div>
       <span class="field-name">Birthdate:</span>
       <div>
-        <div *ngIf="!isEditing.birthDate">
+        <div class="field-value" *ngIf="!isEditing.birthDate">
           <br><b>{{currentUser?.birthDate}}</b>
           <span (click)="startEdit('birthDate')" class="material-symbols-sharp">edit</span>
 
