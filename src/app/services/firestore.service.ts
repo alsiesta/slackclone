@@ -369,10 +369,9 @@ export class FirestoreService {
     const querySnapshot = await getDocs(this.usersCollection);
     this.usersList = querySnapshot.docs.map((doc) => {
       const data = doc.data() as UserTemplate;
-      console.log(this.usersList);
-      
       return { id: doc.id, ...data };
     });
+    return this.usersList as UserTemplate[];
   }
 
   ///////////////// HELPER FUNCTIONS ///////////////////
