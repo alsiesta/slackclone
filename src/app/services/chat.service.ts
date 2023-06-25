@@ -18,6 +18,7 @@ export class ChatService {
   chatPartnerList: Array<any> = [];
   activeChatPartnerList: Array<any> = [];
   chatHistory: Array<any> = [];
+  unfilteredChatHistory: Array<any> = [];
   chatPartner: any;
   scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -112,15 +113,14 @@ export class ChatService {
       this.scrollStatus.emit(false);
     }, 10);
     this.chatReady = true;
-    console.log(this.activeChatPartnerList);
   }
 
   /**
    * update the chat content after a new message was sent
    */
-  updateChatContent() {
+  updateChatContent(filterdChats?: Array<any>) {
     this.checkIfChatExists(this.chatPartner);
-    this.setChatHistory();
+    this.setChatHistory(filterdChats);
     this.findDates();
     this.setUserInChatHistory();
     this.setChatPartnerList();
@@ -130,11 +130,18 @@ export class ChatService {
   /**
    * set the chat history from the chat object
    */
-  setChatHistory() {
+  setChatHistory(filterdChats?: Array<any>) {
     this.chatHistory = [];
+    this.unfilteredChatHistory = [];
+
     this.chat.chat.forEach((element?: any) => {
       this.chatHistory.push(element);
+      this.unfilteredChatHistory.push(element);
     });
+
+    if (filterdChats) {
+      this.chatHistory = filterdChats;
+    }
   }
 
   /**
@@ -232,7 +239,6 @@ export class ChatService {
   sendChatMessage(content: string) {
     const user = this.userService.currentUserId$;
     const message = content;
-    console.log(this.chat, user, message);
 
     this.firestoreService
       .addChatMessage(this.chat.chatId, user, message)
