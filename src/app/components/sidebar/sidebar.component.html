@@ -51,13 +51,9 @@
             </span>
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">
-            <div class="drop-down-element">
-                <img class="drop-down-img" src="assets/img/threads/profile-picture.png">
-                <span>Max Mustermann</span>
-            </div>
-            <div class="drop-down-element">
-                <img class="drop-down-img" src="assets/img/threads/profile-picture.png">
-                <span>Max Mustermann</span>
+            <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner)" class="drop-down-element">
+                <img class="drop-down-img" src="{{ chatPartner.photoURL }}">
+                <span>{{ chatPartner.displayName }}</span>
             </div>
             <div class="drop-down-element add-btn" (click)="openCreateChatDialog()">
                 <mat-icon class="drop-down-img">add_box</mat-icon>

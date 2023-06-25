@@ -151,6 +151,25 @@ export class FirestoreService {
     });
   };
 
+  getChatList(): Observable<any[]> {
+    const q = query(collection(this.firestore, GLOBAL_VARS.CHATS));
+
+    return new Observable<any[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const chats = [];
+        querySnapshot.forEach((doc) => {
+          chats.push(doc.data());
+        });
+        observer.next((this.chatList = chats));
+      });
+
+      //Cleanup function to unsubscribe when the Observable is unsubscribed
+      return () => {
+        unsubscribe();
+      };
+    });
+  }
+
   /**
    *   Observable that listens to changes in the chats collection
    */

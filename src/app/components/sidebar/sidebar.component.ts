@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Thread } from 'src/app/models/thread.class';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { UsersService } from 'src/app/services/users.service';
-import {  User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { Chat } from 'src/app/models/chat.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
@@ -27,13 +27,14 @@ export class SidebarComponent implements OnInit {
   directmessagesAreOpen = true;
   observerChannelList: Observable<any>;
   channels: Channel[] = [];
-  chats: any;
+  chats: Chat[] = [];
+  chatPartners: User[] = [];
 
-  threads: Thread[] = [];
-  allUsers: UserTemplate[] = [];
-  currentUser: User[] = [];
-  allChats: Chat[] = [];
-  userId$: any;
+  // threads: Thread[] = [];
+  // allUsers: UserTemplate[] = [];
+  // currentUser: User[] = [];
+  // allChats: Chat[] = [];
+  // userId$: any;
 
   constructor(private firestoreService: FirestoreService,
     private channelService: ChannelService,
@@ -47,11 +48,47 @@ export class SidebarComponent implements OnInit {
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
     });
-    this.chatService.loadPersonalChatList(this.usersService.currentUserId$).then(() => {
-      this.chats = this.chatService.personalChatList;
+    this.firestoreService.getChatList().subscribe((chats) => {
+      const uniqueUserIds = new Set<string>();
+      this.chats = chats.filter(
+        (chat) =>
+          chat.chatUsers[0] === this.usersService.currentUserId$ ||
+          chat.chatUsers[1] === this.usersService.currentUserId$
+      );
+      this.chatPartners = [];
+      const getUserPromises = []; // Array für die asynchronen Promises
+      this.chats.forEach((chat) => {
+        chat.chatUsers.forEach((user) => {
+          if (user !== this.usersService.currentUserId$ && !uniqueUserIds.has(user)) {
+            uniqueUserIds.add(user);
+            const promise = new Promise((resolve, reject) => {
+              this.usersService.getUserById$(user).subscribe(
+                (userData) => {
+                  resolve(userData); // Benutzerdaten auflösen, wenn sie verfügbar sind
+                },
+                (error) => {
+                  reject(error); // Fehler auflösen, wenn ein Fehler auftritt
+                }
+              );
+            });
+            getUserPromises.push(promise); // Promise zum Array hinzufügen
+          }
+        });
+      });
+    
+      Promise.all(getUserPromises)
+        .then((userDatas) => {
+          userDatas.forEach((userData) => {
+            this.chatPartners.push(userData); // Benutzerdaten zum chatPartners Array hinzufügen
+          });
+        })
+        .catch((error) => {
+          // Fehlerbehandlung
+        });
     });
-    console.log('Chats',this.chats)
   }
+    
+  
 
   toggleDropdown(key) {
     switch (key) {
@@ -81,7 +118,11 @@ export class SidebarComponent implements OnInit {
   }
 
   renderChannel(channel) {
-    this.channelService.loadChannelContent(channel.id);
+    this.channelService.loadChannelContent(channel.channelID);
+  }
+
+  renderChat(chatPartner) {
+    this.chatService.openChat(chatPartner.uid);
   }
 
 }
