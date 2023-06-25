@@ -390,6 +390,7 @@ export class FirestoreService {
       const data = doc.data() as UserTemplate;
       return { id: doc.id, ...data };
     });
+    return this.usersList as UserTemplate[];
   }
 
   ///////////////// HELPER FUNCTIONS ///////////////////

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { and } from 'firebase/firestore';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { Storage , ref, uploadBytesResumable,getDownloadURL, uploadBytes, getStorage} from '@angular/fire/storage';
+import { state } from '@angular/animations';
 export interface DialogData {
   displayName;
   email;
@@ -34,12 +35,15 @@ export interface IsEditing {
   styleUrls: ['./dialog-edit-user.component.scss'],
 })
 export class DialogEditUserComponent {
-  constructor(
+  constructor (
+    public storage: Storage,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public usersService: UsersService,
     public firestoreService: FirestoreService,
     public authService: AuthService
   ) {}
+
+ 
 
   currentUserData$: UserTemplate;
 
@@ -106,19 +110,41 @@ export class DialogEditUserComponent {
 
   /**
    * // update user property in specific field in firebase firestore.
-   * // update displayName in firebase auth in case it was changed.
+   * // updates displayName OR photoURL in firebase auth in case it was changed.
    * @param field 
    * @param value 
    */
-  updateUserProperty(field, value) {
+  updateUserProperty (field, value) {
     this.usersService.updateUserFieldValue(field, value);
+    console.log(this.usersService.currentUserName$)
     if (field === 'displayName') {
-      this.authService.updateAuthCredentials(value);
+      this.authService.updateAuthdisplayName(value);
+    } else if (field === 'photoURL') {
+      this.authService.updateAuthPhoto(value);
     }
-    this.authService.getAuthCredentials();
+    // this.authService.getAuthCredentials();
     this.cancelEdit(field);
   }
 
+  selectedFile: File;
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onUpload();
+  }
+
+  async onUpload(): Promise<void> {
+    if (!this.selectedFile) {
+      return;
+    }
+    const storage = getStorage();
+    const storageRef = ref(storage, this.selectedFile.name);
+    await uploadBytes(storageRef, this.selectedFile);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log('File available at: ', downloadURL);
+    this.updateUserProperty ('photoURL', downloadURL)   }
+
+  
   log(displayName) {
     console.log(displayName);
   }

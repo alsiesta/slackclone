@@ -20,6 +20,7 @@ export class ChatService {
   chatPartnerList: Array<any> = [];
   activeChatPartnerList: Array<any> = [];
   chatHistory: Array<any> = [];
+  unfilteredChatHistory: Array<any> = [];
   chatPartner: any;
   scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -51,6 +52,16 @@ export class ChatService {
     await this.firestoreService.getAllChats().then(() => {
       this.chatList = this.firestoreService.chatList;
     });
+  }
+
+  async loadPersonalChatList(userID: string) {
+    await this.loadChatListFromFirestore();
+    this.chatList.forEach((chat) => {
+      if (chat.chatUsers[0] == userID) {
+        this.personalChatList.push(chat);
+      }
+    });
+    return this.personalChatList;
   }
 
   /**
@@ -100,18 +111,18 @@ export class ChatService {
     this.setUserInChatHistory();
     this.setChatPartnerList();
     this.editChatPartnerList();
-    this.chatReady = true;
     setTimeout(() => {
       this.scrollStatus.emit(false);
-    }, 500);
+    }, 10);
+    this.chatReady = true;
   }
 
   /**
    * update the chat content after a new message was sent
    */
-  updateChatContent() {
+  updateChatContent(filterdChats?: Array<any>) {
     this.checkIfChatExists(this.chatPartner);
-    this.setChatHistory();
+    this.setChatHistory(filterdChats);
     this.findDates();
     this.setUserInChatHistory();
     this.setChatPartnerList();
@@ -121,11 +132,18 @@ export class ChatService {
   /**
    * set the chat history from the chat object
    */
-  setChatHistory() {
+  setChatHistory(filterdChats?: Array<any>) {
     this.chatHistory = [];
+    this.unfilteredChatHistory = [];
+
     this.chat.chat.forEach((element?: any) => {
       this.chatHistory.push(element);
+      this.unfilteredChatHistory.push(element);
     });
+
+    if (filterdChats) {
+      this.chatHistory = filterdChats;
+    }
   }
 
   /**
@@ -223,7 +241,6 @@ export class ChatService {
   sendChatMessage(content: string) {
     const user = this.userService.currentUserId$;
     const message = content;
-    console.log(this.chat, user, message);
 
     this.firestoreService
       .addChatMessage(this.chat.chatId, user, message)

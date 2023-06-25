@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-channel',
@@ -14,7 +15,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
   constructor(
     public channelService: ChannelService,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public searchService: SearchService
   ) {
     this.observerThreadList = this.firestoreService.getThreadList();
     this.observerThreadList.subscribe((threads) => {
@@ -38,8 +40,15 @@ export class ChannelComponent implements OnInit, OnDestroy {
     this.channelService.channelReady = false;
   }
 
+  /**
+   * scroll to the bottom of the channel-content
+   * @param style - smooth or instant
+   */
   scrollToBottomOfContent(style: any): void {
     let content = document.getElementById('channel-content') || undefined;
     content.scrollTo({ top: content.scrollHeight, behavior: style });
+    this.searchService.activeChannel = this.channelService.activeChannel;
+    this.searchService.activeChat = '';
+    this.searchService.findActiveComponent();
   }
 }

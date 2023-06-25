@@ -17,6 +17,7 @@ export class ChannelService {
   userList: Array<any> = [];
   dateList: Array<any> = [];
   channelThreads: Array<any> = [];
+  unfilterdThreads: Array<any> = [];
   activeChannel: any;
   defaultChannelId: string = 'gruppe-576'; //to be changed to #allgemein?
   channelReady: boolean = false;
@@ -76,29 +77,29 @@ export class ChannelService {
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
-    this.sortThreadsByTime();
+    this.sortThreads();
     this.setUserInChannelThreads();
-    this.channelReady = true;
     setTimeout(() => {
       this.scrollStatus.emit(false);
-    }, 500);
+    }, 10);
+    this.channelReady = true;
   }
 
   /**
    * update the channel content when a new thread is added
    */
-  updateChannelContent() {
+  updateChannelContent(filteredThreads?: Array<any>) {
     this.findChannel(this.defaultChannelId);
-    this.findThreads(this.defaultChannelId);
+    this.findThreads(this.defaultChannelId, filteredThreads);
     this.findDates();
-    this.sortThreadsByTime();
+    this.sortThreads();
     this.setUserInChannelThreads();
   }
 
   /**
    * sort the channelThreads by time
    */
-  sortThreadsByTime() {
+  sortThreads() {
     this.channelThreads = this.globalService.sortThreadsByTime(
       this.channelThreads
     );
@@ -118,16 +119,22 @@ export class ChannelService {
   }
 
   /**
-   * find the threads in threadList for active channel
+   * find the filterd threads in threadList for active channel
    * @param channelID - channel id from function loadChannelContent
    */
-  findThreads(channelID: string) {
+  findThreads(channelID: string, filteredThreads?: Array<any>) {
     this.channelThreads = [];
+    this.unfilterdThreads = [];
     this.threadList.forEach((element: any) => {
       if (element.channel == channelID) {
         this.channelThreads.push(element);
+        this.unfilterdThreads.push(element);
       }
     });
+
+    if (filteredThreads) {
+      this.channelThreads = filteredThreads;
+    }
   }
 
   /**
@@ -206,11 +213,6 @@ export class ChannelService {
     this.threadsOpen = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
-    console.log(
-      'I come from channel service:',
-      this.activeChannel.title,
-      this.activeThread
-    );
   }
 
   async updateThread() {

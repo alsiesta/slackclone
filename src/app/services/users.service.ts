@@ -40,12 +40,12 @@ export class UsersService  {
   public usersCollListener = new BehaviorSubject<any>({ users: [] });
   public userListener = new BehaviorSubject<any>({ user: UserTemplate });
   
-  $currentUserData: UserTemplate;
+  // $currentUserData: UserTemplate;
   currentUserId$: any;
   currentUserName$: any;
   currentUserData$: any;
   currentUsers: any;
-  fsUser = new UserTemplate();
+  // fsUser = new UserTemplate();
   
   currentUserRef = collection(this.firestore, GLOBAL_VARS.USERS, );
   
