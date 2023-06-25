@@ -48,7 +48,7 @@ export class ThreadsShortcutComponent {
 
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
-    console.log('All Users comes from thread component:', this.allUser);
+    console.log('All Users comes from thread-shortcut component:', this.allUser);
   }
 
   getCurrentUserId() {
