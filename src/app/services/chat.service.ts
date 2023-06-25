@@ -3,6 +3,8 @@ import { FirestoreService } from './firestore.service';
 import { Chat } from '../models/chat.class';
 import { UsersService } from './users.service';
 import { GlobalService } from './global.service';
+import { Observable, map } from 'rxjs';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root',
@@ -49,16 +51,6 @@ export class ChatService {
     await this.firestoreService.getAllChats().then(() => {
       this.chatList = this.firestoreService.chatList;
     });
-  }
-
-  async loadPersonalChatList(userID: string) {
-    await this.loadChatListFromFirestore();
-    this.chatList.forEach(chat => {
-      if(chat.chatUsers[0] == userID) {
-        this.personalChatList.push(chat)
-      }
-    });
-    return this.personalChatList;
   }
 
   /**
@@ -238,5 +230,30 @@ export class ChatService {
       .then(() => {
         this.scrollStatus.emit(true);
       });
+  }
+
+  /**
+   * Retrieves the chat partners for the current user.
+   * @returns - an observable emitting an array of chat partners.
+   */
+  getChatPartners(): Observable<any[]> {
+    return this.firestoreService.getChatList().pipe(
+      map((chats) => {
+        const uniqueUserIds = new Set<string>();
+        const chatPartners: any[] = [];
+
+        chats.forEach((chat) => {
+          chat.chatUsers.forEach((user) => {
+            if (user !== this.userService.currentUserId$ && !uniqueUserIds.has(user)) {
+              uniqueUserIds.add(user);
+              const user$ = this.userService.getUserById$(user);
+              chatPartners.push(user$);
+            }
+          });
+        });
+
+        return chatPartners;
+      })
+    );
   }
 }
