@@ -30,7 +30,8 @@
                             class="posting-image" src="{{ thread.user.image }}">
                     </div>
                     <div class="posting-main">
-                        <div class="posting-menu" (click)="this.channelService.openThread(thread)">
+                        <div class="posting-menu" (click)="this.channelService.openThread(thread)"
+                            matTooltip="Reply on thread">
                             <mat-icon fontIcon="reply_all"></mat-icon>
                         </div>
                         <div class="posting-main-top">

@@ -15,7 +15,7 @@ export class ThreadsShortcutComponent {
   currentUserData: any = [];
   allThreads: Thread[] = [];
   threadsFromCurrentUser: Thread[] = [];
-  name: string;
+  names: any = [];
   // observerThreadList: Observable<any>;
   allUser: any = [];
   reply: any = [];
@@ -39,27 +39,20 @@ export class ThreadsShortcutComponent {
 
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
-    console.log('Threadslist comes from the thread-shortcut component:', this.allThreads);
+    // console.log('Threadslist comes from the thread-shortcut component:', this.allThreads);
     this.getCurrentUserData();
     this.getCurrentUserId();
     this.getThreadsFromCurrentUser();
   }
 
-  getAllUser() {
-    this.firestoreService.getAllUsers().then((users) => {
-      console.log('All Users', users);
-      this.allUser = users;
-    });
-  }
-
   getCurrentUserId() {
     this.currentUserId = this.usersService.currentUserId$;
-    console.log('Current User Id comes from the thread-shortcut component', this.currentUserId);
+    // console.log('Current User Id comes from the thread-shortcut component', this.currentUserId);
   }
 
   async getCurrentUserData() {
     this.currentUserData = await this.usersService.getCurrentUserData();
-    console.log('Current user data comes from the thread-shortcut component', this.currentUserData);
+    // console.log('Current user data comes from the thread-shortcut component', this.currentUserData);
   }
 
   async getThreadsFromCurrentUser() {
@@ -69,23 +62,40 @@ export class ThreadsShortcutComponent {
       }
     }
     this.getNameOfReply();
-    console.log('Threads from current User', this.threadsFromCurrentUser);
+    // console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
-  getNameOfReply() {
-    this.getAllUser();
+  async getAllUser() {
+    await this.firestoreService.getAllUsers().then((users) => {
+      // console.log('All Users', users);
+      this.allUser = users;
+    });
+  }
+
+  async getNameOfReply() {
+    await this.getAllUser();
+    console.log('All User Liste:', this.allUser);
+
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
       this.reply = this.threadsFromCurrentUser[i].replies;
-      console.log('reply from threads of the currentUser:', this.reply);
-      
+      console.log('Reply', this.reply);
+      console.log('Reply length:', this.reply.length);
       for (let n = 0; n < this.reply.length; n++) {
         for (let j = 0; j < this.allUser.length; j++) {
           if (this.reply[n].user == this.allUser[j].uid) {
-            this.name = this.allUser[j].displayName;
-            console.log(n + '. name:', this.name);
+            console.log('reply[n]', this.reply[n]);
+            console.log('allUser[j]', this.allUser[j]);
+            this.extensionUser(n, j);
           }
         }
       }
     }
+  }
+
+  extensionUser(n: number, j: number) {
+    this.channelService.setUserDataInThreads(
+      this.reply[n],
+      this.allUser[j]
+    );
   }
 }

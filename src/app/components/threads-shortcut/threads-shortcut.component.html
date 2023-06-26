@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container">
     <div>
         <app-sidebar></app-sidebar>
@@ -17,70 +18,33 @@
                         <div class="user-name">{{ currentUserData.displayName }}</div>
                         <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
                     </div>
-                    <div>{{ threadCurrentUser.content }}</div>
+                    <div [innerHTML]="threadCurrentUser.content"></div>
                 </div>
             </div>
-            <app-commentfield></app-commentfield>
-        </div>
 
-        <div class="comments">x weitere Kommentare anzeigen</div>
 
-        <!-- <div *ngIf="this.channelService.show" class="amount-comments">
+            <div class="comments">x weitere Kommentare anzeigen</div>
+
+            <!-- <div *ngIf="this.channelService.show" class="amount-comments">
                 <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
                 <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
                 <div class="comment-line"></div>
             </div> -->
 
-        <div *ngFor="let threadReplies of reply" class="user-message-more">
-            <img src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name">{{ name }}</div>
-                    <div class="time">{{ threadReplies.date | dateAgo }}</div>
+            <div *ngFor="let threadReplies of reply" class="user-message-more">
+                <img src="assets/img/threads/profile-picture.png">
+                <div class="user-name-and-message">
+                    <div class="user-name-and-time">
+                        <div class="user-name">{{ threadReplies.user.name }}</div>
+                        <div class="time">{{ threadReplies.date | dateAgo }}</div>
+                    </div>
+                    <div [innerHTML]="threadReplies.message"></div>
                 </div>
-                <div [innerHTML]="threadReplies.message"></div>
             </div>
-        </div>
 
-        <div class="box-text-editor">
-            <app-commentfield [parentName]="'thread'"></app-commentfield>
+            <div class="box-text-editor">
+                <app-commentfield [parentName]="'thread'"></app-commentfield>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- <div class="post">
-            <div class="user-message">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">Mark</div>
-                        <div class="time">{{ this.channelService.activeThread.date }}</div>
-                    </div>
-                    <div>{{ this.channelService.activeThread.content}}</div>
-                </div>
-            </div>
-            <div class="comments">5 weitere Kommentare anzeigen</div>
-
-            <div class="user-message-more">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">Peter</div>
-                        <div class="time">vor 1 Tag</div>
-                    </div>
-                    <div>Hi, herzlich Willkommen :)</div>
-                </div>
-            </div>
-
-            <div class="user-message-more">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">Nico</div>
-                        <div class="time">vor 1 Tag</div>
-                    </div>
-                    <div>Auch von meiner Seite ein herzliches Willkommen :)</div>
-                </div>
-            </div>
-            <app-commentfield></app-commentfield>
-        </div> -->

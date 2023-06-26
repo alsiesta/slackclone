@@ -4,11 +4,14 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
+import { AuthGuard } from './services/auth.guard';
+
 const routes: Routes = [
-  { path: '', component: SignInComponent },
+  { path: '',pathMatch: 'full', component: SignInComponent },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent,  },
+  // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'home/thread', component: ThreadsShortcutComponent }
 ];
 

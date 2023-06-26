@@ -66,15 +66,28 @@ export class DialogEditUserComponent {
   currentUser: UserTemplate;
   counter: number = 0;
   chat: any;
-
+  isGuestUserActive: boolean = false;
+  
   ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
+    this.checkIfGuestUserIsActive();
     this.observable.subscribe(this.subscriber);
     this.firestoreService.observeChat$.subscribe((data) => {
       console.log(data);
       this.chat = data;
     });
+
   }
+
+  checkIfGuestUserIsActive () {
+    if (this.currentUserId$ === '9KjVGbYn8qOQ9dprTIAxuJ6fpOv2') { 
+      this.isGuestUserActive = true;
+      console.log('GuestUser is logged-in: ',this.isGuestUserActive);
+      
+    }
+  }
+
+
 
   observable = new Observable((subscriber) => {
     // subscriber.next(this.currentUserId$);
@@ -148,6 +161,8 @@ export class DialogEditUserComponent {
   log(displayName) {
     console.log(displayName);
   }
+
+
 
   cancelEdit(field) {
     switch (field) {

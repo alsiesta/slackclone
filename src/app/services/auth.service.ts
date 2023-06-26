@@ -28,6 +28,7 @@ export class AuthService {
   user: User;
   userId: string = '';
   channel: Channel = new Channel;
+  isUserLoggedIn: boolean = false;
 
   /// delete after channel form is finished /////////
   date = new Date(); //mock date
@@ -54,6 +55,7 @@ export class AuthService {
       }
     );
     this.toast.info(`Hi ${name}. Your were successfully signed up`);
+    this.isUserLoggedIn = true;
   };
 
   signIn = async (email: string, password: string) => {
@@ -66,11 +68,14 @@ export class AuthService {
         this.toast.info(
           `Hi ${userCredentials.user.displayName}! You are signed in.`
         );
+        this.isUserLoggedIn = true;
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log('Sign-in error', errorCode, errorMessage);
+        this.toast.error(`Sorry. This user doesn't exist. Permission denied.`);
+        this.isUserLoggedIn = false;
       });
 
     return userCredentials;
