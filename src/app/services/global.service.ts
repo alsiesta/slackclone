@@ -42,6 +42,10 @@ export class GlobalService {
     return threadList;
   }
 
+  /**
+   * opens the component passed as parameter and closes the others
+   * @param component - name of the component to open
+   */
   openComponent(component: string) {
     this.chatOpened = false;
     this.channelOpened = false;
