@@ -7,10 +7,11 @@ import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: SignInComponent },
+  { path: '',pathMatch: 'full', component: SignInComponent },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent,  },
+  // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'home/thread', component: ThreadsShortcutComponent }
 ];
 

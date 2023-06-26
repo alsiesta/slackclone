@@ -3,24 +3,23 @@
   <div class="dialog-top">
     <span class="title">View and edit your profile </span>
   </div>
-
   <div class="dialog-main table-grid">
 
     <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-      <span class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+     <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
     <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-      <span class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+      <span *ngIf="!isGuestUserActive"  class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
     <div>
       <span class="field-name">Display Name:</span>
       <div *ngIf="!isEditing.displayName">
         <span><b>{{currentUser?.displayName}}</b></span>
-        <span (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive"  (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
       </div>
       <div *ngIf="isEditing.displayName">
         <input (keyup.enter)="updateUserProperty('displayName', displayName.value)" class="field-value-form" type="text"
@@ -36,7 +35,7 @@
       <span class="field-name">Firstname:</span>
       <div class="field-value" *ngIf="!isEditing.firstName">
         <span><br><b>{{currentUser?.firstName}}</b></span>
-        <span (click)="startEdit('firstName')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive" (click)="startEdit('firstName')" class="material-symbols-sharp">edit</span>
       </div>
 
       <div *ngIf="isEditing.firstName">
@@ -52,7 +51,7 @@
       <span class="field-name">Lastname:</span>
       <div class="field-value" *ngIf="!isEditing.lastName">
         <span><br><b>{{currentUser?.lastName}}</b></span>
-        <span (click)="startEdit('lastName')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive" (click)="startEdit('lastName')" class="material-symbols-sharp">edit</span>
 
       </div>
       <div *ngIf="isEditing.lastName">
@@ -69,7 +68,7 @@
       <span class="field-name">Email:</span>
       <div class="field-value" *ngIf="!isEditing.email">
         <span> <br><b>{{currentUser?.email}}</b></span>
-        <span (click)="startEdit('email')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive" (click)="startEdit('email')" class="material-symbols-sharp">edit</span>
 
       </div>
       <div *ngIf="isEditing.email">
@@ -95,7 +94,7 @@
       <span class="field-name">City:</span>
       <div class="field-value" *ngIf="!isEditing.city">
         <br><b>{{currentUser?.city}}</b>
-        <span (click)="startEdit('city')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive" (click)="startEdit('city')" class="material-symbols-sharp">edit</span>
 
       </div>
       <div *ngIf="isEditing.city">
@@ -113,7 +112,7 @@
       <div>
         <div class="field-value" *ngIf="!isEditing.street">
           <br><b>{{currentUser?.street}}</b>
-          <span (click)="startEdit('street')" class="material-symbols-sharp">edit</span>
+          <span *ngIf="!isGuestUserActive" (click)="startEdit('street')" class="material-symbols-sharp">edit</span>
 
         </div>
       </div>
@@ -135,7 +134,7 @@
       <div>
         <div class="field-value" *ngIf="!isEditing.zipCode">
           <br><b>{{currentUser?.zipCode}}</b>
-          <span (click)="startEdit('zipCode')" class="material-symbols-sharp">edit</span>
+          <span *ngIf="!isGuestUserActive" (click)="startEdit('zipCode')" class="material-symbols-sharp">edit</span>
 
         </div>
       </div>
@@ -157,7 +156,7 @@
       <div>
         <div class="field-value" *ngIf="!isEditing.birthDate">
           <br><b>{{currentUser?.birthDate}}</b>
-          <span (click)="startEdit('birthDate')" class="material-symbols-sharp">edit</span>
+          <span *ngIf="!isGuestUserActive" (click)="startEdit('birthDate')" class="material-symbols-sharp">edit</span>
 
         </div>
       </div>

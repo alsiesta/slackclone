@@ -11,10 +11,14 @@
             <mat-error *ngIf="password?.errors?.['required']">Please enter a correct password</mat-error>
 
         </mat-form-field><br>
-        <div class="center margin-top">
+        <div class="center margin-top16">
             <button mat-raised-button color="primary" type="submit">Login</button>
         </div>
-        <span class="center margin-top16">New to our platform? <a class="sign-up-link" routerLink="/sign-up">Sign-up!</a></span>
+        <span class="center margin-top16">New to our platform? <a class="sign-up-link"
+                routerLink="/sign-up">Sign-up!</a></span>
+        <div class="center margin-top16">
+            <button (click)="guestSignIn()" mat-stroked-button>sign-in as Guest User</button>
+        </div>
 
     </form>
 </div>
