@@ -1,3 +1,5 @@
+@import "../../../styles/main.scss";
+
 .form-container {
   display: block;
   max-width: 300px;
@@ -24,17 +26,17 @@
 }
 
 .legal-footer {
-  position: absolute;
-  bottom: 16px;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 24px;
+  margin-top: 32px;
 
   span {
+    font-size: $small;
+    color: $textgrey;
     cursor: pointer;
+    transition: all 125ms ease-in-out;
 
     &:hover {
       text-decoration: underline;
