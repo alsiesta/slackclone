@@ -12,7 +12,7 @@
                 <span>Threads</span>
             </div>
         </a>
-        <div class="shortcut">
+        <div class="shortcut" (click)="renderUsers()">
             <mat-icon>group</mat-icon>
             <span>Users</span>
         </div>
@@ -30,6 +30,7 @@
             </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
+            
             <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)"
                 class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>

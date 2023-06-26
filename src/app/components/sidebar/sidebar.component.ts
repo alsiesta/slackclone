@@ -125,4 +125,8 @@ export class SidebarComponent implements OnInit {
     this.chatService.openChat(chatPartner.uid);
   }
 
+  renderUsers() {
+    this.channelService.openUsersShortcut();
+  }
+
 }

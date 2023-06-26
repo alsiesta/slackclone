@@ -37,6 +37,7 @@ import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DialogCreateNewChatComponent } from './components/dialog-create-new-chat/dialog-create-new-chat.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UsersShortcutComponent } from './components/users-shortcut/users-shortcut.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ThreadsShortcutComponent,
     DateAgoPipe,
     DialogCreateNewChatComponent,
+    UsersShortcutComponent,
   ],
   imports: [
     BrowserModule,

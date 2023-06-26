@@ -24,6 +24,7 @@ export class ChannelService {
   message = new Thread();
   activeThread = new Thread();
   threadsOpen: boolean = false;
+  usersShortcutOpen: boolean = false;
   amountReplies: number;
   show: boolean = true;
   single: boolean;
@@ -213,6 +214,10 @@ export class ChannelService {
     this.threadsOpen = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
+  }
+
+  openUsersShortcut() {
+    this.usersShortcutOpen = true;
   }
 
   async updateThread() {
