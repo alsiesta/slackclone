@@ -13,14 +13,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { DialogCreateNewChatComponent } from '../dialog-create-new-chat/dialog-create-new-chat.component';
-
-
-
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
   channelsAreOpen = true;
@@ -36,15 +34,16 @@ export class SidebarComponent implements OnInit {
   // allChats: Chat[] = [];
   // userId$: any;
 
-  constructor(private firestoreService: FirestoreService,
+  constructor(
+    private firestoreService: FirestoreService,
     private channelService: ChannelService,
     private chatService: ChatService,
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
-    ) 
-    {}
+    public globalService: GlobalService
+  ) {}
 
-  ngOnInit () {
+  ngOnInit() {
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
     });
@@ -59,7 +58,10 @@ export class SidebarComponent implements OnInit {
       const getUserPromises = []; // Array für die asynchronen Promises
       this.chats.forEach((chat) => {
         chat.chatUsers.forEach((user) => {
-          if (user !== this.usersService.currentUserId$ && !uniqueUserIds.has(user)) {
+          if (
+            user !== this.usersService.currentUserId$ &&
+            !uniqueUserIds.has(user)
+          ) {
             uniqueUserIds.add(user);
             const promise = new Promise((resolve, reject) => {
               this.usersService.getUserById$(user).subscribe(
@@ -75,7 +77,7 @@ export class SidebarComponent implements OnInit {
           }
         });
       });
-    
+
       Promise.all(getUserPromises)
         .then((userDatas) => {
           userDatas.forEach((userData) => {
@@ -87,17 +89,15 @@ export class SidebarComponent implements OnInit {
         });
     });
   }
-    
-  
 
   toggleDropdown(key) {
     switch (key) {
       case 'ch':
-          this.channelsAreOpen = !this.channelsAreOpen;
+        this.channelsAreOpen = !this.channelsAreOpen;
         break;
 
       case 'dm':
-          this.directmessagesAreOpen = !this.directmessagesAreOpen;
+        this.directmessagesAreOpen = !this.directmessagesAreOpen;
         break;
 
       default:
@@ -119,14 +119,19 @@ export class SidebarComponent implements OnInit {
 
   renderChannel(channel) {
     this.channelService.loadChannelContent(channel.channelID);
+    this.globalService.openComponent('channel');
   }
 
   renderChat(chatPartner) {
     this.chatService.openChat(chatPartner.uid);
+    this.globalService.openComponent('chat');
   }
 
   renderUsers() {
     this.channelService.openUsersShortcut();
   }
 
+  renderThreadShortcuts() {
+    this.globalService.openComponent('threadShortcut');
+  }
 }

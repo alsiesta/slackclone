@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'home', component: HomeComponent },
   // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'home/thread', component: ThreadsShortcutComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'data-protection', component: DataProtectionComponent },
 ];

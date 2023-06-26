@@ -1,7 +1,8 @@
 <div class="main-container">
     <app-sidebar></app-sidebar>
-    <app-channel *ngIf="!this.chatService.chatOpen && !this.channelService.usersShortcutOpen"></app-channel>
-    <app-chat *ngIf="this.chatService.chatOpen && !this.channelService.usersShortcutOpen"></app-chat>
-    <app-users-shortcut *ngIf="this.channelService.usersShortcutOpen"></app-users-shortcut>
-    <app-threads *ngIf="this.channelService.threadsOpen"></app-threads>
+    <app-channel *ngIf="this.globalService.channelOpened"></app-channel>
+    <app-chat *ngIf="this.globalService.chatOpened"></app-chat>
+    <app-threads-shortcut *ngIf="this.globalService.threadsShortcutOpened"></app-threads-shortcut>
+    <app-users-shortcut *ngIf="this.globalService.usersShortcutOpened"></app-users-shortcut>
+    <app-threads *ngIf="this.globalService.threadsRightSideOpened"></app-threads>
 </div>
