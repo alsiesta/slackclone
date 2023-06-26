@@ -128,10 +128,10 @@ export class SidebarComponent implements OnInit {
   }
 
   renderUsers() {
-    this.channelService.openUsersShortcut();
+    this.globalService.openComponent('usersShortcut');
   }
 
   renderThreadShortcuts() {
-    this.globalService.openComponent('threadShortcut');
+    this.globalService.openComponent('threadsShortcut');
   }
 }

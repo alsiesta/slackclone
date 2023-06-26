@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
-import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-shortcut.component';
 import { AuthGuard } from './services/auth.guard';
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataProtectionComponent } from './components/data-protection/data-protection.component';

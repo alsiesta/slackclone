@@ -213,10 +213,6 @@ export class ChannelService {
     this.getUserNameReplies();
   }
 
-  openUsersShortcut() {
-    this.globalService.openComponent('usersShortcut');
-  }
-
   async updateThread() {
     this.specificThread = await this.firestoreService.getSpecificThread(
       this.activeThread.threadId

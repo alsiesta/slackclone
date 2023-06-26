@@ -62,7 +62,7 @@ export class GlobalService {
       case 'usersShortcut':
         this.usersShortcutOpened = true;
         break;
-      case 'threadShortcut':
+      case 'threadsShortcut':
         this.threadsShortcutOpened = true;
         break;
       default:
