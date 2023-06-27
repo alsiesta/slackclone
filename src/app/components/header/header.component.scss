@@ -4,6 +4,7 @@
     background-color: $grey;
     border-bottom: $normalBorder;
     color: $textgrey;
+    height: calc($menuHeight - 1px);
 }
 
 .displayName{
