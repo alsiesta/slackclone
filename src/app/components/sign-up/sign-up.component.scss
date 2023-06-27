@@ -1,46 +1,58 @@
 @import "../../../styles/main.scss";
 
-.form-container {
-  display: block;
-  max-width: 300px;
-  margin: auto;
-  background-color: rgb(226, 226, 226);
-  padding: 48px;
-  border-radius: 16px;
-
-  mat-form-field {
-    width: 100%;
-  }
-}
-
-.sign-up-link {
-  font-size: 1.2rem;
-  margin-left: 8px;
-}
-
-.margin-top16 {
-  margin-top: 16px;
-}
-
-.margin-top100 {
-  margin-top: 100px;
-}
-
-.legal-footer {
+.sign-up-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
-  margin-top: 32px;
+  height: 100vh;
 
-  span {
-    font-size: $small;
-    color: $textgrey;
-    cursor: pointer;
-    transition: all 125ms ease-in-out;
+  .logo {
+    position: absolute;
+    top: 128px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 400px;
+    object-fit: cover;
+  }
 
-    &:hover {
-      text-decoration: underline;
+  .form-container {
+    width: 400px;
+    background-color: rgb(226, 226, 226);
+    padding: 48px;
+    border-radius: 16px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .sign-up-link {
+    font-size: 1.2rem;
+    margin-left: 8px;
+  }
+
+  .margin-top16 {
+    margin-top: 16px;
+  }
+
+  .legal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 32px;
+
+    span {
+      font-size: $small;
+      color: $textgrey;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

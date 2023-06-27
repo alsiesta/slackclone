@@ -7,6 +7,11 @@
   justify-content: center;
   align-items: center;
   gap: 64px;
+  height: 100vh;
+
+  .logo {
+    animation: slideInFromLeft 0.5s ease-in-out;
+  }
 }
 
 .close-icon {
@@ -23,4 +28,13 @@
 
 a {
   color: $blue;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
