@@ -88,18 +88,31 @@
     color: $grey;
 }
 
-.comments {
-    margin-top: 12px;
-    margin-left: 16px;
-    font-size: $fontsubtitle;
-    font-weight: 500;
-    color: $blue;
-    margin-bottom: 32px;
+// .comments {
+//     margin-top: 12px;
+//     margin-left: 16px;
+//     font-size: $fontsubtitle;
+//     font-weight: 500;
+//     color: $blue;
+//     margin-bottom: 32px;
 
-    &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
+//     &:hover {
+//         text-decoration: underline;
+//         cursor: pointer;
+//     }
+// }
+
+.comments {
+    width: 90%;
+    height: 0;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    margin-left: 16px;
+}
+
+.comments-container {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
 }
 
 .user-message-more {

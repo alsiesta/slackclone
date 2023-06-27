@@ -16,7 +16,7 @@ export class ThreadsShortcutComponent {
   allThreads: Thread[] = [];
   threadsFromCurrentUser: Thread[] = [];
   names: any = [];
-  // observerThreadList: Observable<any>;
+  observerThreadList: Observable<any>;
   allUser: any = [];
   n: number;
 
@@ -25,12 +25,6 @@ export class ThreadsShortcutComponent {
     public usersService: UsersService,
     public channelService: ChannelService
   ) {
-    // this.observerThreadList = this.firestoreService.getThreadList();
-    // this.observerThreadList.subscribe((threads) => {
-    //   this.channelService.threadList = threads;
-    //   console.log('What I get here', this.channelService.threadList);
-    //   // updateThreads
-    // });
   }
 
   async ngOnInit(): Promise<void> {
@@ -62,7 +56,7 @@ export class ThreadsShortcutComponent {
       }
     }
     this.getNameOfReply();
-    // console.log('Threads from current User', this.threadsFromCurrentUser);
+    console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
   async getAllUser() {

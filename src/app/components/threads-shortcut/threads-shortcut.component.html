@@ -19,13 +19,10 @@
             </div>
 
 
-            <div class="comments">{{ threadCurrentUser.replies.length }} weitere Kommentare anzeigen</div>
-
-            <!-- <div *ngIf="this.channelService.show" class="amount-comments">
-                <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
-                <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
-                <div class="comment-line"></div>
-            </div> -->
+            <div class="comments-container">
+                <div>{{ threadCurrentUser.replies.length }} Anworten</div>
+                <div class="comments"></div>
+            </div>
 
                 <div *ngFor="let threadReplies of this.threadsFromCurrentUser[i].replies" class="user-message-more">
                     <img src="assets/img/threads/profile-picture.png">
@@ -39,7 +36,7 @@
                 </div>
 
             <div class="box-text-editor">
-                <app-commentfield [parentName]="'thread'"></app-commentfield>
+                <app-commentfield [parentName]="'threadshortcut'" [threadId]="threadsFromCurrentUser[i].threadId"></app-commentfield>
             </div>
         </div>
     </div>
