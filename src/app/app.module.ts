@@ -26,7 +26,7 @@ import { CommentfieldComponent } from './components/commentfield/commentfield.co
 import { UsersService } from './services/users.service';
 import { FirestoreService } from './services/firestore.service';
 import { AuthService } from './services/auth.service';
-import { provideStorage, getStorage} from '@angular/fire/storage'; 
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { ChatComponent } from './components/chat/chat.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
@@ -37,6 +37,9 @@ import { ThreadsShortcutComponent } from './components/threads-shortcut/threads-
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DialogCreateNewChatComponent } from './components/dialog-create-new-chat/dialog-create-new-chat.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UsersShortcutComponent } from './components/users-shortcut/users-shortcut.component';
+import { ImprintComponent } from './components/imprint/imprint.component';
+import { DataProtectionComponent } from './components/data-protection/data-protection.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ThreadsShortcutComponent,
     DateAgoPipe,
     DialogCreateNewChatComponent,
+    UsersShortcutComponent,
+    ImprintComponent,
+    DataProtectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,9 +83,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
   ],
   providers: [AuthGuard, UsersService, FirestoreService, AuthService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

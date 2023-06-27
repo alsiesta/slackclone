@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
@@ -30,7 +31,8 @@ const MaterialComponents = [
   FlexLayoutModule,
   MatProgressSpinnerModule,
   MatDialogModule,
-  FormsModule
+  FormsModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

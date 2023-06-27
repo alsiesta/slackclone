@@ -23,7 +23,6 @@ export class ChannelService {
   channelReady: boolean = false;
   message = new Thread();
   activeThread = new Thread();
-  threadsOpen: boolean = false;
   amountReplies: number;
   show: boolean = true;
   single: boolean;
@@ -73,7 +72,6 @@ export class ChannelService {
     await this.firestoreService.getAllUsers().then(() => {
       this.userList = this.firestoreService.usersList;
     });
-    this.chatService.chatOpen = false;
     this.findChannel(channelID);
     this.findThreads(channelID);
     this.findDates();
@@ -210,7 +208,7 @@ export class ChannelService {
   openThread(thread: any) {
     this.activeThread = thread;
     this.getAmountReplies();
-    this.threadsOpen = true;
+    this.globalService.threadsRightSideOpened = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
   }

@@ -1,0 +1,26 @@
+@import "../../../styles/main.scss";
+
+.imprint-container {
+  padding: 48px 80px;
+  color: $textgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  transition: all 125ms ease-in-out;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+a {
+  color: $blue;
+}

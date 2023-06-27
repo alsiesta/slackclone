@@ -32,6 +32,11 @@ export class SignInComponent {
     return this.loginForm.get('password');
   }
 
+  async guestSignIn () {
+    await this.authService.signIn('guest@d.de','123456');
+    this.router.navigate(['/home']);
+  }
+      
   async submit() {
     const { email, password } = this.loginForm.value; //destructure obj. first
 
@@ -51,9 +56,7 @@ export class SignInComponent {
     }
   }
 
-  monitorUser() {
-    console.log('Mein UserService: ', this.userService);
-  }
+
   // // via Observable
   // this.authService.login(email, password).pipe(
   //   this.toast.observe({

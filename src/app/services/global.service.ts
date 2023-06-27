@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GlobalService {
+  chatOpened: boolean = false;
+  channelOpened: boolean = true;
+  threadsRightSideOpened: boolean = false;
+  usersShortcutOpened: boolean = false;
+  threadsShortcutOpened: boolean = false;
+
   constructor() {}
 
   /**
@@ -34,5 +40,33 @@ export class GlobalService {
   sortThreadsByTime(threadList: Array<any>) {
     threadList.sort((a, b) => a.time.localeCompare(b.time));
     return threadList;
+  }
+
+  /**
+   * opens the component passed as parameter and closes the others
+   * @param component - name of the component to open
+   */
+  openComponent(component: string) {
+    this.chatOpened = false;
+    this.channelOpened = false;
+    this.usersShortcutOpened = false;
+    this.threadsShortcutOpened = false;
+
+    switch (component) {
+      case 'chat':
+        this.chatOpened = true;
+        break;
+      case 'channel':
+        this.channelOpened = true;
+        break;
+      case 'usersShortcut':
+        this.usersShortcutOpened = true;
+        break;
+      case 'threadsShortcut':
+        this.threadsShortcutOpened = true;
+        break;
+      default:
+        break;
+    }
   }
 }
