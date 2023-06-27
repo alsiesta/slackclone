@@ -45,8 +45,11 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * @param style - smooth or instant
    */
   scrollToBottomOfContent(style: any): void {
-    let content = document.getElementById('channel-content') || undefined;
-    content.scrollTo({ top: content.scrollHeight, behavior: style });
+    try {
+      let content = document.getElementById('channel-content') || undefined;
+      content.scrollTo({ top: content.scrollHeight, behavior: style });
+    } catch (err) {}
+
     this.searchService.activeChannel = this.channelService.activeChannel;
     this.searchService.activeChat = '';
     this.searchService.findActiveComponent();
