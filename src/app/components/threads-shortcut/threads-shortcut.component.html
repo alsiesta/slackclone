@@ -10,7 +10,7 @@
             <div class="channel">#</div>
         </div>
 
-        <div *ngFor="let threadCurrentUser of threadsFromCurrentUser" class="post">
+        <div *ngFor="let threadCurrentUser of threadsFromCurrentUser; let i = index" class="post">
             <div class="user-message">
                 <img src="assets/img/threads/profile-picture.png">
                 <div class="user-name-and-message">
@@ -23,7 +23,7 @@
             </div>
 
 
-            <div class="comments">x weitere Kommentare anzeigen</div>
+            <div class="comments">{{ threadCurrentUser.replies.length }} weitere Kommentare anzeigen</div>
 
             <!-- <div *ngIf="this.channelService.show" class="amount-comments">
                 <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
@@ -31,16 +31,16 @@
                 <div class="comment-line"></div>
             </div> -->
 
-            <div *ngFor="let threadReplies of reply" class="user-message-more">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">{{ threadReplies.user.name }}</div>
-                        <div class="time">{{ threadReplies.date | dateAgo }}</div>
+                <div *ngFor="let threadReplies of this.threadsFromCurrentUser[i].replies" class="user-message-more">
+                    <img src="assets/img/threads/profile-picture.png">
+                    <div class="user-name-and-message">
+                        <div class="user-name-and-time">
+                            <div class="user-name">{{ threadReplies.user['name']}}</div>
+                            <div class="time">{{ threadReplies.date | dateAgo }}</div>
+                        </div>
+                        <div [innerHTML]="threadReplies.message"></div>
                     </div>
-                    <div [innerHTML]="threadReplies.message"></div>
                 </div>
-            </div>
 
             <div class="box-text-editor">
                 <app-commentfield [parentName]="'thread'"></app-commentfield>

@@ -18,7 +18,7 @@ export class ThreadsShortcutComponent {
   names: any = [];
   // observerThreadList: Observable<any>;
   allUser: any = [];
-  reply: any = [];
+  n: number;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -75,26 +75,24 @@ export class ThreadsShortcutComponent {
   async getNameOfReply() {
     await this.getAllUser();
     console.log('All User Liste:', this.allUser);
-
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
-      this.reply = this.threadsFromCurrentUser[i].replies;
-      console.log('Reply', this.reply);
-      console.log('Reply length:', this.reply.length);
-      for (let n = 0; n < this.reply.length; n++) {
+      console.log(' this.threadsFromCurrentUser[i].replies', this.threadsFromCurrentUser[i].replies);
+      console.log('this.threadsFromCurrentUser[i].replies.length:', this.threadsFromCurrentUser[i].replies.length);
+      for (this.n = 0; this.n < this.threadsFromCurrentUser[i].replies.length; this.n++) {
         for (let j = 0; j < this.allUser.length; j++) {
-          if (this.reply[n].user == this.allUser[j].uid) {
-            console.log('reply[n]', this.reply[n]);
+          if (this.threadsFromCurrentUser[i].replies[this.n].user == this.allUser[j].uid) {
+            console.log('this.threadsFromCurrentUser[i].replies[n]', this.threadsFromCurrentUser[i].replies[this.n]);
             console.log('allUser[j]', this.allUser[j]);
-            this.extensionUser(n, j);
+            this.extensionUser(i, this.n, j);
           }
         }
       }
     }
   }
 
-  extensionUser(n: number, j: number) {
+  extensionUser(i: number, n: number, j: number) {
     this.channelService.setUserDataInThreads(
-      this.reply[n],
+      this.threadsFromCurrentUser[i].replies[n],
       this.allUser[j]
     );
   }
