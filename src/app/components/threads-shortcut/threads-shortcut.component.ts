@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 export class ThreadsShortcutComponent {
   currentUserId: string;
   currentUserData: any = [];
+  currentThread: any = [];
+  currentReply; any = [];
   allThreads: Thread[] = [];
   threadsFromCurrentUser: Thread[] = [];
   names: any = [];
@@ -70,6 +72,7 @@ export class ThreadsShortcutComponent {
     await this.getAllUser();
     console.log('All User Liste:', this.allUser);
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
+      //this.checkAmountComments(i);
       console.log(' this.threadsFromCurrentUser[i].replies', this.threadsFromCurrentUser[i].replies);
       console.log('this.threadsFromCurrentUser[i].replies.length:', this.threadsFromCurrentUser[i].replies.length);
       for (this.n = 0; this.n < this.threadsFromCurrentUser[i].replies.length; this.n++) {
@@ -88,6 +91,46 @@ export class ThreadsShortcutComponent {
     this.channelService.setUserDataInThreads(
       this.threadsFromCurrentUser[i].replies[n],
       this.allUser[j]
+    );
+  }
+
+  // checkAmountComments(i: number) {
+  //   debugger;
+  //   if(this.threadsFromCurrentUser[i].replies.length > 1) {
+  //     this.plural = true;
+  //     this.single = false;
+  //   } else {
+  //     this.plural = false;
+  //     this.single = true;
+  //   }
+  // }
+
+  getUserInformation(thread) {
+    this.currentThread = thread;
+    let curentUserId = this.currentThread['user'];
+    this.openProfileDetail(curentUserId, this.currentThread); 
+  }
+
+  getUserInformationReplies(threadReply) {
+    this.currentReply = threadReply;
+    let currentUserId = this.currentReply.user['id'];
+    this.openProfileDetail(currentUserId, this.currentReply);
+  }
+
+  openProfileDetail(currentUserId, thread) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      if (currentUserId == this.allUser[i].uid) {
+        thread = this.allUser[i];
+      }
+    }
+    let name = thread.displayName;
+    let image = thread.photoURL;
+    let email = thread.email;
+    this.channelService.messageDialogOpen(
+      name,
+      image,
+      email,
+      this.currentUserId
     );
   }
 }
