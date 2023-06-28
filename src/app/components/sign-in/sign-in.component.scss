@@ -1,5 +1,8 @@
 @import "../../../styles/main.scss";
 
+
+
+
 .sign-in-container {
   display: flex;
   flex-direction: column;
@@ -10,18 +13,22 @@
   .logo {
     margin: 0 auto;
     margin-bottom: 32px;
-    width: 400px;
+    width: clamp(200px, 380px, 80%);
     object-fit: cover;
   }
 
   .form-container {
-    width: 400px;
+    width: clamp(200px, 380px, 95%);
     background-color: rgb(226, 226, 226);
     padding: 48px;
     border-radius: 16px;
 
     mat-form-field {
       width: 100%;
+    }
+
+    @media (max-width: $breakpointCompact) {
+      padding: 24px;
     }
   }
 
