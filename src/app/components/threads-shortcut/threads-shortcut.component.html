@@ -2,18 +2,9 @@
 
     <div class="title-and-channel ">
         <div class="title">Threads</div>
-        <div class="channel">#</div>
     </div>
-    
+
     <div class="threads-container">
-<<<<<<< HEAD
-        <div class="title-and-channel ">
-            <div class="title">Threads</div>
-        </div>
-=======
-
->>>>>>> 0fc916b31488006208e2f200c5ef33636cf15201
-
         <div *ngFor="let threadCurrentUser of threadsFromCurrentUser; let i = index">
             <div class="channel"># {{ threadCurrentUser.channel }}</div>
             <div class="post">
@@ -21,7 +12,8 @@
                     <img src="assets/img/threads/profile-picture.png" (click)="getUserInformation(threadCurrentUser)">
                     <div class="user-name-and-message">
                         <div class="user-name-and-time">
-                            <div class="user-name" (click)="getUserInformation(threadCurrentUser)">{{ currentUserData.displayName }}</div>
+                            <div class="user-name" (click)="getUserInformation(threadCurrentUser)">{{
+                                currentUserData.displayName }}</div>
                             <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
                         </div>
                         <div [innerHTML]="threadCurrentUser.content"></div>
@@ -36,10 +28,12 @@
                 </div>
 
                 <div *ngFor="let threadReplies of this.threadsFromCurrentUser[i].replies" class="user-message-more">
-                    <img (click)="getUserInformationReplies(threadReplies)" src="assets/img/threads/profile-picture.png">
+                    <img (click)="getUserInformationReplies(threadReplies)"
+                        src="assets/img/threads/profile-picture.png">
                     <div class="user-name-and-message">
                         <div class="user-name-and-time">
-                            <div class="user-name"  (click)="getUserInformationReplies(threadReplies)">{{ threadReplies.user['name']}}</div>
+                            <div class="user-name" (click)="getUserInformationReplies(threadReplies)">{{
+                                threadReplies.user['name']}}</div>
                             <div class="time">{{ threadReplies.date | dateAgo }}</div>
                         </div>
                         <div [innerHTML]="threadReplies.message"></div>
