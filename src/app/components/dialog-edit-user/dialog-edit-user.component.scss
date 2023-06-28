@@ -16,52 +16,18 @@
 
   @media (max-width: $breakpointCompact) {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
   }
 
-  .close-icon {
-    cursor: pointer;
-    color: $textgrey;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    transition: all 125ms ease-in-out;
-
-    @media (max-width: $breakpointCompact) {
-      position: inherit;
-    }
-
-    &:hover {
-      color: $white;
-    }
+  .dialog-top{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
   }
-
-
-  // .title {
-  //   color: rgba($textgrey, 0.5) !important;
-  //   background-color: $darkgrey !important;
-  //   border-bottom: 1px solid rgba($textgrey, 0.5) !important;
-  //   // padding: 24px;
-
-  //   font-size: $fonttitle !important;
-  //   font-weight: 400 !important;
-  //   @media (max-width: $breakpointCompact) {
-  //   }
-  // }
-
-  // .dialog-top {
-  //   background-color: $darkgrey !important;
-  //   border-bottom: 1px solid rgba($textgrey, 0.5) !important;
-  //   // padding: 24px;
-
-  //   font-size: $fonttitle !important;
-  //   font-weight: 400 !important;
-  //   @media (max-width: $breakpointCompact) {
-  //   }
-  // }
-
+  
   .field-name {
     color: rgba($textgrey, 0.5);
   }

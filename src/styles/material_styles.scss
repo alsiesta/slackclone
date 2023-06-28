@@ -11,8 +11,8 @@ mat-toolbar-row {
   padding: 16px !important;
 }
 
-// .mat-mdc-dialog-container{
-//   --mdc-dialog-container-color: blueviolet !important;
+// .mdc-dialog__title {
+//   padding-top: 9px;
 // }
 
 .dialog-panel
@@ -23,28 +23,18 @@ mat-toolbar-row {
   border: 1px solid $silvergrey;
   border-radius: 8px;
 
-  .mat-mdc-dialog__title {
-    padding: 9px 24px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
+  // .mat-mdc-dialog-title {
+  //   padding: 9px 24px 9px 24px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   flex-direction: row;
+  //   @media (max-width: $breakpointCompact) {
+  //     flex-direction: column;
+  //   }
+  // }
 
-  .title {
-    color: rgba($textgrey, 0.5) !important;
-    font-size: $fonttitle !important;
-    font-weight: 400 !important;
-    @media (max-width: $breakpointCompact) {
-    }
-  }
-
-  .dialog-top {
-    border-bottom: 1px solid rgba($textgrey, 0.5) !important;
-    @media (max-width: $breakpointCompact) {
-    }
-  }
-
-  .close-icon {
+  .mat-icon {
     cursor: pointer;
     color: $white;
     position: absolute;
@@ -55,7 +45,32 @@ mat-toolbar-row {
       position: inherit;
     }
     &:hover {
-      color: $white;
+      opacity: 0.7;
+    }
+  }
+
+  .title {
+    color: rgba($textgrey, 0.5) !important;
+    font-size: $fonttitle !important;
+    font-weight: 400 !important;
+    @media (max-width: $breakpointCompact) {
+    }
+  }
+
+  .mdc-dialog__title {
+    padding-top: 9px;
+  }
+  
+  .dialog-top {
+    border-bottom: 1px solid rgba($textgrey, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    @media (max-width: $breakpointCompact) {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
   }
 }
