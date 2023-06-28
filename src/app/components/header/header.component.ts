@@ -141,6 +141,7 @@ export class HeaderComponent {
       // height: '350px',
       // width: '400px',
       // position: { right: '50px', top: '74px' },
+      panelClass: 'dialog-panel', // Aad a custom panel class
       data: {
         // displayName: this.authUser$.displayName,
         // email: this.authUser$.email,

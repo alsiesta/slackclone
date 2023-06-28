@@ -1,25 +1,27 @@
-<div class="dialog-container">
+<div class="dialog-top" mat-dialog-title>
+  <span class="title">View and edit your profile </span>
   <mat-icon class="close-icon" mat-button mat-dialog-close>close</mat-icon>
-  <div class="dialog-top">
-    <span class="title">View and edit your profile </span>
-  </div>
+</div>
+
+<div class="dialog-container" mat-dialog-content>
+
   <div class="dialog-main table-grid">
 
     <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-     <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+      <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
     <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-      <span *ngIf="!isGuestUserActive"  class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+      <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
     <div>
       <span class="field-name">Display Name:</span>
       <div *ngIf="!isEditing.displayName">
         <span><b>{{currentUser?.displayName}}</b></span>
-        <span *ngIf="!isGuestUserActive"  (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
+        <span *ngIf="!isGuestUserActive" (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
       </div>
       <div *ngIf="isEditing.displayName">
         <input (keyup.enter)="updateUserProperty('displayName', displayName.value)" class="field-value-form" type="text"

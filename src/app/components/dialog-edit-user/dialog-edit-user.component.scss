@@ -1,8 +1,6 @@
 @import "../../../styles/main.scss";
 
-// .fab-button {
-//   background-color: #3f51b5;
-// }
+
 
 .profile-image {
   width: 100px;
@@ -13,8 +11,15 @@
 
 .dialog-container {
   color: $white;
-  width: 600px;
+  width: clamp(250px, 1200px, 100%);
   position: relative;
+
+  @media (max-width: $breakpointCompact) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
   .close-icon {
     cursor: pointer;
@@ -24,23 +29,38 @@
     right: 16px;
     transition: all 125ms ease-in-out;
 
+    @media (max-width: $breakpointCompact) {
+      position: inherit;
+    }
+
     &:hover {
       color: $white;
     }
   }
 
-  .title {
-    color: rgba($textgrey, 0.5);
-  }
 
-  .dialog-top {
-    background-color: $darkgrey;
-    border-bottom: 1px solid rgba($textgrey, 0.5);
-    padding: 24px;
+  // .title {
+  //   color: rgba($textgrey, 0.5) !important;
+  //   background-color: $darkgrey !important;
+  //   border-bottom: 1px solid rgba($textgrey, 0.5) !important;
+  //   // padding: 24px;
 
-    font-size: $fonttitle;
-    font-weight: 400;
-  }
+  //   font-size: $fonttitle !important;
+  //   font-weight: 400 !important;
+  //   @media (max-width: $breakpointCompact) {
+  //   }
+  // }
+
+  // .dialog-top {
+  //   background-color: $darkgrey !important;
+  //   border-bottom: 1px solid rgba($textgrey, 0.5) !important;
+  //   // padding: 24px;
+
+  //   font-size: $fonttitle !important;
+  //   font-weight: 400 !important;
+  //   @media (max-width: $breakpointCompact) {
+  //   }
+  // }
 
   .field-name {
     color: rgba($textgrey, 0.5);
@@ -50,7 +70,7 @@
     line-height: 10px;
     margin-bottom: 20px;
   }
-  
+
   .field-value-form {
     line-height: 16px;
     background-color: tan;
@@ -72,6 +92,20 @@
       "five nine"
       "six ten"
       "six ten";
+    grid-auto-flow: row;
+    @media (max-width: $breakpointCompact) {
+      grid-template-areas:
+        "one"
+        "two"
+        "three"
+        "four"
+        "five"
+        "six"
+        "seven"
+        "eight"
+        "nine"
+        "ten";
+    }
 
     :nth-child(1) {
       grid-area: one;
@@ -121,8 +155,9 @@
 
   .dialog-main {
     background-color: $grey;
-    padding: 32px;
+    // padding: 32px;
     font-size: $regular;
+    width: inherit;
 
     .dialog-main-box {
       border: 1px solid rgba($textgrey, 0.2);

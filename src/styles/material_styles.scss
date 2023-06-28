@@ -1,17 +1,66 @@
-mat-icon{
+mat-icon {
   cursor: pointer;
 }
 
-mat-toolbar-row{
+mat-toolbar-row {
   height: $menuHeight !important;
   justify-content: space-between;
 }
 
 .mdc-dialog__title + .mdc-dialog__content {
-    padding: 16px !important;
+  padding: 16px !important;
+}
+
+// .mat-mdc-dialog-container{
+//   --mdc-dialog-container-color: blueviolet !important;
+// }
+
+.dialog-panel
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  background-color: $grey;
+  border: 1px solid $silvergrey;
+  border-radius: 8px;
+
+  .mat-mdc-dialog__title {
+    padding: 9px 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
-  
-  mat-card {
-    padding: 16px;
-    width: 50%;
+
+  .title {
+    color: rgba($textgrey, 0.5) !important;
+    font-size: $fonttitle !important;
+    font-weight: 400 !important;
+    @media (max-width: $breakpointCompact) {
+    }
   }
+
+  .dialog-top {
+    border-bottom: 1px solid rgba($textgrey, 0.5) !important;
+    @media (max-width: $breakpointCompact) {
+    }
+  }
+
+  .close-icon {
+    cursor: pointer;
+    color: $white;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transition: all 125ms ease-in-out;
+    @media (max-width: $breakpointCompact) {
+      position: inherit;
+    }
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+mat-card {
+  padding: 16px;
+  width: 50%;
+}
