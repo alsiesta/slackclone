@@ -1,5 +1,12 @@
 @import "../../../styles/main.scss";
 
+.menu {
+    background-color: $grey;
+    border-bottom: $normalBorder;
+    color: $textgrey;
+    height: calc($menuHeight - 1px);
+}
+
 .displayName{
     font-size: 50px;
     font-weight: 900;
@@ -19,4 +26,5 @@ input[type=text], select {
     border-radius: 4px;
     background-color: $white;
     box-sizing: border-box;
+    outline: none;
   }

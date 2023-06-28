@@ -1,10 +1,19 @@
 @import "../../../styles/main.scss";
 
 .container {
+    position: relative;
     display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .threads-container {
+    position: absolute;
+    max-height: calc(100% - $componentHeaderHeight);
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: $darkgrey;
     padding-bottom: 36px;
     overflow-y: auto;
@@ -15,6 +24,8 @@
     display: flex;
     padding: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    height: $componentHeaderHeight;
+    z-index: 1;
 }
 
 .post {

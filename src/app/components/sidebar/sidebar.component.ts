@@ -117,13 +117,13 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  renderChannel(channel) {
-    this.channelService.loadChannelContent(channel.channelID);
+  async renderChannel(channel) {
+    await this.channelService.loadChannelContent(channel.channelID);
     this.globalService.openComponent('channel');
   }
 
-  renderChat(chatPartner) {
-    this.chatService.openChat(chatPartner.uid);
+  async renderChat(chatPartner) {
+    await this.chatService.openChat(chatPartner.uid);
     this.globalService.openComponent('chat');
   }
 
