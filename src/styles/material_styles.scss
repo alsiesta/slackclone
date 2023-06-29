@@ -33,13 +33,20 @@ mat-toolbar-row {
   //     flex-direction: column;
   //   }
   // }
-
+  .mdc-dialog__title::before {
+    display: inline-block;
+    width: 0;
+    height: 0px;
+    content: "";
+    vertical-align: 0;
+  }
   .mat-icon {
     cursor: pointer;
     color: $white;
-    position: absolute;
-    top: 16px;
-    right: 16px;
+    // position: absolute;
+    // top: 16px;
+    // right: 16px;
+    margin: 10px 0;
     transition: all 125ms ease-in-out;
     @media (max-width: $breakpointCompact) {
       position: inherit;
@@ -60,17 +67,17 @@ mat-toolbar-row {
   .mdc-dialog__title {
     padding-top: 9px;
   }
-  
+
   .dialog-top {
     border-bottom: 1px solid rgba($textgrey, 0.5);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     @media (max-width: $breakpointCompact) {
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
   }
 }
