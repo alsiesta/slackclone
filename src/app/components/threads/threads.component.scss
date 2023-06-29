@@ -1,163 +1,177 @@
 @import "../../../styles/main.scss";
 
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border-left: $normalBorder;
+}
+
 .threads-container {
+    position: absolute;
+    max-height: calc(100% - $componentHeaderHeight);
+    top: $componentHeaderHeight;
+    left: 0;
+    right: 0;
     background-color: $darkgrey;
     padding-bottom: 36px;
-    height: calc(100vh - 64px);
     overflow-y: auto;
+    width: 100%;
 }
 
 .title-channel-and-close-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: $normalBorder;
+  height: $componentHeaderHeight;
+  z-index: 1;
 
-    img {
-        width: 20px;
-        height: 20px;
-    }
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .title-and-channel {
-    display: flex;
+  display: flex;
 }
 
 .close {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 
-    &:hover {
-        opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .post {
-    margin-top: 36px;
-    margin-left: 8px;
-    margin-right: 8px;
-    background-color: $threadgray;
-    border-radius: 10px;
-    padding: 36px;
+  margin-top: 24px;
+  margin-left: 8px;
+  margin-right: 8px;
+  background-color: $threadgray;
+  border-radius: 10px;
+  padding: 36px;
 }
 
 .title {
-    color: $white;
-    font-size: $fonttitle;
+  color: $white;
+  font-size: $fonttitle;
 }
 
 .channel {
-    color: $white;
-    margin-left: 16px;
-    font-size: $fonttitle;
+  color: $white;
+  margin-left: 16px;
+  font-size: $fonttitle;
 }
 
-
 .user-message {
-    display: flex;
-    margin-left: 8px;
-    margin-right: 8px;
-    padding: 12px;
+  display: flex;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 12px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
 
     &:hover {
-        background:rgba(255,255,255, 0.2);
+      cursor: pointer;
     }
-
-    img {
-        width: 50px;
-        height: 50px;
-        border-radius: 10px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
+  }
 }
 
 .user-name-and-message {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 10px;
-    font-size: $fontsubtitle;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  font-size: $fontsubtitle;
 }
 
 .user-name {
-    font-weight: 800;
-    margin-right: 10px;
+  font-weight: 800;
+  margin-right: 10px;
 
-    &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .user-name-and-time {
-    display: flex;
+  display: flex;
 }
 
 .time {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: $grey;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: $grey;
 }
 
 .comments {
-    margin-top: 12px;
-    margin-left: 16px;
-    font-size: $fontsubtitle;
-    font-weight: 500;
-    color: $blue;
+  margin-top: 12px;
+  margin-left: 16px;
+  font-size: $fontsubtitle;
+  font-weight: 500;
+  color: $blue;
 
-    &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .user-message-more {
-    display: flex;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 16px;
-    padding: 12px;
+  display: flex;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 16px;
+  padding: 12px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
 
     &:hover {
-        background:rgba(255,255,255, 0.2);
+      cursor: pointer;
     }
-
-    img {
-        width: 50px;
-        height: 50px;
-        border-radius: 10px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
+  }
 }
 
 .amount-comments {
-    display: flex;
-    align-items: center;
-    margin-left: 24px;
+  display: flex;
+  align-items: center;
+  margin-left: 24px;
 }
 
 .replies {
-    display: flex;
+  display: flex;
 }
 
 .comment-line {
-    width: 55%;
-    height: 0;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    margin-left: 16px;
+  width: 75%;
+  height: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin-left: 16px;
 }
 
 .box-text-editor {
-    margin-top: 36px;
-    margin-left: 16px;
+  margin-top: 36px;
+  margin-left: 16px;
 }
-

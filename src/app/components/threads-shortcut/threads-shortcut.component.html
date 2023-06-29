@@ -1,49 +1,49 @@
-<app-header></app-header>
 <div class="container">
-    <div>
-        <app-sidebar></app-sidebar>
+
+    <div class="title-and-channel ">
+        <div class="title">Threads</div>
     </div>
 
     <div class="threads-container">
-        <div class="title-and-channel ">
-            <div class="title">Threads</div>
-            <div class="channel">#</div>
-        </div>
-
-        <div *ngFor="let threadCurrentUser of threadsFromCurrentUser" class="post">
-            <div class="user-message">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">{{ currentUserData.displayName }}</div>
-                        <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
+        <div *ngFor="let threadCurrentUser of threadsFromCurrentUser; let i = index">
+            <div class="channel"># {{ threadCurrentUser.channel }}</div>
+            <div class="post">
+                <div class="user-message">
+                    <img src="assets/img/threads/profile-picture.png" (click)="getUserInformation(threadCurrentUser)">
+                    <div class="user-name-and-message">
+                        <div class="user-name-and-time">
+                            <div class="user-name" (click)="getUserInformation(threadCurrentUser)">{{
+                                currentUserData.displayName }}</div>
+                            <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
+                        </div>
+                        <div [innerHTML]="threadCurrentUser.content"></div>
                     </div>
-                    <div [innerHTML]="threadCurrentUser.content"></div>
                 </div>
-            </div>
 
 
-            <div class="comments">x weitere Kommentare anzeigen</div>
+                <div class="comments-container">
+                    <!-- <div *ngIf="single">{{ threadCurrentUser.replies.length }} Antwort</div>
+                <div *ngIf="plural">{{ threadCurrentUser.replies.length }} Antworten</div> -->
+                    <div class="comments"></div>
+                </div>
 
-            <!-- <div *ngIf="this.channelService.show" class="amount-comments">
-                <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
-                <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
-                <div class="comment-line"></div>
-            </div> -->
-
-            <div *ngFor="let threadReplies of reply" class="user-message-more">
-                <img src="assets/img/threads/profile-picture.png">
-                <div class="user-name-and-message">
-                    <div class="user-name-and-time">
-                        <div class="user-name">{{ threadReplies.user.name }}</div>
-                        <div class="time">{{ threadReplies.date | dateAgo }}</div>
+                <div *ngFor="let threadReplies of this.threadsFromCurrentUser[i].replies" class="user-message-more">
+                    <img (click)="getUserInformationReplies(threadReplies)"
+                        src="assets/img/threads/profile-picture.png">
+                    <div class="user-name-and-message">
+                        <div class="user-name-and-time">
+                            <div class="user-name" (click)="getUserInformationReplies(threadReplies)">{{
+                                threadReplies.user['name']}}</div>
+                            <div class="time">{{ threadReplies.date | dateAgo }}</div>
+                        </div>
+                        <div [innerHTML]="threadReplies.message"></div>
                     </div>
-                    <div [innerHTML]="threadReplies.message"></div>
                 </div>
-            </div>
 
-            <div class="box-text-editor">
-                <app-commentfield [parentName]="'thread'"></app-commentfield>
+                <div class="box-text-editor">
+                    <app-commentfield [parentName]="'threadshortcut'"
+                        [threadId]="threadsFromCurrentUser[i].threadId"></app-commentfield>
+                </div>
             </div>
         </div>
     </div>

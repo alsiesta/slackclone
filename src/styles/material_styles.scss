@@ -1,17 +1,88 @@
-mat-icon{
+mat-icon {
   cursor: pointer;
 }
 
-mat-toolbar-row{
+mat-toolbar-row {
   height: $menuHeight !important;
   justify-content: space-between;
 }
 
 .mdc-dialog__title + .mdc-dialog__content {
-    padding: 16px !important;
+  padding: 16px !important;
+}
+
+// .mdc-dialog__title {
+//   padding-top: 9px;
+// }
+
+.dialog-panel
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  background-color: $grey;
+  border: 1px solid $silvergrey;
+  border-radius: 8px;
+
+  // .mat-mdc-dialog-title {
+  //   padding: 9px 24px 9px 24px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   flex-direction: row;
+  //   @media (max-width: $breakpointCompact) {
+  //     flex-direction: column;
+  //   }
+  // }
+  .mdc-dialog__title::before {
+    display: inline-block;
+    width: 0;
+    height: 0px;
+    content: "";
+    vertical-align: 0;
   }
-  
-  mat-card {
-    padding: 16px;
-    width: 50%;
+  .mat-icon {
+    cursor: pointer;
+    color: $white;
+    // position: absolute;
+    // top: 16px;
+    // right: 16px;
+    margin: 10px 0;
+    transition: all 125ms ease-in-out;
+    @media (max-width: $breakpointCompact) {
+      position: inherit;
+    }
+    &:hover {
+      opacity: 0.7;
+    }
   }
+
+  .title {
+    color: rgba($textgrey, 0.5) !important;
+    font-size: $fonttitle !important;
+    font-weight: 400 !important;
+    @media (max-width: $breakpointCompact) {
+    }
+  }
+
+  .mdc-dialog__title {
+    padding-top: 9px;
+  }
+
+  .dialog-top {
+    border-bottom: 1px solid rgba($textgrey, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    @media (max-width: $breakpointCompact) {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+mat-card {
+  padding: 16px;
+  width: 50%;
+}

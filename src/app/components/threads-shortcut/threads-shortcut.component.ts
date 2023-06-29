@@ -13,24 +13,26 @@ import { Observable } from 'rxjs';
 export class ThreadsShortcutComponent {
   currentUserId: string;
   currentUserData: any = [];
+  currentThread: any = [];
+  currentReply: any = [];
   allThreads: Thread[] = [];
   threadsFromCurrentUser: Thread[] = [];
   names: any = [];
-  // observerThreadList: Observable<any>;
+  observerThreadList: Observable<any>;
   allUser: any = [];
-  reply: any = [];
+  n: number;
 
   constructor(
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService
   ) {
-    // this.observerThreadList = this.firestoreService.getThreadList();
-    // this.observerThreadList.subscribe((threads) => {
-    //   this.channelService.threadList = threads;
-    //   console.log('What I get here', this.channelService.threadList);
-    //   // updateThreads
-    // });
+    this.observerThreadList = this.firestoreService.getThreadList();
+    this.observerThreadList.subscribe((threads) => {
+      this.allThreads = threads;
+      this.updateContent();
+      //this.channelService.sortThreads();
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -40,9 +42,11 @@ export class ThreadsShortcutComponent {
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
     // console.log('Threadslist comes from the thread-shortcut component:', this.allThreads);
-    this.getCurrentUserData();
-    this.getCurrentUserId();
-    this.getThreadsFromCurrentUser();
+    this.updateContent();
+  }
+
+  updateContent() {
+    this.updateThreads();
   }
 
   getCurrentUserId() {
@@ -55,16 +59,6 @@ export class ThreadsShortcutComponent {
     // console.log('Current user data comes from the thread-shortcut component', this.currentUserData);
   }
 
-  async getThreadsFromCurrentUser() {
-    for (let i = 0; i < this.allThreads.length; i++) {
-      if (this.allThreads[i]['user'] == this.currentUserId) {
-        this.threadsFromCurrentUser.push(this.allThreads[i]);
-      }
-    }
-    this.getNameOfReply();
-    // console.log('Threads from current User', this.threadsFromCurrentUser);
-  }
-
   async getAllUser() {
     await this.firestoreService.getAllUsers().then((users) => {
       // console.log('All Users', users);
@@ -72,30 +66,71 @@ export class ThreadsShortcutComponent {
     });
   }
 
+  async updateThreads() {
+    await this.getCurrentUserData();
+    await this.getCurrentUserId();
+    this.threadsFromCurrentUser = [];
+    for (let i = 0; i < this.allThreads.length; i++) {
+      if (this.allThreads[i]['user'] == this.currentUserId) {
+        this.threadsFromCurrentUser.push(this.allThreads[i]);
+      }
+    }
+    await this.getNameOfReply();
+    console.log('Threads from current User', this.threadsFromCurrentUser);
+  }
+
   async getNameOfReply() {
     await this.getAllUser();
-    console.log('All User Liste:', this.allUser);
-
+    // console.log('All User Liste:', this.allUser);
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
-      this.reply = this.threadsFromCurrentUser[i].replies;
-      console.log('Reply', this.reply);
-      console.log('Reply length:', this.reply.length);
-      for (let n = 0; n < this.reply.length; n++) {
+      //this.checkAmountComments(i);
+      // console.log(' this.threadsFromCurrentUser[i].replies', this.threadsFromCurrentUser[i].replies);
+      // console.log('this.threadsFromCurrentUser[i].replies.length:', this.threadsFromCurrentUser[i].replies.length);
+      for (this.n = 0; this.n < this.threadsFromCurrentUser[i].replies.length; this.n++) {
         for (let j = 0; j < this.allUser.length; j++) {
-          if (this.reply[n].user == this.allUser[j].uid) {
-            console.log('reply[n]', this.reply[n]);
-            console.log('allUser[j]', this.allUser[j]);
-            this.extensionUser(n, j);
+          if (this.threadsFromCurrentUser[i].replies[this.n].user == this.allUser[j].uid) {
+            // console.log('this.threadsFromCurrentUser[i].replies[n]', this.threadsFromCurrentUser[i].replies[this.n]);
+            // console.log('allUser[j]', this.allUser[j]);
+            this.extensionUser(i, this.n, j);
           }
         }
       }
     }
   }
 
-  extensionUser(n: number, j: number) {
+  extensionUser(i: number, n: number, j: number) {
     this.channelService.setUserDataInThreads(
-      this.reply[n],
+      this.threadsFromCurrentUser[i].replies[n],
       this.allUser[j]
+    );
+  }
+
+  getUserInformation(thread) {
+    this.currentThread = thread;
+    let curentUserId = this.currentThread['user'];
+    this.openProfileDetail(curentUserId, this.currentThread);
+  }
+
+  getUserInformationReplies(threadReply) {
+    this.currentReply = threadReply;
+    let currentUserId = this.currentReply.user['id'];
+    this.openProfileDetail(currentUserId, this.currentReply);
+  }
+
+  openProfileDetail(currentUserId, thread) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      if (currentUserId == this.allUser[i].uid) {
+        thread = this.allUser[i];
+      }
+    }
+    let name = thread.displayName;
+    let image = thread.photoURL;
+    let email = thread.email;
+    this.channelService.messageDialogOpen(
+      name,
+      image,
+      email,
+      this.currentUserId
     );
   }
 }

@@ -1,3 +1,4 @@
+// Color //
 $white: #ffffff;
 $black: #000000;
 $line: rgba(0, 0, 0, 0.5);
@@ -12,19 +13,27 @@ $lightgrey: #82858d;
 $silvergrey: #97979a;
 $textgrey: #bfc0c2;
 $blue: #1d9acf;
-$threadgray: rgb(222,222,222);
+$threadgray: rgb(222, 222, 222);
 
+// Font //
 $fonttitle: 22px;
 $fontsubtitle: 18px;
 $regular: 16px;
 $small: 14px;
 
+// Header //
+$menuHeight: 64px;
+$menuBreakpoint: 768px;
+
+// Components //
+$componentHeaderHeight: 60px;
+
+// Border //
+$normalBorder: 1px solid rgba(255, 255, 255, 0.2);
+
 $paddingMainTopBottom: 37px;
 $paddingMainLeftRightMax: 100px;
 $paddingMainLeftRightMin: 25px;
-
-$menuHeight: 64px;
-$menuBreakpoint: 768px;
 
 $spacingRegular: 15px;
 $spacingMid: 25px;

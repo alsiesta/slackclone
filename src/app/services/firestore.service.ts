@@ -28,8 +28,6 @@ import { where } from 'firebase/firestore';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -120,7 +118,7 @@ export class FirestoreService {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
 
@@ -323,10 +321,13 @@ export class FirestoreService {
     return this.threadList;
   }
 
-
-  async updateSpecificThread(threadId: string, message: string, currentUserId: string) {
+  async updateSpecificThread(
+    threadId: string,
+    message: string,
+    currentUserId: string
+  ) {
     const date = new Date();
-    const formattedDate = date.toISOString().split('T')[0];
+    const formattedDate = date.toISOString();
     const arg = {
       user: currentUserId,
       date: formattedDate,

@@ -1,0 +1,22 @@
+@import "../../../styles/main.scss";
+
+.data-protection-container {
+  padding: 48px 160px;
+  color: $textgrey;
+}
+
+.close-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  transition: all 125ms ease-in-out;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+a {
+  color: $blue;
+}

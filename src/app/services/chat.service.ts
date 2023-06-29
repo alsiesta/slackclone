@@ -11,7 +11,6 @@ import { query } from '@angular/animations';
 })
 export class ChatService {
   chat = new Chat();
-  chatOpen: boolean = false;
   chatReady: boolean = false;
   chatList: Array<any> = [];
   personalChatList: Array<any> = [];
@@ -42,7 +41,6 @@ export class ChatService {
     }
     this.checkIfChatExists(this.chatPartner);
     this.loadChatContent();
-    this.chatOpen = true;
   }
 
   /**
@@ -261,7 +259,10 @@ export class ChatService {
 
         chats.forEach((chat) => {
           chat.chatUsers.forEach((user) => {
-            if (user !== this.userService.currentUserId$ && !uniqueUserIds.has(user)) {
+            if (
+              user !== this.userService.currentUserId$ &&
+              !uniqueUserIds.has(user)
+            ) {
               uniqueUserIds.add(user);
               const user$ = this.userService.getUserById$(user);
               user$.subscribe(userData => {

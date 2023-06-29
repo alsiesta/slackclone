@@ -9,7 +9,6 @@
   color: $white;
   background-color: $darkgrey;
   transition: all 125ms ease-in-out;
-  border-right: 1px solid rgba($white, 0.2);
 
   .text-editor {
     width: 100%;
@@ -22,7 +21,7 @@
   }
 
   .channelTitle {
-    height: 58px;
+    height: $componentHeaderHeight;
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
     display: flex;
@@ -45,7 +44,7 @@
 
   .channel-content {
     position: absolute;
-    max-height: calc(100% - 58px);
+    max-height: calc(100% - $componentHeaderHeight);
     bottom: 0;
     left: 0;
     right: 0;

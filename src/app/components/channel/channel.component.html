@@ -23,7 +23,7 @@
 
             <ng-container *ngFor="let thread of this.channelService.channelThreads">
 
-                <div *ngIf="thread.date == date" class="posting">
+                <div *ngIf="thread.date.split('T')[0] == date" class="posting">
 
                     <div>
                         <img (click)="this.channelService.messageDialogOpen(thread.user.name, thread.user.image, thread.user.email, thread.user.id)"
@@ -44,8 +44,8 @@
                         <div class="posting-content" [innerHTML]="thread.content"></div>
                         <div *ngIf="thread.replies.length > 0">
                             <div class="posting-threads" (click)="this.channelService.openThread(thread)">
-                                <div class="posting-thread-preview" *ngFor="let reply of thread.replies | slice:0:2">
-                                    <img src="{{ thread.user.image }}">
+                                <div class="posting-thread-preview" *ngFor="let preview of thread.replies | unique">
+                                    <img src="{{ preview.user.image }}">
                                 </div>
                                 <span class="posting-thread-reply">{{ thread.replies.length }} Antworten</span>
                                 <span class="posting-thread-last">Letzte Antwort am {{

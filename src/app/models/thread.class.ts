@@ -18,7 +18,7 @@ export class Thread {
     this.replies = obj ? obj.replies : '';
   }
 
-//// prior code //////////
+  //// prior code //////////
   // public toJSON?(): any {
   //   return {
   //     threadId: this.threadId,
@@ -39,19 +39,19 @@ export class Thread {
   // }
 
   public toJSON?(): any {
-    const formattedReplies = this.replies.map(reply => {
-      const formattedDate = reply.date ? reply.date.toISOString().split('T')[0] : '';
+    const formattedReplies = this.replies.map((reply) => {
+      const formattedDate = reply.date ? reply.date.toISOString() : '';
       return {
         user: reply.user,
         date: formattedDate,
         message: reply.message,
       };
     });
-  
+
     return {
       threadId: this.threadId,
       user: this.user,
-      date: this.date.toISOString().split('T')[0],
+      date: this.date.toISOString(),
       time: this.time.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',

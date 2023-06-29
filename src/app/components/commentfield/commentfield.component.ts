@@ -15,6 +15,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class CommentfieldComponent implements OnInit {
   @ViewChild("textEditor") textEditor: ElementRef;
   @Input() parentName: string;
+  @Input() threadId: string;
   editorForm: FormGroup;
   editorContent: string;
 
@@ -72,6 +73,8 @@ export class CommentfieldComponent implements OnInit {
     } else if(this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.currentUserId$);
       this.channelService.updateThread();
+    } else if(this.parentName == 'threadshortcut') {
+      this.firestoreService.updateSpecificThread(this.threadId, this.editorContent, this.currentUserId$);
     }
     // Clear the editor content
   this.editorForm.get('editor').setValue(null);

@@ -1,24 +1,62 @@
-.form-container {
-  display: block;
-  max-width: 300px;
-  margin: auto;
-  background-color: rgb(226, 226, 226);
-  padding: 48px;
-  border-radius: 16px;
+@import "../../../styles/main.scss";
 
-  mat-form-field {
-    width: 100%;
+
+
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .logo {
+    margin: 0 auto;
+    margin-bottom: 32px;
+    width: clamp(200px, 380px, 80%);
+    object-fit: cover;
   }
-}
 
-.sign-up-link {
-  font-size: 1.2rem;
-  margin-left: 8px;
-}
+  .form-container {
+    width: clamp(200px, 380px, 95%);
+    background-color: rgb(226, 226, 226);
+    padding: 48px;
+    border-radius: 16px;
 
-.margin-top16 {
-  margin-top: 16px;
-}
-.margin-top100 {
-  margin-top: 100px;
+    mat-form-field {
+      width: 100%;
+    }
+
+    @media (max-width: $breakpointCompact) {
+      padding: 24px;
+    }
+  }
+
+  .sign-up-link {
+    font-size: 1.2rem;
+    margin-left: 8px;
+  }
+
+  .margin-top16 {
+    margin-top: 16px;
+  }
+
+  .legal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 32px;
+
+    span {
+      font-size: $small;
+      color: $textgrey;
+      cursor: pointer;
+      transition: all 125ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

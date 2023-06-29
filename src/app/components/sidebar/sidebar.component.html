@@ -6,7 +6,7 @@
 
     <!-- Shortcuts -->
     <div class="shortcuts-container">
-        <a routerLink="thread">
+        <a (click)="renderThreadShortcuts()">
             <div class="shortcut">
                 <mat-icon>chat</mat-icon>
                 <span>Threads</span>
@@ -30,7 +30,7 @@
             </span>
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
-            
+
             <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)"
                 class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
@@ -56,7 +56,8 @@
             </span>
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">
-            <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner)" class="drop-down-element">
+            <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner)"
+                class="drop-down-element">
                 <img class="drop-down-img" src="{{ chatPartner.photoURL }}">
                 <span>{{ chatPartner.displayName }}</span>
             </div>
@@ -67,4 +68,4 @@
         </div>
     </div>
 
-    </div>
+</div>
