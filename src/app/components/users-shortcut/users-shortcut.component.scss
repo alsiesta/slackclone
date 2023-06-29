@@ -1,0 +1,59 @@
+@import "../../../styles/main.scss";
+
+.user-shortcut-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: calc(100vw - 250px);
+    max-width: 100%;
+    color: $white;
+    background-color: $darkgrey;
+    transition: all 125ms ease-in-out;
+    border-right: 1px solid rgba($white, 0.2);
+}
+
+.content-header {
+    height: 58px;
+    border-bottom: 1px solid rgba($white, 0.2);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    background-color: $darkgrey;
+    z-index: 1;
+
+    span {
+        font-size: $fonttitle;
+        font-weight: 500;
+        padding: 6px 1px;
+        border-radius: 6px;
+    }
+}
+
+.content-container{
+    max-height: calc(100% - 58px);
+    overflow-y: auto;
+
+    .user-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 24px;
+        transition: all 125ms ease-in-out;
+        width: 100%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        img {
+            border-radius: 5px;
+            object-fit: cover;
+            object-position: center;
+            height: 23px;
+            width: 23px;
+            margin-right: 10px;
+        }
+    }
+}
+
