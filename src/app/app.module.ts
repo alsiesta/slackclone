@@ -40,6 +40,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UsersShortcutComponent } from './components/users-shortcut/users-shortcut.component';
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataProtectionComponent } from './components/data-protection/data-protection.component';
+import { UniquePipe } from './pipes/unique.pipe';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { DataProtectionComponent } from './components/data-protection/data-prote
     UsersShortcutComponent,
     ImprintComponent,
     DataProtectionComponent,
+    UniquePipe,
   ],
   imports: [
     BrowserModule,

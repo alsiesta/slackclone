@@ -141,7 +141,7 @@ export class ChannelService {
   findDates() {
     this.dateList = [];
     this.channelThreads.forEach((element: any) => {
-      this.dateList.push(element.date);
+      this.dateList.push(element.date.split('T')[0]);
     });
     this.dateList = this.globalService.uniqueList(this.dateList);
     this.dateList = this.globalService.sortingDateList(this.dateList);
