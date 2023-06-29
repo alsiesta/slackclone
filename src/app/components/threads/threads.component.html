@@ -1,4 +1,5 @@
-<div class="threads-container">
+<div class="container">
+
     <div class="title-channel-and-close-container">
         <div class="title-and-channel">
             <div class="title">Threads</div>
@@ -7,38 +8,43 @@
         <div class="close" (click)="closeThread()"><img src="assets/img/threads/close.png"></div>
     </div>
 
-    <div class="post">
-        <div class="user-message">
-            <img (click)="getUserInformation()" src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name" (click)="getUserInformation()">
-                        {{ this.channelService.name }}</div>
-                    <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
-                </div>
-                <div [innerHTML]="this.channelService.activeThread.content"></div>
-            </div>
-        </div>
+    <div class="threads-container">
 
-        <div *ngIf="this.channelService.show" class="amount-comments">
-            <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
-            <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
-            <div class="comment-line"></div>
-        </div>
-        
-        <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
-            <img (click)="getUserInformationFromReplies(this.reply.user)" src="assets/img/threads/profile-picture.png">
-            <div class="user-name-and-message">
-                <div class="user-name-and-time">
-                    <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
-                        this.reply.user['name'] }}</div>
-                    <div class="time">{{ this.reply.date | dateAgo }}</div>
+        <div class="post">
+            <div class="user-message">
+                <img (click)="getUserInformation()" src="assets/img/threads/profile-picture.png">
+                <div class="user-name-and-message">
+                    <div class="user-name-and-time">
+                        <div class="user-name" (click)="getUserInformation()">
+                            {{ this.channelService.name }}</div>
+                        <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
+                    </div>
+                    <div [innerHTML]="this.channelService.activeThread.content"></div>
                 </div>
-                <div [innerHTML]="this.reply.message"></div>
             </div>
-        </div>
-        <div class="box-text-editor">
-            <app-commentfield [parentName]="'thread'"></app-commentfield>
+
+            <div *ngIf="this.channelService.show" class="amount-comments">
+                <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
+                <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
+                <div class="comment-line"></div>
+            </div>
+
+            <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
+                <img (click)="getUserInformationFromReplies(this.reply.user)"
+                    src="assets/img/threads/profile-picture.png">
+                <div class="user-name-and-message">
+                    <div class="user-name-and-time">
+                        <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
+                            this.reply.user['name'] }}</div>
+                        <div class="time">{{ this.reply.date | dateAgo }}</div>
+                    </div>
+                    <div [innerHTML]="this.reply.message"></div>
+                </div>
+            </div>
+            <div class="box-text-editor">
+                <app-commentfield [parentName]="'thread'"></app-commentfield>
+            </div>
         </div>
     </div>
+
 </div>
