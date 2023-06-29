@@ -7,11 +7,12 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class DateAgoPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
+        let intervals: any;
         if (value) {
             const seconds = Math.floor((+new Date() - +new Date(value)) / 1000);
             if (seconds < 29) // less than 30 seconds ago will show as 'Just now'
                 return 'vor wenigen Sekunden';
-            const intervals = {
+            intervals = {
                 'Jahr': 31536000,
                 'Monat': 2592000,
                 'Woche': 604800,
