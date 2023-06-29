@@ -264,7 +264,10 @@ export class ChatService {
             if (user !== this.userService.currentUserId$ && !uniqueUserIds.has(user)) {
               uniqueUserIds.add(user);
               const user$ = this.userService.getUserById$(user);
-              chatPartners.push(user$);
+              user$.subscribe(userData => {
+                console.log(userData)
+                chatPartners.push(userData);
+              }) 
             }
           });
         });
