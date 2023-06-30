@@ -36,7 +36,16 @@ export class SignInComponent {
     await this.authService.signIn('guest@d.de','123456');
     this.router.navigate(['/home']);
   }
-      
+
+  signInWithGoogle () {
+    this.authService.signInWithGoogle();
+  }
+  
+  logOut() {
+    this.authService.logOut();
+    this.router.navigate(['']);
+  }
+
   async submit() {
     const { email, password } = this.loginForm.value; //destructure obj. first
 

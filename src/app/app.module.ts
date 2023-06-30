@@ -41,6 +41,8 @@ import { UsersShortcutComponent } from './components/users-shortcut/users-shortc
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataProtectionComponent } from './components/data-protection/data-protection.component';
 import { UniquePipe } from './pipes/unique.pipe';
+import { GoogleAuthProvider } from "firebase/auth";
+
 
 @NgModule({
   declarations: [
@@ -87,7 +89,7 @@ import { UniquePipe } from './pipes/unique.pipe';
     MatAutocompleteModule,
     QuillModule.forRoot(),
   ],
-  providers: [AuthGuard, UsersService, FirestoreService, AuthService],
+  providers: [AuthGuard, UsersService, FirestoreService, AuthService, GoogleAuthProvider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

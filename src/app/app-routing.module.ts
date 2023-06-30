@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'imprint', component: ImprintComponent },
-  { path: 'data-protection', component: DataProtectionComponent }
+  { path: 'data-protection', component: DataProtectionComponent },
+  // { path: '**', redirectTo: 'sign-in' },
 ];
 
 @NgModule({
