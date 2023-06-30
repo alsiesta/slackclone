@@ -7,4 +7,5 @@ export const environment = {
     authDomain: 'slackclone-a5cb0.firebaseapp.com',
     messagingSenderId: '948469326821',
     measurementId: 'G-BQ10LN7JRY',
+    signInSuccessUrl: '/home',
   },};

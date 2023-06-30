@@ -173,12 +173,12 @@ export class FirestoreService {
    */
   observeChat$ = this.chatListener();
 
-  /**
-   * Subscription to the observable
-   */
-  subscription = this.observeChat$.subscribe((chats) => {
-    console.log('Received chats in subscription:', chats); // All chats as an array
-  });
+  // /**
+  //  * Subscription to the observable
+  //  */
+  // subscription = this.observeChat$.subscribe((chats) => {
+  //   console.log('Received chats in subscription:', chats); // All chats as an array
+  // });
 
   /**
    * Unsubscribe from the observable
