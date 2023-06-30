@@ -43,31 +43,13 @@
                 padding: 20px 28px;
             }
 
-            .create-chat-input {
-                display: block;
-                height: 44px;
-                margin: 0 28px;
-                border: 1px solid rgba(232, 232, 232, .3);
-                border-radius: 5px;
-                position: relative;
-                transition: all 125ms ease-in-out;
+            form {
+                width: 100%;
+                padding: 0px 28px;
+            }
 
-                .chat-input {
-                    box-sizing: border-box;
-                    border: none;
-                    background-color: transparent;
-                    padding: 4px 26px 4px 26px;
-                    height: 100%;
-                    left: 0;
-                    line-height: 1.5;
-                    position: absolute;
-                    top: 0;
-                    width: 100%;
-                    color: #fff;
-                    font-size: 18px;
-                    border-radius: 5px;
-                    transition: all 125ms ease-in-out;
-                }
+            mat-error {
+                padding: 0px 28px;
             }
 
             .dialog-description {
