@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="message-container-bottom">
-        <button class="message-button" (click)="this.chatService.openChat(this.data.id); dialogRef.close();"
+        <button class="message-button" (click)="this.chatService.openChat(this.data.id); dialogRef.close(); this.globalService.openComponent('chat')"
             [disabled]="this.data.id == this.userSevice.currentUserId$">
             <mat-icon fontIcon="question_answer"></mat-icon>Message</button>
     </div>
