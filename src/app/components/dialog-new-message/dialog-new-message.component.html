@@ -1,7 +1,7 @@
 <div class="message-container">
     <div class="message-container-top">
         <div class="profil-box">
-            <img class="profil-image" src="{{ this.data.image }}">
+            <img class="profil-image" src="{{ this.data.image || 'assets/img/user/profile-picture.png' }}">
             <div class="profil-name-box">
                 <span class="profil-name">{{ this.data.user }}</span>
                 <span class="profil-email">{{ this.data.email }}</span>
