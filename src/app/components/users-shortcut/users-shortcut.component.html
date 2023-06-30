@@ -5,17 +5,9 @@
     </div>
 
     <div class="content-container">
-        <div class="user-container">
-            <img src="assets/img/user/profile-picture.png">
-            <span>Max Mustermann</span>
-        </div>
-        <div class="user-container">
-            <img src="assets/img/user/profile-picture.png">
-            <span>Max Mustermann</span>
-        </div>
-        <div class="user-container">
-            <img src="assets/img/user/profile-picture.png">
-            <span>Max Mustermann</span>
+        <div *ngFor="let user of userList" class="user-container" (click)="openDialog(user.displayName, user.photoURL, user.email, user.uid)">
+            <img src="{{ user.photoURL }}">
+            <span>{{ user.displayName }}</span>
         </div>
     </div>
 </div>
