@@ -6,7 +6,7 @@
 
     <div class="content-container">
         <div *ngFor="let user of userList" class="user-container" (click)="openDialog(user.displayName, user.photoURL, user.email, user.uid)">
-            <img src="{{ user.photoURL }}">
+            <img src="{{ user.photoURL || 'assets/img/user/profile-picture.png' }}">
             <span>{{ user.displayName }}</span>
         </div>
     </div>
