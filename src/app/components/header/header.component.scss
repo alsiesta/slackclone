@@ -28,3 +28,13 @@ input[type=text], select {
     box-sizing: border-box;
     outline: none;
   }
+
+.menu-icon {
+    display: none;
+}
+
+@media (max-width: $menuBreakpoint) {
+  .menu-icon {
+    display: flex;
+  }
+}
