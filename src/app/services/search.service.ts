@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ChannelService } from './channel.service';
 import { ChatService } from './chat.service';
 
@@ -8,7 +8,11 @@ import { ChatService } from './chat.service';
 export class SearchService {
   activeChannel: any;
   activeChat: any;
+  activeThread: any;
   activeComponent: any = 'Loading...';
+  unfilteredThreads: any;
+  filteredThreads: any;
+  searchThreadsStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public channelService: ChannelService,
@@ -30,6 +34,9 @@ export class SearchService {
         searchTerm,
         this.chatService.unfilteredChatHistory
       );
+    } else {
+      this.searchThreadsContent(searchTerm, this.unfilteredThreads);
+      this.searchThreadsStatus.emit(true);
     }
   }
 
@@ -39,8 +46,10 @@ export class SearchService {
   findActiveComponent() {
     if (this.activeChannel) {
       this.activeComponent = 'Search channel #' + this.activeChannel.title;
-    } else {
+    } else if (this.activeChat) {
       this.activeComponent = 'Search #' + this.activeChat;
+    } else {
+      this.activeComponent = 'Search #' + this.activeThread;
     }
   }
 
@@ -51,13 +60,13 @@ export class SearchService {
    */
   searchChannelThreads(searchTerm: string, threads: Array<any>) {
     searchTerm = searchTerm.toLowerCase();
-    let filterdContent = threads.filter((thread) => {
+    let filteredContent = threads.filter((thread) => {
       return (
         thread.user.name.toLowerCase().includes(searchTerm) ||
         thread.content.toLowerCase().includes(searchTerm)
       );
     });
-    threads = filterdContent;
+    threads = filteredContent;
     this.channelService.updateChannelContent(threads);
   }
 
@@ -68,13 +77,26 @@ export class SearchService {
    */
   searchChatContent(searchTerm: string, chats: Array<any>) {
     searchTerm = searchTerm.toLowerCase();
-    let filterdContent = chats.filter((chat) => {
+    let filteredContent = chats.filter((chat) => {
       return (
         chat.user.name.toLowerCase().includes(searchTerm) ||
         chat.message.toLowerCase().includes(searchTerm)
       );
     });
-    chats = filterdContent;
+    chats = filteredContent;
     this.chatService.updateChatContent(chats);
+  }
+
+  /**
+   * search the threads content for the search term
+   * @param searchTerm - the search term of input field
+   * @param chats - the chats from chat to search in
+   */
+  searchThreadsContent(searchTerm: string, threads: Array<any>) {
+    searchTerm = searchTerm.toLowerCase();
+    let filteredContent = threads.filter((thread) => {
+      return thread.content.toLowerCase().includes(searchTerm);
+    });
+    this.filteredThreads = filteredContent;
   }
 }

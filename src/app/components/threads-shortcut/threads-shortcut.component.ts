@@ -4,6 +4,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Component } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
 import { Observable } from 'rxjs';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-threads-shortcut',
@@ -21,17 +22,28 @@ export class ThreadsShortcutComponent {
   observerThreadList: Observable<any>;
   allUser: any = [];
   n: number;
+  searchThreadsStatus = this.searchService.searchThreadsStatus;
+  filteredThreads: any;
 
   constructor(
     public firestoreService: FirestoreService,
     public usersService: UsersService,
-    public channelService: ChannelService
+    public channelService: ChannelService,
+    public searchService: SearchService
   ) {
     this.observerThreadList = this.firestoreService.getThreadList();
     this.observerThreadList.subscribe((threads) => {
       this.allThreads = threads;
       this.updateContent();
       //this.channelService.sortThreads();
+    });
+    this.searchThreadsStatus.subscribe((status) => {
+      if (status) {
+        this.filteredThreads = this.searchService.filteredThreads;
+        this.updateThreads(this.filteredThreads);
+      } else {
+        this.filteredThreads = [];
+      }
     });
   }
 
@@ -66,14 +78,20 @@ export class ThreadsShortcutComponent {
     });
   }
 
-  async updateThreads() {
+  async updateThreads(filteredThreads?: any) {
+    this.setSearchFunction();
     await this.getCurrentUserData();
     await this.getCurrentUserId();
     this.threadsFromCurrentUser = [];
+    this.searchService.unfilteredThreads = [];
     for (let i = 0; i < this.allThreads.length; i++) {
       if (this.allThreads[i]['user'] == this.currentUserId) {
         this.threadsFromCurrentUser.push(this.allThreads[i]);
+        this.searchService.unfilteredThreads.push(this.allThreads[i])
       }
+    }
+    if (filteredThreads) {
+      this.threadsFromCurrentUser = filteredThreads;
     }
     await this.getNameOfReply();
     console.log('Threads from current User', this.threadsFromCurrentUser);
@@ -132,5 +150,12 @@ export class ThreadsShortcutComponent {
       email,
       this.currentUserId
     );
+  }
+
+  setSearchFunction() {
+    this.searchService.activeChannel = '';
+    this.searchService.activeChat = '';
+    this.searchService.activeThread = 'threads';
+    this.searchService.findActiveComponent();
   }
 }

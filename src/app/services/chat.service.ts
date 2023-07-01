@@ -118,9 +118,9 @@ export class ChatService {
   /**
    * update the chat content after a new message was sent
    */
-  updateChatContent(filterdChats?: Array<any>) {
+  updateChatContent(filteredChats?: Array<any>) {
     this.checkIfChatExists(this.chatPartner);
-    this.setChatHistory(filterdChats);
+    this.setChatHistory(filteredChats);
     this.findDates();
     this.setUserInChatHistory();
     this.setChatPartnerList();
@@ -130,7 +130,7 @@ export class ChatService {
   /**
    * set the chat history from the chat object
    */
-  setChatHistory(filterdChats?: Array<any>) {
+  setChatHistory(filteredChats?: Array<any>) {
     this.chatHistory = [];
     this.unfilteredChatHistory = [];
 
@@ -139,8 +139,8 @@ export class ChatService {
       this.unfilteredChatHistory.push(element);
     });
 
-    if (filterdChats) {
-      this.chatHistory = filterdChats;
+    if (filteredChats) {
+      this.chatHistory = filteredChats;
     }
   }
 

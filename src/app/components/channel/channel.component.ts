@@ -49,9 +49,13 @@ export class ChannelComponent implements OnInit, OnDestroy {
       let content = document.getElementById('channel-content') || undefined;
       content.scrollTo({ top: content.scrollHeight, behavior: style });
     } catch (err) {}
+    this.setSearchFunction();
+  }
 
+  setSearchFunction() {
     this.searchService.activeChannel = this.channelService.activeChannel;
     this.searchService.activeChat = '';
+    this.searchService.activeThread = '';
     this.searchService.findActiveComponent();
   }
 }

@@ -51,8 +51,13 @@ export class ChatComponent implements OnDestroy, OnInit {
       let content = document.getElementById('chat-content') || undefined;
       content.scrollTo({ top: content.scrollHeight, behavior: style });
     } catch (err) {}
+    this.setSearchFunction();
+  }
+
+  setSearchFunction() {
     this.searchService.activeChannel = '';
     this.searchService.activeChat = 'chat';
+    this.searchService.activeThread = '';
     this.searchService.findActiveComponent();
   }
 }
