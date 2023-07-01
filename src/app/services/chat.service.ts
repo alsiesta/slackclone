@@ -52,6 +52,11 @@ export class ChatService {
     });
   }
 
+  /**
+   * load the personal chat list
+   * @param userID - the user to open a chat with
+   * @returns
+   */
   async loadPersonalChatList(userID: string) {
     await this.loadChatListFromFirestore();
     this.chatList.forEach((chat) => {
@@ -265,10 +270,10 @@ export class ChatService {
             ) {
               uniqueUserIds.add(user);
               const user$ = this.userService.getUserById$(user);
-              user$.subscribe(userData => {
-                console.log(userData)
+              user$.subscribe((userData) => {
+                console.log(userData);
                 chatPartners.push(userData);
-              }) 
+              });
             }
           });
         });
