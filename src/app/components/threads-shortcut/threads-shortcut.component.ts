@@ -3,8 +3,9 @@ import { UsersService } from 'src/app/services/users.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Component } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
-import { Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-threads-shortcut',
@@ -29,7 +30,8 @@ export class ThreadsShortcutComponent {
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService,
-    public searchService: SearchService
+    public searchService: SearchService,
+    public globalService: GlobalService
   ) {
     this.observerThreadList = this.firestoreService.getThreadList();
     this.observerThreadList.subscribe((threads) => {
@@ -98,6 +100,7 @@ export class ThreadsShortcutComponent {
   }
 
   async getNameOfReply() {
+    this.threadsFromCurrentUser = this.globalService.sortingThreadsOnDate(this.threadsFromCurrentUser);
     await this.getAllUser();
     // console.log('All User Liste:', this.allUser);
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {

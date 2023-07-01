@@ -27,7 +27,7 @@ export class GlobalService {
   }
 
   /**
-   * returns a sorted list of dates
+   * returns a sorted list of dates (descending)
    */
   sortingDateList(dateList: Array<any>) {
     dateList.sort((a, b) => a.localeCompare(b));
@@ -35,7 +35,17 @@ export class GlobalService {
   }
 
   /**
-   * returns an array of threads sorted by time
+   * sorts the threads by date (ascending)
+   * @param threadList - list of threads to sort
+   * @returns
+   */
+  sortingThreadsOnDate(threadList: Array<any>) {
+    threadList.sort((a, b) => b.date.localeCompare(a.date));
+    return threadList;
+  }
+
+  /**
+   * returns an array of threads sorted by time (descending)
    */
   sortThreadsByTime(threadList: Array<any>) {
     threadList.sort((a, b) => a.time.localeCompare(b.time));

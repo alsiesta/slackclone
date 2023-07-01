@@ -11,7 +11,7 @@
 .threads-container {
     position: absolute;
     max-height: calc(100% - $componentHeaderHeight);
-    bottom: 0;
+    top: $componentHeaderHeight;
     left: 0;
     right: 0;
     background-color: $darkgrey;
