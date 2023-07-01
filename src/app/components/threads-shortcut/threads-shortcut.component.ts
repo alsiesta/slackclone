@@ -81,7 +81,6 @@ export class ThreadsShortcutComponent {
   }
 
   async updateThreads(filteredThreads?: any) {
-    this.setSearchFunction();
     await this.getCurrentUserData();
     await this.getCurrentUserId();
     this.threadsFromCurrentUser = [];
@@ -153,12 +152,5 @@ export class ThreadsShortcutComponent {
       email,
       this.currentUserId
     );
-  }
-
-  setSearchFunction() {
-    this.searchService.activeChannel = '';
-    this.searchService.activeChat = '';
-    this.searchService.activeThread = 'threads';
-    this.searchService.findActiveComponent();
   }
 }
