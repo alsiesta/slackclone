@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { DialogCreateNewChatComponent } from '../dialog-create-new-chat/dialog-create-new-chat.component';
 import { GlobalService } from 'src/app/services/global.service';
+import { SearchService } from 'src/app/services/search.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatDrawerMode } from '@angular/material/sidenav';
 
@@ -38,6 +39,7 @@ export class SidebarComponent implements OnInit {
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
     public globalService: GlobalService,
+    public searchService: SearchService,
     private breakpointObserver: BreakpointObserver
   ) { }
 
@@ -133,16 +135,45 @@ export class SidebarComponent implements OnInit {
   }
 
   async renderChat(chatPartner) {
+    this.setSearchFunction('chat');
     await this.chatService.openChat(chatPartner.uid);
     this.globalService.openComponent('chat');
   }
 
   renderUsers() {
+    this.setSearchFunction('users');
     this.globalService.openComponent('usersShortcut');
   }
 
   renderThreadShortcuts() {
+    this.setSearchFunction('threads');
     this.globalService.openComponent('threadsShortcut');
+  }
+
+  /**
+   * set the active component for the search function
+   * @param component - the component to search in
+   */
+  setSearchFunction(component: string) {
+    this.searchService.activeChannel = '';
+    this.searchService.activeChat = '';
+    this.searchService.activeThread = '';
+    this.searchService.activeUsers = '';
+
+    switch (component) {
+      case 'chat':
+        this.searchService.activeChat = 'chat';
+        break;
+      case 'users':
+        this.searchService.activeUsers = 'users';
+        break;
+      case 'threads':
+        this.searchService.activeThread = 'threads';
+        break;
+      default:
+        break;
+    }
+    this.searchService.findActiveComponent();
   }
 
   toggleSidebar() {

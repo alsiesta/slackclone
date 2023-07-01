@@ -9,10 +9,14 @@ export class SearchService {
   activeChannel: any;
   activeChat: any;
   activeThread: any;
+  activeUsers: any;
   activeComponent: any = 'Loading...';
   unfilteredThreads: any;
   filteredThreads: any;
+  unfilteredUsers: any;
+  filteredUsers: any;
   searchThreadsStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  searchUsersStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public channelService: ChannelService,
@@ -34,9 +38,12 @@ export class SearchService {
         searchTerm,
         this.chatService.unfilteredChatHistory
       );
-    } else {
+    } else if (this.activeThread) {
       this.searchThreadsContent(searchTerm, this.unfilteredThreads);
       this.searchThreadsStatus.emit(true);
+    } else if (this.activeUsers) {
+      this.searchUsersContent(searchTerm, this.unfilteredUsers);
+      this.searchUsersStatus.emit(true);
     }
   }
 
@@ -48,8 +55,10 @@ export class SearchService {
       this.activeComponent = 'Search channel #' + this.activeChannel.title;
     } else if (this.activeChat) {
       this.activeComponent = 'Search #' + this.activeChat;
-    } else {
+    } else if (this.activeThread) {
       this.activeComponent = 'Search #' + this.activeThread;
+    } else if (this.activeUsers) {
+      this.activeComponent = 'Search #' + this.activeUsers;
     }
   }
 
@@ -98,5 +107,18 @@ export class SearchService {
       return thread.content.toLowerCase().includes(searchTerm);
     });
     this.filteredThreads = filteredContent;
+  }
+
+  /**
+   * search the users for the search term
+   * @param searchTerm - the search term of input field
+   * @param threads - the users from users-shortcut to search in
+   */
+  searchUsersContent(searchTerm: string, users: Array<any>) {
+    searchTerm = searchTerm.toLowerCase();
+    let filteredContent = users.filter((user) => {
+      return user.displayName.toLowerCase().includes(searchTerm);
+    });
+    this.filteredUsers = filteredContent;
   }
 }
