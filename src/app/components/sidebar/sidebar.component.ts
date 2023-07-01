@@ -14,6 +14,8 @@ import { Observable } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { DialogCreateNewChatComponent } from '../dialog-create-new-chat/dialog-create-new-chat.component';
 import { GlobalService } from 'src/app/services/global.service';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { MatDrawerMode } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-sidebar',
@@ -27,12 +29,7 @@ export class SidebarComponent implements OnInit {
   channels: Channel[] = [];
   chats: Chat[] = [];
   chatPartners: User[] = [];
-
-  // threads: Thread[] = [];
-  // allUsers: UserTemplate[] = [];
-  // currentUser: User[] = [];
-  // allChats: Chat[] = [];
-  // userId$: any;
+  drawerMode: MatDrawerMode;
 
   constructor(
     private firestoreService: FirestoreService,
@@ -40,16 +37,24 @@ export class SidebarComponent implements OnInit {
     private chatService: ChatService,
     private usersService: UsersService,
     public createChannelDialog: MatDialog,
-    public globalService: GlobalService
-  ) {}
+    public globalService: GlobalService,
+    private breakpointObserver: BreakpointObserver
+  ) { }
 
   ngOnInit() {
+    const customBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
+
+    this.breakpointObserver.observe([customBreakpoint])
+      .subscribe((state: BreakpointState) => {
+        this.drawerMode = state.matches ? 'over' : 'side';
+      });
+
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
     });
     // this.chatService.getChatPartners().subscribe( chatPartners => {
     //     this.chatPartners = chatPartners;
-        
+
     //     console.log(this.chatPartners)
     // })
     this.firestoreService.getChatList().subscribe((chats) => {
@@ -138,5 +143,9 @@ export class SidebarComponent implements OnInit {
 
   renderThreadShortcuts() {
     this.globalService.openComponent('threadsShortcut');
+  }
+
+  toggleSidebar() {
+    this.globalService.toggleSidebar();
   }
 }

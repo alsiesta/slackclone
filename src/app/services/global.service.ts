@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,16 @@ export class GlobalService {
   threadsRightSideOpened: boolean = false;
   usersShortcutOpened: boolean = false;
   threadsShortcutOpened: boolean = false;
+  private isSidebarOpenSubject = new Subject<boolean>();
+  isSidebarOpen$ = this.isSidebarOpenSubject.asObservable();
+  private isSidebarOpen = true;
 
   constructor() {}
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    this.isSidebarOpenSubject.next(this.isSidebarOpen);
+  }
 
   /**
    * returns a list of unique dates

@@ -1,4 +1,4 @@
-<div class="sidebar">
+<mat-drawer class="sidebar" #sidebar opened="{{ globalService.isSidebarOpen$ | async }}" [mode]="drawerMode">
     <!-- Sidebar Header -->
     <div class="title">
         <span>SlackClone</span>
@@ -68,4 +68,4 @@
         </div>
     </div>
 
-</div>
+</mat-drawer>

@@ -10,6 +10,8 @@ import {
 } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { SearchService } from 'src/app/services/search.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +27,8 @@ export class HeaderComponent {
     public usersService: UsersService,
     public firestore: FirestoreService,
     public dialog: MatDialog,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private globalService: GlobalService,
   ) {}
 
   currentUserDisplayName: any;
@@ -33,6 +36,10 @@ export class HeaderComponent {
     this.startSearchEvent();
     // this.loglocalStorage();
   }
+
+  toggleSidebar() {
+    this.globalService.toggleSidebar();
+}
 
   /// delete from here  /////////
   mockChatData = {
