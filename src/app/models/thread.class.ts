@@ -6,7 +6,6 @@ export class Thread {
   content: string; // content of thread
   channel: string; // channel id (#..........)
   replies: { user: string; date?: Date; message: string }[]; // stores reply objects
-  //(nice-to-have: emoji)
 
   constructor(obj?: any) {
     this.threadId = obj ? obj.threadId : '';
@@ -17,26 +16,6 @@ export class Thread {
     this.channel = obj ? obj.channel : '';
     this.replies = obj ? obj.replies : '';
   }
-
-  //// prior code //////////
-  // public toJSON?(): any {
-  //   return {
-  //     threadId: this.threadId,
-  //     user: this.user,
-  //     date: this.date.toLocaleDateString('de-DE', {
-  //       year: 'numeric',
-  //       month: '2-digit',
-  //       day: '2-digit',
-  //     }),
-  //     time: this.time.toLocaleTimeString([], {
-  //       hour: '2-digit',
-  //       minute: '2-digit',
-  //     }),
-  //     content: this.content,
-  //     channel: this.channel,
-  //     replies: this.replies,
-  //   };
-  // }
 
   public toJSON?(): any {
     const formattedReplies = this.replies.map((reply) => {

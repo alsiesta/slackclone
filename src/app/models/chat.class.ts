@@ -34,8 +34,4 @@ export class Chat {
       chat: formattedChat,
     };
   }
-
-  // public addUser(userId: string): void {
-  //   this.chatUsers.push(userId);
-  // }
 }

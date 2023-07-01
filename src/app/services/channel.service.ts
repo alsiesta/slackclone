@@ -213,6 +213,9 @@ export class ChannelService {
     this.getUserNameReplies();
   }
 
+  /**
+   * update thread after new reply
+   */
   async updateThread() {
     this.specificThread = await this.firestoreService.getSpecificThread(
       this.activeThread.threadId

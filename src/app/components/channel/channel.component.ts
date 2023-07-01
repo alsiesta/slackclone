@@ -52,6 +52,9 @@ export class ChannelComponent implements OnInit, OnDestroy {
     this.setSearchFunction();
   }
 
+  /**
+   * set the search function for channel component
+   */
   setSearchFunction() {
     this.searchService.activeChannel = this.channelService.activeChannel;
     this.searchService.activeChat = '';

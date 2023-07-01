@@ -52,7 +52,7 @@ export class SearchService {
    */
   findActiveComponent() {
     if (this.activeChannel) {
-      this.activeComponent = 'Search channel #' + this.activeChannel.title;
+      this.activeComponent = 'Search #' + this.activeChannel.title;
     } else if (this.activeChat) {
       this.activeComponent = 'Search #' + this.activeChat;
     } else if (this.activeThread) {
