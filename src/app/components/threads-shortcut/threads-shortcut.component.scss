@@ -6,6 +6,7 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    background-color: $darkgrey;
 }
 
 .threads-container {
@@ -77,7 +78,7 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 10px;
-    font-size: $fontsubtitle;
+    font-size: $regular
 }
 
 .user-name {

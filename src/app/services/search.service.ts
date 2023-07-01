@@ -90,7 +90,7 @@ export class SearchService {
   /**
    * search the threads content for the search term
    * @param searchTerm - the search term of input field
-   * @param chats - the chats from chat to search in
+   * @param threads - the threads from threads-shortcut to search in
    */
   searchThreadsContent(searchTerm: string, threads: Array<any>) {
     searchTerm = searchTerm.toLowerCase();

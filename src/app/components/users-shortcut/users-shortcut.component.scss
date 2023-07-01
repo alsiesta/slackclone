@@ -3,8 +3,7 @@
 .user-shortcut-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: calc(100vw - 250px);
+    max-height: calc(100% - $componentHeaderHeight);
     max-width: 100%;
     color: $white;
     background-color: $darkgrey;

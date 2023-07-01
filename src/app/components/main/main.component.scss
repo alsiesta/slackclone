@@ -1,6 +1,7 @@
 @import "../../../styles/main.scss";
 
 .main-container {
+  position: relative;
   background-color: $darkgrey;
   display: flex;
   min-height: calc(100vh - $menuHeight);
@@ -23,5 +24,39 @@
 
   app-threads-shortcut {
     width: 100%;
+  }
+
+  @media (max-width: $breakpointExpanded) {
+    app-threads {
+      position: absolute;
+      top: 0;
+      left: $sidebarWidth;
+      right: 0;
+      height: 100%;
+      width: calc(100% - $sidebarWidth);
+      z-index: 1;
+    }
+  }
+
+  @media (max-width: $menuBreakpoint) {
+    app-threads {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+
+    app-channel, app-chat,
+    app-users-shortcut, app-threads-shortcut {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+    }
   }
 }

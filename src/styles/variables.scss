@@ -23,10 +23,12 @@ $small: 14px;
 
 // Header //
 $menuHeight: 64px;
-$menuBreakpoint: 768px;
 
 // Components //
 $componentHeaderHeight: 60px;
+
+// Sidebar //
+$sidebarWidth: 250px;
 
 // Border //
 $normalBorder: 1px solid rgba(255, 255, 255, 0.2);
@@ -39,6 +41,8 @@ $spacingRegular: 15px;
 $spacingMid: 25px;
 $spacingBig: 35px;
 
+// Breakpoints //
 $breakpointExpanded: 1280px;
 $breakpointMedium: 960px;
+$menuBreakpoint: 768px;
 $breakpointCompact: 600px;

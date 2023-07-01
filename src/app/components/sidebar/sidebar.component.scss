@@ -3,7 +3,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: $sidebarWidth;
     height: calc(100vh - $menuHeight);
     overflow-y: auto;
     background-color: $grey;
