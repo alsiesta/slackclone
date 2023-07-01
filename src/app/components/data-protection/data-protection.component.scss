@@ -3,10 +3,26 @@
 .data-protection-container {
   padding: 48px 160px;
   color: $textgrey;
+
+  @media (max-width: $breakpointExpanded) {
+    padding: 48px 80px;
+  }
+  @media (max-width: $breakpointMedium) {
+    padding: 48px 40px;
+  }
+  @media (max-width: $breakpointCompact) {
+    padding: 48px 20px;
+  }
+
+  h1 {
+    @media (max-width: 360px) {
+      font-size: 24px;
+    }
+  }
 }
 
 .close-icon {
-  position: absolute;
+  position: fixed;
   top: 16px;
   right: 16px;
   cursor: pointer;
@@ -19,4 +35,7 @@
 
 a {
   color: $blue;
+  @media (max-width: 360px) {
+    word-break: break-all;
+  }
 }
