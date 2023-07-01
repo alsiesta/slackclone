@@ -1,7 +1,7 @@
 <mat-toolbar class="menu">
   <mat-toolbar-row class="example-sidenav-content">
-    <img class="logo" src="./assets/img/slackclone_white.png">
-    <mat-icon class="menu-icon" (click)="toggleSidebar()">menu</mat-icon>
+    <!-- <img class="logo" src="./assets/img/slackclone_white.png"> -->
+    <mat-icon class="menu-icon" (click)="toggleSidebar()">{{ icon }}</mat-icon>
     <input id="searchbar" type="text" [(ngModel)]="searchText" [placeholder]="this.searchService.activeComponent">
     <div>
       <span [style.displayName]="true">{{currentUserName$}}</span>

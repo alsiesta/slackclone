@@ -20,6 +20,7 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class HeaderComponent {
   public searchText: string;
+  public icon = 'menu_open';
 
   constructor(
     public authService: AuthService,
@@ -39,6 +40,7 @@ export class HeaderComponent {
 
   toggleSidebar() {
     this.globalService.toggleSidebar();
+    this.icon = this.icon === 'menu_open' ? 'menu' : 'menu_open';
 }
 
   /// delete from here  /////////

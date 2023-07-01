@@ -7,17 +7,18 @@
     height: calc($menuHeight - 1px);
 }
 
-.displayName{
+.displayName {
     font-size: 50px;
     font-weight: 900;
 }
 
-.logo{
+.logo {
     width: 200px;
 }
 
-input[type=text], select {
-    width: 250px;
+input[type=text],
+select {
+    width: 500px;
     color: $darkgrey;
     padding: 4px 4px;
     margin: 4px 0;
@@ -27,14 +28,19 @@ input[type=text], select {
     background-color: $white;
     box-sizing: border-box;
     outline: none;
-  }
+}
 
 .menu-icon {
     display: none;
 }
 
 @media (max-width: $menuBreakpoint) {
-  .menu-icon {
-    display: flex;
-  }
+
+    input[type=text],select {
+        width: 250px;
+    }
+
+    .menu-icon {
+        display: flex;
+    }
 }
