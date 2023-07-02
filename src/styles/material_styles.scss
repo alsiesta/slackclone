@@ -43,10 +43,7 @@ mat-toolbar-row {
   .mat-icon {
     cursor: pointer;
     color: $white;
-    // position: absolute;
-    // top: 16px;
-    // right: 16px;
-    margin: 10px 0;
+    margin: 0 0;
     transition: all 125ms ease-in-out;
     @media (max-width: $breakpointCompact) {
       position: inherit;
@@ -61,6 +58,7 @@ mat-toolbar-row {
     font-size: $fonttitle !important;
     font-weight: 400 !important;
     @media (max-width: $breakpointCompact) {
+      font-size: $small !important;
     }
   }
 

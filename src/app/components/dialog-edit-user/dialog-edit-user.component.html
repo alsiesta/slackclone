@@ -9,7 +9,7 @@
 
     <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-      <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+      <mat-icon *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</mat-icon>
     </div>
 
 
@@ -24,117 +24,117 @@
 
 
     <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image">
-      <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
-      <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+      <input size="12" hidden type="file" #selectFile (change)="onFileSelected($event)" />
+      <mat-icon *ngIf="!isGuestUserActive" (click)="selectFile.click()">edit</mat-icon>
+      
     </div>
 
-    <div>
+    <div class="length20">
       <span class="field-name">Display Name:</span>
       <div *ngIf="!isEditing.displayName">
-        <span><b>{{currentUser?.displayName}}</b></span>
-        <span *ngIf="!isGuestUserActive" (click)="startEdit('displayName')" class="material-symbols-sharp">edit</span>
+        <span class="field-value"><b>{{currentUser?.displayName}}</b>
+        <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('displayName')">edit</mat-icon></span>
       </div>
       <div *ngIf="isEditing.displayName">
-        <input (keyup.enter)="updateUserProperty('displayName', displayName.value)" class="field-value-form" type="text"
+        <input size="12" (keyup.enter)="updateUserProperty('displayName', displayName.value)" class="field-value-form" type="text"
           #displayName value="{{currentUser?.displayName}}">
-        <span (click)="updateUserProperty('displayName', displayName.value)" class="material-symbols-sharp">done</span>
-        <span (click)="cancelEdit('displayName')" class="material-symbols-sharp">close</span>
+        <mat-icon (click)="updateUserProperty('displayName', displayName.value)" class="material-symbols-sharp">done</mat-icon>
+        <mat-icon (click)="cancelEdit('displayName')">close</mat-icon>
 
       </div>
     </div>
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Firstname:</span>
-      <div class="field-value" *ngIf="!isEditing.firstName">
-        <span><br><b>{{currentUser?.firstName}}</b></span>
-        <span *ngIf="!isGuestUserActive" (click)="startEdit('firstName')" class="material-symbols-sharp">edit</span>
+      <div *ngIf="!isEditing.firstName">
+        <span class="field-value"><br><b>{{currentUser?.firstName}}</b>
+        <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('firstName')" class="material-symbols-sharp">edit</mat-icon></span>
       </div>
 
       <div *ngIf="isEditing.firstName">
-        <input (keyup.enter)="updateUserProperty('firstName', firstname.value)" class="field-value-form" type="text"
+        <input size="12" (keyup.enter)="updateUserProperty('firstName', firstname.value)" class="field-value-form" type="text"
           #firstname value="{{currentUser?.firstName}}">
-        <span (click)="updateUserProperty('firstName', firstname.value)" class="material-symbols-sharp">done</span>
-        <span (click)="cancelEdit('firstName')" class="material-symbols-sharp">close</span>
+        <mat-icon (click)="updateUserProperty('firstName', firstname.value)" class="material-symbols-sharp">done</mat-icon>
+        <mat-icon (click)="cancelEdit('firstName')" class="material-symbols-sharp">close</mat-icon>
       </div>
     </div>
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Lastname:</span>
-      <div class="field-value" *ngIf="!isEditing.lastName">
-        <span><br><b>{{currentUser?.lastName}}</b></span>
-        <span *ngIf="!isGuestUserActive" (click)="startEdit('lastName')" class="material-symbols-sharp">edit</span>
+      <div *ngIf="!isEditing.lastName">
+        <span class="field-value"><br><b>{{currentUser?.lastName}}</b>
+        <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('lastName')">edit</mat-icon></span>
 
       </div>
       <div *ngIf="isEditing.lastName">
-        <input (keyup.enter)="updateUserProperty('lastName', lastName.value)" class="field-value-form" type="text"
+        <input size="12" (keyup.enter)="updateUserProperty('lastName', lastName.value)" class="field-value-form" type="text"
           #lastName value="{{currentUser?.lastName}}">
-        <span (click)="updateUserProperty('lastName', lastName.value)" class="material-symbols-sharp">done</span>
-        <span (click)="cancelEdit('lastName')" class="material-symbols-sharp">close</span>
+        <mat-icon (click)="updateUserProperty('lastName', lastName.value)">done</mat-icon>
+        <mat-icon (click)="cancelEdit('lastName')" class="material-symbols-sharp">close</mat-icon>
 
       </div>
     </div>
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Email:</span>
-      <div class="field-value" *ngIf="!isEditing.email">
-        <span> <br><b>{{currentUser?.email}}</b></span>
-        <span *ngIf="!isGuestUserActive" (click)="startEdit('email')" class="material-symbols-sharp">edit</span>
+      <div *ngIf="!isEditing.email">
+        <span class="field-value"> <br><b>{{currentUser?.email}}</b>
+        <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('email')">edit</mat-icon></span>
 
       </div>
       <div *ngIf="isEditing.email">
-        <input (keyup.enter)="updateUserProperty('email', email.value)" class="field-value-form" type="text" #email
+        <input size="12" (keyup.enter)="updateUserProperty('email', email.value)" class="field-value-form" type="text" #email
           value="{{currentUser?.email}}">
-        <span (click)="updateUserProperty('email', email.value)" class="material-symbols-sharp">done</span>
-        <span (click)="cancelEdit('email')" class="material-symbols-sharp">close</span>
+        <mat-icon (click)="updateUserProperty('email', email.value)">done</mat-icon>
+        <mat-icon (click)="cancelEdit('email')">close</mat-icon>
 
       </div>
     </div>
 
 
-    <div>
-      <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span><br><b>Yes</b>
+    <div class="length20">
+      <div *ngIf="data.emailVerified === true"><span class="field-name">Email verified:</span>&nbsp;<b>Yes</b>
       </div>
-      <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span><br>
-        <b>No</b>
+      <div *ngIf="data.emailVerified === false"><span class="field-name">Email verified:</span>&nbsp;<b>No</b>
       </div>
     </div>
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">City:</span>
-      <div class="field-value" *ngIf="!isEditing.city">
-        <br><b>{{currentUser?.city}}</b>
-        <span *ngIf="!isGuestUserActive" (click)="startEdit('city')" class="material-symbols-sharp">edit</span>
+      <div *ngIf="!isEditing.city">
+        <span class="field-value"><br><b>{{currentUser?.city}}</b>
+        <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('city')">edit</mat-icon></span>
 
       </div>
       <div *ngIf="isEditing.city">
-        <input (keyup.enter)="updateUserProperty('email', city.value)" class="field-value-form" type="text" #city
+        <input size="12" (keyup.enter)="updateUserProperty('email', city.value)" class="field-value-form" type="text" #city
           value="{{currentUser?.city}}">
-        <span (click)="updateUserProperty('city', city.value)" class="material-symbols-sharp">done</span>
-        <span (click)="cancelEdit('city')" class="material-symbols-sharp">close</span>
+        <mat-icon (click)="updateUserProperty('city', city.value)">done</mat-icon>
+        <mat-icon (click)="cancelEdit('city')">close</mat-icon>
 
       </div>
     </div>
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Street:</span>
       <div>
-        <div class="field-value" *ngIf="!isEditing.street">
-          <br><b>{{currentUser?.street}}</b>
-          <span *ngIf="!isGuestUserActive" (click)="startEdit('street')" class="material-symbols-sharp">edit</span>
+        <div *ngIf="!isEditing.street">
+          <span class="field-value"><br><b>{{currentUser?.street}}</b>
+          <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('street')">edit</mat-icon></span>
 
         </div>
       </div>
       <div>
         <div *ngIf="isEditing.street">
-          <input (keyup.enter)="updateUserProperty('street', street.value)" class="field-value-form" type="text" #street
+          <input size="12" (keyup.enter)="updateUserProperty('street', street.value)" class="field-value-form" type="text" #street
             value="{{currentUser?.street}}">
-          <span (click)="updateUserProperty('street', street.value)" class="material-symbols-sharp">done</span>
-          <span (click)="cancelEdit('street')" class="material-symbols-sharp">close</span>
+          <mat-icon (click)="updateUserProperty('street', street.value)">done</mat-icon>
+          <mat-icon (click)="cancelEdit('street')">close</mat-icon>
 
         </div>
       </div>
@@ -142,21 +142,21 @@
 
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Zip-Code:</span>
       <div>
-        <div class="field-value" *ngIf="!isEditing.zipCode">
-          <br><b>{{currentUser?.zipCode}}</b>
-          <span *ngIf="!isGuestUserActive" (click)="startEdit('zipCode')" class="material-symbols-sharp">edit</span>
+        <div *ngIf="!isEditing.zipCode">
+          <span class="field-value"><br><b>{{currentUser?.zipCode}}</b>
+          <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('zipCode')">edit</mat-icon></span>
 
         </div>
       </div>
       <div>
         <div *ngIf="isEditing.zipCode">
-          <input (keyup.enter)="updateUserProperty('zipCode', zipCode.value)" class="field-value-form" type="text"
+          <input size="12" (keyup.enter)="updateUserProperty('zipCode', zipCode.value)" class="field-value-form" type="text"
             #zipCode value="{{currentUser?.zipCode}}">
-          <span (click)="updateUserProperty('zipCode', zipCode.value)" class="material-symbols-sharp">done</span>
-          <span (click)="cancelEdit('zipCode')" class="material-symbols-sharp">close</span>
+          <mat-icon (click)="updateUserProperty('zipCode', zipCode.value)">done</mat-icon>
+          <mat-icon (click)="cancelEdit('zipCode')">close</mat-icon>
 
         </div>
       </div>
@@ -164,21 +164,21 @@
 
 
 
-    <div>
+    <div class="length20">
       <span class="field-name">Birthdate:</span>
       <div>
-        <div class="field-value" *ngIf="!isEditing.birthDate">
-          <br><b>{{currentUser?.birthDate}}</b>
-          <span *ngIf="!isGuestUserActive" (click)="startEdit('birthDate')" class="material-symbols-sharp">edit</span>
+        <div *ngIf="!isEditing.birthDate">
+          <span class="field-value"><br><b>{{currentUser?.birthDate}}</b>
+          <mat-icon *ngIf="!isGuestUserActive" (click)="startEdit('birthDate')">edit</mat-icon></span>
 
         </div>
       </div>
       <div>
         <div *ngIf="isEditing.birthDate">
-          <input (keyup.enter)="updateUserProperty('birthDate', birthDate.value)" class="field-value-form" type="text"
+          <input size="12" (keyup.enter)="updateUserProperty('birthDate', birthDate.value)" class="field-value-form" type="text"
             #birthDate value="{{currentUser?.birthDate}}">
-          <span (click)="updateUserProperty('birthDate', birthDate.value)" class="material-symbols-sharp">done</span>
-          <span (click)="cancelEdit('birthDate')" class="material-symbols-sharp">close</span>
+          <mat-icon (click)="updateUserProperty('birthDate', birthDate.value)">done</mat-icon>
+          <mat-icon (click)="cancelEdit('birthDate')">close</mat-icon>
 
         </div>
       </div>

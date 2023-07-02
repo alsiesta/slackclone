@@ -1,7 +1,9 @@
 @import "../../../styles/main.scss";
 
 
-
+.title{
+  font-size: 45px;
+}
 .profile-image {
   width: 100px;
   height: 100px;
@@ -11,7 +13,7 @@
 
 .dialog-container {
   color: $white;
-  width: clamp(250px, 1200px, 100%);
+  width: clamp(200px, 1200px, 100%);
   position: relative;
 
   @media (max-width: $breakpointCompact) {
@@ -28,13 +30,25 @@
     flex-direction: column;
   }
   
+  .length20{
+    width:240px
+  }
   .field-name {
     color: rgba($textgrey, 0.5);
+    @media (max-width: $breakpointCompact) {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .field-value {
-    line-height: 10px;
+    line-height: 30px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    @media (max-width: $breakpointCompact) {
+      justify-content: center;
+    }
   }
 
   .field-value-form {
@@ -42,10 +56,7 @@
     background-color: tan;
   }
 
-  .material-symbols-sharp {
-    cursor: pointer;
-    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 200, "opsz" 30;
-  }
+
   .table-grid {
     display: grid;
     gap: 1rem;
@@ -125,6 +136,10 @@
     font-size: $regular;
     width: inherit;
 
+    @media (max-width: $breakpointCompact) {
+      font-size: $small;
+    }
+  
     .dialog-main-box {
       border: 1px solid rgba($textgrey, 0.2);
       border-radius: 8px;
