@@ -36,7 +36,6 @@ export class FirestoreService {
   channel = new Channel();
   chat = new Chat();
   thread = new Thread();
-  // isChannelDoublicated: boolean;
   usersList: any;
   channelList: any;
   threadList: any;
@@ -49,6 +48,9 @@ export class FirestoreService {
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
     this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
+
+  ngOnInit () { }
+  
 
   /////////////////////////// CHANNEL FUNCTIONS ///////////////////////////
   /**
@@ -120,6 +122,11 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Function checks if channel id already exists
+   * @param cid 
+   * @returns boolean
+   */
  async isChannelDoublicated(cid: string) {
     const channelList = await this.readChannels();
     let isChannelDoublicated: boolean;
@@ -134,7 +141,11 @@ export class FirestoreService {
    return isChannelDoublicated;
   }
 
-
+/**
+ * Function returns a specific channel
+ * @param id 
+ * @returns Promise that resolves to a channel
+ */
   async getSpecificChannel(id) {
     const docRef = doc(this.channelCollection, id);
     const docSnap = await getDoc(docRef);
@@ -148,10 +159,8 @@ export class FirestoreService {
     }
   }
 
-  ngOnInit() {}
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
-
   /**
    *
    * @returns Observable that listens to changes in the chats collection
@@ -163,10 +172,8 @@ export class FirestoreService {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const chats = [];
         querySnapshot.forEach((doc) => {
-          // console.log('Change occured in this chat: ', doc.data()); // Specific doc that changed
           chats.push(doc.data());
         });
-        // console.log('Current chats: ', chats); // All chats as an array
 
         subscriber.next(chats); // Emit the chats data to the subscriber
       });
@@ -179,6 +186,11 @@ export class FirestoreService {
     });
   };
 
+
+  /**
+   * 
+   * @returns Observable that listens to changes in the chats collection
+   */
   getChatList(): Observable<any[]> {
     const q = query(collection(this.firestore, GLOBAL_VARS.CHATS));
 
@@ -203,20 +215,8 @@ export class FirestoreService {
    */
   observeChat$ = this.chatListener();
 
-  // /**
-  //  * Subscription to the observable
-  //  */
-  // subscription = this.observeChat$.subscribe((chats) => {
-  //   console.log('Received chats in subscription:', chats); // All chats as an array
-  // });
-
   /**
-   * Unsubscribe from the observable
-   */
-  // subscription.unsubscribe ();
-
-  /**
-   * adding a new chat to the firestore
+   * adding a new chat to firestore
    * @param chat
    */
   async addNewChat(chat?: Chat) {
@@ -228,6 +228,11 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * 
+   * @param id 
+   * @returns Promise that resolves to a chat
+   */
   async getSpecificChat(id) {
     const docRef = doc(this.chatCollection, id);
     const docSnap = await getDoc(docRef);
@@ -241,6 +246,11 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Function adds a user to a chat in firestore
+   * @param chatId 
+   * @param newUser 
+   */
   async addUserToChat(chatId: string, newUser: string) {
     const chatRef = doc(this.chatCollection, chatId);
     await updateDoc(chatRef, {
@@ -248,6 +258,12 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Function adds a message to a chat in firestore
+   * @param chatId 
+   * @param user 
+   * @param message 
+   */
   async addChatMessage(chatId, user, message) {
     const date = new Date();
     const formdate = date.toISOString().split('T')[0];
@@ -267,6 +283,10 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * 
+   * @returns Promise that resolves to an array of all chats
+   */
   async getAllChats() {
     const querySnapshot = await getDocs(this.chatCollection);
     this.chatList = querySnapshot.docs.map((doc) => {
@@ -275,9 +295,14 @@ export class FirestoreService {
     });
     return this.chatList;
   }
+  
+  
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
-  ///// LISTENER listening to THREADS CHANGE
+  /**
+   * Listener listening to changes in the threads collection
+   * returns an array of all threads
+   */
   query = query(collection(this.firestore, GLOBAL_VARS.THREADS));
   uunsubscribe = onSnapshot(this.query, (querySnapshot) => {
     const threads = [];
@@ -290,8 +315,10 @@ export class FirestoreService {
     return this.threadList;
   });
 
-  ///// LISTENER AS OBSERVABLE listening to THREADS CHANGE
-
+/**
+ * 
+ * @returns Observable that listens to changes in the threads collection
+ */
   getThreadList(): Observable<any[]> {
     const q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
 
@@ -311,6 +338,10 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Function adds a new thread to firestore
+   * @param thread 
+   */
   async addNewThread(thread?: Thread) {
     let dateTime = new Date();
     this.thread.date = dateTime;
@@ -329,6 +360,11 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * Function returns a specific thread
+   * @param id 
+   * @returns data of a thread
+   */
   async getSpecificThread(id) {
     const docRef = doc(this.threadCollection, id);
     const docSnap = await getDoc(docRef);
@@ -342,6 +378,9 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * @returns Promise that resolves to an array of all threads
+   */
   async getAllThreads() {
     const querySnapshot = await getDocs(this.threadCollection);
     this.threadList = querySnapshot.docs.map((doc) => {
@@ -351,6 +390,12 @@ export class FirestoreService {
     return this.threadList;
   }
 
+  /**
+   * Function adds a reply to a thread in firestore
+   * @param threadId 
+   * @param message 
+   * @param currentUserId 
+   */
   async updateSpecificThread(
     threadId: string,
     message: string,
@@ -372,6 +417,13 @@ export class FirestoreService {
 
   ///////////////// USER FUNKTIONEN ///////////////////
 
+  /**
+   * Function adds a new user to firestore
+   * @param uid 
+   * @param name 
+   * @param email 
+   * @param password 
+   */
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
     this.user.email = email;
@@ -386,6 +438,11 @@ export class FirestoreService {
       });
   }
 
+  /**
+   * Function returns a specific user
+   * @param id 
+   * @returns specific user data
+   */
   async getSpecificUser(id) {
     const docRef = doc(this.usersCollection, id);
     const docSnap = await getDoc(docRef);
@@ -399,6 +456,11 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Function updates a specific user in firestore
+   * @param id 
+   * @param data 
+   */
   async updateSpecificUser(id, data: UserTemplate) {
     const docRef = doc(this.usersCollection, id);
     await updateDoc(docRef, {
@@ -415,6 +477,9 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * @returns Promise that resolves to an array of all users
+   */
   async getAllUsers() {
     const querySnapshot = await getDocs(this.usersCollection);
     this.usersList = querySnapshot.docs.map((doc) => {
@@ -426,13 +491,13 @@ export class FirestoreService {
 
   ///////////////// HELPER FUNCTIONS ///////////////////
 
+  /**
+   * @param uid 
+   * @returns document reference in firestore
+   */
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
   }
 
-  getDocData(uid) {
-    const gameData = docData(this.getDocRef(uid));
-    return gameData;
-  }
 }
