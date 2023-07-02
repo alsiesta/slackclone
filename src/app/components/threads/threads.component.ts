@@ -25,7 +25,7 @@ export class ThreadsComponent implements OnInit {
     public usersService: UsersService,
     public channelService: ChannelService,
     public globalService: GlobalService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     await this.getAllThreads();
@@ -35,30 +35,33 @@ export class ThreadsComponent implements OnInit {
     this.getAllUser();
   }
 
+  /**
+  * Gets all the threads from the Firestore
+  */
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
-    console.log(
-      'Threadslist comes from the thread component:',
-      this.allThreads
-    );
+    // console.log('Threadslist comes from the thread component:', this.allThreads);
   }
 
+  /**
+   * Fetches the ID for the user who is currently logged in
+   */
   getCurrentUserId() {
     this.currentUserId = this.usersService.currentUserId$;
-    console.log(
-      'Current User Id comes from the thread component',
-      this.currentUserId
-    );
+    // console.log('Current User Id comes from the thread component', this.currentUserId);
   }
 
+  /**
+   * Fetches the user data of the currently logged in user
+   */
   async getCurrentUserData() {
     this.currentUserData = await this.usersService.getCurrentUserData();
-    console.log(
-      'Current user data comes from the thread component',
-      this.currentUserData
-    );
+    // console.log('Current user data comes from the thread component', this.currentUserData);
   }
 
+  /**
+   * Only retrieves the threads from the Firestore that belong to the current user
+   */
   getThreadsFromCurrentUser() {
     for (let i = 0; i < this.allThreads.length; i++) {
       if (this.allThreads[i]['user'] == this.currentUserId) {
@@ -66,24 +69,37 @@ export class ThreadsComponent implements OnInit {
       }
       i++;
     }
-    console.log('Threads from current User', this.threadsFromCurrentUser);
+    // console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
+  /**
+   * Gets all users from the Firestore
+   */
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
-    console.log('All Users comes from thread component:', this.allUser);
+    // console.log('All Users comes from thread component:', this.allUser);
   }
 
+  /**
+  * Fetches the information for the user to display user details as a pop-up window
+  */
   getUserInformation() {
     let curentUserId = this.channelService.activeThread.user['id'];
     this.openProfileDetail(curentUserId);
   }
 
+  /**
+   * Fetches the information for the user to display user details as a pop-up window
+   * But this time from the replies
+   */
   getUserInformationFromReplies(user) {
     let curentUserId = user['id'];
     this.openProfileDetail(curentUserId);
   }
 
+  /**
+  *  Opens the profile details in the pop-up window
+  */
   openProfileDetail(currentUserId) {
     for (let i = 0; i < this.allUser.length; i++) {
       if (currentUserId == this.allUser[i].uid) {
@@ -101,6 +117,9 @@ export class ThreadsComponent implements OnInit {
     );
   }
 
+  /**
+  *  Closes the thread
+  */
   closeThread() {
     this.globalService.threadsRightSideOpened = false;
   }
