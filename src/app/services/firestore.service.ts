@@ -4,6 +4,7 @@ import { Channel } from '../models/channel.class';
 import { Chat } from '../models/chat.class';
 import { Thread } from '../models/thread.class';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
+import { HotToastService } from '@ngneat/hot-toast';
 import {
   addDoc,
   collection,
@@ -42,15 +43,14 @@ export class FirestoreService {
   chatList: any;
   currentUserId: string;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private toast: HotToastService) {
     this.usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     this.channelCollection = collection(this.firestore, GLOBAL_VARS.CHANNELS);
     this.chatCollection = collection(this.firestore, GLOBAL_VARS.CHATS);
     this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
 
-  ngOnInit () { }
-  
+  ngOnInit() {}
 
   /////////////////////////// CHANNEL FUNCTIONS ///////////////////////////
   /**
@@ -97,9 +97,13 @@ export class FirestoreService {
    * @param channel
    * @returns Promise that resolves to the channel id of the newly added channel
    */
-  async addNewChannel (cid: string, channel: Channel) {
+  async addNewChannel(cid: string, channel: Channel) {
+    debugger;
     if (await this.isChannelDoublicated(cid)) {
       console.log('Channel already exists');
+      this.toast.info(
+        `Sorry, the channel ${cid} already exists. Please choose another channel name`
+      );
       return null;
     } else {
       let dateTime = new Date();
@@ -108,7 +112,9 @@ export class FirestoreService {
       this.channel.info = channel.info;
       this.channel.title = channel.title;
       const ref = doc(this.channelCollection, cid);
-
+      this.toast.info(
+        `Your channel ${cid} was successfully created.`
+      );
       await setDoc(ref, this.channel.toJSON())
         .then(() => {
           console.log('New Channel added to firestore', cid);
@@ -124,28 +130,28 @@ export class FirestoreService {
 
   /**
    * Function checks if channel id already exists
-   * @param cid 
+   * @param cid
    * @returns boolean
    */
- async isChannelDoublicated(cid: string) {
+  async isChannelDoublicated(cid: string) {
     const channelList = await this.readChannels();
     let isChannelDoublicated: boolean;
-   channelList.forEach((channel: Channel) => {
-     if (channel.channelID === cid) {
-       isChannelDoublicated = true;
-       return isChannelDoublicated;
-     } else {
-       return null
-     }
-   });
-   return isChannelDoublicated;
+    channelList.forEach((channel: Channel) => {
+      if (channel.channelID === cid) {
+        isChannelDoublicated = true;
+        return isChannelDoublicated;
+      } else {
+        return null;
+      }
+    });
+    return isChannelDoublicated;
   }
 
-/**
- * Function returns a specific channel
- * @param id 
- * @returns Promise that resolves to a channel
- */
+  /**
+   * Function returns a specific channel
+   * @param id
+   * @returns Promise that resolves to a channel
+   */
   async getSpecificChannel(id) {
     const docRef = doc(this.channelCollection, id);
     const docSnap = await getDoc(docRef);
@@ -158,7 +164,6 @@ export class FirestoreService {
       return null;
     }
   }
-
 
   ///////////////// CHAT FUNKTIONEN ///////////////////
   /**
@@ -186,9 +191,8 @@ export class FirestoreService {
     });
   };
 
-
   /**
-   * 
+   *
    * @returns Observable that listens to changes in the chats collection
    */
   getChatList(): Observable<any[]> {
@@ -229,8 +233,8 @@ export class FirestoreService {
   }
 
   /**
-   * 
-   * @param id 
+   *
+   * @param id
    * @returns Promise that resolves to a chat
    */
   async getSpecificChat(id) {
@@ -248,8 +252,8 @@ export class FirestoreService {
 
   /**
    * Function adds a user to a chat in firestore
-   * @param chatId 
-   * @param newUser 
+   * @param chatId
+   * @param newUser
    */
   async addUserToChat(chatId: string, newUser: string) {
     const chatRef = doc(this.chatCollection, chatId);
@@ -260,9 +264,9 @@ export class FirestoreService {
 
   /**
    * Function adds a message to a chat in firestore
-   * @param chatId 
-   * @param user 
-   * @param message 
+   * @param chatId
+   * @param user
+   * @param message
    */
   async addChatMessage(chatId, user, message) {
     const date = new Date();
@@ -284,7 +288,7 @@ export class FirestoreService {
   }
 
   /**
-   * 
+   *
    * @returns Promise that resolves to an array of all chats
    */
   async getAllChats() {
@@ -295,8 +299,7 @@ export class FirestoreService {
     });
     return this.chatList;
   }
-  
-  
+
   ///////////////// THREAD FUNKTIONEN ///////////////////
 
   /**
@@ -315,10 +318,10 @@ export class FirestoreService {
     return this.threadList;
   });
 
-/**
- * 
- * @returns Observable that listens to changes in the threads collection
- */
+  /**
+   *
+   * @returns Observable that listens to changes in the threads collection
+   */
   getThreadList(): Observable<any[]> {
     const q = query(collection(this.firestore, GLOBAL_VARS.THREADS));
 
@@ -340,7 +343,7 @@ export class FirestoreService {
 
   /**
    * Function adds a new thread to firestore
-   * @param thread 
+   * @param thread
    */
   async addNewThread(thread?: Thread) {
     let dateTime = new Date();
@@ -362,7 +365,7 @@ export class FirestoreService {
 
   /**
    * Function returns a specific thread
-   * @param id 
+   * @param id
    * @returns data of a thread
    */
   async getSpecificThread(id) {
@@ -392,9 +395,9 @@ export class FirestoreService {
 
   /**
    * Function adds a reply to a thread in firestore
-   * @param threadId 
-   * @param message 
-   * @param currentUserId 
+   * @param threadId
+   * @param message
+   * @param currentUserId
    */
   async updateSpecificThread(
     threadId: string,
@@ -419,10 +422,10 @@ export class FirestoreService {
 
   /**
    * Function adds a new user to firestore
-   * @param uid 
-   * @param name 
-   * @param email 
-   * @param password 
+   * @param uid
+   * @param name
+   * @param email
+   * @param password
    */
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
@@ -440,7 +443,7 @@ export class FirestoreService {
 
   /**
    * Function returns a specific user
-   * @param id 
+   * @param id
    * @returns specific user data
    */
   async getSpecificUser(id) {
@@ -458,8 +461,8 @@ export class FirestoreService {
 
   /**
    * Function updates a specific user in firestore
-   * @param id 
-   * @param data 
+   * @param id
+   * @param data
    */
   async updateSpecificUser(id, data: UserTemplate) {
     const docRef = doc(this.usersCollection, id);
@@ -492,12 +495,11 @@ export class FirestoreService {
   ///////////////// HELPER FUNCTIONS ///////////////////
 
   /**
-   * @param uid 
+   * @param uid
    * @returns document reference in firestore
    */
   getDocRef(uid) {
     this.docRef = doc(this.usersCollection, uid);
     return this.docRef;
   }
-
 }
