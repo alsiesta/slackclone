@@ -15,15 +15,15 @@
 }
 
 .threads-container {
-    position: absolute;
-    max-height: calc(100% - $componentHeaderHeight);
-    top: $componentHeaderHeight;
-    left: 0;
-    right: 0;
-    background-color: $darkgrey;
-    padding-bottom: 36px;
-    overflow-y: auto;
-    width: 100%;
+  position: absolute;
+  max-height: calc(100% - $componentHeaderHeight);
+  top: $componentHeaderHeight;
+  left: 0;
+  right: 0;
+  background-color: $darkgrey;
+  padding-bottom: 36px;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .title-channel-and-close-container {
@@ -165,7 +165,6 @@
 
 .amount-comments {
   display: flex;
-  align-items: center;
   margin-left: 24px;
 }
 
@@ -173,11 +172,21 @@
   display: flex;
 }
 
+.comment-container {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  width: 100%;
+}
+
 .comment-line {
-  width: 75%;
+  width: 100vw;
   height: 0;
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin-left: 16px;
+  margin-right: 16px;
+  width: 100vw;
+  max-width: 100%;
 }
 
 .box-text-editor {

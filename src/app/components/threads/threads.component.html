@@ -24,9 +24,15 @@
             </div>
 
             <div *ngIf="this.channelService.show" class="amount-comments">
-                <div *ngIf="this.channelService.single">{{ this.channelService.amountReplies }} Antwort</div>
-                <div *ngIf="this.channelService.plural">{{ this.channelService.amountReplies }} Antworten</div>
-                <div class="comment-line"></div>
+                <div>{{ this.channelService.amountReplies }}</div>
+                <div *ngIf="this.channelService.single" class="comment-container">
+                    <div>Antwort</div>
+                    <div class="comment-line"></div>
+                </div>
+                <div *ngIf="this.channelService.plural" class="comment-container">
+                    <div>Antworten</div>
+                    <div class="comment-line"></div>
+                </div>
             </div>
 
             <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
