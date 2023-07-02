@@ -36,8 +36,8 @@ export class SignInComponent {
     this.router.navigate(['/home']);
   }
 
-  signInWithGoogle () {
-    this.authService.signInWithGoogle();
+  async signInWithGoogle () {
+   this.userService.currentUserData$ = await this.authService.signInWithGoogle();
   }
   
   logOut() {

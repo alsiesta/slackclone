@@ -64,26 +64,37 @@ export class DialogEditUserComponent {
   currentUser$: any;
   currentUserId$: any;
   currentUser: UserTemplate;
+  googleCurrentUser: UserTemplate;
   counter: number = 0;
   chat: any;
   isGuestUserActive: boolean = false;
   
-  ngOnInit() {
+ async ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
     this.checkIfGuestUserIsActive();
     this.observable.subscribe(this.subscriber);
     this.firestoreService.observeChat$.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.chat = data;
     });
-
   }
+
+
+
+  
+  // get currentUserPhoto() {
+  //   return this.usersService.currentUserPhoto;
+  // }
+  // get currentUserName$() {
+  //   return this.usersService.currentUserName$;
+  // }
+
+
 
   checkIfGuestUserIsActive () {
     if (this.currentUserId$ === '9KjVGbYn8qOQ9dprTIAxuJ6fpOv2') { 
       this.isGuestUserActive = true;
-      console.log('GuestUser is logged-in: ',this.isGuestUserActive);
-      
+      // console.log('GuestUser is logged-in: ',this.isGuestUserActive);
     }
   }
 
@@ -106,18 +117,18 @@ export class DialogEditUserComponent {
   subscriber = {
     next: (data) => {
       this.counter++;
-      console.log(
-        `${
-          this.counter
-        }.) Subscriber received \"${typeof data}\" with this data:`,
-        data
-      );
+      // console.log(
+      //   `${
+      //     this.counter
+      //   }.) Subscriber received \"${typeof data}\" with this data:`,
+      //   data
+      // );
     },
     error: (error) => {
       console.error('An error occurred:', error);
     },
     complete: () => {
-      console.log('Subscriber Complete');
+      // console.log('Subscriber Complete');
     },
   };
 
@@ -129,7 +140,7 @@ export class DialogEditUserComponent {
    */
   updateUserProperty (field, value) {
     this.usersService.updateUserFieldValue(field, value);
-    console.log(this.usersService.currentUserName$)
+    // console.log(this.usersService.currentUserName$)
     if (field === 'displayName') {
       this.authService.updateAuthdisplayName(value);
     } else if (field === 'photoURL') {
@@ -154,14 +165,8 @@ export class DialogEditUserComponent {
     await uploadBytes(storageRef, this.selectedFile);
 
     const downloadURL = await getDownloadURL(storageRef);
-    console.log('File available at: ', downloadURL);
+    // console.log('File available at: ', downloadURL);
     this.updateUserProperty ('photoURL', downloadURL)   }
-
-  
-  log(displayName) {
-    console.log(displayName);
-  }
-
 
 
   cancelEdit(field) {

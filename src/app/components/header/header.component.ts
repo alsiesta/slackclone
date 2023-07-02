@@ -9,6 +9,7 @@ import {
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { SearchService } from 'src/app/services/search.service';
 import { GlobalService } from 'src/app/services/global.service';
+import { UserTemplate } from 'src/app/models/usertemplate.class';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,9 @@ export class HeaderComponent {
   ) {}
 
   currentUserDisplayName: any;
-  ngOnInit() {
+  currentUser = new UserTemplate(); 
+
+  async ngOnInit () {
     this.startSearchEvent();
   }
 
@@ -38,8 +41,7 @@ export class HeaderComponent {
     this.globalService.toggleSidebar();
     this.icon = this.icon === 'menu_open' ? 'menu' : 'menu_open';
 }
-
-
+  
   get authUser$() {
     return this.authService.getAuthCredentials();
   }

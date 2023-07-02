@@ -23,13 +23,13 @@ import { getAdditionalUserInfo } from 'firebase/auth';
 })
 export class AuthService {
   userData: import('@angular/fire/auth').User;
-  constructor(
+  constructor (
     private firestoreService: FirestoreService,
     private auth: Auth,
     private toast: HotToastService,
     private router: Router,
     private googleAuthProvider: GoogleAuthProvider
-  ) {}
+  ) { }
 
   loading: boolean = false;
   // user: User;
@@ -92,37 +92,38 @@ export class AuthService {
     return userCredentials;
   };
 
-  async signInWithGoogle() {
+  async signInWithGoogle (): Promise<any> {
     const auth = getAuth();
     const provider = new GoogleAuthProvider(); // needed for redirect only
-
-      // Sign in with popup: is not recommended for mobile devices
-    await signInWithPopup(auth, this.providerGoogle).then((result) => {
+    let providerUser;
+    // Sign in with popup: is not recommended for mobile devices
+    await signInWithPopup(auth, this.providerGoogle)
+      .then((result) => {
         this.router.navigate(['/home']);
-      localStorage.setItem('SlackUser', JSON.stringify(result.user?.uid));
+        localStorage.setItem('SlackUser', JSON.stringify(result.user?.uid));
 
-      // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-      const user = result.user;
-      this.toast.info(`Hi ${user.displayName}! You are signed in.`);
-      this.isUserLoggedIn = true;
-      console.log(user);
-      
-      
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        this.toast.info(`Hi ${user.displayName}! You are signed in.`);
+        this.isUserLoggedIn = true;
+        providerUser = user;
       },
-        (error) => {
-          console.log(error.message);
-        }
-      );
+      (error) => {
+        console.log(error.message);
+      });
+      
+      return providerUser;
+  
 
-    
+
     // Note when going into production, you should check that the redirect URL matches the one you specified when you enabled the sign-in method.
     // Sign in with redirect: is recommended for mobile devices
     // When you use signInWithRedirect, the sign-in flow is completed on a separate page and then returns to your page.
     // as soon as we have a solution for the redirect, we can use it
-  
+
     // try {
     //   await signInWithRedirect(auth, provider);
     //   debugger;
@@ -150,7 +151,6 @@ export class AuthService {
     //   // ...
     // }
   }
-
 
   updateAuthdisplayName(dName) {
     console.log('update Profile Name');

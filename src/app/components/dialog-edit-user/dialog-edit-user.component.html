@@ -12,6 +12,17 @@
       <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
     </div>
 
+
+<!-- Google Credentials Work-in-Progress -->
+    <!-- <div *ngIf="currentUserPhoto"><img src="{{currentUserPhoto}}" class="profile-image">
+      <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
+      <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
+    </div> -->
+<!-- <div>
+  {{currentUserName$}}
+</div> -->
+
+
     <div *ngIf="!currentUser?.photoURL"><img src="assets/img/user/profile-picture.png" class="profile-image">
       <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
       <span *ngIf="!isGuestUserActive" class="material-symbols-sharp" (click)="selectFile.click()">edit</span>
