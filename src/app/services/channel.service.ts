@@ -226,6 +226,9 @@ export class ChannelService {
     this.getAmountReplies();
   }
 
+  /**
+   * Fetches the name of the user replying to the reply
+  */
   async getUserNameReplies() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
@@ -239,12 +242,14 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Fetches the name of the user replying to the reply
+   * However, after the replies have been updated
+  */
   async getUserNameRepliesAfterUpdate() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
-      //i = 3
       for (let j = 0; j < this.allUsers.length; j++) {
-        // j = 5
         if (this.activeThread.replies[i].user == this.allUsers[j].uid) {
           this.setUserDataInThreads(
             this.activeThread.replies[i],
@@ -256,6 +261,9 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Fetches the name of the user in order to display the corresponding data of the user in the pop-up window
+  */
   async getNameOpenThread() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
@@ -265,6 +273,10 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Fetches the name of the user in order to display the corresponding data of the user in the pop-up window
+   * However, after the replies have been updated
+  */
   async getNameOpenThreadAfterUpdate() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
@@ -274,6 +286,9 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Finds out if there are replies in a thread or not
+  */
   noComment() {
     if (this.activeThread.replies.length == 0) {
       this.show = false;
@@ -282,6 +297,9 @@ export class ChannelService {
     }
   }
 
+  /**
+   * Determines the number of replies
+  */
   getAmountReplies() {
     this.noComment();
     if (this.activeThread.replies.length == 1) {
