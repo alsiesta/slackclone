@@ -98,7 +98,6 @@ export class FirestoreService {
    * @returns Promise that resolves to the channel id of the newly added channel
    */
   async addNewChannel(cid: string, channel: Channel) {
-    debugger;
     if (await this.isChannelDoublicated(cid)) {
       console.log('Channel already exists');
       this.toast.info(

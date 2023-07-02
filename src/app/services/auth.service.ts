@@ -15,6 +15,7 @@ import {
   signInWithPopup,
 } from '@angular/fire/auth';
 import { Channel } from '../models/channel.class';
+import { getAdditionalUserInfo } from 'firebase/auth';
 // import { GoogleAuthProvider } from 'firebase/auth';
 
 @Injectable({
@@ -55,7 +56,6 @@ export class AuthService {
   signUp = async (email: string, password: string, name: any) => {
     await createUserWithEmailAndPassword(this.auth, email, password).then(
       (userCredentials) => {
-        // this.userId = userCredentials.user.uid;
         this.firestoreService.addNewUser(
           userCredentials.user.uid,
           name,
@@ -94,12 +94,23 @@ export class AuthService {
 
   async signInWithGoogle() {
     const auth = getAuth();
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider(); // needed for redirect only
+
       // Sign in with popup: is not recommended for mobile devices
     await signInWithPopup(auth, this.providerGoogle).then((result) => {
-       debugger
         this.router.navigate(['/home']);
-        localStorage.setItem('SlackUser', JSON.stringify(result.user?.uid));
+      localStorage.setItem('SlackUser', JSON.stringify(result.user?.uid));
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+      const user = result.user;
+      this.toast.info(`Hi ${user.displayName}! You are signed in.`);
+      this.isUserLoggedIn = true;
+      console.log(user);
+      
+      
       },
         (error) => {
           console.log(error.message);

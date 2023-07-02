@@ -19,7 +19,6 @@ export class SignInComponent {
     private authService: AuthService,
     private userService: UsersService,
     private router: Router,
-    private toast: HotToastService
   ) { }
   
   userCredentials;
@@ -55,11 +54,6 @@ export class SignInComponent {
     try {
       await this.authService.signIn(email,password);
       this.router.navigate(['/home']);
-      // this.toast.observe({
-      //       success: 'Logged in successfully',
-      //       loading: 'Logging in...',
-      //       error:'There was an error'
-      //     })
     } catch (error) {
       console.warn(error);
     }
