@@ -7,7 +7,6 @@ import * as GLOBAL_VARS from 'src/app/shared/globals';
 import {
   addDoc,
   collection,
-  collectionData,
   CollectionReference,
   doc,
   docData,
@@ -22,11 +21,7 @@ import {
   query,
   onSnapshot,
 } from '@angular/fire/firestore';
-import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
-import { where } from 'firebase/firestore';
-import { AuthService } from './auth.service';
-import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +36,7 @@ export class FirestoreService {
   channel = new Channel();
   chat = new Chat();
   thread = new Thread();
-
+  // isChannelDoublicated: boolean;
   usersList: any;
   channelList: any;
   threadList: any;
@@ -55,7 +50,11 @@ export class FirestoreService {
     this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
 
-  ///////////////// CHANNEL FUNKTIONEN ///////////////////
+  /////////////////////////// CHANNEL FUNCTIONS ///////////////////////////
+  /**
+   *
+   * @returns Promise that resolves to an array of all channels
+   */
   async readChannels() {
     const querySnapshot = await getDocs(collection(this.firestore, 'channels'));
     this.channelList = querySnapshot.docs.map((doc) => {
@@ -66,6 +65,10 @@ export class FirestoreService {
     return this.channelList;
   }
 
+  /**
+   *
+   * @returns Observable that listens to changes in the channels collection
+   */
   getChannelList(): Observable<any[]> {
     const q = query(collection(this.firestore, GLOBAL_VARS.CHANNELS));
 
@@ -85,25 +88,52 @@ export class FirestoreService {
     });
   }
 
-  async addNewChannel(cid: string, channel: Channel) {
-    // check and avoid channel name doublication!!!
-    let dateTime = new Date();
-    this.channel.creationDate = dateTime;
-    this.channel.creator = channel.creator;
-    this.channel.info = channel.info;
-    this.channel.title = channel.title;
-    const ref = doc(this.channelCollection, cid);
-    await setDoc(ref, this.channel.toJSON())
-      .then(() => {
-        console.log('New Channel added to firestore', cid);
-      })
-      .catch((error) => {
-        console.log(error);
+  /**
+   *
+   * Function checks if channel id already exists and if false adds a new channel to firestore
+   * @param cid
+   * @param channel
+   * @returns Promise that resolves to the channel id of the newly added channel
+   */
+  async addNewChannel (cid: string, channel: Channel) {
+    if (await this.isChannelDoublicated(cid)) {
+      console.log('Channel already exists');
+      return null;
+    } else {
+      let dateTime = new Date();
+      this.channel.creationDate = dateTime;
+      this.channel.creator = channel.creator;
+      this.channel.info = channel.info;
+      this.channel.title = channel.title;
+      const ref = doc(this.channelCollection, cid);
+
+      await setDoc(ref, this.channel.toJSON())
+        .then(() => {
+          console.log('New Channel added to firestore', cid);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      await updateDoc(ref, {
+        channelID: cid,
       });
-    await updateDoc(ref, {
-      channelID: cid,
-    });
+    }
   }
+
+ async isChannelDoublicated(cid: string) {
+    const channelList = await this.readChannels();
+    let isChannelDoublicated: boolean;
+   channelList.forEach((channel: Channel) => {
+     if (channel.channelID === cid) {
+       isChannelDoublicated = true;
+       return isChannelDoublicated;
+     } else {
+       return null
+     }
+   });
+   return isChannelDoublicated;
+  }
+
 
   async getSpecificChannel(id) {
     const docRef = doc(this.channelCollection, id);

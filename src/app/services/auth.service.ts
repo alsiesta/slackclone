@@ -6,17 +6,12 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithRedirect,
-  getRedirectResult,
   updateProfile,
-  User,
   getAuth,
   GoogleAuthProvider,
   FacebookAuthProvider,
   TwitterAuthProvider,
   GithubAuthProvider,
-  OAuthProvider,
   signInWithPopup,
 } from '@angular/fire/auth';
 import { Channel } from '../models/channel.class';
@@ -36,8 +31,8 @@ export class AuthService {
   ) {}
 
   loading: boolean = false;
-  user: User;
-  userId: string = '';
+  // user: User;
+  // userId: string = '';
   channel: Channel = new Channel();
   isUserLoggedIn: boolean = false;
   userCredentials; // used for google sign in
@@ -46,21 +41,21 @@ export class AuthService {
   providerTwitter = new TwitterAuthProvider();
   providerGithub = new GithubAuthProvider();
 
-  /// delete after channel form is finished /////////
-  date = new Date(); //mock date
-  testChannel = {
-    channelID: 'Muster Kanal',
-    title: 'Titel',
-    creator: 'Autor',
-    creationDate: this.date,
-    info: 'Information',
-  };
-  //////////////////////////////////
+  // /// delete after channel form is finished /////////
+  // date = new Date(); //mock date
+  // testChannel = {
+  //   channelID: 'Muster Kanal',
+  //   title: 'Titel',
+  //   creator: 'Autor',
+  //   creationDate: this.date,
+  //   info: 'Information',
+  // };
+  // //////////////////////////////////
 
   signUp = async (email: string, password: string, name: any) => {
     await createUserWithEmailAndPassword(this.auth, email, password).then(
       (userCredentials) => {
-        this.userId = userCredentials.user.uid;
+        // this.userId = userCredentials.user.uid;
         this.firestoreService.addNewUser(
           userCredentials.user.uid,
           name,
@@ -101,7 +96,8 @@ export class AuthService {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
       // Sign in with popup: is not recommended for mobile devices
-     await signInWithPopup(auth, this.providerGoogle).then((result) => {
+    await signInWithPopup(auth, this.providerGoogle).then((result) => {
+       debugger
         this.router.navigate(['/home']);
         localStorage.setItem('SlackUser', JSON.stringify(result.user?.uid));
       },
@@ -110,6 +106,12 @@ export class AuthService {
         }
       );
 
+    
+    // Note when going into production, you should check that the redirect URL matches the one you specified when you enabled the sign-in method.
+    // Sign in with redirect: is recommended for mobile devices
+    // When you use signInWithRedirect, the sign-in flow is completed on a separate page and then returns to your page.
+    // as soon as we have a solution for the redirect, we can use it
+  
     // try {
     //   await signInWithRedirect(auth, provider);
     //   debugger;
@@ -172,20 +174,17 @@ export class AuthService {
     const user = auth.currentUser;
     if (user !== null) {
       // The user object has basic properties such as display name, email, etc.
-      const displayName = user.displayName;
-      const email = user.email;
-      const photoURL = user.photoURL;
-      const emailVerified = user.emailVerified;
+      // const displayName = user.displayName;
+      // const email = user.email;
+      // const photoURL = user.photoURL;
+      // const emailVerified = user.emailVerified;
 
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-      const uid = user.uid;
-      //   console.log('DisplayName: ', displayName,' \nEmail: ', email,' \nphotoURL: ', photoURL,' \nEmail verified: ', emailVerified,' \nUID: ', uid);
-      //  const authUser = [displayName,email,photoURL,emailVerified]
-
-      //   return authUser;
-      console.log('Authenticated User in Firestore: ', user);
+      // // The user's ID, unique to the Firebase project. Do NOT use
+      // // this value to authenticate with your backend server, if
+      // // you have one. Use User.getToken() instead.
+      // const uid = user.uid;
+      // //   console.log('DisplayName: ', displayName,' \nEmail: ', email,' \nphotoURL: ', photoURL,' \nEmail verified: ', emailVerified,' \nUID: ', uid);
+      // //  const authUser = [displayName,email,photoURL,emailVerified]
 
       return user;
     } else {
@@ -197,27 +196,4 @@ export class AuthService {
     localStorage.removeItem('SlackUser');
     return this.auth.signOut();
   }
-
-  // setLocalUser() {
-  //   onAuthStateChanged(this.auth, (user) => {
-  //     if (user) {
-  //       this.userData = user;
-  //       localStorage.setItem('SlackUser', JSON.stringify(this.userData));
-  //       // JSON.parse(localStorage.getItem('SlackUser')!);
-  //     } else {
-  //       localStorage.setItem('SlackUser', 'null');
-  //       // JSON.parse(localStorage.getItem('SlackUser')!);
-  //     }
-  //   });
-  // }
-
-  // getCurrentLocalUser() {
-  //   const user = JSON.parse(localStorage.getItem('SlackUser')!);
-  //   if (user) {
-  //     console.log('Authenticated User in local storage: ', user);
-  //     return user.displayName;
-  //   } else {
-  //     console.log('No user in local storage');
-  //   }
-  // }
 }
