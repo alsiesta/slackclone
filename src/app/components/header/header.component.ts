@@ -92,11 +92,17 @@ export class HeaderComponent {
   };
   /// till here  ///////////////////
 
+
+
+
   get authUser$() {
     return this.authService.getAuthCredentials();
   }
   get currentUserId$() {
     return this.usersService.currentUserId$;
+  }
+  get currentUserPhoto() {
+    return this.usersService.currentUserPhoto;
   }
   get currentUserName$() {
     return this.usersService.currentUserName$;

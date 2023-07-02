@@ -44,6 +44,7 @@ export class UsersService  {
   currentUserId$: any;
   currentUserName$: any;
   currentUserData$: any;
+  currentUserPhoto: any;
   currentUsers: any;
   // fsUser = new UserTemplate();
   
@@ -94,6 +95,7 @@ export class UsersService  {
       if (user) {
         this.currentUserId$ = user.uid;
         this.currentUserName$ = user.displayName;
+        this.currentUserPhoto = user.photoURL;
         // return user.uid;  EINE CALL BACK FN KANN NICHTS RETURNEN
       } else {
         this.currentUserId$ = null;
