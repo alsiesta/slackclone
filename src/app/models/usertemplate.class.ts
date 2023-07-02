@@ -40,6 +40,7 @@ export class UserTemplate {
       street: this.street,
       zipCode: this.zipCode,
       city: this.city,
+      uid: this.uid
     };
   }
 }

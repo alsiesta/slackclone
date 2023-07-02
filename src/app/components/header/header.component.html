@@ -9,7 +9,7 @@
       <!-- <span [style.displayName]="true">| Name: {{authUser$.displayName}}</span> -->
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
-          <img class="profile-image" src="{{currentUserPhoto}}" alt="User Profile Image">
+          <img class="profile-image" src="{{currentUserPhoto || '/assets/img/user/profile-picture.png' }}" alt="User Profile Image">
           <mat-icon>expand_more</mat-icon>
         </button>
       </span>
