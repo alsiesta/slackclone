@@ -91,7 +91,7 @@ export class ThreadsComponent implements OnInit {
   /**
    * Fetches the information for the user to display user details as a pop-up window
    * But this time from the replies
-   */
+  */
   getUserInformationFromReplies(user) {
     let curentUserId = user['id'];
     this.openProfileDetail(curentUserId);

@@ -3,7 +3,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Component } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
-import { Observable, filter } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -37,8 +37,18 @@ export class ThreadsShortcutComponent {
     this.observerThreadList.subscribe((threads) => {
       this.allThreads = threads;
       this.updateContent();
-      //this.channelService.sortThreads();
     });
+    this.searchThreads();
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.getAllThreads();
+  }
+
+  /**
+   * Search for specific threads
+   */
+  searchThreads() {
     this.searchThreadsStatus.subscribe((status) => {
       if (status) {
         this.filteredThreads = this.searchService.filteredThreads;
@@ -49,30 +59,41 @@ export class ThreadsShortcutComponent {
     });
   }
 
-  async ngOnInit(): Promise<void> {
-    await this.getAllThreads();
-  }
-
+  /**
+  * Gets all the threads from the Firestore
+  */
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
     // console.log('Threadslist comes from the thread-shortcut component:', this.allThreads);
     this.updateContent();
   }
 
+  /**
+  * Updates the threads as soon as a new reply is added
+  */
   updateContent() {
     this.updateThreads();
   }
 
+  /**
+  * Fetches the ID for the user who is currently logged in
+  */
   getCurrentUserId() {
     this.currentUserId = this.usersService.currentUserId$;
     // console.log('Current User Id comes from the thread-shortcut component', this.currentUserId);
   }
 
+  /**
+   * Fetches the user data of the currently logged in user
+   */
   async getCurrentUserData() {
     this.currentUserData = await this.usersService.getCurrentUserData();
     // console.log('Current user data comes from the thread-shortcut component', this.currentUserData);
   }
 
+  /**
+   * Gets all users from the Firestore
+   */
   async getAllUser() {
     await this.firestoreService.getAllUsers().then((users) => {
       // console.log('All Users', users);
@@ -80,37 +101,44 @@ export class ThreadsShortcutComponent {
     });
   }
 
+  /**
+  * Updates the threads as soon as a new reply is added
+  */
   async updateThreads(filteredThreads?: any) {
     await this.getCurrentUserData();
     await this.getCurrentUserId();
     this.threadsFromCurrentUser = [];
     this.searchService.unfilteredThreads = [];
+    this.threadsCurrentUser();
+    if (filteredThreads) {
+      this.threadsFromCurrentUser = filteredThreads;
+    }
+    await this.getNameOfReply();
+    // console.log('Threads from current User', this.threadsFromCurrentUser);
+  }
+
+  /**
+  * Pick the threads from the current user
+  */
+  threadsCurrentUser() {
     for (let i = 0; i < this.allThreads.length; i++) {
       if (this.allThreads[i]['user'] == this.currentUserId) {
         this.threadsFromCurrentUser.push(this.allThreads[i]);
         this.searchService.unfilteredThreads.push(this.allThreads[i])
       }
     }
-    if (filteredThreads) {
-      this.threadsFromCurrentUser = filteredThreads;
-    }
-    await this.getNameOfReply();
-    console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
+  /**
+  * Adds the name of the user who replied to a specific thread
+  */
   async getNameOfReply() {
     this.threadsFromCurrentUser = this.globalService.sortingThreadsOnDate(this.threadsFromCurrentUser);
     await this.getAllUser();
-    // console.log('All User Liste:', this.allUser);
     for (let i = 0; i < this.threadsFromCurrentUser.length; i++) {
-      //this.checkAmountComments(i);
-      // console.log(' this.threadsFromCurrentUser[i].replies', this.threadsFromCurrentUser[i].replies);
-      // console.log('this.threadsFromCurrentUser[i].replies.length:', this.threadsFromCurrentUser[i].replies.length);
       for (this.n = 0; this.n < this.threadsFromCurrentUser[i].replies.length; this.n++) {
         for (let j = 0; j < this.allUser.length; j++) {
           if (this.threadsFromCurrentUser[i].replies[this.n].user == this.allUser[j].uid) {
-            // console.log('this.threadsFromCurrentUser[i].replies[n]', this.threadsFromCurrentUser[i].replies[this.n]);
-            // console.log('allUser[j]', this.allUser[j]);
             this.extensionUser(i, this.n, j);
           }
         }
@@ -118,6 +146,9 @@ export class ThreadsShortcutComponent {
     }
   }
 
+  /**
+  * Extends the user json with further attributes
+  */
   extensionUser(i: number, n: number, j: number) {
     this.channelService.setUserDataInThreads(
       this.threadsFromCurrentUser[i].replies[n],
@@ -125,18 +156,28 @@ export class ThreadsShortcutComponent {
     );
   }
 
+  /**
+  * Fetches the information for the user to display user details as a pop-up window
+  */
   getUserInformation(thread) {
     this.currentThread = thread;
     let curentUserId = this.currentThread['user'];
     this.openProfileDetail(curentUserId, this.currentThread);
   }
 
+  /**
+   * Fetches the information for the user to display user details as a pop-up window
+   * But this time from the replies
+  */
   getUserInformationReplies(threadReply) {
     this.currentReply = threadReply;
     let currentUserId = this.currentReply.user['id'];
     this.openProfileDetail(currentUserId, this.currentReply);
   }
 
+  /**
+  *  Opens the profile details in the pop-up window
+  */
   openProfileDetail(currentUserId, thread) {
     for (let i = 0; i < this.allUser.length; i++) {
       if (currentUserId == this.allUser[i].uid) {
