@@ -429,7 +429,7 @@ export class FirestoreService {
   addNewUser(uid: string, name, email, password) {
     this.user.displayName = name;
     this.user.email = email;
-    this.user.password = password;
+    this.user.uid = uid;
     const docRef = doc(this.usersCollection, uid);
     setDoc(docRef, this.user.toJSON())
       .then(() => {
