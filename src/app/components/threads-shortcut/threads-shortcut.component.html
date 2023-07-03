@@ -9,7 +9,7 @@
             <div class="channel"># {{ threadCurrentUser.channel }}</div>
             <div class="post">
                 <div class="user-message">
-                    <img src="assets/img/threads/profile-picture.png" (click)="getUserInformation(threadCurrentUser)">
+                    <img src="{{ currentUserData.photoURL || '/assets/img/user/profile-picture.png' }}" (click)="getUserInformation(threadCurrentUser)">
                     <div class="user-name-and-message">
                         <div class="user-name-and-time">
                             <div class="user-name" (click)="getUserInformation(threadCurrentUser)">{{
@@ -29,7 +29,7 @@
 
                 <div *ngFor="let threadReplies of this.threadsFromCurrentUser[i].replies" class="user-message-more">
                     <img (click)="getUserInformationReplies(threadReplies)"
-                        src="assets/img/threads/profile-picture.png">
+                        src="{{threadReplies.user['image'] || '/assets/img/user/profile-picture.png' }}">
                     <div class="user-name-and-message">
                         <div class="user-name-and-time">
                             <div class="user-name" (click)="getUserInformationReplies(threadReplies)">{{

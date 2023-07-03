@@ -12,7 +12,7 @@
 
         <div class="post">
             <div class="user-message">
-                <img (click)="getUserInformation()" src="assets/img/threads/profile-picture.png">
+                <img (click)="getUserInformation()" src="{{this.channelService.activeThread.user['image'] || '/assets/img/user/profile-picture.png' }}" >
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" (click)="getUserInformation()">
@@ -37,7 +37,7 @@
 
             <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
                 <img (click)="getUserInformationFromReplies(this.reply.user)"
-                    src="assets/img/threads/profile-picture.png">
+                    src="{{this.reply.user['image'] || '/assets/img/user/profile-picture.png' }}">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
