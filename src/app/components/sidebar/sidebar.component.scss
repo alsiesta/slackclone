@@ -11,6 +11,33 @@
     color: $white;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.open {
+    animation: slide-In 0.3s ease;
+}
+
+.close {
+    animation: slide-Out 0.3s ease;
+}
+
+@keyframes slide-Out {
+    from{
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-250px);
+    }
+}
+
+@keyframes slide-In {
+    from{
+        transform: translateX(-250px);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 .title {
