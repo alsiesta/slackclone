@@ -19,7 +19,7 @@ export class ChannelService {
   channelThreads: Array<any> = [];
   unfilterdThreads: Array<any> = [];
   activeChannel: any;
-  defaultChannelId: string = 'gruppe-576'; //to be changed to #allgemein?
+  defaultChannelId: string = 'general';
   channelReady: boolean = false;
   message = new Thread();
   activeThread = new Thread();
@@ -73,6 +73,7 @@ export class ChannelService {
       this.userList = this.firestoreService.usersList;
     });
     this.findChannel(channelID);
+    this.setUserInChannelInfo();
     this.findThreads(channelID);
     this.findDates();
     this.sortThreads();
@@ -88,6 +89,7 @@ export class ChannelService {
    */
   updateChannelContent(filteredThreads?: Array<any>) {
     this.findChannel(this.defaultChannelId);
+    this.setUserInChannelInfo();
     this.findThreads(this.defaultChannelId, filteredThreads);
     this.findDates();
     this.sortThreads();
@@ -145,6 +147,24 @@ export class ChannelService {
     });
     this.dateList = this.globalService.uniqueList(this.dateList);
     this.dateList = this.globalService.sortingDateList(this.dateList);
+  }
+
+  /**
+   * set user data in channelInfo
+   */
+  setUserInChannelInfo() {
+    this.userList.forEach((user: any) => {
+      if (this.activeChannel.creator == user.id) {
+        this.activeChannel.creator = {
+          id: user.id,
+          name: user.displayName,
+          image: user.photoURL
+            ? user.photoURL
+            : 'assets/img/threads/profile-picture.png',
+          email: user.email,
+        };
+      }
+    });
   }
 
   /**
@@ -228,7 +248,7 @@ export class ChannelService {
 
   /**
    * Fetches the name of the user replying to the reply
-  */
+   */
   async getUserNameReplies() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
@@ -245,7 +265,7 @@ export class ChannelService {
   /**
    * Fetches the name of the user replying to the reply
    * However, after the replies have been updated
-  */
+   */
   async getUserNameRepliesAfterUpdate() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
@@ -263,7 +283,7 @@ export class ChannelService {
 
   /**
    * Fetches the name of the user in order to display the corresponding data of the user in the pop-up window
-  */
+   */
   async getNameOpenThread() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
@@ -276,7 +296,7 @@ export class ChannelService {
   /**
    * Fetches the name of the user in order to display the corresponding data of the user in the pop-up window
    * However, after the replies have been updated
-  */
+   */
   async getNameOpenThreadAfterUpdate() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.allUsers.length; i++) {
@@ -288,7 +308,7 @@ export class ChannelService {
 
   /**
    * Finds out if there are replies in a thread or not
-  */
+   */
   noComment() {
     if (this.activeThread.replies.length == 0) {
       this.show = false;
@@ -299,7 +319,7 @@ export class ChannelService {
 
   /**
    * Determines the number of replies
-  */
+   */
   getAmountReplies() {
     this.noComment();
     if (this.activeThread.replies.length == 1) {

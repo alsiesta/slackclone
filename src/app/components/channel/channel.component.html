@@ -12,7 +12,9 @@
                 <mat-icon>numbers</mat-icon>
                 <h1>{{ this.channelService.activeChannel.title }}</h1>
             </div>
-            <div>This channel was created by <span class="channel-creator">@{{ this.channelService.activeChannel.creator
+            <div>This channel was created by <span class="channel-creator"
+                    (click)="this.channelService.messageDialogOpen(this.channelService.activeChannel.creator.name, this.channelService.activeChannel.creator.image, this.channelService.activeChannel.creator.email, this.channelService.activeChannel.creator.id)">@{{
+                    this.channelService.activeChannel.creator.name
                     }}</span> on {{ this.channelService.activeChannel.creationDate.toLocaleString() }}.
                 This is the beginning of the channel.</div>
         </div>
