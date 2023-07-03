@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
     public createChannelDialog: MatDialog,
     public globalService: GlobalService,
     public searchService: SearchService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
   ) { }
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit {
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
     });
-    
+
     // this.chatService.getChatPartners().subscribe( chatPartners => {
     //     this.chatPartners = chatPartners;
 

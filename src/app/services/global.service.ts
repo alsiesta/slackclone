@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -13,12 +14,25 @@ export class GlobalService {
   private isSidebarOpenSubject = new Subject<boolean>();
   isSidebarOpen$ = this.isSidebarOpenSubject.asObservable();
   private isSidebarOpen = true;
+  public menuIcon = 'menu_open'
 
-  constructor() {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+    const customMinBreakpoint = '(min-width: 769px)'; // Breite ab der die Sidebar immer sichtbar sein soll
+  
+    this.breakpointObserver.observe([customMinBreakpoint])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isSidebarOpen = true; // Sidebar always open, if min breakpoint is reached
+          this.isSidebarOpenSubject.next(this.isSidebarOpen);
+          this.menuIcon = this.isSidebarOpen ? 'menu_open' : 'menu';
+        }
+      });
+  }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.isSidebarOpenSubject.next(this.isSidebarOpen);
+    this.menuIcon = this.isSidebarOpen ? 'menu_open' : 'menu';
   }
 
   /**

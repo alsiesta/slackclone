@@ -18,7 +18,6 @@ import { UserTemplate } from 'src/app/models/usertemplate.class';
 })
 export class HeaderComponent {
   public searchText: string;
-  public icon = 'menu_open';
 
   constructor(
     public authService: AuthService,
@@ -27,7 +26,7 @@ export class HeaderComponent {
     public firestore: FirestoreService,
     public dialog: MatDialog,
     public searchService: SearchService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {}
 
   currentUserDisplayName: any;
@@ -39,8 +38,7 @@ export class HeaderComponent {
 
   toggleSidebar() {
     this.globalService.toggleSidebar();
-    this.icon = this.icon === 'menu_open' ? 'menu' : 'menu_open';
-}
+  }
   
   get authUser$() {
     return this.authService.getAuthCredentials();
