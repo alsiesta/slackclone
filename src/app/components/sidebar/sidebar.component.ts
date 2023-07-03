@@ -49,6 +49,9 @@ export class SidebarComponent implements OnInit {
     this.breakpointObserver.observe([customBreakpoint])
       .subscribe((state: BreakpointState) => {
         this.drawerMode = state.matches ? 'over' : 'side';
+        if(!this.globalService.isSidebarOpen$) {
+          this.toggleSidebar();
+        }
       });
 
     this.firestoreService.getChannelList().subscribe((channels) => {
