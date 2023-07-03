@@ -10,11 +10,12 @@
         <div class="profil-time-box">
             <mat-icon fontIcon="schedule"></mat-icon>
             <span class="profil-time">{{ this.time.toLocaleTimeString([], {hour:
-                '2-digit', minute:'2-digit'}) }} Uhr Ortszeit</span>
+                '2-digit', minute:'2-digit'}) }} h local time</span>
         </div>
     </div>
     <div class="message-container-bottom">
-        <button class="message-button" (click)="this.chatService.openChat(this.data.id); dialogRef.close(); this.globalService.openComponent('chat')"
+        <button class="message-button"
+            (click)="this.chatService.openChat(this.data.id); dialogRef.close(); this.globalService.openComponent('chat')"
             [disabled]="this.data.id == this.userSevice.currentUserId$">
             <mat-icon fontIcon="question_answer"></mat-icon>Message</button>
     </div>

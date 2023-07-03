@@ -14,10 +14,9 @@
             <span
                 (click)="this.channelService.messageDialogOpen(partner.name, partner.image, partner.email, partner.id)">{{
                 partner.name }}</span>
-            <div class="chat-subtext">Diese Unterhaltung findet nur zwischen <span class="chat-partner-blue"
+            <div class="chat-subtext">This conversation exists only between <span class="chat-partner-blue"
                     (click)="this.channelService.messageDialogOpen(partner.name, partner.image, partner.email, partner.id)">@{{
-                    partner.name }}</span> und dir statt. Schaue dir das Profil der Person an, um mehr
-                über sie zu erfahren.
+                    partner.name }}</span> and you. Check the profil of this person to see more information.
             </div>
         </div>
 

@@ -12,10 +12,9 @@
                 <mat-icon>numbers</mat-icon>
                 <h1>{{ this.channelService.activeChannel.title }}</h1>
             </div>
-            <div><span class="channel-creator">@{{ this.channelService.activeChannel.creator }}</span> hat diesen
-                Channel am {{
-                this.channelService.activeChannel.creationDate.toLocaleString() }} erstellt.
-                Das ist der Anfang des Channels.</div>
+            <div>This channel was created by <span class="channel-creator">@{{ this.channelService.activeChannel.creator
+                    }}</span> on {{ this.channelService.activeChannel.creationDate.toLocaleString() }}.
+                This is the beginning of the channel.</div>
         </div>
 
         <div *ngFor="let date of this.channelService.dateList" class="channel-date-spacer">
@@ -47,8 +46,11 @@
                                 <div class="posting-thread-preview" *ngFor="let preview of thread.replies | unique">
                                     <img src="{{ preview.user.image }}">
                                 </div>
-                                <span class="posting-thread-reply">{{ thread.replies.length }} Antworten</span>
-                                <span class="posting-thread-last">Letzte Antwort am {{
+                                <span *ngIf="thread.replies.length == 1" class="posting-thread-reply">{{
+                                    thread.replies.length }} reply</span>
+                                <span *ngIf="thread.replies.length > 1" class="posting-thread-reply">{{
+                                    thread.replies.length }} replies</span>
+                                <span class="posting-thread-last">Last reply on {{
                                     thread.replies[thread.replies.length -1].date | date:
                                     'dd.MM.yyyy' }}</span>
                                 <mat-icon class="posting-thread-navigate" fontIcon="navigate_next"></mat-icon>
