@@ -6,13 +6,13 @@
 
     <!-- Shortcuts -->
     <div class="shortcuts-container">
-        <a (click)="renderThreadShortcuts()">
+        <a (click)="renderThreadShortcuts(); checkSidebarClosing()">
             <div class="shortcut">
                 <mat-icon>chat</mat-icon>
                 <span>Threads</span>
             </div>
         </a>
-        <div class="shortcut" (click)="renderUsers()">
+        <div class="shortcut" (click)="renderUsers(); checkSidebarClosing()">
             <mat-icon>group</mat-icon>
             <span>Users</span>
         </div>
@@ -31,7 +31,7 @@
         </div>
         <div *ngIf="channelsAreOpen" class="drop-down-content">
 
-            <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel)"
+            <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel); checkSidebarClosing()"
                 class="drop-down-element">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
                 <span>{{ channel.title }}</span>
@@ -56,7 +56,7 @@
             </span>
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">
-            <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner)"
+            <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner); checkSidebarClosing()"
                 class="drop-down-element">
                 <img class="drop-down-img" src="{{ chatPartner.photoURL || 'assets/img/user/profile-picture.png' }}">
                 <span>{{ chatPartner.displayName }}</span>

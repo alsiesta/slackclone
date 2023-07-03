@@ -133,3 +133,12 @@
 .rotate90 {
     transform: rotate(-90deg);
 }
+
+@media screen and (max-width: $breakpointCompact) {
+    .sidebar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: auto;
+    }
+}

@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
   chats: Chat[] = [];
   chatPartners: User[] = [];
   drawerMode: MatDrawerMode;
+  responsiveSidebar: boolean = false;
 
   constructor(
     private firestoreService: FirestoreService,
@@ -44,11 +45,12 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const customBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
+    const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
 
-    this.breakpointObserver.observe([customBreakpoint])
+    this.breakpointObserver.observe([customMaxBreakpoint])
       .subscribe((state: BreakpointState) => {
         this.drawerMode = state.matches ? 'over' : 'side';
+        this.responsiveSidebar = state.matches ? true : false;
         if(!this.globalService.isSidebarOpen$) {
           this.toggleSidebar();
         }
@@ -57,11 +59,13 @@ export class SidebarComponent implements OnInit {
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
     });
+    
     // this.chatService.getChatPartners().subscribe( chatPartners => {
     //     this.chatPartners = chatPartners;
 
     //     console.log(this.chatPartners)
     // })
+
     this.firestoreService.getChatList().subscribe((chats) => {
       const uniqueUserIds = new Set<string>();
       this.chats = chats.filter(
@@ -70,7 +74,7 @@ export class SidebarComponent implements OnInit {
           chat.chatUsers[1] === this.usersService.currentUserId$
       );
       this.chatPartners = [];
-      const getUserPromises = []; // Array für die asynchronen Promises
+      const getUserPromises = []; // array for async promises
       this.chats.forEach((chat) => {
         chat.chatUsers.forEach((user) => {
           if (
@@ -81,14 +85,14 @@ export class SidebarComponent implements OnInit {
             const promise = new Promise((resolve, reject) => {
               this.usersService.getUserById$(user).subscribe(
                 (userData) => {
-                  resolve(userData); // Benutzerdaten auflösen, wenn sie verfügbar sind
+                  resolve(userData); // resolve userData, if there are resived
                 },
                 (error) => {
-                  reject(error); // Fehler auflösen, wenn ein Fehler auftritt
+                  reject(error); // resolve error, if an error happens
                 }
               );
             });
-            getUserPromises.push(promise); // Promise zum Array hinzufügen
+            getUserPromises.push(promise); // add promis to array
           }
         });
       });
@@ -96,15 +100,29 @@ export class SidebarComponent implements OnInit {
       Promise.all(getUserPromises)
         .then((userDatas) => {
           userDatas.forEach((userData) => {
-            this.chatPartners.push(userData); // Benutzerdaten zum chatPartners Array hinzufügen
+            this.chatPartners.push(userData); // userData added to chatPartners Array
           });
         })
         .catch((error) => {
-          // Fehlerbehandlung
+          // Errormessage
         });
     });
   }
 
+  /**
+   * when the breakpoint for responive sidebar is reached it toogles the sidebar to close, else it stays open
+   * 
+   */
+  checkSidebarClosing() {
+    if(this.responsiveSidebar) {
+      this.toggleSidebar();
+    }
+  }
+
+  /**
+   * toggles the droppdown menu for channels and directmessages in the sidebar
+   * 
+   */
   toggleDropdown(key) {
     switch (key) {
       case 'ch':
@@ -120,34 +138,58 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * opens the dialog to create a new channel
+   * 
+   */
   openCreateChannelDialog() {
     this.createChannelDialog.open(DialogCreateNewChannelComponent, {
       maxWidth: '100vw',
     });
   }
 
+  /**
+   * opens the dialog to create a new chat
+   * 
+   */
   openCreateChatDialog() {
     this.createChannelDialog.open(DialogCreateNewChatComponent, {
       maxWidth: '100vw',
     });
   }
 
+  /**
+   * renders the channel componend based on the channel id
+   * 
+   */
   async renderChannel(channel) {
     await this.channelService.loadChannelContent(channel.channelID);
     this.globalService.openComponent('channel');
   }
 
+  /**
+   * renders the chat componend based on the chatPartner id
+   * 
+   */
   async renderChat(chatPartner) {
     this.setSearchFunction('chat');
     await this.chatService.openChat(chatPartner.uid);
     this.globalService.openComponent('chat');
   }
 
+  /**
+   * renders the users shortcut componend
+   * 
+   */
   renderUsers() {
     this.setSearchFunction('users');
     this.globalService.openComponent('usersShortcut');
   }
 
+  /**
+   * renders the thread shortcut componend
+   * 
+   */
   renderThreadShortcuts() {
     this.setSearchFunction('threads');
     this.globalService.openComponent('threadsShortcut');
@@ -179,6 +221,10 @@ export class SidebarComponent implements OnInit {
     this.searchService.findActiveComponent();
   }
 
+  /**
+   * toggles the sidebar
+   * 
+   */
   toggleSidebar() {
     this.globalService.toggleSidebar();
   }
