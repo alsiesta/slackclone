@@ -22,24 +22,6 @@
     animation: slide-Out 0.3s ease;
 }
 
-@keyframes slide-Out {
-    from{
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-250px);
-    }
-}
-
-@keyframes slide-In {
-    from{
-        transform: translateX(-250px);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
 .title {
     padding: $spacingRegular;
     font-size: $fonttitle;
@@ -161,6 +143,42 @@
     transform: rotate(-90deg);
 }
 
+@keyframes slide-Out {
+    from{
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-$sidebarWidth);
+    }
+}
+
+@keyframes slide-In {
+    from{
+        transform: translateX(-$sidebarWidth);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-Out-Resp {
+    from{
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100vw);
+    }
+}
+
+@keyframes slide-In-Resp {
+    from{
+        transform: translateX(-100vw);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
 @media screen and (max-width: $breakpointCompact) {
     .sidebar {
         position: absolute;
@@ -168,4 +186,13 @@
         right: 0;
         width: auto;
     }
+
+    .open {
+        animation: slide-In-Resp 0.3s ease;
+    }
+    
+    .close {
+        animation: slide-Out-Resp 0.3s ease;
+    }
+    
 }
