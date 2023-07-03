@@ -211,8 +211,6 @@ export class ChannelService {
     this.globalService.threadsRightSideOpened = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
-    console.log('active Thread', this.activeThread);
-    
   }
 
   /**

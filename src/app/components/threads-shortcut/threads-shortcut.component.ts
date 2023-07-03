@@ -191,7 +191,7 @@ export class ThreadsShortcutComponent {
       name,
       image,
       email,
-      this.currentUserId
+      currentUserId
     );
   }
 }

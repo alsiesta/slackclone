@@ -84,8 +84,8 @@ export class ThreadsComponent implements OnInit {
   * Fetches the information for the user to display user details as a pop-up window
   */
   getUserInformation() {
-    let curentUserId = this.channelService.activeThread.user['id'];
-    this.openProfileDetail(curentUserId);
+    let currentUserId = this.channelService.activeThread.user['id'];
+    this.openProfileDetail(currentUserId);
   }
 
   /**
@@ -93,8 +93,8 @@ export class ThreadsComponent implements OnInit {
    * But this time from the replies
   */
   getUserInformationFromReplies(user) {
-    let curentUserId = user['id'];
-    this.openProfileDetail(curentUserId);
+    let currentUserId = user['id'];
+    this.openProfileDetail(currentUserId);
   }
 
   /**
@@ -113,7 +113,7 @@ export class ThreadsComponent implements OnInit {
       name,
       image,
       email,
-      this.currentUserId
+      currentUserId
     );
   }
 
