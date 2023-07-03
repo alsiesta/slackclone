@@ -26,17 +26,17 @@ export class DateAgoPipe implements PipeTransform {
 
       const seconds = Math.floor((currentDate.getTime() - date.getTime()) / 1000);
       if (seconds < 29) {
-        return 'vor wenigen Sekunden';
+        return 'Just now';
       }
 
       const intervals: Intervals = {
-        Jahr: 31536000,
-        Monat: 2592000,
-        Woche: 604800,
-        Tag: 86400,
-        Stunde: 3600,
-        Minute: 60,
-        Sekunde: 1
+        year: 31536000,
+        month: 2592000,
+        week: 604800,
+        day: 86400,
+        hour: 3600,
+        minute: 60,
+        second: 1
       };
 
       for (const i in intervals) {
@@ -44,12 +44,17 @@ export class DateAgoPipe implements PipeTransform {
           const counter = Math.floor(seconds / intervals[i]);
           if (counter > 0) {
             if (counter === 1) {
-              return `vor ${counter} ${i}`;
-            } else if (counter > 1 && (i === 'Jahr' || i === 'Monat' || i === 'Tag')) {
-              return `vor ${counter} ${i}en`;
-            } else if (counter > 1 && (i === 'Woche' || i === 'Minute' || i === 'Sekunde' || i === 'Stunde')) {
-              return `vor ${counter} ${i}n`;
-            }
+              return counter + ' ' + i + ' ago';
+          } else {
+              return counter + ' ' + i + 's ago';
+          }
+            // if (counter === 1) {
+            //   return `vor ${counter} ${i}`;
+            // } else if (counter > 1 && (i === 'Jahr' || i === 'Monat' || i === 'Tag')) {
+            //   return `vor ${counter} ${i}en`;
+            // } else if (counter > 1 && (i === 'Woche' || i === 'Minute' || i === 'Sekunde' || i === 'Stunde')) {
+            //   return `vor ${counter} ${i}n`;
+            // }
           }
         }
       }
