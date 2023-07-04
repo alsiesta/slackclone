@@ -1,14 +1,16 @@
 @import "../../../styles/main.scss";
 
-
-
-
 .sign-in-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  @media (max-width: 900px) and (orientation: landscape) {
+    padding: 16px;
+    justify-content: flex-start;
+  }
 
   .logo {
     margin: 0 auto;
@@ -61,11 +63,9 @@
   }
 }
 
-.googlelogo{
+.googlelogo {
   width: 20px;
   height: 20px;
   margin-right: 10px;
   float: left;
 }
-
-

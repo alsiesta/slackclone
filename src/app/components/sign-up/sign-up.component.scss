@@ -6,6 +6,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  
+  @media (max-width: 900px) and (orientation: landscape) {
+    padding: 16px;
+    justify-content: flex-start;
+  }
 
   .logo {
     margin: 0 auto;
