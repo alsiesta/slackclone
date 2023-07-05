@@ -1,10 +1,12 @@
 @import "../../../styles/main.scss";
 
 .menu {
+    position: relative;
     background-color: $grey;
     border-bottom: $normalBorder;
     color: $textgrey;
     height: calc($menuHeight - 1px);
+    z-index: 2;
 }
 
 .displayName {
@@ -37,7 +39,7 @@ select {
 @media (max-width: $menuBreakpoint) {
 
     input[type=text],select {
-        width: 250px;
+        width: 50%;
     }
 
     .menu-icon {

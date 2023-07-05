@@ -5,7 +5,7 @@
             this.channelService.activeChannel.title }}</span>
     </div>
 
-    <div id="channel-content" class="channel-content">
+    <div id="channel-content" class="channel-content" [class.no-editor-padding]="!this.showEditor">
 
         <div class="channel-top">
             <div class="channel-top-header">
@@ -46,8 +46,7 @@
                             <div [innerHTML]="this.channelService.sanitizeHTML(thread.content)"></div>
                             <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(thread.content))"
                                 *ngIf="this.channelService.isImage(thread.content)"
-                                [src]="this.channelService.getImageSrc(thread.content)"
-                                class="image-attachment">
+                                [src]="this.channelService.getImageSrc(thread.content)" class="image-attachment">
                         </div>
                         <!-- <div class="posting-content" [innerHTML]="thread.content"></div> -->
                         <div *ngIf="thread.replies.length > 0">
@@ -75,8 +74,14 @@
 
     </div>
 
-    <div class="text-editor">
+    <div class="text-editor" *ngIf="this.showEditor">
         <app-commentfield [parentName]="'channel'"></app-commentfield>
+    </div>
+    <div class="editor-btn" (click)="this.setEditorStatus()">
+        <button mat-mini-fab color="#ffffff">
+            <mat-icon *ngIf="!this.showEditor">keyboard</mat-icon>
+            <mat-icon *ngIf="this.showEditor">keyboard_hide</mat-icon>
+        </button>
     </div>
 
 </div>

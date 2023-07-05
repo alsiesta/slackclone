@@ -6,7 +6,7 @@
             partner.name }}</span>
     </div>
 
-    <div id="chat-content" class="chat-content">
+    <div id="chat-content" class="chat-content" [class.no-editor-padding]="!this.showEditor">
 
         <div *ngFor="let partner of this.chatService.activeChatPartnerList" class="chat-top">
             <img src="{{ partner.image }}"
@@ -49,9 +49,14 @@
 
     </div>
 
-    <div class="text-editor">
+    <div class="text-editor" *ngIf="this.showEditor">
         <app-commentfield [parentName]="'chat'"></app-commentfield>
     </div>
-
+    <div class="editor-btn" (click)="this.setEditorStatus()">
+        <button mat-mini-fab color="#ffffff">
+            <mat-icon *ngIf="!this.showEditor">keyboard</mat-icon>
+            <mat-icon *ngIf="this.showEditor">keyboard_hide</mat-icon>
+        </button>
+    </div>
 
 </div>
