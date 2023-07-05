@@ -1,11 +1,9 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UsersService } from 'src/app/services/users.service';
-import { Observable, of } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-threads',
@@ -23,11 +21,10 @@ export class ThreadsComponent implements OnInit {
   showImage;
 
   constructor(
-    private sanitizer: DomSanitizer,
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService,
-    public globalService: GlobalService
+    public globalService: GlobalService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -125,27 +122,5 @@ export class ThreadsComponent implements OnInit {
   */
   closeThread() {
     this.globalService.threadsRightSideOpened = false;
-  }
-
-  isImage(message: string): boolean {
-    const regex = /<img.*?src=['"](.*?)['"]/;
-    return regex.test(message);
-  }
-
-  getImageSrc(message: string): string {
-    const regex = /<img.*?src=['"](.*?)['"]/;
-    const match = regex.exec(message);
-    return match ? match[1] : '';
-  }
-
-  sanitizeHTML(html: string): SafeHtml {
-    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
-    // Remove <img> tags
-    const cleanedHTML = sanitized.replace(/<img[^>]+>/gm, '');
-    return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
-  }
-
-  openImagePopup() {
-    this.showImage = true;
   }
 }

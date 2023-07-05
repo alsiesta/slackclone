@@ -1,3 +1,4 @@
+
 import { EventEmitter, Injectable, SecurityContext } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
@@ -8,6 +9,7 @@ import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 import { ChatService } from './chat.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DialogAttachmentImageComponent } from '../components/dialog-attachment-image/dialog-attachment-image.component';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +34,7 @@ export class ChannelService {
   allUsers: any = [];
   name: string;
   scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  imageURL: string;
 
   constructor(
     public channelDialog: MatDialog,
@@ -353,9 +356,11 @@ export class ChannelService {
     return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
   }
   
-  openCreateImageDialog() {
-    // this.channelDialog.open(DialogAttachmentImageComponent, {
-    //   maxWidth: '100vw',
-    // });
+  openCreateImageDialog(imageURL) {
+    this.channelDialog.open(DialogAttachmentImageComponent, {
+      maxWidth: '100vw',
+    });
+    this.imageURL = imageURL;
+    console.log('URL:', this.imageURL);
   }
 }
