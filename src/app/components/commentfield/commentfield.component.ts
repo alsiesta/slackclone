@@ -21,7 +21,7 @@ export class CommentfieldComponent implements OnInit {
   editorContent: string;
 
   editorStyle = {
-    height: '150px'
+    height: '100px'
   }
 
   modules = {}
