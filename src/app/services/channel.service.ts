@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, SecurityContext } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
@@ -7,6 +7,7 @@ import { GlobalService } from './global.service';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 import { ChatService } from './chat.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,8 @@ export class ChannelService {
     public firestoreService: FirestoreService,
     public globalService: GlobalService,
     public userService: UsersService,
-    public chatService: ChatService
+    public chatService: ChatService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   /**
@@ -331,5 +333,29 @@ export class ChannelService {
       this.plural = true;
     }
     this.amountReplies = this.activeThread.replies.length;
+  }
+
+  isImage(message: string): boolean {
+    const regex = /<img.*?src=['"](.*?)['"]/;
+    return regex.test(message);
+  }
+
+  getImageSrc(message: string): string {
+    const regex = /<img.*?src=['"](.*?)['"]/;
+    const match = regex.exec(message);
+    return match ? match[1] : '';
+  }
+
+  sanitizeHTML(html: string): SafeHtml {
+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
+    // Remove <img> tags
+    const cleanedHTML = sanitized.replace(/<img[^>]+>/gm, '');
+    return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
+  }
+  
+  openCreateImageDialog() {
+    // this.channelDialog.open(DialogAttachmentImageComponent, {
+    //   maxWidth: '100vw',
+    // });
   }
 }

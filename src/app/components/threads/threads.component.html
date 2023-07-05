@@ -21,7 +21,7 @@
                     </div>
                     <div class="img-message">
                         <div [innerHTML]="this.channelService.activeThread.content"></div>
-                        <img *ngIf="isImage(this.channelService.activeThread.content)" [src]="getImageSrc(this.channelService.activeThread.content)" class="image-attachment">
+                        <img *ngIf="this.channelService.isImage(this.channelService.activeThread.content)" [src]="this.channelService.getImageSrc(this.channelService.activeThread.content)" class="image-attachment">
                     </div>
                 </div>
             </div>
@@ -48,8 +48,9 @@
                         <div class="time">{{ this.reply.date | dateAgo }}</div>
                     </div>
                     <div class="img-message">
-                        <div [innerHTML]="sanitizeHTML(this.reply.message)"></div>
-                        <img (click)="openImagePopup()" *ngIf="isImage(reply.message)" [src]="getImageSrc(reply.message)" class="image-attachment">
+                        <div [innerHTML]="this.channelService.sanitizeHTML(this.reply.message)"></div>
+                        <img (click)="this.channelService.openCreateImageDialog()" *ngIf="this.channelService.isImage(reply.message)" [src]="this.channelService.getImageSrc(reply.message)" class="image-attachment">
+                        <!-- <img class="show-image" *ngIf="showImage" [src]="this.channelService.getImageSrc(reply.message)"> -->
                     </div>
                 </div>
             </div>
