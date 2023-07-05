@@ -50,7 +50,6 @@
                     <div class="img-message">
                         <div [innerHTML]="sanitizeHTML(this.reply.message)"></div>
                         <img (click)="openImagePopup()" *ngIf="isImage(reply.message)" [src]="getImageSrc(reply.message)" class="image-attachment">
-                        <img class="show-image" *ngIf="showImage" [src]="getImageSrc(reply.message)">
                     </div>
                 </div>
             </div>
