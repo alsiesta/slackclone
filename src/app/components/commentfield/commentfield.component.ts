@@ -7,6 +7,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 
+
 @Component({
   selector: 'app-commentfield',
   templateUrl: './commentfield.component.html',
@@ -19,10 +20,10 @@ export class CommentfieldComponent implements OnInit {
   editorForm: FormGroup;
   editorContent: string;
 
-  editorStyle ={
+  editorStyle = {
     height: '150px'
   }
-  
+
   modules = {}
 
   constructor(public channelService: ChannelService, public firestoreService: FirestoreService, public chatService: ChatService, public usersService: UsersService) {
@@ -50,7 +51,10 @@ export class CommentfieldComponent implements OnInit {
 
           // ['clean'],                                         // remove formatting button
 
-          // ['link', 'image', 'video'],                         // link and image, video
+          ['image'],                                            // image
+
+          //['link', 'video'],                                  // link and video
+          
           ['emoji'],
         ],
         handlers: { 'emoji': function () { } }
@@ -67,24 +71,24 @@ export class CommentfieldComponent implements OnInit {
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
-        this.channelService.addNewMessage(this.editorContent);
+      this.channelService.addNewMessage(this.editorContent);
     } else if (this.parentName == 'chat') {
-        this.chatService.sendChatMessage(this.editorContent);
-    } else if(this.parentName == 'thread') {
+      this.chatService.sendChatMessage(this.editorContent);
+    } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.currentUserId$);
       this.channelService.updateThread();
-    } else if(this.parentName == 'threadshortcut') {
+    } else if (this.parentName == 'threadshortcut') {
       this.firestoreService.updateSpecificThread(this.threadId, this.editorContent, this.currentUserId$);
     }
     // Clear the editor content
-  this.editorForm.get('editor').setValue(null);
+    this.editorForm.get('editor').setValue(null);
   }
 
   maxLength(e) {
-    if(e.editor.getLength() > 1000) {
+    if (e.editor.getLength() > 1000) {
       e.editor.deleteText(1000, e.editor.getLength());
     };
-  } 
+  }
 
   get currentUserId$() {
     return this.usersService.currentUserId$;

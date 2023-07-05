@@ -16,7 +16,7 @@
                                 currentUserData.displayName }}</div>
                             <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
                         </div>
-                        <div [innerHTML]="threadCurrentUser.content"></div>
+                        <div class="img-message" [innerHTML]="threadCurrentUser.content"></div>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@
                                 threadReplies.user['name']}}</div>
                             <div class="time">{{ threadReplies.date | dateAgo }}</div>
                         </div>
-                        <div [innerHTML]="threadReplies.message"></div>
+                        <div class="img-message" [innerHTML]="threadReplies.message"></div>
                     </div>
                 </div>
 
