@@ -1,8 +1,16 @@
 <div *ngIf="this.channelService.channelReady" class="channel-container">
     <div class="channelTitle">
-        <mat-icon>numbers</mat-icon>
-        <span (click)="this.channelService.channelDialogOpen()">{{
-            this.channelService.activeChannel.title }}</span>
+        <div>
+            <mat-icon>numbers</mat-icon>
+            <span (click)="this.channelService.channelDialogOpen()">{{
+                this.channelService.activeChannel.title }}</span>
+        </div>
+        <div class="editor-btn" (click)="this.setEditorStatus()">
+            <button mat-mini-fab color="#ffffff">
+                <mat-icon *ngIf="!this.showEditor">keyboard</mat-icon>
+                <mat-icon *ngIf="this.showEditor">keyboard_hide</mat-icon>
+            </button>
+        </div>
     </div>
 
     <div id="channel-content" class="channel-content" [class.no-editor-padding]="!this.showEditor">
@@ -76,12 +84,6 @@
 
     <div class="text-editor" *ngIf="this.showEditor">
         <app-commentfield [parentName]="'channel'"></app-commentfield>
-    </div>
-    <div class="editor-btn" (click)="this.setEditorStatus()">
-        <button mat-mini-fab color="#ffffff">
-            <mat-icon *ngIf="!this.showEditor">keyboard</mat-icon>
-            <mat-icon *ngIf="this.showEditor">keyboard_hide</mat-icon>
-        </button>
     </div>
 
 </div>
