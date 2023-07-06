@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -42,9 +42,13 @@ export class SidebarComponent implements OnInit {
     public globalService: GlobalService,
     public searchService: SearchService,
     private breakpointObserver: BreakpointObserver,
+    private renderer: Renderer2,
   ) { }
 
   ngOnInit() {
+    const sidebarElement = document.querySelector('mat-drawer');
+    this.renderer.addClass(sidebarElement, 'remove-macos-focus-outline');
+
     const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
 
     this.breakpointObserver.observe([customMaxBreakpoint])
