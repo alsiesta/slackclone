@@ -1,6 +1,7 @@
 import { UsersService } from './../../services/users.service';
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import Quill from 'quill';
 import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -19,6 +20,9 @@ export class CommentfieldComponent implements OnInit {
   @Input() threadId: string;
   editorForm: FormGroup;
   editorContent: string;
+  selectedFile: File;
+  quillEditorRef: any;
+  img: any;
 
   editorStyle = {
     height: '100px'
@@ -54,7 +58,7 @@ export class CommentfieldComponent implements OnInit {
           ['image'],                                            // image
 
           //['link', 'video'],                                  // link and video
-          
+
           ['emoji'],
         ],
         handlers: { 'emoji': function () { } }
@@ -65,7 +69,11 @@ export class CommentfieldComponent implements OnInit {
   ngOnInit(): void {
     this.editorForm = new FormGroup({
       'editor': new FormControl(null)
-    })
+    });
+  }
+
+  handleImageUpload(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
   onSubmit() {
@@ -93,4 +101,43 @@ export class CommentfieldComponent implements OnInit {
   get currentUserId$() {
     return this.usersService.currentUserId$;
   }
+
+  getEditorInstance(editorInstance: any) {
+    console.log('getEditorInstance was called!');
+    this.quillEditorRef = editorInstance;
+    const toolbar = editorInstance.getModule('toolbar');
+    toolbar.addHandler('image', this.imageHandler);
+  }
+
+  imageHandler = () => {
+    console.log('imageHandler was called!');
+    const range = this.quillEditorRef.getSelection();
+
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Image = reader.result.toString();
+          this.img = `
+                        <a href="${base64Image}" data-lightbox="image-1" data-title="My caption">
+                          <div>
+                            <img class="image-attachment" src="${base64Image}"/>
+                          </div>
+                        </a>
+                       `;
+          this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, this.img );
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    input.click();
+  };
+
+  delete() {
+    this.img = '';
+  }
 }
+
