@@ -2,6 +2,7 @@
     <form [formGroup]="editorForm" (submit)="onSubmit()">
         <quill-editor #textEditor class="quill-text-editor" placeholder="Answers ..." [style]="editorStyle"
             [modules]="modules" (onContentChanged)="maxLength($event)" (onEditorCreated)="getEditorInstance($event)" formControlName="editor">
+            
         </quill-editor>
         <div>
             <button class="send-btn"><img class="send-icon" src="assets/img/commentfield/send-icon.png"></button>

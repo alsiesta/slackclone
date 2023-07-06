@@ -135,9 +135,5 @@ export class CommentfieldComponent implements OnInit {
     });
     input.click();
   };
-
-  delete() {
-    this.img = '';
-  }
 }
 

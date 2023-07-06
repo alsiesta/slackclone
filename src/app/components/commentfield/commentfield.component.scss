@@ -5,9 +5,20 @@
 }
 
 .quill-text-editor {
+    position: relative;
     width: 100%;
     background-color: #ffffff;
     border-radius: 11px;
+}
+
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    img {
+        margin-right: 8px;
+    }
 }
 
 .send-icon {
@@ -38,11 +49,8 @@
 }
 
 .container-attachement {
-    position: relative;
-}
-
-.close {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
 }
+
