@@ -1,4 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
+
+import { EventEmitter, Injectable, SecurityContext } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
@@ -7,6 +8,8 @@ import { GlobalService } from './global.service';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 import { ChatService } from './chat.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DialogAttachmentImageComponent } from '../components/dialog-attachment-image/dialog-attachment-image.component';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +34,7 @@ export class ChannelService {
   allUsers: any = [];
   name: string;
   scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  imageURL: string;
 
   constructor(
     public channelDialog: MatDialog,
@@ -38,7 +42,8 @@ export class ChannelService {
     public firestoreService: FirestoreService,
     public globalService: GlobalService,
     public userService: UsersService,
-    public chatService: ChatService
+    public chatService: ChatService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   /**
@@ -231,6 +236,7 @@ export class ChannelService {
     this.globalService.threadsRightSideOpened = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
+    console.log('activeThread:', this.activeThread.user['image']);
   }
 
   /**
@@ -330,5 +336,31 @@ export class ChannelService {
       this.plural = true;
     }
     this.amountReplies = this.activeThread.replies.length;
+  }
+
+  isImage(message: string): boolean {
+    const regex = /<img.*?src=['"](.*?)['"]/;
+    return regex.test(message);
+  }
+
+  getImageSrc(message: string): string {
+    const regex = /<img.*?src=['"](.*?)['"]/;
+    const match = regex.exec(message);
+    return match ? match[1] : '';
+  }
+
+  sanitizeHTML(html: string): SafeHtml {
+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
+    // Remove <img> tags
+    const cleanedHTML = sanitized.replace(/<img[^>]+>/gm, '');
+    return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
+  }
+  
+  openCreateImageDialog(imageURL) {
+    this.channelDialog.open(DialogAttachmentImageComponent, {
+      maxWidth: '100vw',
+    });
+    this.imageURL = imageURL;
+    console.log('URL:', this.imageURL);
   }
 }

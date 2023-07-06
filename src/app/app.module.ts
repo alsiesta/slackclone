@@ -42,6 +42,7 @@ import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataProtectionComponent } from './components/data-protection/data-protection.component';
 import { UniquePipe } from './pipes/unique.pipe';
 import { GoogleAuthProvider } from "firebase/auth";
+import { DialogAttachmentImageComponent } from './components/dialog-attachment-image/dialog-attachment-image.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { GoogleAuthProvider } from "firebase/auth";
     ImprintComponent,
     DataProtectionComponent,
     UniquePipe,
+    DialogAttachmentImageComponent,
   ],
   imports: [
     BrowserModule,

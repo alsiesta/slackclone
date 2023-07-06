@@ -12,6 +12,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class ChatComponent implements OnDestroy, OnInit {
   observerChatList: Observable<any>;
+  showEditor = true;
   scrollStatus = this.chatService.scrollStatus;
 
   constructor(
@@ -35,7 +36,8 @@ export class ChatComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    //this.chatService.loadChatContent();
+    this.checkWindowHeight();
+    this.eventListenerWindowHeight();
   }
 
   ngOnDestroy(): void {
@@ -51,5 +53,39 @@ export class ChatComponent implements OnDestroy, OnInit {
       let content = document.getElementById('chat-content') || undefined;
       content.scrollTo({ top: content.scrollHeight, behavior: style });
     } catch (err) {}
+  }
+
+  /**
+   * set the editor status and scroll to the bottom of the channel-content
+   */
+  setEditorStatus() {
+    this.showEditor = !this.showEditor;
+    setTimeout(() => {
+      this.scrollToBottomOfContent('smooth');
+    }, 100);
+  }
+
+  /**
+   * check the window height and set the editor status
+   */
+  checkWindowHeight() {
+    if (window.innerHeight < 600) {
+      this.showEditor = false;
+    } else {
+      this.showEditor = true;
+    }
+  }
+
+  /**
+   * event listener for window height
+   */
+  eventListenerWindowHeight() {
+    window.addEventListener('resize', () => {
+      if (window.innerHeight < 600) {
+        this.showEditor = false;
+      } else {
+        this.showEditor = true;
+      }
+    });
   }
 }

@@ -12,14 +12,21 @@
 
         <div class="post">
             <div class="user-message">
-                <img (click)="getUserInformation()" src="{{this.channelService.activeThread.user['image'] || '/assets/img/user/profile-picture.png' }}" >
+                <img (click)="getUserInformation()"
+                    src="{{ this.channelService.activeThread.user['image'] ||  'assets/img/user/profile-picture.png' }}">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" (click)="getUserInformation()">
                             {{ this.channelService.name }}</div>
                         <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
                     </div>
-                    <div [innerHTML]="this.channelService.activeThread.content"></div>
+                    <div>
+                        <div [innerHTML]="this.channelService.sanitizeHTML(this.channelService.activeThread.content)"></div>
+                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(this.channelService.activeThread.content))"
+                            *ngIf="this.channelService.isImage(this.channelService.activeThread.content)"
+                            [src]="this.channelService.getImageSrc(this.channelService.activeThread.content)"
+                            class="image-attachment">
+                    </div>
                 </div>
             </div>
 
@@ -37,14 +44,19 @@
 
             <div *ngFor="let reply of channelService.activeThread.replies" class="user-message-more">
                 <img (click)="getUserInformationFromReplies(this.reply.user)"
-                    src="{{this.reply.user['image'] || '/assets/img/user/profile-picture.png' }}">
+                    src="{{this.reply.user['image'] || 'assets/img/user/profile-picture.png' }}">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" img (click)="getUserInformationFromReplies(this.reply.user)">{{
                             this.reply.user['name'] }}</div>
                         <div class="time">{{ this.reply.date | dateAgo }}</div>
                     </div>
-                    <div [innerHTML]="this.reply.message"></div>
+                    <div class="img-message">
+                        <div [innerHTML]="this.channelService.sanitizeHTML(this.reply.message)"></div>
+                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(reply.message))"
+                            *ngIf="this.channelService.isImage(reply.message)"
+                            [src]="this.channelService.getImageSrc(reply.message)" class="image-attachment">
+                    </div>
                 </div>
             </div>
             <div class="box-text-editor">

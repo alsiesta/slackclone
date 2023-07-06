@@ -3,7 +3,6 @@ import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UsersService } from 'src/app/services/users.service';
-import { Observable, of } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -19,12 +18,13 @@ export class ThreadsComponent implements OnInit {
   threadsFromCurrentUser: Thread[] = [];
   name: string;
   currentUser;
+  showImage;
 
   constructor(
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService,
-    public globalService: GlobalService
+    public globalService: GlobalService,
   ) { }
 
   async ngOnInit(): Promise<void> {
