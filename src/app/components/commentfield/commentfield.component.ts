@@ -22,7 +22,7 @@ export class CommentfieldComponent implements OnInit {
   editorContent: string;
   selectedFile: File;
   quillEditorRef: any;
-  img: any;
+  maxUploadFileSize = 1000000;
 
   editorStyle = {
     height: '100px'
@@ -103,36 +103,38 @@ export class CommentfieldComponent implements OnInit {
   }
 
   getEditorInstance(editorInstance: any) {
-    console.log('getEditorInstance was called!');
     this.quillEditorRef = editorInstance;
+    console.log(this.quillEditorRef);
     const toolbar = editorInstance.getModule('toolbar');
     toolbar.addHandler('image', this.imageHandler);
   }
 
-  imageHandler = () => {
-    console.log('imageHandler was called!');
-    const range = this.quillEditorRef.getSelection();
-
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.addEventListener('change', () => {
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64Image = reader.result.toString();
-          this.img = `
-                        <a href="${base64Image}" data-lightbox="image-1" data-title="My caption">
-                          <div>
-                            <img class="image-attachment" src="${base64Image}"/>
-                          </div>
-                        </a>
-                       `;
-          this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, this.img );
-        };
-        reader.readAsDataURL(file);
+  imageHandler = (image, callback) => {
+    const input = <HTMLInputElement>document.getElementById('fileInputField');
+    document.getElementById('fileInputField').onchange = () => {
+      let file: File;
+      file = input.files[0];
+      // file type is only image.
+      if (/^image\//.test(file.type)) {
+        if (file.size > this.maxUploadFileSize) {
+          alert('Image needs to be less than 1MB');
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const range = this.quillEditorRef.getSelection();
+            const img = '<img src="' + reader.result + '" />';
+            this.quillEditorRef.clipboard.dangerouslyPasteHTML(
+              range.index,
+              img
+            );
+          };
+          reader.readAsDataURL(file);
+        }
+      } else {
+        alert('You could only upload images.');
       }
-    });
+    };
+
     input.click();
   };
 }
