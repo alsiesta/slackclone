@@ -25,6 +25,7 @@
     border-bottom: 1px solid rgba($white, 0.2);
     padding: 16px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: $darkgrey;
     z-index: 1;
@@ -40,6 +41,22 @@
         background-color: $grey;
       }
     }
+
+    .editor-btn {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      width: 43px;
+      height: 43px;
+      border: 1px solid rgba($white, 0.1);
+      background-color: $darkgrey;
+      border-radius: 50%;
+      z-index: 1;
+
+      @media (max-height: 600px) {
+        display: flex;
+      }
+    }
   }
 
   .channel-content {
@@ -49,8 +66,12 @@
     left: 0;
     right: 0;
     padding-top: 100px;
-    padding-bottom: 200px;
+    padding-bottom: 150px;
     overflow-y: auto;
+  }
+
+  .no-editor-padding {
+    padding-bottom: 10px;
   }
 
   .channel-top {

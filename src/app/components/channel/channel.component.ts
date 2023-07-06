@@ -11,6 +11,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class ChannelComponent implements OnInit, OnDestroy {
   observerThreadList: Observable<any>;
+  showEditor = true;
   scrollStatus = this.channelService.scrollStatus;
 
   constructor(
@@ -34,6 +35,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.channelService.loadChannelContent();
+    this.checkWindowHeight();
+    this.eventListenerWindowHeight();
   }
 
   ngOnDestroy(): void {
@@ -61,5 +64,39 @@ export class ChannelComponent implements OnInit, OnDestroy {
     this.searchService.activeThread = '';
     this.searchService.activeUsers = '';
     this.searchService.findActiveComponent();
+  }
+
+  /**
+   * set the editor status and scroll to the bottom of the channel-content
+   */
+  setEditorStatus() {
+    this.showEditor = !this.showEditor;
+    setTimeout(() => {
+      this.scrollToBottomOfContent('smooth');
+    }, 100);
+  }
+
+  /**
+   * check the window height and set the editor status
+   */
+  checkWindowHeight() {
+    if (window.innerHeight < 600) {
+      this.showEditor = false;
+    } else {
+      this.showEditor = true;
+    }
+  }
+
+  /**
+   * event listener for window height
+   */
+  eventListenerWindowHeight() {
+    window.addEventListener('resize', () => {
+      if (window.innerHeight < 600) {
+        this.showEditor = false;
+      } else {
+        this.showEditor = true;
+      }
+    });
   }
 }

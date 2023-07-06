@@ -6,7 +6,16 @@ import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { and } from 'firebase/firestore';
 import { AuthService } from 'src/app/services/auth.service';
-import { Storage , ref, uploadBytesResumable,getDownloadURL, uploadBytes, getStorage} from '@angular/fire/storage';
+import {
+  Storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  uploadBytes,
+  getStorage,
+  getMetadata,
+  updateMetadata,
+} from '@angular/fire/storage';
 import { state } from '@angular/animations';
 export interface DialogData {
   displayName;
@@ -35,15 +44,13 @@ export interface IsEditing {
   styleUrls: ['./dialog-edit-user.component.scss'],
 })
 export class DialogEditUserComponent {
-  constructor (
+  constructor(
     public storage: Storage,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public usersService: UsersService,
     public firestoreService: FirestoreService,
     public authService: AuthService
   ) {}
-
- 
 
   currentUserData$: UserTemplate;
 
@@ -68,8 +75,8 @@ export class DialogEditUserComponent {
   counter: number = 0;
   chat: any;
   isGuestUserActive: boolean = false;
-  
- async ngOnInit() {
+
+  async ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
     this.checkIfGuestUserIsActive();
     this.observable.subscribe(this.subscriber);
@@ -79,29 +86,21 @@ export class DialogEditUserComponent {
     });
   }
 
-
-
-  
-  // get currentUserPhoto() {
-  //   return this.usersService.currentUserPhoto;
-  // }
-  // get currentUserName$() {
-  //   return this.usersService.currentUserName$;
-  // }
-
-
-
-  checkIfGuestUserIsActive () {
-    if (this.currentUserId$ === '9KjVGbYn8qOQ9dprTIAxuJ6fpOv2') { 
+  /**
+   * // check if guest user is logged-in. This is important, because the guest user is not allowed to edit his profile.
+   */
+  checkIfGuestUserIsActive() {
+    if (this.currentUserId$ === '9KjVGbYn8qOQ9dprTIAxuJ6fpOv2') {
       this.isGuestUserActive = true;
       // console.log('GuestUser is logged-in: ',this.isGuestUserActive);
     }
   }
 
-
-
+  /**
+   * // observable to get the current user data from firestore.
+   * // the data is stored in the currentUser$ variable.
+   */
   observable = new Observable((subscriber) => {
-    // subscriber.next(this.currentUserId$);
     subscriber.next(
       (this.currentUser$ = this.usersService.getUserById$(this.currentUserId$))
     );
@@ -110,43 +109,32 @@ export class DialogEditUserComponent {
         this.currentUser = data;
       })
     );
-    // subscriber.error();
     subscriber.complete();
   });
 
   subscriber = {
     next: (data) => {
       this.counter++;
-      // console.log(
-      //   `${
-      //     this.counter
-      //   }.) Subscriber received \"${typeof data}\" with this data:`,
-      //   data
-      // );
     },
     error: (error) => {
       console.error('An error occurred:', error);
     },
-    complete: () => {
-      // console.log('Subscriber Complete');
-    },
+    complete: () => {},
   };
 
   /**
    * // update user property in specific field in firebase firestore.
    * // updates displayName OR photoURL in firebase auth in case it was changed.
-   * @param field 
-   * @param value 
+   * @param field
+   * @param value
    */
-  updateUserProperty (field, value) {
+  updateUserProperty(field, value) {
     this.usersService.updateUserFieldValue(field, value);
-    // console.log(this.usersService.currentUserName$)
     if (field === 'displayName') {
       this.authService.updateAuthdisplayName(value);
     } else if (field === 'photoURL') {
       this.authService.updateAuthPhoto(value);
     }
-    // this.authService.getAuthCredentials();
     this.cancelEdit(field);
   }
 
@@ -161,13 +149,20 @@ export class DialogEditUserComponent {
       return;
     }
     const storage = getStorage();
-    const storageRef = ref(storage, this.selectedFile.name);
+    const fileName = this.currentUserId$ + '_' + this.selectedFile.name;
+    const storageRef = ref(storage, fileName);
     await uploadBytes(storageRef, this.selectedFile);
+    getMetadata(storageRef)
+      .then((metadata) => {
+        console.log(metadata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     const downloadURL = await getDownloadURL(storageRef);
-    // console.log('File available at: ', downloadURL);
-    this.updateUserProperty ('photoURL', downloadURL)   }
-
+    this.updateUserProperty('photoURL', downloadURL);
+  }
 
   cancelEdit(field) {
     switch (field) {
