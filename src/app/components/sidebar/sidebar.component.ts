@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const sidebarElement = document.querySelector('mat-drawer');
+    const sidebarElement = document.querySelector('.sidebar');
     this.renderer.addClass(sidebarElement, 'remove-macos-focus-outline');
 
     const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
