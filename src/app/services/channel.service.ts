@@ -352,7 +352,7 @@ export class ChannelService {
   sanitizeHTML(html: string): SafeHtml {
     const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
     // Remove <img> tags
-    const cleanedHTML = sanitized.replace(/<img[^>]+>/gm, '');
+    const cleanedHTML = sanitized?.replace(/<img[^>]+>/gm, '');
     return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
   }
   

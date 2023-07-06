@@ -1,3 +1,14 @@
+.dialog-container {
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+.image {
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .cross {
     position: absolute;
     left: 50%;
