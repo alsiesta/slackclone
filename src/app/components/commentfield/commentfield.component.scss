@@ -5,7 +5,6 @@
 }
 
 .quill-text-editor {
-    position: relative;
     width: 100%;
     background-color: #ffffff;
     border-radius: 11px;
@@ -42,15 +41,13 @@
     }
 }
 
-.image-attachment {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-}
+.image-container {
+    display: flex;
 
-.container-attachement {
-    position: absolute;
-    top: 0;
-    left: 0;
+    img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 }
-
+  

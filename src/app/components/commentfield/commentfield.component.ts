@@ -20,9 +20,9 @@ export class CommentfieldComponent implements OnInit {
   @Input() threadId: string;
   editorForm: FormGroup;
   editorContent: string;
-  selectedFile: File;
-  quillEditorRef: any;
-  maxUploadFileSize = 1000000;
+  // selectedFile: File;
+  // quillEditorRef: any;
+  // maxUploadFileSize = 1000000;
 
   editorStyle = {
     height: '100px'
@@ -72,10 +72,6 @@ export class CommentfieldComponent implements OnInit {
     });
   }
 
-  handleImageUpload(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
-
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
@@ -102,40 +98,45 @@ export class CommentfieldComponent implements OnInit {
     return this.usersService.currentUserId$;
   }
 
-  getEditorInstance(editorInstance: any) {
-    this.quillEditorRef = editorInstance;
-    console.log(this.quillEditorRef);
-    const toolbar = editorInstance.getModule('toolbar');
-    toolbar.addHandler('image', this.imageHandler);
-  }
+   // handleImageUpload(event: any) {
+  //   this.selectedFile = event.target.files[0];
+  // }
 
-  imageHandler = (image, callback) => {
-    const input = <HTMLInputElement>document.getElementById('fileInputField');
-    document.getElementById('fileInputField').onchange = () => {
-      let file: File;
-      file = input.files[0];
-      // file type is only image.
-      if (/^image\//.test(file.type)) {
-        if (file.size > this.maxUploadFileSize) {
-          alert('Image needs to be less than 1MB');
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const range = this.quillEditorRef.getSelection();
-            const img = '<img src="' + reader.result + '" />';
-            this.quillEditorRef.clipboard.dangerouslyPasteHTML(
-              range.index,
-              img
-            );
-          };
-          reader.readAsDataURL(file);
-        }
-      } else {
-        alert('You could only upload images.');
-      }
-    };
+  // getEditorInstance(editorInstance: any) {
+  //   this.quillEditorRef = editorInstance;
+  //   console.log(this.quillEditorRef);
+  //   const toolbar = editorInstance.getModule('toolbar');
+  //   toolbar.addHandler('image', this.imageHandler);
+  // }
 
-    input.click();
-  };
+  // imageHandler = (image, callback) => {
+  //   const input = <HTMLInputElement>document.getElementById('fileInputField');
+  //   document.getElementById('fileInputField').onchange = () => {
+  //     let file: File;
+  //     file = input.files[0];
+  //     // file type is only image.
+  //     if (/^image\//.test(file.type)) {
+  //       if (file.size > this.maxUploadFileSize) {
+  //         alert('Image needs to be less than 1MB');
+  //       } else {
+  //         const reader = new FileReader();
+  //         reader.onload = () => {
+  //           const range = this.quillEditorRef.getSelection();
+  //           const img = '<div class="image-container"><img src="' + reader.result + '" /></div>';
+  //           this.quillEditorRef.clipboard.dangerouslyPasteHTML(
+  //             range.index,
+  //             img
+  //           );
+  //         };
+  //         reader.readAsDataURL(file);
+  //       }
+  //     } else {
+  //       alert('You could only upload images.');
+  //     }
+  //   };
+
+  //   input.click();
+  // };
+  
 }
 
