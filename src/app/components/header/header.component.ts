@@ -10,6 +10,7 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
 import { SearchService } from 'src/app/services/search.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-header',
@@ -29,8 +30,6 @@ export class HeaderComponent {
     public globalService: GlobalService,
   ) {}
 
-  currentUserDisplayName: any;
-  // currentUser = new UserTemplate(); 
 
   async ngOnInit () {
     this.startSearchEvent();
@@ -63,7 +62,9 @@ export class HeaderComponent {
     this.authService.getAuthCredentials();
   }
 
-
+/**
+ * open dialog for editing user
+ */
   openDialog() {
     this.dialog.open(DialogEditUserComponent, {
       panelClass: 'dialog-panel', // Aad a custom panel class
@@ -80,9 +81,11 @@ export class HeaderComponent {
   startSearchEvent() {
     setTimeout(() => {
       const searchbar = document.getElementById('searchbar');
-      searchbar.addEventListener('keyup', () => {
-        this.searchingComponents(this.searchText);
-      });
+      if (searchbar) {
+        searchbar.addEventListener('keyup', () => {
+          this.searchingComponents(this.searchText);
+        });
+      }
     }, 1000);
   }
 

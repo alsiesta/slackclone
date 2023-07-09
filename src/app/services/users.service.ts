@@ -1,10 +1,8 @@
-import { Injectable, OnInit, inject } from '@angular/core';
-import { FirestoreService } from './firestore.service';
+import { Injectable } from '@angular/core';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
-import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { AuthService } from 'src/app/services/auth.service';
+import { Auth, User, onAuthStateChanged } from '@angular/fire/auth';
 
-import { BehaviorSubject, Observable, from, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   collection,
   Firestore,
@@ -16,6 +14,8 @@ import {
   onSnapshot,
   DocumentReference,
   docData,
+  DocumentData,
+  DocumentSnapshot,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -24,7 +24,6 @@ import {
   
 export class UsersService {
   constructor(
-    private firestoreService: FirestoreService,
     private firestore: Firestore,
     private auth: Auth
   ) {
@@ -80,7 +79,7 @@ export class UsersService {
     }
   
 
-  getAllUsers() {
+  getAllUsers(): User[] {
     return this.currentUsers;
   }
   
@@ -90,34 +89,24 @@ export class UsersService {
    * 2. set local properties to user data (id, name)
    * @returns current user data from firebase auth
    */
-  getCurrentUserId() {
+  getCurrentUserId(): string {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.currentUserId$ = user.uid;
         this.currentUserName$ = user.displayName;
         this.currentUserPhoto = user.photoURL;
-        // return user.uid;  EINE CALL BACK FN KANN NICHTS RETURNEN
       } else {
         this.currentUserId$ = null;
-        // return null;   EINE CALL BACK FN KANN NICHTS RETURNEN
       }
     });
     return this.currentUserId$
   }
 
 
-  // setAuthDisplayName (displayName: string) {
-  //   this.auth.currentUser.then((user) => {
-  //     user.updateProfile({
-  //       displayName: displayName,
-  //     });
-  //   });
-  // }
-
   // AS PROMISE
-  async getCurrentUserData() {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
-    const docSnap = await getDoc(docRef);
+  async getCurrentUserData(): Promise<any> {
+    const docRef: DocumentReference<DocumentData> = doc(this.usersCollection, this.currentUserId$);
+    const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
     if (docSnap.exists()) {
       this.currentUserData$ = docSnap.data();
       // return docSnap.data();
@@ -130,13 +119,13 @@ export class UsersService {
   }
   
   // AS OBSERVABLE
-  getUserById$(userId: string): Observable<any> {
+  getUserById$(userId: string): Observable<User> {
     const usersDocRef: DocumentReference = doc(this.usersCollection, userId);
-    return docData(usersDocRef, { idField: 'UserId' }) as Observable<any>;
+    return docData(usersDocRef, { idField: 'UserId' }) as Observable<User>;
   }
   
-  async updateUserFieldValue(field,arg) {
-    const docRef = doc(this.usersCollection, this.currentUserId$);
+  async updateUserFieldValue(field:string,arg:any) {
+    const docRef:DocumentReference<DocumentData> = doc(this.usersCollection, this.currentUserId$);
     await updateDoc(docRef, {
       [field]: arg,
     });
