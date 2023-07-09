@@ -26,6 +26,8 @@ import { CommentfieldComponent } from './components/commentfield/commentfield.co
 import { UsersService } from './services/users.service';
 import { FirestoreService } from './services/firestore.service';
 import { AuthService } from './services/auth.service';
+import { UploadImagesService } from './services/upload-images.service';
+
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { ChatComponent } from './components/chat/chat.component';
@@ -43,6 +45,7 @@ import { DataProtectionComponent } from './components/data-protection/data-prote
 import { UniquePipe } from './pipes/unique.pipe';
 import { GoogleAuthProvider } from "firebase/auth";
 import { DialogAttachmentImageComponent } from './components/dialog-attachment-image/dialog-attachment-image.component';
+
 
 
 @NgModule({
@@ -91,7 +94,7 @@ import { DialogAttachmentImageComponent } from './components/dialog-attachment-i
     MatAutocompleteModule,
     QuillModule.forRoot(),
   ],
-  providers: [AuthGuard, UsersService, FirestoreService, AuthService, GoogleAuthProvider],
+  providers: [AuthGuard, UsersService, FirestoreService, AuthService, GoogleAuthProvider,UploadImagesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

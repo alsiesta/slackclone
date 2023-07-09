@@ -1,8 +1,17 @@
 <div class="box">
+
+    <!-- IMAGE UPLOAD -->
+    <div>
+        <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
+        Upload Image
+        <mat-icon class="material-symbols-sharp" (click)="selectFile.click()">edit</mat-icon>
+        {{imageSrc$}}
+    </div>
+    <!-- END IMAGE UPLOAD -->
+
     <form [formGroup]="editorForm" (submit)="onSubmit()">
         <quill-editor #textEditor class="quill-text-editor" placeholder="Answers ..." [style]="editorStyle"
-            [modules]="modules" (onContentChanged)="maxLength($event)"
-            formControlName="editor">
+            [modules]="modules" (onContentChanged)="maxLength($event)" formControlName="editor">
         </quill-editor>
         <!-- <input type="file" style="display: none" id="fileInputField" /> -->
         <div>

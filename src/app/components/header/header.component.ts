@@ -30,7 +30,7 @@ export class HeaderComponent {
   ) {}
 
   currentUserDisplayName: any;
-  currentUser = new UserTemplate(); 
+  // currentUser = new UserTemplate(); 
 
   async ngOnInit () {
     this.startSearchEvent();

@@ -15,7 +15,10 @@ import {
   signInWithPopup,
 } from '@angular/fire/auth';
 import { Channel } from '../models/channel.class';
+import { UsersService } from './users.service';
 import { getAdditionalUserInfo } from 'firebase/auth';
+import { UserTemplate } from '../models/usertemplate.class';
+
 // import { GoogleAuthProvider } from 'firebase/auth';
 
 @Injectable({
@@ -28,12 +31,12 @@ export class AuthService {
     private auth: Auth,
     private toast: HotToastService,
     private router: Router,
+    private usersService : UsersService,
     private googleAuthProvider: GoogleAuthProvider
   ) { }
-
+  
+  user = new UserTemplate();
   loading: boolean = false;
-  // user: User;
-  // userId: string = '';
   channel: Channel = new Channel();
   isUserLoggedIn: boolean = false;
   userCredentials; // used for google sign in
@@ -107,6 +110,11 @@ export class AuthService {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        this.user.displayName = user.displayName;
+        this.user.email = user.email;
+        this.user.photoURL = user.photoURL;
+
+        
         this.toast.info(`Hi ${user.displayName}! You are signed in.`);
         this.isUserLoggedIn = true;
         providerUser = user;
@@ -153,7 +161,7 @@ export class AuthService {
   }
 
   updateAuthdisplayName(dName) {
-    console.log('update Profile Name');
+    console.log('update Profile DisplayName');
     const auth = getAuth();
     updateProfile(auth.currentUser, {
       displayName: dName,
@@ -167,7 +175,7 @@ export class AuthService {
   }
 
   updateAuthPhoto(photoName) {
-    console.log('update Profile Name');
+    console.log('update ProfilePhoto');
     const auth = getAuth();
     updateProfile(auth.currentUser, {
       photoURL: photoName,

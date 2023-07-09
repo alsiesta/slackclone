@@ -1,8 +1,9 @@
 import { Injectable, OnInit, inject } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import * as GLOBAL_VARS from 'src/app/shared/globals';
-import { UserTemplate } from '../models/usertemplate.class';
 import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { AuthService } from 'src/app/services/auth.service';
+
 import { BehaviorSubject, Observable, from, map, switchMap } from 'rxjs';
 import {
   collection,
@@ -18,9 +19,10 @@ import {
 } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class UsersService  {
+  
+export class UsersService {
   constructor(
     private firestoreService: FirestoreService,
     private firestore: Firestore,
@@ -28,20 +30,18 @@ export class UsersService  {
   ) {
     this.getCurrentUserId();
   }
-  ngOnInit () {
+  ngOnInit() {
     this.keepUsersUptodate();
     this.observCurrentUser().subscribe((data) => {
       this.currentUserData$ = data;
     });
-}
-
+  }
 
   usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
   public usersCollListener = new BehaviorSubject<any>({ users: [] });
-  public userListener = new BehaviorSubject<any>({ user: UserTemplate });
-  
-  // $currentUserData: UserTemplate;
+
   currentUserId$: any;
+  currentUserEmail$: any;
   currentUserName$: any;
   currentUserData$: any;
   currentUserPhoto: any;

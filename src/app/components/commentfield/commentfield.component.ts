@@ -6,42 +6,62 @@ import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
-
+import { UploadImagesService } from 'src/app/services/upload-images.service';
 
 @Component({
   selector: 'app-commentfield',
   templateUrl: './commentfield.component.html',
-  styleUrls: ['./commentfield.component.scss']
+  styleUrls: ['./commentfield.component.scss'],
 })
 export class CommentfieldComponent implements OnInit {
-  @ViewChild("textEditor") textEditor: ElementRef;
+  @ViewChild('textEditor') textEditor: ElementRef;
   @Input() parentName: string;
   @Input() threadId: string;
   editorForm: FormGroup;
   editorContent: string;
-  // selectedFile: File;
   // quillEditorRef: any;
   // maxUploadFileSize = 1000000;
 
   editorStyle = {
-    height: '100px'
+    height: '100px',
+  };
+
+  modules = {};
+
+  ///////////// IMAGE UPLOAD /////////////
+  imageSrc$: string[] = [];
+
+  selectedFile: File;
+  async onFileSelected(event: any): Promise<void> {
+    this.selectedFile = event.target.files[0];
+    this.imageSrc$.push(
+      await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
+    );
+    for (let i = 0; i < this.imageSrc$.length; i++) {
+      const img = this.imageSrc$[i];
+      console.log(img);
+    }
   }
+  ///////////// END IMAGE UPLOAD /////////////
 
-  modules = {}
-
-  constructor(public channelService: ChannelService, public firestoreService: FirestoreService, public chatService: ChatService, public usersService: UsersService) {
+  constructor(
+    public channelService: ChannelService,
+    public firestoreService: FirestoreService,
+    public chatService: ChatService,
+    public usersService: UsersService,
+    public uploadImagesService: UploadImagesService
+  ) {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
       'emoji-toolbar': true,
-      'toolbar': {
+      toolbar: {
         container: [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['bold', 'italic', 'underline', 'strike'], // toggled buttons
           ['blockquote', 'code-block'],
 
           // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
           // [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
           // [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
           // [{ 'direction': 'rtl' }],                         // text direction
@@ -55,20 +75,20 @@ export class CommentfieldComponent implements OnInit {
 
           // ['clean'],                                         // remove formatting button
 
-          ['image'],                                            // image
+          ['image'], // image
 
           //['link', 'video'],                                  // link and video
 
           ['emoji'],
         ],
-        handlers: { 'emoji': function () { } }
-      }
-    }
+        handlers: { emoji: function () {} },
+      },
+    };
   }
 
   ngOnInit(): void {
     this.editorForm = new FormGroup({
-      'editor': new FormControl(null)
+      editor: new FormControl(null),
     });
   }
 
@@ -79,10 +99,18 @@ export class CommentfieldComponent implements OnInit {
     } else if (this.parentName == 'chat') {
       this.chatService.sendChatMessage(this.editorContent);
     } else if (this.parentName == 'thread') {
-      this.firestoreService.updateSpecificThread(this.channelService.activeThread.threadId, this.editorContent, this.currentUserId$);
+      this.firestoreService.updateSpecificThread(
+        this.channelService.activeThread.threadId,
+        this.editorContent,
+        this.currentUserId$
+      );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
-      this.firestoreService.updateSpecificThread(this.threadId, this.editorContent, this.currentUserId$);
+      this.firestoreService.updateSpecificThread(
+        this.threadId,
+        this.editorContent,
+        this.currentUserId$
+      );
     }
     // Clear the editor content
     this.editorForm.get('editor').setValue(null);
@@ -91,14 +119,14 @@ export class CommentfieldComponent implements OnInit {
   maxLength(e) {
     if (e.editor.getLength() > 1000) {
       e.editor.deleteText(1000, e.editor.getLength());
-    };
+    }
   }
 
   get currentUserId$() {
     return this.usersService.currentUserId$;
   }
 
-   // handleImageUpload(event: any) {
+  // handleImageUpload(event: any) {
   //   this.selectedFile = event.target.files[0];
   // }
 
@@ -137,6 +165,4 @@ export class CommentfieldComponent implements OnInit {
 
   //   input.click();
   // };
-  
 }
-
