@@ -4,19 +4,16 @@ import { UsersService } from 'src/app/services/users.service';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { and } from 'firebase/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import {
   Storage,
   ref,
-  uploadBytesResumable,
   getDownloadURL,
   uploadBytes,
   getStorage,
   getMetadata,
-  updateMetadata,
 } from '@angular/fire/storage';
-import { state } from '@angular/animations';
+
 export interface DialogData {
   displayName;
   email;
@@ -79,9 +76,8 @@ export class DialogEditUserComponent {
   async ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
     this.checkIfGuestUserIsActive();
-    this.observable.subscribe(this.subscriber);
+    this.observable.subscribe(this.mysubscriber);
     this.firestoreService.observeChat$.subscribe((data) => {
-      // console.log(data);
       this.chat = data;
     });
   }
@@ -92,7 +88,6 @@ export class DialogEditUserComponent {
   checkIfGuestUserIsActive() {
     if (this.currentUserId$ === '9KjVGbYn8qOQ9dprTIAxuJ6fpOv2') {
       this.isGuestUserActive = true;
-      // console.log('GuestUser is logged-in: ',this.isGuestUserActive);
     }
   }
 
@@ -112,7 +107,7 @@ export class DialogEditUserComponent {
     subscriber.complete();
   });
 
-  subscriber = {
+  mysubscriber = {
     next: (data) => {
       this.counter++;
     },
@@ -148,93 +143,38 @@ export class DialogEditUserComponent {
     if (!this.selectedFile) {
       return;
     }
-    const storage = getStorage();
     const fileName = this.currentUserId$ + '_' + this.selectedFile.name;
-    const storageRef = ref(storage, fileName);
-    await uploadBytes(storageRef, this.selectedFile);
-    getMetadata(storageRef)
-      .then((metadata) => {
-        console.log(metadata);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    const downloadURL = await getDownloadURL(storageRef);
+    await this.uploadToFirebase(fileName);
+    const downloadURL = await this.getDownloadURL(fileName);
     this.updateUserProperty('photoURL', downloadURL);
   }
 
-  cancelEdit(field) {
-    switch (field) {
-      case 'displayName':
-        this.isEditing.displayName = false;
-        break;
-      case 'firstName':
-        this.isEditing.firstName = false;
-        break;
-      case 'lastName':
-        this.isEditing.lastName = false;
-        break;
-      case 'email':
-        this.isEditing.email = false;
-        break;
-      case 'city':
-        this.isEditing.city = false;
-        break;
-      case 'street':
-        this.isEditing.street = false;
-        break;
-      case 'zipCode':
-        this.isEditing.zipCode = false;
-        break;
-      case 'birthDate':
-        this.isEditing.birthDate = false;
-        break;
-      case 'photoUrl':
-        this.isEditing.photoUrl = false;
-        break;
-      case 'emailVerified':
-        this.isEditing.emailVerified = false;
-        break;
-      default:
-        break;
-    }
+  private async uploadToFirebase(fileName: string): Promise<void> {
+    const storage = getStorage();
+    const storageRef = ref(storage, fileName);
+    await uploadBytes(storageRef, this.selectedFile);
   }
 
-  startEdit(field) {
-    switch (field) {
-      case 'displayName':
-        this.isEditing.displayName = true;
-        break;
-      case 'firstName':
-        this.isEditing.firstName = true;
-        break;
-      case 'lastName':
-        this.isEditing.lastName = true;
-        break;
-      case 'email':
-        this.isEditing.email = true;
-        break;
-      case 'city':
-        this.isEditing.city = true;
-        break;
-      case 'street':
-        this.isEditing.street = true;
-        break;
-      case 'zipCode':
-        this.isEditing.zipCode = true;
-        break;
-      case 'birthDate':
-        this.isEditing.birthDate = true;
-        break;
-      case 'photoUrl':
-        this.isEditing.photoUrl = true;
-        break;
-      case 'emailVerified':
-        this.isEditing.emailVerified = true;
-        break;
-      default:
-        break;
+  private async getDownloadURL(fileName: string): Promise<string> {
+    const storage = getStorage();
+    const storageRef = ref(storage, fileName);
+    return getDownloadURL(storageRef);
+  }
+
+
+  cancelEdit(field) {
+    if (this.isEditing[field]) {
+      this.isEditing[field] = false;
+    } else {
+      console.error("cancelEdit called for a field that was not being edited:", field);
     }
+}
+
+
+  startEdit(field) {
+    if (this.isEditing[field] === undefined) {
+      throw new Error(`Cannot start editing unknown field: ${field}`);
+    }
+    this.isEditing[field] = true;
   }
 }

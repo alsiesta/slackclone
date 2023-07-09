@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import {
   getDownloadURL,
-  getMetadata,
   getStorage,
   ref,
   uploadBytes,
@@ -34,22 +33,19 @@ export class UploadImagesService {
   }
 
   async onUpload(uid): Promise<string> {
-    if (!this.selectedFile) {
+    await this.uploadFile(uid, this.selectedFile);
+    return this.downloadURL;
+  }
+
+  async uploadFile(uid, file) {
+    if (!file) {
       return null;
     }
     const storage = getStorage();
-    const fileName = uid + '_' + this.selectedFile.name;
+    const fileName = uid + '_' + file.name;
     const storageRef = ref(storage, 'thread_images/'+ fileName);
-    await uploadBytes(storageRef, this.selectedFile);
-    getMetadata(storageRef)
-      .then((metadata) => {
-        console.log(metadata);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await uploadBytes(storageRef, file);
     this.downloadURL = await getDownloadURL(storageRef);
-    return this.downloadURL;
   }
 
 }
