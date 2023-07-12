@@ -21,7 +21,7 @@
             <div class="image-container-attachment">
                 <div *ngFor="let ar of array; let i = index">
                     <div class="image-container">
-                        <img src="{{ar}}" alt="Empty">
+                        <img (click)="this.channelService.openCreateImageDialog(ar)"src="{{ar}}" alt="Empty">
                         <div class="close-icon">
                             <img (click)="deleteTemporaryImages(i)" src="assets/img/commentfield/close.png">
                         </div>
