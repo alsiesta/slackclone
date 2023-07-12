@@ -153,9 +153,6 @@ export class CommentfieldComponent implements OnInit {
         reader.onload = () => {
           const base64Images = reader.result.toString();
           this.array.push(base64Images);
-          console.log('Array:', this.array);
-          
-          console.log('Image path:', base64Images); // Output the path to the console
           // this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, attachement);
         };
         reader.readAsDataURL(file);
