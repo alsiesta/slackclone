@@ -66,7 +66,7 @@
     left: 0;
     right: 0;
     padding-top: 100px;
-    padding-bottom: 150px;
+    padding-bottom: 190px;
     overflow-y: auto;
   }
 
@@ -219,9 +219,15 @@
     font-weight: 300;
     color: $textgrey;
 
+    .posting-attachment {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     img {
-      width: 50px;
-      height: 50px;
+      width: 70px;
+      height: 70px;
       border-radius: 10px;
       object-fit: cover;
       cursor: pointer;

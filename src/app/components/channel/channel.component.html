@@ -52,11 +52,18 @@
                         </div>
                         <div class="posting-content">
                             <div [innerHTML]="thread.content"></div>
-                            <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(thread.content))"
+                            <div *ngIf="thread.images.length > 0">
+                                <div class="posting-attachment">
+                                    <img *ngFor="let image of thread.images"
+                                        (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                        class="image-attachment">
+                                </div>
+                            </div>
+                            <!-- <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(thread.content))"
                                 *ngIf="this.channelService.isImage(thread.content)"
                                 [src]="this.channelService.getImageSrc(thread.content)" class="image-attachment">
+                            -->
                         </div>
-                        <!-- <div class="posting-content" [innerHTML]="thread.content"></div> -->
                         <div *ngIf="thread.replies.length > 0">
                             <div class="posting-threads" (click)="this.channelService.openThread(thread)">
                                 <div class="posting-thread-preview" *ngFor="let preview of thread.replies | unique">
