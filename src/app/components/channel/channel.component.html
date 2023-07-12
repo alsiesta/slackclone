@@ -51,7 +51,7 @@
                             <div class="posting-time">{{ thread.time }}</div>
                         </div>
                         <div class="posting-content">
-                            <div [innerHTML]="this.channelService.sanitizeHTML(thread.content)"></div>
+                            <div [innerHTML]="thread.content"></div>
                             <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(thread.content))"
                                 *ngIf="this.channelService.isImage(thread.content)"
                                 [src]="this.channelService.getImageSrc(thread.content)" class="image-attachment">

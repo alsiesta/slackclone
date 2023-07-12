@@ -1,7 +1,6 @@
 import { UsersService } from './../../services/users.service';
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import Quill from 'quill';
 import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -18,30 +17,32 @@ export class CommentfieldComponent implements OnInit {
   @Input() parentName: string;
   @Input() threadId: string;
   editorForm: FormGroup;
-  editorContent: string;
-  // quillEditorRef: any;
-  // maxUploadFileSize = 1000000;
+  editorContent: any;
+  quillEditorRef: any;
+  // attachments: File[] = [];
+  quillModules: any;
+  maxUploadFileSize = 1000000;
+  selectedFile: any;
+  array: any = [];
 
   editorStyle = {
     height: '100px',
   };
 
-  modules = {};
-
   ///////////// IMAGE UPLOAD /////////////
   imageSrc$: string[] = [];
 
-  selectedFile: File;
-  async onFileSelected(event: any): Promise<void> {
-    this.selectedFile = event.target.files[0];
-    this.imageSrc$.push(
-      await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
-    );
-    for (let i = 0; i < this.imageSrc$.length; i++) {
-      const img = this.imageSrc$[i];
-      console.log(img);
-    }
-  }
+  // selectedFile: File;
+  // async onFileSelected(event: any): Promise<void> {
+  //   this.selectedFile = event.target.files[0];
+  //   this.imageSrc$.push(
+  //     await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
+  //   );
+  //   for (let i = 0; i < this.imageSrc$.length; i++) {
+  //     const img = this.imageSrc$[i];
+  //     console.log(img);
+  //   }
+  // }
   ///////////// END IMAGE UPLOAD /////////////
 
   constructor(
@@ -49,9 +50,12 @@ export class CommentfieldComponent implements OnInit {
     public firestoreService: FirestoreService,
     public chatService: ChatService,
     public usersService: UsersService,
-    public uploadImagesService: UploadImagesService
+    public uploadImagesService: UploadImagesService,
+    private renderer: Renderer2, 
+    private elementRef: ElementRef
   ) {
-    this.modules = {
+
+    this.quillModules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
       'emoji-toolbar': true,
@@ -81,7 +85,9 @@ export class CommentfieldComponent implements OnInit {
 
           ['emoji'],
         ],
-        handlers: { emoji: function () {} },
+        handlers: {
+          emoji: function () { },
+        },
       },
     };
   }
@@ -126,43 +132,48 @@ export class CommentfieldComponent implements OnInit {
     return this.usersService.currentUserId$;
   }
 
-  // handleImageUpload(event: any) {
-  //   this.selectedFile = event.target.files[0];
+  getEditorInstance(editorInstance: any) {
+    console.log('getEditorInstance was called!');
+    this.quillEditorRef = editorInstance;
+    const toolbar = editorInstance.getModule('toolbar');
+    toolbar.addHandler('image', this.imageHandler.bind(this));
+    //this.removeImagesFromEditor(editorInstance);
+  }
+
+  imageHandler = () => {
+    console.log('imageHandler was called!');
+    const range = this.quillEditorRef.getSelection();
+
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Images = reader.result.toString();
+          this.array.push(base64Images);
+          console.log('Array:', this.array);
+          
+          console.log('Image path:', base64Images); // Output the path to the console
+          // this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, attachement);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    input.click();
+    const content = this.editorForm.get('editor').value;
+    console.log('Inhalt:', content);
+  };
+
+  deleteTemporaryImages(index: number): void {
+    if (index >= 0 && index < this.array.length) {
+      this.array.splice(index, 1);
+    }
+  }
+
+  // addStyleToElement(i) {
+  //   const element = this.elementRef.nativeElement.querySelector(i);
+  //   this.renderer.setStyle(element, 'opacity', 'gray');
   // }
-
-  // getEditorInstance(editorInstance: any) {
-  //   this.quillEditorRef = editorInstance;
-  //   console.log(this.quillEditorRef);
-  //   const toolbar = editorInstance.getModule('toolbar');
-  //   toolbar.addHandler('image', this.imageHandler);
-  // }
-
-  // imageHandler = (image, callback) => {
-  //   const input = <HTMLInputElement>document.getElementById('fileInputField');
-  //   document.getElementById('fileInputField').onchange = () => {
-  //     let file: File;
-  //     file = input.files[0];
-  //     // file type is only image.
-  //     if (/^image\//.test(file.type)) {
-  //       if (file.size > this.maxUploadFileSize) {
-  //         alert('Image needs to be less than 1MB');
-  //       } else {
-  //         const reader = new FileReader();
-  //         reader.onload = () => {
-  //           const range = this.quillEditorRef.getSelection();
-  //           const img = '<div class="image-container"><img src="' + reader.result + '" /></div>';
-  //           this.quillEditorRef.clipboard.dangerouslyPasteHTML(
-  //             range.index,
-  //             img
-  //           );
-  //         };
-  //         reader.readAsDataURL(file);
-  //       }
-  //     } else {
-  //       alert('You could only upload images.');
-  //     }
-  //   };
-
-  //   input.click();
-  // };
 }

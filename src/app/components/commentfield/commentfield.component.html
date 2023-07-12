@@ -1,21 +1,34 @@
 <div class="box">
 
     <!-- IMAGE UPLOAD -->
-    <div>
+    <!-- <div>
         <input hidden type="file" #selectFile (change)="onFileSelected($event)" />
         Upload Image
         <mat-icon class="material-symbols-sharp" (click)="selectFile.click()">edit</mat-icon>
         {{imageSrc$}}
-    </div>
+    </div> -->
     <!-- END IMAGE UPLOAD -->
 
-    <form [formGroup]="editorForm" (submit)="onSubmit()">
-        <quill-editor #textEditor class="quill-text-editor" placeholder="Answers ..." [style]="editorStyle"
-            [modules]="modules" (onContentChanged)="maxLength($event)" formControlName="editor">
-        </quill-editor>
-        <!-- <input type="file" style="display: none" id="fileInputField" /> -->
+    <div [formGroup]="editorForm" (submit)="onSubmit()">
         <div>
-            <button class="send-btn"><img class="send-icon" src="assets/img/commentfield/send-icon.png"></button>
+            <quill-editor formControlName="editor" #textEditor class="quill-text-editor" placeholder="Answers ..."
+                [style]="editorStyle" [modules]="quillModules" (onContentChanged)="maxLength($event)"
+                (onEditorCreated)="getEditorInstance($event)">
+            </quill-editor>
         </div>
-    </form>
+
+        <div class="image-and-send">
+            <div class="image-container-attachment">
+                <div *ngFor="let ar of array; let i = index">
+                    <div class="image-container">
+                        <img src="{{ar}}" alt="Empty">
+                        <div class="close-icon">
+                            <img (click)="deleteTemporaryImages(i)" src="assets/img/commentfield/close.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="send-btn"><img src="assets/img/commentfield/send-icon.png"></button>
+        </div>
+    </div>
 </div>

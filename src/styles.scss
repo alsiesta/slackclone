@@ -71,6 +71,10 @@ body {
   box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -60px inset;
 }
 
+.ql-editor {
+  background-color: white;
+}
+
 .ql-editor.ql-blank::before {
   color: grey;
 }

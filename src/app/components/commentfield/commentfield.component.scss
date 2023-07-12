@@ -2,6 +2,8 @@
 
 .box {
     position: relative;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .quill-text-editor {
@@ -10,30 +12,14 @@
     border-radius: 11px;
 }
 
-.image-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    img {
-        margin-right: 8px;
-    }
-}
-
-.send-icon {
-    position: absolute;
-    bottom: 40px;
-    right: 15px;
-    width: 25px;
-    height: 25px;
-}
-
 .send-btn {
     background-color: rgb(123, 123, 123, 0);
     border: none;
 
     img {
         cursor: pointer;
+        width: 25px;
+        height: 25px;
 
         &:hover {
             opacity: 0.8;
@@ -41,13 +27,42 @@
     }
 }
 
-.image-container {
+.image-and-send {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-container-attachment {
     display: flex;
 
     img {
-        max-width: 100%;
-        height: auto;
+        height: 50px;
+        width: 50px;
         object-fit: cover;
+        border-radius: 10px;
+        margin-left: 12px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
-  
+
+.image-container {
+    position: relative;
+}
+
+.close-icon {
+    position: absolute;
+    display: flex;
+    top: -15px;
+    right: -10px;
+
+    img {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+    }
+}

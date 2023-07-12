@@ -17,7 +17,7 @@
                             <div class="time">{{ threadCurrentUser.date | dateAgo }}</div>
                         </div>
                         <div class="img-message">
-                            <div [innerHTML]="this.channelService.sanitizeHTML(threadCurrentUser.content)"></div>
+                            <div [innerHTML]="threadCurrentUser.content"></div>
                             <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(threadCurrentUser.content))"
                                 *ngIf="this.channelService.isImage(threadCurrentUser.content)"
                                 [src]="this.channelService.getImageSrc(threadCurrentUser.content)"
@@ -43,7 +43,7 @@
                             <div class="time">{{ threadReplies.date | dateAgo }}</div>
                         </div>
                         <div>
-                            <div [innerHTML]="this.channelService.sanitizeHTML(threadReplies.message)"></div>
+                            <div [innerHTML]="threadReplies.message"></div>
                             <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(threadReplies.message))"
                                 *ngIf="this.channelService.isImage(threadReplies.message)"
                                 [src]="this.channelService.getImageSrc(threadReplies.message)"

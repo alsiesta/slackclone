@@ -349,12 +349,12 @@ export class ChannelService {
     return match ? match[1] : '';
   }
 
-  sanitizeHTML(html: string): SafeHtml {
-    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
-    // Remove <img> tags
-    const cleanedHTML = sanitized?.replace(/<img[^>]+>/gm, '');
-    return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
-  }
+  // sanitizeHTML(html: string): SafeHtml {
+  //   const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
+  //   // Remove <img> tags
+  //   const cleanedHTML = sanitized?.replace(/<img[^>]+>/gm, '');
+  //   return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
+  // }
   
   openCreateImageDialog(imageURL) {
     this.channelDialog.open(DialogAttachmentImageComponent, {
