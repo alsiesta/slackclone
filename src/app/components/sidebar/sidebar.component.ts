@@ -46,71 +46,11 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const sidebarElement = document.querySelector('.sidebar');
-    this.renderer.addClass(sidebarElement, 'remove-macos-focus-outline');
+    this.breakPontObserving();
 
-    const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
+    this.getChannelsFromFirestore();
 
-    this.breakpointObserver.observe([customMaxBreakpoint])
-      .subscribe((state: BreakpointState) => {
-        this.drawerMode = state.matches ? 'over' : 'side';
-        this.responsiveSidebar = state.matches ? true : false;
-        if(!this.globalService.isSidebarOpen$) {
-          this.toggleSidebar();
-        }
-      });
-
-    this.firestoreService.getChannelList().subscribe((channels) => {
-      this.channels = channels;
-    });
-
-    // this.chatService.getChatPartners().subscribe( chatPartners => {
-    //     this.chatPartners = chatPartners;
-
-    //     console.log(this.chatPartners)
-    // })
-
-    this.firestoreService.getChatList().subscribe((chats) => {
-      const uniqueUserIds = new Set<string>();
-      this.chats = chats.filter(
-        (chat) =>
-          chat.chatUsers[0] === this.usersService.currentUserId$ ||
-          chat.chatUsers[1] === this.usersService.currentUserId$
-      );
-      this.chatPartners = [];
-      const getUserPromises = []; // array for async promises
-      this.chats.forEach((chat) => {
-        chat.chatUsers.forEach((user) => {
-          if (
-            user !== this.usersService.currentUserId$ &&
-            !uniqueUserIds.has(user)
-          ) {
-            uniqueUserIds.add(user);
-            const promise = new Promise((resolve, reject) => {
-              this.usersService.getUserById$(user).subscribe(
-                (userData) => {
-                  resolve(userData); // resolve userData, if there are resived
-                },
-                (error) => {
-                  reject(error); // resolve error, if an error happens
-                }
-              );
-            });
-            getUserPromises.push(promise); // add promis to array
-          }
-        });
-      });
-
-      Promise.all(getUserPromises)
-        .then((userDatas) => {
-          userDatas.forEach((userData) => {
-            this.chatPartners.push(userData); // userData added to chatPartners Array
-          });
-        })
-        .catch((error) => {
-          // Errormessage
-        });
-    });
+    this.getChatsFromFirestore();
   }
 
   /**
@@ -231,5 +171,87 @@ export class SidebarComponent implements OnInit {
    */
   toggleSidebar() {
     this.globalService.toggleSidebar();
+  }
+
+
+  /**
+   * Handels when the sidebar is displayed on the side or is overlaping or filling fullscreen
+   * 
+   */
+  breakPontObserving() {
+    const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
+
+    this.breakpointObserver.observe([customMaxBreakpoint])
+      .subscribe((state: BreakpointState) => {
+        this.drawerMode = state.matches ? 'over' : 'side';
+        this.responsiveSidebar = state.matches ? true : false;
+        if(!this.globalService.isSidebarOpen$) {
+          this.toggleSidebar();
+        }
+      });
+  }
+
+  /**
+   * Subscribs to the channels from the channellist at the firestore service
+   * 
+   */
+  getChannelsFromFirestore() {
+    this.firestoreService.getChannelList().subscribe((channels) => {
+      this.channels = channels;
+    });
+  }
+
+  /**
+   * Filters and subscribs to the chats from the chatlist at the firestore service
+   * 
+   */
+  getChatsFromFirestore() {
+    // this.chatService.getChatPartners().subscribe( chatPartners => {
+    //     this.chatPartners = chatPartners;
+
+    //     console.log(this.chatPartners)
+    // })
+
+    this.firestoreService.getChatList().subscribe((chats) => {
+      const uniqueUserIds = new Set<string>();
+      this.chats = chats.filter(
+        (chat) =>
+          chat.chatUsers[0] === this.usersService.currentUserId$ ||
+          chat.chatUsers[1] === this.usersService.currentUserId$
+      );
+      this.chatPartners = [];
+      const getUserPromises = []; // array for async promises
+      this.chats.forEach((chat) => {
+        chat.chatUsers.forEach((user) => {
+          if (
+            user !== this.usersService.currentUserId$ &&
+            !uniqueUserIds.has(user)
+          ) {
+            uniqueUserIds.add(user);
+            const promise = new Promise((resolve, reject) => {
+              this.usersService.getUserById$(user).subscribe(
+                (userData) => {
+                  resolve(userData); // resolve userData, if there are resived
+                },
+                (error) => {
+                  reject(error); // resolve error, if an error happens
+                }
+              );
+            });
+            getUserPromises.push(promise); // add promis to array
+          }
+        });
+      });
+
+      Promise.all(getUserPromises)
+        .then((userDatas) => {
+          userDatas.forEach((userData) => {
+            this.chatPartners.push(userData); // userData added to chatPartners Array
+          });
+        })
+        .catch((error) => {
+          // Errormessage
+        });
+    });
   }
 }
