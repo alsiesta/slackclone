@@ -179,7 +179,7 @@ export class CommentfieldComponent implements OnInit {
           // console.log('Image Src:', convertedImage.src);
           // this.imagePath = this._sanitizer.bypassSecurityTrustResourceUrl(base64Images
           //   + toReturnImage.base64string);
-          // this.array.push(convertedImage.src);
+          this.array.push(base64Images);
           // Update the temporary image with the actual image
           //this.quillEditorRef.deleteText(range.index, 1);
           this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
