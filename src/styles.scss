@@ -73,6 +73,10 @@ body {
 
 .ql-editor {
   background-color: white;
+
+  img {
+    display: none;
+  }
 }
 
 .ql-editor.ql-blank::before {

@@ -19,10 +19,7 @@ export class CommentfieldComponent implements OnInit {
   editorForm: FormGroup;
   editorContent: any;
   quillEditorRef: any;
-  // attachments: File[] = [];
   quillModules: any;
-  maxUploadFileSize = 1000000;
-  selectedFile: any;
   array: any = [];
 
   editorStyle = {
@@ -32,18 +29,22 @@ export class CommentfieldComponent implements OnInit {
   ///////////// IMAGE UPLOAD /////////////
   imageSrc$: string[] = [];
 
-  // selectedFile: File;
-  // async onFileSelected(event: any): Promise<void> {
-  //   this.selectedFile = event.target.files[0];
-  //   this.imageSrc$.push(
-  //     await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
-  //   );
-  //   for (let i = 0; i < this.imageSrc$.length; i++) {
-  //     const img = this.imageSrc$[i];
-  //     console.log(img);
-  //   }
-  // }
-  ///////////// END IMAGE UPLOAD /////////////
+  //selectedFile: File;
+  async onFileSelected(event: any): Promise<void> {
+    //this.selectedFile = event.target.files[0];
+    for (let i = 0; i < this.array.length; i++) {
+      console.log('array an der Stelle' + i + this.array[i]);
+      this.imageSrc$.push(this.array[i]);
+    }
+    this.imageSrc$.push(
+      await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
+    );
+    for (let i = 0; i < this.imageSrc$.length; i++) {
+      const img = this.imageSrc$[i];
+      console.log(img);
+    }
+  }
+  /////////// END IMAGE UPLOAD /////////////
 
   constructor(
     public channelService: ChannelService,
@@ -51,7 +52,7 @@ export class CommentfieldComponent implements OnInit {
     public chatService: ChatService,
     public usersService: UsersService,
     public uploadImagesService: UploadImagesService,
-    private renderer: Renderer2, 
+    private renderer: Renderer2,
     private elementRef: ElementRef
   ) {
 
@@ -99,6 +100,8 @@ export class CommentfieldComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('Ich wurde aufgerufen');
+
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
       this.channelService.addNewMessage(this.editorContent);
@@ -133,11 +136,9 @@ export class CommentfieldComponent implements OnInit {
   }
 
   getEditorInstance(editorInstance: any) {
-    console.log('getEditorInstance was called!');
     this.quillEditorRef = editorInstance;
     const toolbar = editorInstance.getModule('toolbar');
     toolbar.addHandler('image', this.imageHandler.bind(this));
-    //this.removeImagesFromEditor(editorInstance);
   }
 
   imageHandler = () => {
@@ -149,11 +150,15 @@ export class CommentfieldComponent implements OnInit {
     input.addEventListener('change', () => {
       const file = input.files[0];
       if (file) {
+        // Insert temporary loading placeholder image
+        //this.quillEditorRef.insertEmbed(range.index, 'image', 'assets/img/commentfield/loading.png');
         const reader = new FileReader();
         reader.onload = () => {
           const base64Images = reader.result.toString();
           this.array.push(base64Images);
-          // this.quillEditorRef.clipboard.dangerouslyPasteHTML(range.index, attachement);
+          // Update the temporary image with the actual image
+          //this.quillEditorRef.deleteText(range.index, 1);
+          this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
         };
         reader.readAsDataURL(file);
       }
