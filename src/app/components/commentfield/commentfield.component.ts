@@ -33,7 +33,6 @@ export class CommentfieldComponent implements OnInit {
   async onFileSelected(event: any): Promise<void> {
     //this.selectedFile = event.target.files[0];
     for (let i = 0; i < this.array.length; i++) {
-      console.log('array an der Stelle' + i + this.array[i]);
       this.imageSrc$.push(this.array[i]);
     }
     this.imageSrc$.push(
@@ -100,8 +99,6 @@ export class CommentfieldComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Ich wurde aufgerufen');
-
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
       this.channelService.addNewMessage(this.editorContent);
@@ -142,7 +139,6 @@ export class CommentfieldComponent implements OnInit {
   }
 
   imageHandler = () => {
-    console.log('imageHandler was called!');
     const range = this.quillEditorRef.getSelection();
 
     const input = document.createElement('input');
@@ -165,7 +161,6 @@ export class CommentfieldComponent implements OnInit {
     });
     input.click();
     const content = this.editorForm.get('editor').value;
-    console.log('Inhalt:', content);
   };
 
   deleteTemporaryImages(index: number): void {
