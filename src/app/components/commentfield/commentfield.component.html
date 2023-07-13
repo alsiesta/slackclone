@@ -9,26 +9,28 @@
     </div> -->
     <!-- END IMAGE UPLOAD -->
 
-    <div [formGroup]="editorForm" (submit)="onSubmit()">
-        <div>
-            <quill-editor formControlName="editor" #textEditor class="quill-text-editor" placeholder="Answers ..."
-                [style]="editorStyle" [modules]="quillModules" (onContentChanged)="maxLength($event)"
-                (onEditorCreated)="getEditorInstance($event)">
-            </quill-editor>
-        </div>
+    <div>
+        <form [formGroup]="editorForm" (submit)="onSubmit()">
+            <div>
+                <quill-editor formControlName="editor" #textEditor class="quill-text-editor" placeholder="Answers ..."
+                    [style]="editorStyle" [modules]="quillModules" (onContentChanged)="maxLength($event)"
+                    (onEditorCreated)="getEditorInstance($event)">
+                </quill-editor>
+            </div>
 
-        <div class="image-and-send">
-            <div class="image-container-attachment">
-                <div *ngFor="let ar of array; let i = index">
-                    <div class="image-container">
-                        <img (click)="this.channelService.openCreateImageDialog(ar)"src="{{ar}}" alt="Empty">
-                        <div class="close-icon">
-                            <img (click)="deleteTemporaryImages(i)" src="assets/img/commentfield/close.png">
+            <div class="image-and-send">
+                <div class="image-container-attachment">
+                    <div *ngFor="let ar of array; let i = index">
+                        <div class="image-container">
+                            <img (click)="this.channelService.openCreateImageDialog(ar)" src="{{ar}}" alt="Empty">
+                            <div class="close-icon">
+                                <img (click)="deleteTemporaryImages(i)" src="assets/img/commentfield/close.png">
+                            </div>
                         </div>
                     </div>
                 </div>
+                <button class="send-btn" type="submit"><img src="assets/img/commentfield/send-icon.png"></button>
             </div>
-            <button class="send-btn" type="submit"><img src="assets/img/commentfield/send-icon.png"></button>
-        </div>
+        </form>
     </div>
 </div>

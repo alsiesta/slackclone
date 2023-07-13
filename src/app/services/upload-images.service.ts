@@ -26,8 +26,8 @@ export class UploadImagesService {
     this.currentUserId$ = this.usersService.getCurrentUserId();
   }
 
-  onFileSelected(event: any, uid): Promise<string> {
-    //this.selectedFile = event.target.files[0];
+  onFileSelected(file, uid): Promise<string> {
+    this.selectedFile = file;
     const downloadURL = this.onUpload(uid);
     return downloadURL;
   }

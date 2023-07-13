@@ -6,6 +6,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UploadImagesService } from 'src/app/services/upload-images.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-commentfield',
@@ -21,6 +22,7 @@ export class CommentfieldComponent implements OnInit {
   quillEditorRef: any;
   quillModules: any;
   array: any = [];
+  uid: any;
 
   editorStyle = {
     height: '100px',
@@ -29,20 +31,8 @@ export class CommentfieldComponent implements OnInit {
   ///////////// IMAGE UPLOAD /////////////
   imageSrc$: string[] = [];
 
-  //selectedFile: File;
-  async onFileSelected(event: any): Promise<void> {
-    //this.selectedFile = event.target.files[0];
-    for (let i = 0; i < this.array.length; i++) {
-      this.imageSrc$.push(this.array[i]);
-    }
-    this.imageSrc$.push(
-      await this.uploadImagesService.onFileSelected(event, this.currentUserId$)
-    );
-    for (let i = 0; i < this.imageSrc$.length; i++) {
-      const img = this.imageSrc$[i];
-      console.log(img);
-    }
-  }
+  selectedFile: File;
+
   /////////// END IMAGE UPLOAD /////////////
 
   constructor(
@@ -51,8 +41,7 @@ export class CommentfieldComponent implements OnInit {
     public chatService: ChatService,
     public usersService: UsersService,
     public uploadImagesService: UploadImagesService,
-    private renderer: Renderer2,
-    private elementRef: ElementRef
+    private _sanitizer: DomSanitizer
   ) {
 
     this.quillModules = {
@@ -96,13 +85,21 @@ export class CommentfieldComponent implements OnInit {
     this.editorForm = new FormGroup({
       editor: new FormControl(null),
     });
+    this.getCurrentUserId();
   }
 
   /**
    * button to send messages
    */
-  onSubmit() {
+  async onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
+    if (this.array.length > 0) {
+      for (let i = 0; i < this.array.length; i++) {
+        const file = this.array[i];
+        await this.onFileSelected(file);
+      }
+
+    }
     if (this.parentName == 'channel') {
       this.channelService.addNewMessage(this.editorContent);
     } else if (this.parentName == 'chat') {
@@ -111,18 +108,31 @@ export class CommentfieldComponent implements OnInit {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
-        this.currentUserId$
+        this.uid
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
       this.firestoreService.updateSpecificThread(
         this.threadId,
         this.editorContent,
-        this.currentUserId$
+        this.uid
       );
     }
     // Clear the editor content
     this.editorForm.get('editor').setValue(null);
+  }
+
+  async onFileSelected(file: any): Promise<void> {
+    for (let i = 0; i < this.array.length; i++) {
+      this.imageSrc$.push(this.array[i]);
+    }
+    this.imageSrc$.push(
+      await this.uploadImagesService.onFileSelected(file, this.uid)
+    );
+    for (let i = 0; i < this.imageSrc$.length; i++) {
+      const img = this.imageSrc$[i];
+      console.log(img);
+    }
   }
 
   /**
@@ -134,8 +144,8 @@ export class CommentfieldComponent implements OnInit {
     }
   }
 
-  get currentUserId$() {
-    return this.usersService.currentUserId$;
+  async getCurrentUserId() {
+    this.uid = await this.usersService.currentUserId$;
   }
 
   /**
@@ -163,7 +173,13 @@ export class CommentfieldComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
           const base64Images = reader.result.toString();
-          this.array.push(base64Images);
+          // var convertedImage = new Image();
+          // convertedImage.src = base64Images;
+          // console.log('Image Path:', convertedImage);
+          // console.log('Image Src:', convertedImage.src);
+          // this.imagePath = this._sanitizer.bypassSecurityTrustResourceUrl(base64Images
+          //   + toReturnImage.base64string);
+          // this.array.push(convertedImage.src);
           // Update the temporary image with the actual image
           //this.quillEditorRef.deleteText(range.index, 1);
           this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
