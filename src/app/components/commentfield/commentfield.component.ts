@@ -98,6 +98,9 @@ export class CommentfieldComponent implements OnInit {
     });
   }
 
+  /**
+   * button to send messages
+   */
   onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
     if (this.parentName == 'channel') {
@@ -122,6 +125,9 @@ export class CommentfieldComponent implements OnInit {
     this.editorForm.get('editor').setValue(null);
   }
 
+  /**
+   * Determine maximum length in the text editor
+   */
   maxLength(e) {
     if (e.editor.getLength() > 1000) {
       e.editor.deleteText(1000, e.editor.getLength());
@@ -132,12 +138,18 @@ export class CommentfieldComponent implements OnInit {
     return this.usersService.currentUserId$;
   }
 
+  /**
+   * Gets a reference of the text editor
+   */
   getEditorInstance(editorInstance: any) {
     this.quillEditorRef = editorInstance;
     const toolbar = editorInstance.getModule('toolbar');
     toolbar.addHandler('image', this.imageHandler.bind(this));
   }
 
+  /**
+   * Function to insert images via the image icon for the attachment
+   */
   imageHandler = () => {
     const range = this.quillEditorRef.getSelection();
 
@@ -163,14 +175,12 @@ export class CommentfieldComponent implements OnInit {
     const content = this.editorForm.get('editor').value;
   };
 
+  /**
+   * Function to delete a picture from the attachment
+   */
   deleteTemporaryImages(index: number): void {
     if (index >= 0 && index < this.array.length) {
       this.array.splice(index, 1);
     }
   }
-
-  // addStyleToElement(i) {
-  //   const element = this.elementRef.nativeElement.querySelector(i);
-  //   this.renderer.setStyle(element, 'opacity', 'gray');
-  // }
 }
