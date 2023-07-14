@@ -5,6 +5,7 @@ import {
   getStorage,
   ref,
   uploadBytes,
+  uploadString,
 } from 'firebase/storage';
 import { UsersService } from './users.service';
 
@@ -42,9 +43,22 @@ export class UploadImagesService {
       return null;
     }
     const storage = getStorage();
-    const fileName = uid + '_' + file.name;
-    const storageRef = ref(storage, 'thread_images/'+ fileName);
-    await uploadBytes(storageRef, file);
+    const name = 'tollerName';
+    const fileName = uid + '_' + name;
+    const storageRef = ref(storage, 'thread_images/' + fileName);
+    const type = file.split(';')[0].split(':')[1];
+    console.log('Image type:', type);
+    const metadata = {
+      contentType: type,
+    };
+    const cleanBase64Image = file.split(',')[1];
+    console.log('Image file:', cleanBase64Image);
+    uploadString(storageRef, cleanBase64Image, 'base64', metadata).then((snapshot) => {
+      console.log('Uploaded a base64 string!');
+    })
+    
+    // await uploadBytes(storageRef, file); // method to upload file OR Blob data
+    
     this.downloadURL = await getDownloadURL(storageRef);
   }
 
