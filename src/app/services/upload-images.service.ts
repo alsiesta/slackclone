@@ -56,10 +56,9 @@ export class UploadImagesService {
     uploadString(storageRef, cleanBase64Image, 'base64', metadata).then((snapshot) => {
       console.log('Uploaded a base64 string!');
     })
-    
-    // await uploadBytes(storageRef, file); // method to upload file OR Blob data
-    
+       
     this.downloadURL = await getDownloadURL(storageRef);
+    // console.log('File available at', this.downloadURL);
   }
 
 }
