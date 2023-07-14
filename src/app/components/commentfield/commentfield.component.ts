@@ -131,7 +131,7 @@ export class CommentfieldComponent implements OnInit {
     );
     for (let i = 0; i < this.imageSrc$.length; i++) {
       const img = this.imageSrc$[i];
-      console.log(img);
+      // console.log(img);
     }
   }
 

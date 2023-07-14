@@ -52,13 +52,13 @@ export class UploadImagesService {
       contentType: type,
     };
     const cleanBase64Image = file.split(',')[1];
-    console.log('Image file:', cleanBase64Image);
+    // console.log('Image file:', cleanBase64Image);
     uploadString(storageRef, cleanBase64Image, 'base64', metadata).then((snapshot) => {
-      console.log('Uploaded a base64 string!');
+      // console.log('Uploaded a base64 string!');
     })
        
     this.downloadURL = await getDownloadURL(storageRef);
-    // console.log('File available at', this.downloadURL);
+    console.log('File available at', this.downloadURL);
   }
 
 }
