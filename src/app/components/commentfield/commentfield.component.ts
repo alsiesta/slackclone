@@ -6,7 +6,6 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UploadImagesService } from 'src/app/services/upload-images.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-commentfield',
@@ -21,7 +20,12 @@ export class CommentfieldComponent implements OnInit {
   editorContent: any;
   quillEditorRef: any;
   quillModules: any;
-  array: any = [];
+  base64ArrayJson: any = {
+    'base64': '',
+    'fileName': ''
+  };
+  base64Array: any = [];
+  base64Attachement: any[];
   uid: any;
 
   editorStyle = {
@@ -41,8 +45,8 @@ export class CommentfieldComponent implements OnInit {
     public chatService: ChatService,
     public usersService: UsersService,
     public uploadImagesService: UploadImagesService,
-    private _sanitizer: DomSanitizer
   ) {
+    this.base64Attachement = [];
 
     this.quillModules = {
       'emoji-shortname': true,
@@ -93,9 +97,9 @@ export class CommentfieldComponent implements OnInit {
    */
   async onSubmit() {
     this.editorContent = this.editorForm.get('editor').value;
-    if (this.array.length > 0) {
-      for (let i = 0; i < this.array.length; i++) {
-        const file = this.array[i];
+    if (this.base64Array.length > 0) {
+      for (let i = 0; i < this.base64Array.length; i++) {
+        const file = this.base64Array[i];
         await this.onFileSelected(file);
       }
 
@@ -123,8 +127,8 @@ export class CommentfieldComponent implements OnInit {
   }
 
   async onFileSelected(file: any): Promise<void> {
-    for (let i = 0; i < this.array.length; i++) {
-      this.imageSrc$.push(this.array[i]);
+    for (let i = 0; i < this.base64Array.length; i++) {
+      this.imageSrc$.push(this.base64Array[i]);
     }
     this.imageSrc$.push(
       await this.uploadImagesService.onFileSelected(file, this.uid)
@@ -162,7 +166,6 @@ export class CommentfieldComponent implements OnInit {
    */
   imageHandler = () => {
     const range = this.quillEditorRef.getSelection();
-
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.addEventListener('change', () => {
@@ -173,13 +176,13 @@ export class CommentfieldComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
           const base64Images = reader.result.toString();
-          // var convertedImage = new Image();
-          // convertedImage.src = base64Images;
-          // console.log('Image Path:', convertedImage);
-          // console.log('Image Src:', convertedImage.src);
-          // this.imagePath = this._sanitizer.bypassSecurityTrustResourceUrl(base64Images
-          //   + toReturnImage.base64string);
-          this.array.push(base64Images);
+          const fileName = file.name; // Get the original file name
+          this.base64Attachement.push(base64Images);
+          const base64WithFileName = this.getBase64WithFileName(base64Images, fileName);
+          this.base64ArrayJson['base64'] = base64Images;
+          this.base64ArrayJson['fileName'] = base64WithFileName;
+          this.base64Array.push(this.base64ArrayJson);
+          console.log('Array', this.base64Array);
           // Update the temporary image with the actual image
           //this.quillEditorRef.deleteText(range.index, 1);
           this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
@@ -191,12 +194,22 @@ export class CommentfieldComponent implements OnInit {
     const content = this.editorForm.get('editor').value;
   };
 
+  getBase64WithFileName(base64String: string, fileName: string): string {
+    const matches = base64String.match(/^data:(.+);base64,(.+)$/);
+    if (matches && matches.length === 3) {
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      return `${fileName}`;
+    }
+    return '';
+  }
+
   /**
    * Function to delete a picture from the attachment
    */
   deleteTemporaryImages(index: number): void {
-    if (index >= 0 && index < this.array.length) {
-      this.array.splice(index, 1);
+    if (index >= 0 && index < this.base64Array.length) {
+      this.base64Array.splice(index, 1);
     }
   }
 }
