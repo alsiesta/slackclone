@@ -8,15 +8,17 @@
     <!-- Shortcuts -->
     <div class="shortcuts-container">
         <a (click)="renderThreadShortcuts(); checkSidebarClosing()">
-            <div class="shortcut">
+            <div class="shortcut" [ngClass]="{'active-sidebar-element': shortcuts[0].isActive}">
                 <mat-icon>chat</mat-icon>
                 <span>Threads</span>
             </div>
         </a>
-        <div class="shortcut" (click)="renderUsers(); checkSidebarClosing()">
-            <mat-icon>group</mat-icon>
-            <span>Users</span>
-        </div>
+        <a (click)="renderUsers(); checkSidebarClosing()">
+            <div class="shortcut" [ngClass]="{'active-sidebar-element': shortcuts[1].isActive}">
+                <mat-icon>group</mat-icon>
+                <span>Users</span>
+            </div>
+        </a>
     </div>
 
     <!-- Channels -->
@@ -33,7 +35,7 @@
         <div *ngIf="channelsAreOpen" class="drop-down-content">
 
             <div *ngFor="let channel of channels; let i = index" (click)="renderChannel(channel); checkSidebarClosing()"
-                class="drop-down-element">
+                class="drop-down-element" [ngClass]="{'drop-down-element': true, 'active-sidebar-element': channel.isActive}">
                 <mat-icon class="drop-down-img">numbers</mat-icon>
                 <span>{{ channel.title }}</span>
             </div>

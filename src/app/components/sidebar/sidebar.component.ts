@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -33,6 +33,11 @@ export class SidebarComponent implements OnInit {
   drawerMode: MatDrawerMode;
   responsiveSidebar: boolean = false;
 
+  shortcuts = [
+    { label: 'Threads', isActive: false },
+    { label: 'Users', isActive: false },
+  ];
+
   constructor(
     private firestoreService: FirestoreService,
     private channelService: ChannelService,
@@ -42,11 +47,10 @@ export class SidebarComponent implements OnInit {
     public globalService: GlobalService,
     public searchService: SearchService,
     private breakpointObserver: BreakpointObserver,
-    private renderer: Renderer2,
   ) { }
 
   ngOnInit() {
-    this.breakPontObserving();
+    this.breakPointObserving();
 
     this.getChannelsFromFirestore();
 
@@ -107,6 +111,9 @@ export class SidebarComponent implements OnInit {
    * 
    */
   async renderChannel(channel) {
+    this.resetAllActiveStates();
+    console.log(channel)
+    channel.isActive = true;
     await this.channelService.loadChannelContent(channel.channelID);
     this.globalService.openComponent('channel');
   }
@@ -126,6 +133,8 @@ export class SidebarComponent implements OnInit {
    * 
    */
   renderUsers() {
+    this.resetAllActiveStates();
+    this.shortcuts[1].isActive = true;
     this.setSearchFunction('users');
     this.globalService.openComponent('usersShortcut');
   }
@@ -135,6 +144,8 @@ export class SidebarComponent implements OnInit {
    * 
    */
   renderThreadShortcuts() {
+    this.resetAllActiveStates();
+    this.shortcuts[0].isActive = true;
     this.setSearchFunction('threads');
     this.globalService.openComponent('threadsShortcut');
   }
@@ -178,7 +189,7 @@ export class SidebarComponent implements OnInit {
    * Handels when the sidebar is displayed on the side or is overlaping or filling fullscreen
    * 
    */
-  breakPontObserving() {
+  breakPointObserving() {
     const customMaxBreakpoint = '(max-width: 768px)'; // Breite bis zu der Sidebar mode over ausgeführt wird
 
     this.breakpointObserver.observe([customMaxBreakpoint])
@@ -254,4 +265,12 @@ export class SidebarComponent implements OnInit {
         });
     });
   }
+
+  resetAllActiveStates(): void {
+    this.shortcuts.forEach(item => item.isActive = false);
+    this.channels.forEach(channel => channel.isActive = false);
+    // this.chatPartners.forEach(chatPartner => chatPartner.isActive = false);
+  }
+
+
 }

@@ -144,6 +144,13 @@
     transform: rotate(-90deg);
 }
 
+
+.active-sidebar-element {
+    background-color: $white;
+    color: $darkgrey;
+    font-weight: bold;
+  }
+
 @keyframes slide-Out {
     from{
         transform: translateX(0);

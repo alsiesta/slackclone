@@ -4,6 +4,7 @@ export class Channel {
   creator: string; // user id of creator
   creationDate: Date; // date of creation
   info: string; // description
+  isActive: boolean // sidebar handler
 
   constructor(obj?: any) {
     this.channelID = obj ? obj.channelID : '';
@@ -11,6 +12,7 @@ export class Channel {
     this.creator = obj ? obj.creator : '';
     this.creationDate = obj ? obj.creationDate : '';
     this.info = obj ? obj.info : '';
+    this.isActive = false; 
   }
 
   public toJSON?(): any {
