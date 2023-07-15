@@ -213,8 +213,6 @@ export class CommentfieldComponent implements OnInit {
     if (index >= 0 && index < this.base64Attachement.length) {
       this.base64Attachement.splice(index, 1);
     }
-    debugger;
-
     if (index >= 0 && index < this.base64Array.length) {
       this.base64Array.splice(index, 1);
       console.log('From Delete:', this.base64Array);
