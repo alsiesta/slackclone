@@ -193,6 +193,9 @@ export class CommentfieldComponent implements OnInit {
     const content = this.editorForm.get('editor').value;
   };
 
+  /**
+   * Function returns the original filename of a base64 image format
+   */
   getBase64WithFileName(base64String: string, fileName: string): string {
     const matches = base64String.match(/^data:(.+);base64,(.+)$/);
     if (matches && matches.length === 3) {
