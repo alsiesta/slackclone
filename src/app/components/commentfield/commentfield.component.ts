@@ -20,10 +20,6 @@ export class CommentfieldComponent implements OnInit {
   editorContent: any;
   quillEditorRef: any;
   quillModules: any;
-  base64ArrayJson: any = {
-    'base64': '',
-    'fileName': ''
-  };
   base64Array: any = [];
   base64Attachement: any[];
   uid: any;
@@ -135,7 +131,6 @@ export class CommentfieldComponent implements OnInit {
     );
     for (let i = 0; i < this.imageSrc$.length; i++) {
       const img = this.imageSrc$[i];
-      // console.log(img);
     }
   }
 
@@ -179,10 +174,14 @@ export class CommentfieldComponent implements OnInit {
           const fileName = file.name; // Get the original file name
           this.base64Attachement.push(base64Images);
           const base64WithFileName = this.getBase64WithFileName(base64Images, fileName);
-          this.base64ArrayJson['base64'] = base64Images;
-          this.base64ArrayJson['fileName'] = base64WithFileName;
-          this.base64Array.push(this.base64ArrayJson);
+          const base64ArrayJson = {
+            base64: base64Images,
+            fileName: base64WithFileName
+          };
+          this.base64Array.push(base64ArrayJson);
+          console.log('ArrayJson', base64ArrayJson);
           console.log('Array', this.base64Array);
+          
           // Update the temporary image with the actual image
           //this.quillEditorRef.deleteText(range.index, 1);
           this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
@@ -210,6 +209,12 @@ export class CommentfieldComponent implements OnInit {
   deleteTemporaryImages(index: number): void {
     if (index >= 0 && index < this.base64Attachement.length) {
       this.base64Attachement.splice(index, 1);
+    }
+    debugger;
+
+    if (index >= 0 && index < this.base64Array.length) {
+      this.base64Array.splice(index, 1);
+      console.log('From Delete:', this.base64Array);
     }
   }
 }
