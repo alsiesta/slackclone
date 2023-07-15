@@ -208,8 +208,8 @@ export class CommentfieldComponent implements OnInit {
    * Function to delete a picture from the attachment
    */
   deleteTemporaryImages(index: number): void {
-    if (index >= 0 && index < this.base64Array.length) {
-      this.base64Array.splice(index, 1);
+    if (index >= 0 && index < this.base64Attachement.length) {
+      this.base64Attachement.splice(index, 1);
     }
   }
 }
