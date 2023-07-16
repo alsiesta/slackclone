@@ -6,7 +6,7 @@ export class Thread {
   content: string; // content of thread
   channel: string; // channel id (#..........)
   images?: string[]; // array of image urls
-  replies: { user: string; date?: Date; message: string }[]; // stores reply objects
+  replies: { user: string; date?: Date; message: string, images?: string[] }[]; // stores reply objects
 
   constructor(obj?: any) {
     this.threadId = obj ? obj.threadId : '';

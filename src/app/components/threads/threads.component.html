@@ -22,10 +22,9 @@
                     </div>
                     <div>
                         <div [innerHTML]="this.channelService.activeThread.content"></div>
-                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(this.channelService.activeThread.content))"
-                            *ngIf="this.channelService.isImage(this.channelService.activeThread.content)"
-                            [src]="this.channelService.getImageSrc(this.channelService.activeThread.content)"
-                            class="image-attachment">
+                        <img *ngFor="let image of this.channelService.activeThread.images"
+                            (click)="this.channelService.openCreateImageDialog(image)"
+                            [src]="image['url']" class="image-attachment">
                     </div>
                 </div>
             </div>

@@ -100,26 +100,29 @@ export class CommentfieldComponent implements OnInit {
         await this.onFileSelected(file, i);
       }
       
+      console.log('Images Array', this.base64Array);
       // // this.imageSrc$ contains the array of download URLs
       // console.log('Array of Download URLs: ',this.imageSrc$);
       
     }
     if (this.parentName == 'channel') {
-      this.channelService.addNewMessage(this.editorContent);
+      this.channelService.addNewMessage(this.editorContent, this.base64Array);
     } else if (this.parentName == 'chat') {
-      this.chatService.sendChatMessage(this.editorContent);
+      this.chatService.sendChatMessage(this.editorContent, this.base64Array);
     } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
-        this.uid
+        this.uid,
+        this.base64Array
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
       this.firestoreService.updateSpecificThread(
         this.threadId,
         this.editorContent,
-        this.uid
+        this.uid,
+        this.base64Array
       );
     }
     // Clear the editor content

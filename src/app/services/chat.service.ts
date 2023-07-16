@@ -241,7 +241,8 @@ export class ChatService {
    * send a chat message - update chat in firestore
    * @param content - the content of the chat message
    */
-  sendChatMessage(content: string) {
+  sendChatMessage(content: string, imagesURL: any) {
+    
     const user = this.userService.currentUserId$;
     const message = content;
 

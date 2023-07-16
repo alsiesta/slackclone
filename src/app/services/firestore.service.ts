@@ -401,7 +401,8 @@ export class FirestoreService {
   async updateSpecificThread(
     threadId: string,
     message: string,
-    currentUserId: string
+    currentUserId: string,
+    imagesURL: string
   ) {
     const date = new Date();
     const formattedDate = date.toISOString();
@@ -409,6 +410,7 @@ export class FirestoreService {
       user: currentUserId,
       date: formattedDate,
       message: message,
+      images: imagesURL
     };
 
     const ref = doc(this.threadCollection, threadId);

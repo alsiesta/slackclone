@@ -212,7 +212,7 @@ export class ChannelService {
    * creating new thread in firestore
    * @param content - message content from text editor
    */
-  addNewMessage(content: string) {
+  addNewMessage(content: string, imagesURL: any) {
     this.message = {
       channel: this.activeChannel.id,
       content: content,
