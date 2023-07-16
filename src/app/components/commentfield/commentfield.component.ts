@@ -6,6 +6,8 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UploadImagesService } from 'src/app/services/upload-images.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-commentfield',
@@ -29,9 +31,10 @@ export class CommentfieldComponent implements OnInit {
   };
 
   ///////////// IMAGE UPLOAD /////////////
-  imageSrc$: string[] = [];
+  // imageSrc$: string[] = [];
 
   selectedFile: File;
+  isUploading: boolean;
 
   /////////// END IMAGE UPLOAD /////////////
 
@@ -40,7 +43,7 @@ export class CommentfieldComponent implements OnInit {
     public firestoreService: FirestoreService,
     public chatService: ChatService,
     public usersService: UsersService,
-    public uploadImagesService: UploadImagesService,
+    public uploadImagesService: UploadImagesService
   ) {
     this.base64Attachement = [];
 
@@ -96,9 +99,12 @@ export class CommentfieldComponent implements OnInit {
     if (this.base64Array.length > 0) {
       for (let i = 0; i < this.base64Array.length; i++) {
         const file = this.base64Array[i];
-        await this.onFileSelected(file);
+        await this.onFileSelected(file, i);
       }
-
+      
+      // // this.imageSrc$ contains the array of download URLs
+      // console.log('Array of Download URLs: ',this.imageSrc$);
+      
     }
     if (this.parentName == 'channel') {
       this.channelService.addNewMessage(this.editorContent);
@@ -122,16 +128,11 @@ export class CommentfieldComponent implements OnInit {
     this.editorForm.get('editor').setValue(null);
   }
 
-  async onFileSelected(file: any): Promise<void> {
-    for (let i = 0; i < this.base64Array.length; i++) {
-      this.imageSrc$.push(this.base64Array[i]);
-    }
-    this.imageSrc$.push(
-      await this.uploadImagesService.onFileSelected(file, this.uid)
-    );
-    for (let i = 0; i < this.imageSrc$.length; i++) {
-      const img = this.imageSrc$[i];
-    }
+  async onFileSelected (file: any, index: number): Promise<void> {
+    this.isUploading = true;
+    const src = await this.uploadImagesService.onFileSelected(file, this.uid);
+    this.base64Array[index].url = src;   
+    this.isUploading = false;
   }
 
   /**
@@ -179,7 +180,7 @@ export class CommentfieldComponent implements OnInit {
             fileName: base64WithFileName
           };
           this.base64Array.push(base64ArrayJson);
-          console.log('ArrayJson', base64ArrayJson);
+          // console.log('ArrayJson', base64ArrayJson);
           console.log('Array', this.base64Array);
           
           // Update the temporary image with the actual image
