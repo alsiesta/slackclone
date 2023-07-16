@@ -6,7 +6,6 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UploadImagesService } from 'src/app/services/upload-images.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -31,7 +30,6 @@ export class CommentfieldComponent implements OnInit {
   };
 
   ///////////// IMAGE UPLOAD /////////////
-  // imageSrc$: string[] = [];
 
   selectedFile: File;
   isUploading: boolean;
