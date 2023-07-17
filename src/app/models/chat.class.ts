@@ -1,7 +1,13 @@
 export class Chat {
   chatId: string; // firestore id firestore auto-generated id
   chatUsers: string[]; // user ids of the two chat partners
-  chat: { user: string; date: Date; time: Date; message: string }[]; // stores chat objects
+  chat: {
+    user: string;
+    date: Date;
+    time: Date;
+    message: string;
+    images: string[];
+  }[]; // stores chat objects
 
   constructor(obj?: any) {
     this.chatId = obj ? obj.chatId : '';
@@ -25,6 +31,7 @@ export class Chat {
         date: formattedDate,
         time: formattedTime,
         message: chat.message,
+        images: chat.images,
       };
     });
 

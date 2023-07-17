@@ -47,7 +47,17 @@
                                 {{ message.user.name }}</div>
                             <div class="message-time">{{ message.time }}</div>
                         </div>
-                        <div class="message-content" [innerHTML]="message.message"></div>
+                        <div class="message-content">
+                            <div [innerHTML]="message.message"></div>
+                            <div *ngIf="message.images.length > 0">
+                                <div class="message-attachment">
+                                    <img *ngFor="let image of message.images"
+                                        (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                        class="image-attachment">
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>

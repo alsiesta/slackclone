@@ -23,6 +23,7 @@ export class CommentfieldComponent implements OnInit {
   quillModules: any;
   base64Array: any = [];
   base64Attachement: any[];
+  imageURLs: string[];
   uid: any;
 
   editorStyle = {
@@ -99,22 +100,23 @@ export class CommentfieldComponent implements OnInit {
         const file = this.base64Array[i];
         await this.onFileSelected(file, i);
       }
-      
+      this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
+
       console.log('Images Array', this.base64Array);
       // // this.imageSrc$ contains the array of download URLs
       // console.log('Array of Download URLs: ',this.imageSrc$);
       
     }
     if (this.parentName == 'channel') {
-      this.channelService.addNewMessage(this.editorContent, this.base64Array);
+      this.channelService.addNewMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'chat') {
-      this.chatService.sendChatMessage(this.editorContent, this.base64Array);
+      this.chatService.sendChatMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
         this.uid,
-        this.base64Array
+        this.imageURLs
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
@@ -122,7 +124,7 @@ export class CommentfieldComponent implements OnInit {
         this.threadId,
         this.editorContent,
         this.uid,
-        this.base64Array
+        this.imageURLs
       );
     }
     // Clear the editor content
@@ -135,6 +137,19 @@ export class CommentfieldComponent implements OnInit {
     this.base64Array[index].url = src;   
     this.isUploading = false;
   }
+
+  /**
+   * push image urls to array
+   * @param base64Array - array of base64 images
+   * @returns - array of image urls
+   */
+    pushImgageUrlsToArray(base64Array: any) {
+      let imageURLs: string[] = [];
+      for (let i = 0; i < base64Array.length; i++) {
+        imageURLs.push(base64Array[i].url);
+      }
+      return imageURLs;
+    }
 
   /**
    * Determine maximum length in the text editor

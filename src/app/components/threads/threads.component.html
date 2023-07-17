@@ -22,9 +22,13 @@
                     </div>
                     <div>
                         <div [innerHTML]="this.channelService.activeThread.content"></div>
-                        <img *ngFor="let image of this.channelService.activeThread.images"
-                            (click)="this.channelService.openCreateImageDialog(image)"
-                            [src]="image['url']" class="image-attachment">
+                        <div *ngIf="this.channelService.activeThread.images.length > 0">
+                            <div class="posting-attachment">
+                                <img *ngFor="let image of this.channelService.activeThread.images"
+                                    (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                    class="image-attachment">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,9 +56,13 @@
                     </div>
                     <div class="img-message">
                         <div [innerHTML]="this.reply.message"></div>
-                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(reply.message))"
-                            *ngIf="this.channelService.isImage(reply.message)"
-                            [src]="this.channelService.getImageSrc(reply.message)" class="image-attachment">
+                        <div *ngIf="this.reply.images.length > 0">
+                            <div class="posting-attachment">
+                                <img *ngFor="let image of this.reply.images"
+                                    (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                    class="image-attachment">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

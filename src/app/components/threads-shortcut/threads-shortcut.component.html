@@ -18,10 +18,13 @@
                         </div>
                         <div class="img-message">
                             <div [innerHTML]="threadCurrentUser.content"></div>
-                            <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(threadCurrentUser.content))"
-                                *ngIf="this.channelService.isImage(threadCurrentUser.content)"
-                                [src]="this.channelService.getImageSrc(threadCurrentUser.content)"
-                                class="image-attachment">
+                            <div *ngIf="threadCurrentUser.images.length > 0">
+                                <div class="posting-attachment">
+                                    <img *ngFor="let image of threadCurrentUser.images"
+                                        (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                        class="image-attachment">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -44,10 +47,13 @@
                         </div>
                         <div>
                             <div [innerHTML]="threadReplies.message"></div>
-                            <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(threadReplies.message))"
-                                *ngIf="this.channelService.isImage(threadReplies.message)"
-                                [src]="this.channelService.getImageSrc(threadReplies.message)"
-                                class="image-attachment">
+                            <div *ngIf="threadReplies.images.length > 0">
+                                <div class="posting-attachment">
+                                    <img *ngFor="let image of threadReplies.images"
+                                        (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                        class="image-attachment">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
