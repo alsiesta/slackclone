@@ -19,13 +19,16 @@ export class ThreadsComponent implements OnInit {
   name: string;
   currentUser;
   showImage;
+  imageSource: string;
 
   constructor(
     public firestoreService: FirestoreService,
     public usersService: UsersService,
     public channelService: ChannelService,
     public globalService: GlobalService,
-  ) { }
+  ) {
+    this.imageSource = this.channelService.activeThread.user['image'] || 'assets/img/user/profile-picture.png';
+   }
 
   async ngOnInit(): Promise<void> {
     await this.getAllThreads();

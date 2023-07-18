@@ -12,8 +12,7 @@
 
         <div class="post">
             <div class="user-message">
-                <img (click)="getUserInformation()"
-                    src="{{ this.channelService.activeThread.user['image'] ||  'assets/img/user/profile-picture.png' }}">
+                <img (click)="getUserInformation()" [src]="imageSource">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" (click)="getUserInformation()">
