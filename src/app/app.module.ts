@@ -45,6 +45,7 @@ import { DataProtectionComponent } from './components/data-protection/data-prote
 import { UniquePipe } from './pipes/unique.pipe';
 import { GoogleAuthProvider } from "firebase/auth";
 import { DialogAttachmentImageComponent } from './components/dialog-attachment-image/dialog-attachment-image.component';
+import { DialogResetPasswordComponent } from './components/dialog-reset-password/dialog-reset-password.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { DialogAttachmentImageComponent } from './components/dialog-attachment-i
     DataProtectionComponent,
     UniquePipe,
     DialogAttachmentImageComponent,
+    DialogResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

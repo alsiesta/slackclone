@@ -16,7 +16,11 @@ import {
 } from '@angular/fire/auth';
 import { Channel } from '../models/channel.class';
 import { UsersService } from './users.service';
-import { AuthProvider, getAdditionalUserInfo } from 'firebase/auth';
+import {
+  AuthProvider,
+  getAdditionalUserInfo,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
 import { UserTemplate } from '../models/usertemplate.class';
 
 // import { GoogleAuthProvider } from 'firebase/auth';
@@ -26,15 +30,15 @@ import { UserTemplate } from '../models/usertemplate.class';
 })
 export class AuthService {
   userData: import('@angular/fire/auth').User;
-  constructor (
+  constructor(
     private firestoreService: FirestoreService,
     private auth: Auth,
     private toast: HotToastService,
     private router: Router,
-    private usersService : UsersService,
+    private usersService: UsersService,
     private googleAuthProvider: GoogleAuthProvider
-  ) { }
-  
+  ) {}
+
   user = new UserTemplate();
   loading: boolean = false;
   channel: Channel = new Channel();
@@ -44,7 +48,6 @@ export class AuthService {
   providerFacebook = new FacebookAuthProvider();
   providerTwitter = new TwitterAuthProvider();
   providerGithub = new GithubAuthProvider();
-
 
   signUp = async (email: string, password: string, name: any) => {
     try {
@@ -68,7 +71,9 @@ export class AuthService {
 
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
-      this.auth,email,password
+      this.auth,
+      email,
+      password
     )
       .then((userCredentials) => {
         this.toast.info(
@@ -97,7 +102,7 @@ export class AuthService {
     }
   };
 
-  async signInWithGoogle (): Promise<any> {
+  async signInWithGoogle(): Promise<any> {
     const user = await this.signInWithPopup(this.providerGoogle);
     return user;
   }
@@ -106,16 +111,17 @@ export class AuthService {
     const auth = getAuth();
     let providerUser;
     // Sign in with popup: is not recommended for mobile devices
-    await signInWithPopup(auth, provider)
-      .then((result) => {
+    await signInWithPopup(auth, provider).then(
+      (result) => {
         this.router.navigate(['/home']);
         providerUser = this.onSuccess(result);
       },
-        (error) => {
-          console.log(error.message);
-          this.toast.error(error.message);
-        });
-      
+      (error) => {
+        console.log(error.message);
+        this.toast.error(error.message);
+      }
+    );
+
     return providerUser;
   }
 
@@ -132,38 +138,48 @@ export class AuthService {
     return user;
   }
 
+  resetPassword(email: string) {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        this.toast.info(`Password reset email sent to ${email}`);
+      })
+      .catch((error) => {
+        this.toast.error(error.message);
+      });
+  }
 
-    // Note when going into production, you should check that the redirect URL matches the one you specified when you enabled the sign-in method.
-    // Sign in with redirect: is recommended for mobile devices
-    // When you use signInWithRedirect, the sign-in flow is completed on a separate page and then returns to your page.
-    // as soon as we have a solution for the redirect, we can use it
+  // Note when going into production, you should check that the redirect URL matches the one you specified when you enabled the sign-in method.
+  // Sign in with redirect: is recommended for mobile devices
+  // When you use signInWithRedirect, the sign-in flow is completed on a separate page and then returns to your page.
+  // as soon as we have a solution for the redirect, we can use it
 
-    // try {
-    //   await signInWithRedirect(auth, provider);
-    //   debugger;
-    //   const result = await getRedirectResult(auth);
-    //   console.log('Google Sign-In 1');
-    //   // This gives you a Google Access Token. You can use it to access Google APIs.
-    //   const credential = GoogleAuthProvider.credentialFromResult(result);
-    //   const token = credential.accessToken;
+  // try {
+  //   await signInWithRedirect(auth, provider);
+  //   debugger;
+  //   const result = await getRedirectResult(auth);
+  //   console.log('Google Sign-In 1');
+  //   // This gives you a Google Access Token. You can use it to access Google APIs.
+  //   const credential = GoogleAuthProvider.credentialFromResult(result);
+  //   const token = credential.accessToken;
 
-    //   // The signed-in user info.
-    //   const user = result.user;
-    //   this.toast.info(`Hi ${user.displayName}! You are signed in.`);
-    //   this.isUserLoggedIn = true;
-    //   console.log('Google Sign-In 2');
-    //   this.router.navigate(['/home']);
-    //   console.log('Google Sign-In 3');
-    // } catch (error) {
-    //   // Handle Errors here.
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   // The email of the user's account used.
-    //   const email = error.customData.email;
-    //   // The AuthCredential type that was used.
-    //   const credential = GoogleAuthProvider.credentialFromError(error);
-    //   // ...
-    // }
+  //   // The signed-in user info.
+  //   const user = result.user;
+  //   this.toast.info(`Hi ${user.displayName}! You are signed in.`);
+  //   this.isUserLoggedIn = true;
+  //   console.log('Google Sign-In 2');
+  //   this.router.navigate(['/home']);
+  //   console.log('Google Sign-In 3');
+  // } catch (error) {
+  //   // Handle Errors here.
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // The email of the user's account used.
+  //   const email = error.customData.email;
+  //   // The AuthCredential type that was used.
+  //   const credential = GoogleAuthProvider.credentialFromError(error);
+  //   // ...
+  // }
   // }
 
   updateAuthdisplayName(dName) {
