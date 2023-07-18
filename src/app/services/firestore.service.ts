@@ -312,7 +312,6 @@ export class FirestoreService {
       threads.push(doc.data());
     });
     this.threadList = threads;
-    console.log('Thread changed: ', this.threadList);
     return this.threadList;
   });
 
