@@ -24,6 +24,7 @@ export class CommentfieldComponent implements OnInit {
   base64Array: any = [];
   base64Attachement: any[];
   uid: any;
+  imageURLs: string[];
 
   editorStyle = {
     height: '100px',
@@ -93,8 +94,8 @@ export class CommentfieldComponent implements OnInit {
    * button to send messages
    */
   async onSubmit() {
-    if (this.base64Attachement.length > 3) {
-      alert('You have exceeded the maximum number of images. You can upload a maximum of three images.');
+    if (this.base64Attachement.length > 4) {
+      alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
     } else {
       this.editorContent = this.editorForm.get('editor').value;
       if (this.base64Array.length > 0) {
@@ -103,25 +104,40 @@ export class CommentfieldComponent implements OnInit {
           await this.onFileSelected(file, i);
         }
       }
+      this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
       this.handleParentAction();
       this.clearTextEditor();
     }
   }
+
+   /**
+   * push image urls to array
+   * @param base64Array - array of base64 images
+   * @returns - array of image urls
+   */
+   pushImgageUrlsToArray(base64Array: any) {
+    let imageURLs: string[] = [];
+    for (let i = 0; i < base64Array.length; i++) {
+      imageURLs.push(base64Array[i].url);
+    }
+    return imageURLs;
+  }
+
 
   /**
   * Add the thread to the corresponding component depending on the call of the text-editor.
   */
   handleParentAction() {
     if (this.parentName == 'channel') {
-      this.channelService.addNewMessage(this.editorContent, this.base64Array);
+      this.channelService.addNewMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'chat') {
-      this.chatService.sendChatMessage(this.editorContent, this.base64Array);
+      this.chatService.sendChatMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
         this.uid,
-        this.base64Array
+        this.imageURLs
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
@@ -129,7 +145,7 @@ export class CommentfieldComponent implements OnInit {
         this.threadId,
         this.editorContent,
         this.uid,
-        this.base64Array
+        this.imageURLs
       );
     }
   }
