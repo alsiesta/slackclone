@@ -59,10 +59,6 @@
                                         class="image-attachment">
                                 </div>
                             </div>
-                            <!-- <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(thread.content))"
-                                *ngIf="this.channelService.isImage(thread.content)"
-                                [src]="this.channelService.getImageSrc(thread.content)" class="image-attachment">
-                            -->
                         </div>
                         <div *ngIf="thread.replies.length > 0">
                             <div class="posting-threads" (click)="this.channelService.openThread(thread)">

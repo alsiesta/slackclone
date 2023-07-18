@@ -241,12 +241,13 @@ export class ChatService {
    * send a chat message - update chat in firestore
    * @param content - the content of the chat message
    */
-  sendChatMessage(content: string) {
+  sendChatMessage(content: string, imageURLs: string[]) {
     const user = this.userService.currentUserId$;
     const message = content;
+    const images = imageURLs
 
     this.firestoreService
-      .addChatMessage(this.chat.chatId, user, message)
+      .addChatMessage(this.chat.chatId, user, message, images)
       .then(() => {
         this.scrollStatus.emit(true);
       });

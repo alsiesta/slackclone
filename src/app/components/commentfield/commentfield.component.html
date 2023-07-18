@@ -22,14 +22,20 @@
                 <div class="image-container-attachment">
                     <div *ngFor="let base64 of base64Attachement; let i = index">
                         <div class="image-container">
-                            <img (click)="this.channelService.openCreateImageDialog(base64)" src="{{base64}}" alt="Empty">
+                            <img (click)="this.channelService.openCreateImageDialog(base64)" src="{{base64}}"
+                                alt="Empty">
                             <div class="close-icon">
                                 <img (click)="deleteTemporaryImages(i)" src="assets/img/commentfield/close.png">
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="send-btn" type="submit"><img src="assets/img/commentfield/send-icon.png"></button>
+                <div class="send-btn-container">
+                    <button class="send-btn" type="submit"><img src="assets/img/commentfield/send-icon.png"></button>
+                    <div class="loading">
+                        <mat-spinner *ngIf="isUploading"></mat-spinner>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

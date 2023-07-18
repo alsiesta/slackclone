@@ -5,7 +5,7 @@
     <div class="form-container mat-elevation-z5 margin-top100">
         <h1 class="text-center">Log-in</h1>
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
-             <mat-form-field>
+            <mat-form-field>
                 <input matInput placeholder="Email address" formControlName="email">
                 <mat-error *ngIf="email?.errors?.['required']">Email is required</mat-error>
                 <mat-error *ngIf="email?.errors?.['email']">Please enter a correct email format!</mat-error>
@@ -14,17 +14,22 @@
                 <input matInput placeholder="Password" formControlName="password" type="password">
                 <mat-error *ngIf="password?.errors?.['required']">Please enter a correct password</mat-error>
 
-            </mat-form-field><br> 
-             <div class="center margin-top16">
+            </mat-form-field><br>
+            <div class="center margin-top16">
                 <button mat-raised-button color="primary" type="submit">Login</button>
             </div>
             <span class="center margin-top16">New to our platform? <a class="sign-up-link"
                     routerLink="/sign-up">Sign-up!</a></span>
+            <div class="center">
+                <button mat-button type="text" class="center margin-top16" (click)="openDialog($event)">Reset your
+                    password?</button>
+            </div>
             <div class="center margin-top16">
                 <button type="button" (click)="guestSignIn()" mat-stroked-button>Sign-in as Guest User</button>
             </div>
             <div class="center margin-top16">
-                <button type="button" (click)="signInWithGoogle ()" mat-stroked-button> <img class="googlelogo" src="assets/img/google-icon.png" alt="">Sign-in with Google</button>
+                <button type="button" (click)="signInWithGoogle ()" mat-stroked-button> <img class="googlelogo"
+                        src="assets/img/google-icon.png" alt="">Sign-in with Google</button>
             </div>
 
         </form>

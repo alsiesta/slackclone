@@ -156,3 +156,9 @@
     height: auto;
     object-fit: cover;
 }
+
+.posting-attachment {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

@@ -1,4 +1,3 @@
-
 import { EventEmitter, Injectable, SecurityContext } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
@@ -43,7 +42,7 @@ export class ChannelService {
     public globalService: GlobalService,
     public userService: UsersService,
     public chatService: ChatService,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {}
 
   /**
@@ -212,11 +211,12 @@ export class ChannelService {
    * creating new thread in firestore
    * @param content - message content from text editor
    */
-  addNewMessage(content: string) {
+  addNewMessage(content: string, imageURLs: string[]) {
     this.message = {
       channel: this.activeChannel.id,
       content: content,
       date: new Date(),
+      images: imageURLs,
       replies: [],
       threadId: '',
       time: new Date(),
@@ -355,7 +355,7 @@ export class ChannelService {
   //   const cleanedHTML = sanitized?.replace(/<img[^>]+>/gm, '');
   //   return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
   // }
-  
+
   openCreateImageDialog(imageURL) {
     this.channelDialog.open(DialogAttachmentImageComponent, {
       maxWidth: '100vw',

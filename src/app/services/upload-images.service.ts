@@ -27,9 +27,9 @@ export class UploadImagesService {
     this.currentUserId$ = this.usersService.getCurrentUserId();
   }
 
-  onFileSelected(file, uid): Promise<string> {
+  async onFileSelected(file, uid): Promise<string> {
     this.selectedFile = file;
-    const downloadURL = this.onUpload(uid);
+    const downloadURL = await this.onUpload(uid);
     return downloadURL;
   }
 
@@ -43,22 +43,27 @@ export class UploadImagesService {
       return null;
     }
     const storage = getStorage();
-    const name = 'tollerName';
-    const fileName = uid + '_' + name;
+    const fileName = uid + '_' + file.fileName;
     const storageRef = ref(storage, 'thread_images/' + fileName);
-    const type = file.split(';')[0].split(':')[1];
-    console.log('Image type:', type);
+    // console.log('Base64 file: ', file.base64);
+    const type = file.base64.split(';')[0].split(':')[1];
     const metadata = {
       contentType: type,
     };
-    const cleanBase64Image = file.split(',')[1];
-    // console.log('Image file:', cleanBase64Image);
-    uploadString(storageRef, cleanBase64Image, 'base64', metadata).then((snapshot) => {
-      // console.log('Uploaded a base64 string!');
-    })
-       
-    this.downloadURL = await getDownloadURL(storageRef);
-    console.log('File available at', this.downloadURL);
+
+    const cleanBase64Image = file.base64.split(',')[1];
+    await uploadString(storageRef, cleanBase64Image, 'base64', metadata);
+    await this.setDownloadURL(storageRef);
+    return this.downloadURL;
   }
 
+  async setDownloadURL(storageRef) {
+    return await getDownloadURL(storageRef)
+      .then((url) => {
+        this.downloadURL = url;
+      })
+      .catch((error) => {
+        console.log('DownloadURL error: ', error);
+      });
+  }
 }

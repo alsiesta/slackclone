@@ -111,9 +111,7 @@ export class FirestoreService {
       this.channel.info = channel.info;
       this.channel.title = channel.title;
       const ref = doc(this.channelCollection, cid);
-      this.toast.info(
-        `Your channel ${cid} was successfully created.`
-      );
+      this.toast.info(`Your channel ${cid} was successfully created.`);
       await setDoc(ref, this.channel.toJSON())
         .then(() => {
           console.log('New Channel added to firestore', cid);
@@ -267,7 +265,7 @@ export class FirestoreService {
    * @param user
    * @param message
    */
-  async addChatMessage(chatId, user, message) {
+  async addChatMessage(chatId, user, message, images) {
     const date = new Date();
     const formdate = date.toISOString().split('T')[0];
     const formtime = date.toLocaleTimeString([], {
@@ -279,6 +277,7 @@ export class FirestoreService {
       date: formdate,
       time: formtime,
       message: message,
+      images: images,
     };
     const chatRef = doc(this.chatCollection, chatId);
     await updateDoc(chatRef, {
@@ -313,7 +312,6 @@ export class FirestoreService {
       threads.push(doc.data());
     });
     this.threadList = threads;
-    console.log('Thread changed: ', this.threadList);
     return this.threadList;
   });
 
@@ -352,6 +350,7 @@ export class FirestoreService {
     this.thread.content = thread.content;
     this.thread.channel = thread.channel;
     this.thread.replies = thread.replies;
+    this.thread.images = thread.images;
 
     const docRef = await addDoc(this.threadCollection, this.thread.toJSON());
 
@@ -401,7 +400,8 @@ export class FirestoreService {
   async updateSpecificThread(
     threadId: string,
     message: string,
-    currentUserId: string
+    currentUserId: string,
+    imagesURL: string[]
   ) {
     const date = new Date();
     const formattedDate = date.toISOString();
@@ -409,6 +409,7 @@ export class FirestoreService {
       user: currentUserId,
       date: formattedDate,
       message: message,
+      images: imagesURL,
     };
 
     const ref = doc(this.threadCollection, threadId);

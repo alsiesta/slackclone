@@ -21,4 +21,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+        background-color: rgba($grey, 0.4);
+    }
 }

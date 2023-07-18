@@ -1,11 +1,12 @@
 import { UsersService } from './../../services/users.service';
-import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UploadImagesService } from 'src/app/services/upload-images.service';
+
 
 @Component({
   selector: 'app-commentfield',
@@ -23,15 +24,16 @@ export class CommentfieldComponent implements OnInit {
   base64Array: any = [];
   base64Attachement: any[];
   uid: any;
+  imageURLs: string[];
 
   editorStyle = {
     height: '100px',
   };
 
   ///////////// IMAGE UPLOAD /////////////
-  imageSrc$: string[] = [];
 
   selectedFile: File;
+  isUploading: boolean;
 
   /////////// END IMAGE UPLOAD /////////////
 
@@ -40,7 +42,7 @@ export class CommentfieldComponent implements OnInit {
     public firestoreService: FirestoreService,
     public chatService: ChatService,
     public usersService: UsersService,
-    public uploadImagesService: UploadImagesService,
+    public uploadImagesService: UploadImagesService
   ) {
     this.base64Attachement = [];
 
@@ -92,46 +94,78 @@ export class CommentfieldComponent implements OnInit {
    * button to send messages
    */
   async onSubmit() {
-    this.editorContent = this.editorForm.get('editor').value;
-    if (this.base64Array.length > 0) {
-      for (let i = 0; i < this.base64Array.length; i++) {
-        const file = this.base64Array[i];
-        await this.onFileSelected(file);
+    if (this.base64Attachement.length > 4) {
+      alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
+    } else {
+      this.editorContent = this.editorForm.get('editor').value;
+      if (this.base64Array.length > 0) {
+        for (let i = 0; i < this.base64Array.length; i++) {
+          const file = this.base64Array[i];
+          await this.onFileSelected(file, i);
+        }
       }
-
+      this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
+      this.handleParentAction();
+      this.clearTextEditor();
     }
+  }
+
+   /**
+   * push image urls to array
+   * @param base64Array - array of base64 images
+   * @returns - array of image urls
+   */
+   pushImgageUrlsToArray(base64Array: any) {
+    let imageURLs: string[] = [];
+    for (let i = 0; i < base64Array.length; i++) {
+      imageURLs.push(base64Array[i].url);
+    }
+    return imageURLs;
+  }
+
+
+  /**
+  * Add the thread to the corresponding component depending on the call of the text-editor.
+  */
+  handleParentAction() {
     if (this.parentName == 'channel') {
-      this.channelService.addNewMessage(this.editorContent);
+      this.channelService.addNewMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'chat') {
-      this.chatService.sendChatMessage(this.editorContent);
+      this.chatService.sendChatMessage(this.editorContent, this.imageURLs);
     } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
-        this.uid
+        this.uid,
+        this.imageURLs
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
       this.firestoreService.updateSpecificThread(
         this.threadId,
         this.editorContent,
-        this.uid
+        this.uid,
+        this.imageURLs
       );
     }
-    // Clear the editor content
-    this.editorForm.get('editor').setValue(null);
   }
 
-  async onFileSelected(file: any): Promise<void> {
-    for (let i = 0; i < this.base64Array.length; i++) {
-      this.imageSrc$.push(this.base64Array[i]);
-    }
-    this.imageSrc$.push(
-      await this.uploadImagesService.onFileSelected(file, this.uid)
-    );
-    for (let i = 0; i < this.imageSrc$.length; i++) {
-      const img = this.imageSrc$[i];
-    }
+  /**
+* Empty the text editor after submitting the thread.
+*/
+  clearTextEditor() {
+    this.editorForm.get('editor').setValue(null);
+    this.base64Attachement.splice(0, this.base64Attachement.length);
+  }
+
+  /**
+   * Saves the images in the Firestore storage. 
+   */
+  async onFileSelected(file: any, index: number): Promise<void> {
+    this.isUploading = true;
+    const src = await this.uploadImagesService.onFileSelected(file, this.uid);
+    this.base64Array[index].url = src;
+    this.isUploading = false;
   }
 
   /**
@@ -166,32 +200,32 @@ export class CommentfieldComponent implements OnInit {
     input.addEventListener('change', () => {
       const file = input.files[0];
       if (file) {
-        // Insert temporary loading placeholder image
-        //this.quillEditorRef.insertEmbed(range.index, 'image', 'assets/img/commentfield/loading.png');
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64Images = reader.result.toString();
-          const fileName = file.name; // Get the original file name
-          this.base64Attachement.push(base64Images);
-          const base64WithFileName = this.getBase64WithFileName(base64Images, fileName);
-          const base64ArrayJson = {
-            base64: base64Images,
-            fileName: base64WithFileName
-          };
-          this.base64Array.push(base64ArrayJson);
-          console.log('ArrayJson', base64ArrayJson);
-          console.log('Array', this.base64Array);
-          
-          // Update the temporary image with the actual image
-          //this.quillEditorRef.deleteText(range.index, 1);
-          this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
-        };
-        reader.readAsDataURL(file);
+        this.handleFileUpload(file, range);
       }
     });
     input.click();
     const content = this.editorForm.get('editor').value;
   };
+
+  /**
+  * Deals with the upload images and prepares the images for the Firestore storage.
+  */
+  handleFileUpload(file: any, range: any) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64Images = reader.result.toString();
+      const fileName = file.name; // Get the original file name
+      this.base64Attachement.push(base64Images);
+      const base64WithFileName = this.getBase64WithFileName(base64Images, fileName);
+      const base64ArrayJson = {
+        base64: base64Images,
+        fileName: base64WithFileName
+      };
+      this.base64Array.push(base64ArrayJson);
+      this.quillEditorRef.insertEmbed(range.index, 'image', base64Images);
+    };
+    reader.readAsDataURL(file);
+  }
 
   /**
    * Function returns the original filename of a base64 image format

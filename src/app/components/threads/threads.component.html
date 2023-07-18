@@ -2,8 +2,8 @@
 
     <div class="title-channel-and-close-container">
         <div class="title-and-channel">
-            <div class="title">Threads</div>
-            <div class="channel"># {{ this.channelService.activeChannel.title}}</div>
+            <div class="title">Thread</div>
+            <div class="channel"># {{ this.channelService.activeThread.channel }}</div>
         </div>
         <div class="close" (click)="closeThread()"><img src="assets/img/threads/close.png"></div>
     </div>
@@ -12,8 +12,7 @@
 
         <div class="post">
             <div class="user-message">
-                <img (click)="getUserInformation()"
-                    src="{{ this.channelService.activeThread.user['image'] ||  'assets/img/user/profile-picture.png' }}">
+                <img (click)="getUserInformation()" [src]="imageSource">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" (click)="getUserInformation()">
@@ -22,10 +21,13 @@
                     </div>
                     <div>
                         <div [innerHTML]="this.channelService.activeThread.content"></div>
-                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(this.channelService.activeThread.content))"
-                            *ngIf="this.channelService.isImage(this.channelService.activeThread.content)"
-                            [src]="this.channelService.getImageSrc(this.channelService.activeThread.content)"
-                            class="image-attachment">
+                        <div *ngIf="this.channelService.activeThread.images.length > 0">
+                            <div class="posting-attachment">
+                                <img *ngFor="let image of this.channelService.activeThread.images"
+                                    (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                    class="image-attachment">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,9 +55,13 @@
                     </div>
                     <div class="img-message">
                         <div [innerHTML]="this.reply.message"></div>
-                        <img (click)="this.channelService.openCreateImageDialog(this.channelService.getImageSrc(reply.message))"
-                            *ngIf="this.channelService.isImage(reply.message)"
-                            [src]="this.channelService.getImageSrc(reply.message)" class="image-attachment">
+                        <div *ngIf="this.reply.images.length > 0">
+                            <div class="posting-attachment">
+                                <img *ngFor="let image of this.reply.images"
+                                    (click)="this.channelService.openCreateImageDialog(image)" [src]="image"
+                                    class="image-attachment">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
