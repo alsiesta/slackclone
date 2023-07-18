@@ -1,5 +1,5 @@
 import { UsersService } from './../../services/users.service';
-import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -14,7 +14,6 @@ import { UploadImagesService } from 'src/app/services/upload-images.service';
   styleUrls: ['./commentfield.component.scss'],
 })
 export class CommentfieldComponent implements OnInit {
-  @ViewChild('textEditor') textEditor: ElementRef;
   @Input() parentName: string;
   @Input() threadId: string;
   editorForm: FormGroup;
@@ -107,7 +106,6 @@ export class CommentfieldComponent implements OnInit {
         this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
       }
       this.handleParentAction();
-      // Clear the editor content
       this.clearTextEditor();
     }
   }
@@ -205,7 +203,6 @@ export class CommentfieldComponent implements OnInit {
       }
     });
     input.click();
-    const content = this.editorForm.get('editor').value;
   };
 
   /**
