@@ -49,12 +49,14 @@ export class SidebarComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.breakPointObserving();
 
-    this.getChannelsFromFirestore();
+    await this.getChannelsFromFirestore();
 
-    this.getChatsFromFirestore();
+    await this.getChatsFromFirestore();
+
+    
   }
 
   /**
@@ -203,12 +205,16 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Subscribs to the channels from the channellist at the firestore service
+   * Subscribs to the channels from the channellist at the firestore service and activates the default.
    * 
    */
   getChannelsFromFirestore() {
     this.firestoreService.getChannelList().subscribe((channels) => {
       this.channels = channels;
+      this.channels.forEach( channel => {
+        if(channel.title == this.channelService.defaultChannelId)
+          channel.isActive = true;
+      })
     });
   }
 
