@@ -93,15 +93,19 @@ export class CommentfieldComponent implements OnInit {
    * button to send messages
    */
   async onSubmit() {
-    this.editorContent = this.editorForm.get('editor').value;
-    if (this.base64Array.length > 0) {
-      for (let i = 0; i < this.base64Array.length; i++) {
-        const file = this.base64Array[i];
-        await this.onFileSelected(file, i);
+    if (this.base64Attachement.length > 3) {
+      alert('You have exceeded the maximum number of images. You can upload a maximum of three images.');
+    } else {
+      this.editorContent = this.editorForm.get('editor').value;
+      if (this.base64Array.length > 0) {
+        for (let i = 0; i < this.base64Array.length; i++) {
+          const file = this.base64Array[i];
+          await this.onFileSelected(file, i);
+        }
       }
+      this.handleParentAction();
+      this.clearTextEditor();
     }
-    this.handleParentAction();
-    this.clearTextEditor();
   }
 
   /**
@@ -191,8 +195,6 @@ export class CommentfieldComponent implements OnInit {
   * Deals with the upload images and prepares the images for the Firestore storage.
   */
   handleFileUpload(file: any, range: any) {
-    // Insert temporary loading placeholder image
-    //this.quillEditorRef.insertEmbed(range.index, 'image', 'assets/img/commentfield/loading.png');
     const reader = new FileReader();
     reader.onload = () => {
       const base64Images = reader.result.toString();
