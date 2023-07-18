@@ -1,5 +1,5 @@
 import { UsersService } from './../../services/users.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import 'quill-emoji/dist/quill-emoji.js';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -14,6 +14,7 @@ import { UploadImagesService } from 'src/app/services/upload-images.service';
   styleUrls: ['./commentfield.component.scss'],
 })
 export class CommentfieldComponent implements OnInit {
+  @ViewChild('textEditor') textEditor: ElementRef;
   @Input() parentName: string;
   @Input() threadId: string;
   editorForm: FormGroup;
@@ -22,7 +23,6 @@ export class CommentfieldComponent implements OnInit {
   quillModules: any;
   base64Array: any = [];
   base64Attachement: any[];
-  imageURLs: string[];
   uid: any;
 
   editorStyle = {
@@ -93,21 +93,15 @@ export class CommentfieldComponent implements OnInit {
    * button to send messages
    */
   async onSubmit() {
-    console.log('base64Attachement:', this.base64Attachement);
-    if (this.base64Attachement.length > 4) {
-      alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
-    } else {
-      this.editorContent = this.editorForm.get('editor').value;
-      if (this.base64Array.length > 0) {
-        for (let i = 0; i < this.base64Array.length; i++) {
-          const file = this.base64Array[i];
-          await this.onFileSelected(file, i);
-        }
-        this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
+    this.editorContent = this.editorForm.get('editor').value;
+    if (this.base64Array.length > 0) {
+      for (let i = 0; i < this.base64Array.length; i++) {
+        const file = this.base64Array[i];
+        await this.onFileSelected(file, i);
       }
-      this.handleParentAction();
-      this.clearTextEditor();
     }
+    this.handleParentAction();
+    this.clearTextEditor();
   }
 
   /**
@@ -115,15 +109,15 @@ export class CommentfieldComponent implements OnInit {
   */
   handleParentAction() {
     if (this.parentName == 'channel') {
-      this.channelService.addNewMessage(this.editorContent, this.imageURLs);
+      this.channelService.addNewMessage(this.editorContent, this.base64Array);
     } else if (this.parentName == 'chat') {
-      this.chatService.sendChatMessage(this.editorContent, this.imageURLs);
+      this.chatService.sendChatMessage(this.editorContent, this.base64Array);
     } else if (this.parentName == 'thread') {
       this.firestoreService.updateSpecificThread(
         this.channelService.activeThread.threadId,
         this.editorContent,
         this.uid,
-        this.imageURLs
+        this.base64Array
       );
       this.channelService.updateThread();
     } else if (this.parentName == 'threadshortcut') {
@@ -131,14 +125,14 @@ export class CommentfieldComponent implements OnInit {
         this.threadId,
         this.editorContent,
         this.uid,
-        this.imageURLs
+        this.base64Array
       );
     }
   }
 
   /**
- * Empty the text editor after submitting the thread.
- */
+* Empty the text editor after submitting the thread.
+*/
   clearTextEditor() {
     this.editorForm.get('editor').setValue(null);
     this.base64Attachement.splice(0, this.base64Attachement.length);
@@ -152,19 +146,6 @@ export class CommentfieldComponent implements OnInit {
     const src = await this.uploadImagesService.onFileSelected(file, this.uid);
     this.base64Array[index].url = src;
     this.isUploading = false;
-  }
-
-  /**
-   * push image urls to array
-   * @param base64Array - array of base64 images
-   * @returns - array of image urls
-   */
-  pushImgageUrlsToArray(base64Array: any) {
-    let imageURLs: string[] = [];
-    for (let i = 0; i < base64Array.length; i++) {
-      imageURLs.push(base64Array[i].url);
-    }
-    return imageURLs;
   }
 
   /**
@@ -203,16 +184,19 @@ export class CommentfieldComponent implements OnInit {
       }
     });
     input.click();
+    const content = this.editorForm.get('editor').value;
   };
 
   /**
-   * Deals with the upload images and prepares the images for the Firestore storage.
-   */
+  * Deals with the upload images and prepares the images for the Firestore storage.
+  */
   handleFileUpload(file: any, range: any) {
+    // Insert temporary loading placeholder image
+    //this.quillEditorRef.insertEmbed(range.index, 'image', 'assets/img/commentfield/loading.png');
     const reader = new FileReader();
     reader.onload = () => {
       const base64Images = reader.result.toString();
-      const fileName = file.name;
+      const fileName = file.name; // Get the original file name
       this.base64Attachement.push(base64Images);
       const base64WithFileName = this.getBase64WithFileName(base64Images, fileName);
       const base64ArrayJson = {
@@ -224,7 +208,6 @@ export class CommentfieldComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
 
   /**
    * Function returns the original filename of a base64 image format
