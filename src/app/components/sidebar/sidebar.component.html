@@ -60,7 +60,7 @@
         </div>
         <div *ngIf="directmessagesAreOpen" class="drop-down-content">
             <div *ngFor="let chatPartner of chatPartners; let i = index" (click)="renderChat(chatPartner); checkSidebarClosing()"
-                class="drop-down-element">
+                class="drop-down-element" [ngClass]="{'drop-down-element': true, 'active-sidebar-element': chatPartner.isActive}">
                 <img class="drop-down-img" src="{{ chatPartner.photoURL || 'assets/img/user/profile-picture.png' }}">
                 <span>{{ chatPartner.displayName }}</span>
             </div>

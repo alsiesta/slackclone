@@ -151,7 +151,13 @@
     color: $darkgrey;
     font-weight: bold;
     transition: 125ms ease-in-out;
-  }
+
+    &:hover {
+        background-color: rgba($white, 0.8) !important;
+        color: $darkgrey !important;
+        font-weight: bold !important;
+    }
+}
 
 @keyframes slide-Out {
     from{

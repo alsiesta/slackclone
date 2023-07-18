@@ -12,6 +12,7 @@ export class UserTemplate {
   city?: string;
   isOnline?: boolean;
   uid: string;
+  isActive: boolean // sidebar handler
 
 
   constructor(obj?: any) {
@@ -26,6 +27,7 @@ export class UserTemplate {
     this.zipCode = obj ? obj.zipCode : '';
     this.city = obj ? obj.city : '';
     this.uid = obj ? obj.uid : '';
+    this.isActive = false;
   }
 
   public toJSON?(): any {

@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
   observerChannelList: Observable<any>;
   channels: Channel[] = [];
   chats: Chat[] = [];
-  chatPartners: User[] = [];
+  chatPartners: UserTemplate[] = [];
   drawerMode: MatDrawerMode;
   responsiveSidebar: boolean = false;
 
@@ -114,7 +114,6 @@ export class SidebarComponent implements OnInit {
    */
   async renderChannel(channel) {
     this.resetAllActiveStates();
-    console.log(channel)
     channel.isActive = true;
     await this.channelService.loadChannelContent(channel.channelID);
     this.globalService.openComponent('channel');
@@ -125,6 +124,8 @@ export class SidebarComponent implements OnInit {
    * 
    */
   async renderChat(chatPartner) {
+    this.resetAllActiveStates();
+    chatPartner.isActive = true;
     this.setSearchFunction('chat');
     await this.chatService.openChat(chatPartner.uid);
     this.globalService.openComponent('chat');
@@ -272,10 +273,14 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets all states of shortcuts, channels and chatPartners to false.
+   * 
+   */
   resetAllActiveStates(): void {
     this.shortcuts.forEach(item => item.isActive = false);
     this.channels.forEach(channel => channel.isActive = false);
-    // this.chatPartners.forEach(chatPartner => chatPartner.isActive = false);
+    this.chatPartners.forEach(chatPartner => chatPartner.isActive = false);
   }
 
 
