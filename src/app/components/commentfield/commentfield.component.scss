@@ -14,28 +14,38 @@
 
 .send-btn-container {
     position: relative;
+    overflow: hidden;
+
+    .send-btn {
+        position: relative;
+        background-color: rgb(123, 123, 123, 0);
+        border: none;
+
+        img {
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            display: block;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 }
+
+
 
 .loading {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-.send-btn {
-    background-color: rgb(123, 123, 123, 0);
-    border: none;
-
-    img {
-        cursor: pointer;
-        width: 25px;
-        height: 25px;
-
-        &:hover {
-            opacity: 0.8;
-        }
+    mat-spinner {
+        display: block;
+        margin: 0 auto;
+        transform: scale(0.3);
     }
 }
 
