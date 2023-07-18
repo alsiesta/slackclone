@@ -14,12 +14,13 @@ export class GlobalService {
   private isSidebarOpenSubject = new Subject<boolean>();
   isSidebarOpen$ = this.isSidebarOpenSubject.asObservable();
   private isSidebarOpen = true;
-  public menuIcon = 'menu_open'
+  public menuIcon = 'menu_open';
 
   constructor(private breakpointObserver: BreakpointObserver) {
     const customMinBreakpoint = '(min-width: 769px)'; // Breite ab der die Sidebar immer sichtbar sein soll
-  
-    this.breakpointObserver.observe([customMinBreakpoint])
+
+    this.breakpointObserver
+      .observe([customMinBreakpoint])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.isSidebarOpen = true; // Sidebar always open, if min breakpoint is reached
@@ -97,6 +98,7 @@ export class GlobalService {
         break;
       case 'threadsShortcut':
         this.threadsShortcutOpened = true;
+        this.threadsRightSideOpened = false;
         break;
       default:
         break;
