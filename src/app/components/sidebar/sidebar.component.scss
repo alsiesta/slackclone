@@ -100,6 +100,7 @@
             
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2);
+                transition: 125ms ease-in-out;
                 
                 mat-icon {
                     opacity: 1;
@@ -146,9 +147,10 @@
 
 
 .active-sidebar-element {
-    background-color: $white;
+    background-color: rgba($white, 0.8);
     color: $darkgrey;
     font-weight: bold;
+    transition: 125ms ease-in-out;
   }
 
 @keyframes slide-Out {
