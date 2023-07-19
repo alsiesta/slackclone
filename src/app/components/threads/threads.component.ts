@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Thread } from 'src/app/models/thread.class';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -10,7 +10,8 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './threads.component.html',
   styleUrls: ['./threads.component.scss'],
 })
-export class ThreadsComponent implements OnInit {
+export class ThreadsComponent implements OnInit, AfterViewInit {
+  @ViewChild('contentContainer') contentContainer: ElementRef;
   currentUserId: string;
   currentUserData: any = [];
   allThreads: Thread[] = [];
@@ -26,9 +27,10 @@ export class ThreadsComponent implements OnInit {
     public usersService: UsersService,
     public channelService: ChannelService,
     public globalService: GlobalService,
+    private renderer: Renderer2
   ) {
     this.imageSource = this.channelService.activeThread.user['image'] || 'assets/img/user/profile-picture.png';
-   }
+  }
 
   async ngOnInit(): Promise<void> {
     await this.getAllThreads();
@@ -36,6 +38,20 @@ export class ThreadsComponent implements OnInit {
     this.getCurrentUserId();
     this.getThreadsFromCurrentUser();
     this.getAllUser();
+  }
+
+  ngAfterViewInit(): void {
+    this.hideImages();
+  }
+
+  /**
+  * Let the image disappear in the corresponding div box
+  */
+  private hideImages(): void {
+    const imgElements: HTMLImageElement[] = this.contentContainer.nativeElement.querySelectorAll('img');
+    imgElements.forEach((imgElement: HTMLImageElement) => {
+      this.renderer.setStyle(imgElement, 'display', 'none');
+    });
   }
 
   /**

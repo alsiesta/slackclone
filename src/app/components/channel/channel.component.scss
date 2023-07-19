@@ -1,5 +1,11 @@
 @import "../../../styles/main.scss";
 
+.test {
+  img {
+    display: none !important;
+  }
+}
+
 .channel-container {
   position: relative;
   display: flex;

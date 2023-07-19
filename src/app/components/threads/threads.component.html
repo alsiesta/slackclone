@@ -20,7 +20,7 @@
                         <div class="time">{{ this.channelService.activeThread.date | dateAgo }}</div>
                     </div>
                     <div>
-                        <div [innerHTML]="this.channelService.activeThread.content"></div>
+                        <div class="content-thread-container" [innerHTML]="this.channelService.activeThread.content" #contentContainer></div>
                         <div *ngIf="this.channelService.activeThread.images.length > 0">
                             <div class="posting-attachment">
                                 <img *ngFor="let image of this.channelService.activeThread.images"

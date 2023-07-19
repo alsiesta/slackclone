@@ -129,6 +129,13 @@
   color: $grey;
 }
 
+.content-thread-container {
+  
+  img {
+    display: none !important;
+  }
+}
+
 .comments {
   margin-top: 12px;
   margin-left: 16px;
