@@ -12,7 +12,7 @@
 
         <div class="post">
             <div class="user-message">
-                <img (click)="getUserInformation()" [src]="imageSource">
+                <img (click)="getUserInformation()" [src]="this.channelService.imageSource">
                 <div class="user-name-and-message">
                     <div class="user-name-and-time">
                         <div class="user-name" (click)="getUserInformation()">

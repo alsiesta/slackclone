@@ -155,7 +155,8 @@ export class CommentfieldComponent implements OnInit {
 */
   clearTextEditor() {
     this.editorForm.get('editor').setValue(null);
-    this.base64Attachement.splice(0, this.base64Attachement.length);
+    this.base64Attachement = [];
+    this.base64Array = [];
   }
 
   /**

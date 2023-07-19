@@ -34,6 +34,7 @@ export class ChannelService {
   name: string;
   scrollStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   imageURL: string;
+  imageSource: string;
 
   constructor(
     public channelDialog: MatDialog,
@@ -236,7 +237,7 @@ export class ChannelService {
     this.globalService.threadsRightSideOpened = true;
     this.getNameOpenThread();
     this.getUserNameReplies();
-    console.log('activeThread:', this.activeThread.user['image']);
+    this.imageSource = this.activeThread.user['image'] || 'assets/img/user/profile-picture.png';
   }
 
   /**

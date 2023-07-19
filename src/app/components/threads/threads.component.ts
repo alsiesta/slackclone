@@ -20,7 +20,6 @@ export class ThreadsComponent implements OnInit, AfterViewInit {
   name: string;
   currentUser;
   showImage;
-  imageSource: string;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -29,7 +28,6 @@ export class ThreadsComponent implements OnInit, AfterViewInit {
     public globalService: GlobalService,
     private renderer: Renderer2
   ) {
-    this.imageSource = this.channelService.activeThread.user['image'] || 'assets/img/user/profile-picture.png';
   }
 
   async ngOnInit(): Promise<void> {
