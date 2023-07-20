@@ -90,6 +90,20 @@ export class CommentfieldComponent implements OnInit {
     this.getCurrentUserId();
   }
 
+   /**
+   * Function to remove the <img> tag from the editor content.
+   */
+   removeImgTagFromEditorContent(editorContent: string): string {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = editorContent;
+    const imgElements = tempDiv.getElementsByTagName('img');
+    for (let i = imgElements.length - 1; i >= 0; i--) {
+      const imgElement = imgElements[i];
+      imgElement.remove();
+    }
+    return tempDiv.innerHTML;
+  }
+
   /**
    * button to send messages
    */
@@ -98,6 +112,10 @@ export class CommentfieldComponent implements OnInit {
       alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
     } else {
       this.editorContent = this.editorForm.get('editor').value;
+       // Remove the <img> tag from the editor content before submitting
+       this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
+       console.log('Before Submit, the editorContent:', this.editorContent);
+       
       if (this.base64Array.length > 0) {
         for (let i = 0; i < this.base64Array.length; i++) {
           const file = this.base64Array[i];
