@@ -112,9 +112,7 @@ export class CommentfieldComponent implements OnInit {
       alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
     } else {
       this.editorContent = this.editorForm.get('editor').value;
-       // Remove the <img> tag from the editor content before submitting
        this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
-       console.log('Before Submit, the editorContent:', this.editorContent);
        
       if (this.base64Array.length > 0) {
         for (let i = 0; i < this.base64Array.length; i++) {
@@ -268,7 +266,6 @@ export class CommentfieldComponent implements OnInit {
     }
     if (index >= 0 && index < this.base64Array.length) {
       this.base64Array.splice(index, 1);
-      console.log('From Delete:', this.base64Array);
     }
   }
 }
