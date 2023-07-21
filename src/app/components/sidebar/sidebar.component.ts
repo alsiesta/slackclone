@@ -53,10 +53,10 @@ export class SidebarComponent implements OnInit {
     this.breakPointObserving();
 
     await this.getChannelsFromFirestore();
-
     await this.getChatsFromFirestore();
-
-    
+    this.resetAllActiveStates();
+    this.globalService.openComponent('channel');
+    await this.channelService.loadChannelContent();
   }
 
   /**

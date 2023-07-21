@@ -95,6 +95,7 @@ export class GlobalService {
         break;
       case 'usersShortcut':
         this.usersShortcutOpened = true;
+        this.threadsRightSideOpened = false;
         break;
       case 'threadsShortcut':
         this.threadsShortcutOpened = true;
