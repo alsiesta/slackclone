@@ -30,9 +30,7 @@
                 </div>
 
 
-                <div class="comments-container">
-                    <!-- <div *ngIf="single">{{ threadCurrentUser.replies.length }} Antwort</div>
-                <div *ngIf="plural">{{ threadCurrentUser.replies.length }} Antworten</div> -->
+                <div class="comments-container" *ngIf="threadCurrentUser.replies.length > 0">
                     <div class="comments"></div>
                 </div>
 
