@@ -5,6 +5,10 @@
   width: 600px;
   position: relative;
 
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+
   mat-icon {
     cursor: pointer;
     color: $textgrey;
