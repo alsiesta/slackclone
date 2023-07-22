@@ -41,7 +41,6 @@ export class ThreadsComponent implements OnInit {
   */
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
-    // console.log('Threadslist comes from the thread component:', this.allThreads);
   }
 
   /**
@@ -49,7 +48,6 @@ export class ThreadsComponent implements OnInit {
    */
   getCurrentUserId() {
     this.currentUserId = this.usersService.currentUserId$;
-    // console.log('Current User Id comes from the thread component', this.currentUserId);
   }
 
   /**
@@ -57,7 +55,6 @@ export class ThreadsComponent implements OnInit {
    */
   async getCurrentUserData() {
     this.currentUserData = await this.usersService.getCurrentUserData();
-    // console.log('Current user data comes from the thread component', this.currentUserData);
   }
 
   /**
@@ -70,7 +67,6 @@ export class ThreadsComponent implements OnInit {
       }
       i++;
     }
-    // console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
   /**
@@ -78,7 +74,6 @@ export class ThreadsComponent implements OnInit {
    */
   getAllUser() {
     this.allUser = this.usersService.getAllUsers();
-    // console.log('All Users comes from thread component:', this.allUser);
   }
 
   /**

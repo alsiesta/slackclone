@@ -64,7 +64,6 @@ export class ThreadsShortcutComponent {
   */
   async getAllThreads() {
     this.allThreads = await this.firestoreService.getAllThreads();
-    // console.log('Threadslist comes from the thread-shortcut component:', this.allThreads);
     this.updateContent();
   }
 
@@ -80,7 +79,6 @@ export class ThreadsShortcutComponent {
   */
   getCurrentUserId() {
     this.currentUserId = this.usersService.currentUserId$;
-    // console.log('Current User Id comes from the thread-shortcut component', this.currentUserId);
   }
 
   /**
@@ -88,7 +86,6 @@ export class ThreadsShortcutComponent {
    */
   async getCurrentUserData() {
     this.currentUserData = await this.usersService.getCurrentUserData();
-    // console.log('Current user data comes from the thread-shortcut component', this.currentUserData);
   }
 
   /**
@@ -96,7 +93,6 @@ export class ThreadsShortcutComponent {
    */
   async getAllUser() {
     await this.firestoreService.getAllUsers().then((users) => {
-      // console.log('All Users', users);
       this.allUser = users;
     });
   }
@@ -114,7 +110,6 @@ export class ThreadsShortcutComponent {
       this.threadsFromCurrentUser = filteredThreads;
     }
     await this.getNameOfReply();
-    // console.log('Threads from current User', this.threadsFromCurrentUser);
   }
 
   /**
