@@ -45,7 +45,6 @@ export class UploadImagesService {
     const storage = getStorage();
     const fileName = uid + '_' + file.fileName;
     const storageRef = ref(storage, 'thread_images/' + fileName);
-    // console.log('Base64 file: ', file.base64);
     const type = file.base64.split(';')[0].split(':')[1];
     const metadata = {
       contentType: type,

@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, SecurityContext } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelDialogComponent } from '../components/channel-dialog/channel-dialog.component';
 import { FirestoreService } from './firestore.service';
@@ -7,7 +7,6 @@ import { GlobalService } from './global.service';
 import { Thread } from '../models/thread.class';
 import { UsersService } from './users.service';
 import { ChatService } from './chat.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { DialogAttachmentImageComponent } from '../components/dialog-attachment-image/dialog-attachment-image.component';
 
 @Injectable({
@@ -43,7 +42,6 @@ export class ChannelService {
     public globalService: GlobalService,
     public userService: UsersService,
     public chatService: ChatService,
-    private sanitizer: DomSanitizer
   ) {}
 
   /**
@@ -282,7 +280,6 @@ export class ChannelService {
             this.activeThread.replies[i],
             this.allUsers[j]
           );
-          //this.activeThread.user['name'] = this.allUsers[j].displayName;
         }
       }
     }
@@ -350,18 +347,10 @@ export class ChannelService {
     return match ? match[1] : '';
   }
 
-  // sanitizeHTML(html: string): SafeHtml {
-  //   const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html);
-  //   // Remove <img> tags
-  //   const cleanedHTML = sanitized?.replace(/<img[^>]+>/gm, '');
-  //   return this.sanitizer.bypassSecurityTrustHtml(cleanedHTML);
-  // }
-
   openCreateImageDialog(imageURL) {
     this.channelDialog.open(DialogAttachmentImageComponent, {
       maxWidth: '100vw',
     });
     this.imageURL = imageURL;
-    console.log('URL:', this.imageURL);
   }
 }
