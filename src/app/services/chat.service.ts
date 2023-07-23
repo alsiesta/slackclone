@@ -4,7 +4,6 @@ import { Chat } from '../models/chat.class';
 import { UsersService } from './users.service';
 import { GlobalService } from './global.service';
 import { Observable, map } from 'rxjs';
-import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root',
@@ -50,21 +49,6 @@ export class ChatService {
     await this.firestoreService.getAllChats().then(() => {
       this.chatList = this.firestoreService.chatList;
     });
-  }
-
-  /**
-   * load the personal chat list
-   * @param userID - the user to open a chat with
-   * @returns
-   */
-  async loadPersonalChatList(userID: string) {
-    await this.loadChatListFromFirestore();
-    this.chatList.forEach((chat) => {
-      if (chat.chatUsers[0] == userID) {
-        this.personalChatList.push(chat);
-      }
-    });
-    return this.personalChatList;
   }
 
   /**

@@ -257,11 +257,8 @@ export class ChannelService {
   async getUserNameReplies() {
     this.allUsers = await this.userService.getAllUsers();
     for (let i = 0; i < this.activeThread.replies.length; i++) {
-      //i = 3
       for (let j = 0; j < this.allUsers.length; j++) {
-        // j = 5
         if (this.activeThread.replies[i].user['id'] == this.allUsers[j].uid) {
-          //this.activeThread.user['name'] = this.allUsers[j].displayName;
         }
       }
     }
@@ -347,6 +344,10 @@ export class ChannelService {
     return match ? match[1] : '';
   }
 
+  /**
+   * open image dialog
+   * @param imageURL - image url from firestore
+   */
   openCreateImageDialog(imageURL) {
     this.channelDialog.open(DialogAttachmentImageComponent, {
       maxWidth: '100vw',
