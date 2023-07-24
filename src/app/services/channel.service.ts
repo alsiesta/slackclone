@@ -333,17 +333,6 @@ export class ChannelService {
     this.amountReplies = this.activeThread.replies.length;
   }
 
-  isImage(message: string): boolean {
-    const regex = /<img.*?src=['"](.*?)['"]/;
-    return regex.test(message);
-  }
-
-  getImageSrc(message: string): string {
-    const regex = /<img.*?src=['"](.*?)['"]/;
-    const match = regex.exec(message);
-    return match ? match[1] : '';
-  }
-
   /**
    * open image dialog
    * @param imageURL - image url from firestore

@@ -230,8 +230,6 @@ export class CommentfieldComponent implements OnInit {
   getBase64WithFileName(base64String: string, fileName: string): string {
     const matches = base64String.match(/^data:(.+);base64,(.+)$/);
     if (matches && matches.length === 3) {
-      const mimeType = matches[1];
-      const base64Data = matches[2];
       return `${fileName}`;
     }
     return '';
