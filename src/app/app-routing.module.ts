@@ -15,11 +15,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'imprint', component: ImprintComponent },
   { path: 'data-protection', component: DataProtectionComponent },
-  // { path: '**', redirectTo: 'sign-in' },
+  { path: '**', redirectTo: 'sign-in' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

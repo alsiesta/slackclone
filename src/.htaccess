@@ -1,0 +1,16 @@
+# RewriteEngine On
+# RewriteBase /
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^ index.html [L]
+
+# <IfModule mod_headers.c>
+    # Header set Access-Control-Allow-Origin "*"
+    # </IfModule>
+
+# RewriteEngine On
+# RewriteCond %{HTTP_HOST} !^www.alexanderschoenfeld.com$ [NC]
+# RewriteRule ^(.*)$ https://www.alexanderschoenfeld.com/$1 [L,R=301]
+
+# Header add Access-Control-Allow-Origin "*"
+# Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
