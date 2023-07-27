@@ -10,7 +10,6 @@ import {
   collection,
   CollectionReference,
   doc,
-  docData,
   DocumentData,
   DocumentReference,
   Firestore,
@@ -50,11 +49,9 @@ export class FirestoreService {
     this.threadCollection = collection(this.firestore, GLOBAL_VARS.THREADS);
   }
 
-  ngOnInit() {}
-
-  /////////////////////////// CHANNEL FUNCTIONS ///////////////////////////
+    ///////////////// CHANNEL FUNKTIONEN ///////////////////
   /**
-   *
+   * is called om Channel.service.ts to display all channels
    * @returns Promise that resolves to an array of all channels
    */
   async readChannels() {
@@ -68,7 +65,7 @@ export class FirestoreService {
   }
 
   /**
-   *
+   *    * is called om Channel.service.ts to display all channels
    * @returns Observable that listens to changes in the channels collection
    */
   getChannelList(): Observable<any[]> {
@@ -83,7 +80,6 @@ export class FirestoreService {
         observer.next((this.channelList = channels));
       });
 
-      //Cleanup function to unsubscribe when the Observable is unsubscribed
       return () => {
         unsubscribe();
       };
@@ -331,7 +327,6 @@ export class FirestoreService {
         observer.next((this.threadList = threads));
       });
 
-      //Cleanup function to unsubscribe when the Observable is unsubscribed
       return () => {
         unsubscribe();
       };
@@ -419,7 +414,6 @@ export class FirestoreService {
   }
 
   ///////////////// USER FUNKTIONEN ///////////////////
-
   /**
    * Function adds a new user to firestore
    * @param uid
@@ -493,7 +487,6 @@ export class FirestoreService {
   }
 
   ///////////////// HELPER FUNCTIONS ///////////////////
-
   /**
    * @param uid
    * @returns document reference in firestore

@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { SearchService } from 'src/app/services/search.service';
 import { GlobalService } from 'src/app/services/global.service';
-import { UserTemplate } from 'src/app/models/usertemplate.class';
-import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-header',

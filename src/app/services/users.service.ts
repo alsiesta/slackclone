@@ -44,14 +44,13 @@ export class UsersService {
   currentUserName$: any;
   currentUserData$: any;
   currentUserPhoto: any;
-  currentUsers: any;
-  // fsUser = new UserTemplate();
-  
+  currentUsers: any;  
   currentUserRef = collection(this.firestore, GLOBAL_VARS.USERS, );
   
-
+/**
+* Observes the users collection in Firestore and updates the local users array
+ */
   keepUsersUptodate() {
-    // const usersCollection = collection(this.firestore, GLOBAL_VARS.USERS);
     const users$ = collectionData(this.usersCollection, { idField: 'uid' });
     users$.subscribe((_users) => {
       this.usersCollListener.next({ users: _users });
@@ -59,6 +58,10 @@ export class UsersService {
     });
   }
 
+  /**
+   * Observes the current user data in Firestore
+   * @returns Observable of the current user data
+   */
   observCurrentUser (): Observable<any[]> {
       const q = query(this.usersCollection);
   
@@ -78,16 +81,16 @@ export class UsersService {
       });
     }
   
-
+/**
+ * @returns all users from the users collection in Firestore
+ */
   getAllUsers(): User[] {
     return this.currentUsers;
   }
   
   
   /**
-   * 1. get current user from firebase auth
-   * 2. set local properties to user data (id, name)
-   * @returns current user data from firebase auth
+   * @returns current user id
    */
   getCurrentUserId(): string {
     onAuthStateChanged(this.auth, (user) => {
@@ -103,7 +106,10 @@ export class UsersService {
   }
 
 
-  // AS PROMISE
+/**
+ * Retrieves the current user data from Firestore and returns it as a Promise
+ * @returns Promise of the current user data
+ */
   async getCurrentUserData(): Promise<any> {
     const docRef: DocumentReference<DocumentData> = doc(this.usersCollection, this.currentUserId$);
     const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
@@ -118,12 +124,21 @@ export class UsersService {
     }
   }
   
-  // AS OBSERVABLE
+/**
+ * retrieves the user data from Firestore by the user id
+ * @param userId 
+ * @returns Observable 
+ */
   getUserById$(userId: string): Observable<User> {
     const usersDocRef: DocumentReference = doc(this.usersCollection, userId);
     return docData(usersDocRef, { idField: 'UserId' }) as Observable<User>;
   }
   
+  /**
+   * is used in the dialog-edit-user.component.ts
+   * @param field indicates the field that was changed
+   * @param arg represents the new value of the field
+   */
   async updateUserFieldValue(field:string,arg:any) {
     const docRef:DocumentReference<DocumentData> = doc(this.usersCollection, this.currentUserId$);
     await updateDoc(docRef, {

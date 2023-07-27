@@ -11,7 +11,6 @@ import {
   getDownloadURL,
   uploadBytes,
   getStorage,
-  getMetadata,
 } from '@angular/fire/storage';
 
 export interface DialogData {
@@ -21,6 +20,7 @@ export interface DialogData {
   emailVerified;
   uid;
 }
+
 export interface IsEditing {
   displayName?: boolean;
   firstName?: boolean;
@@ -51,6 +51,10 @@ export class DialogEditUserComponent {
 
   currentUserData$: UserTemplate;
 
+  /**
+   * // isEditing is an object that stores the editing status of each field.
+   * // isEditing is used to show/hide the edit button and the save button.
+   */
   isEditing: IsEditing = {
     displayName: false,
     firstName: false,
@@ -65,6 +69,7 @@ export class DialogEditUserComponent {
     uid: false,
   };
 
+  
   currentUser$: any;
   currentUserId$: any;
   currentUser: UserTemplate;
@@ -73,6 +78,14 @@ export class DialogEditUserComponent {
   chat: any;
   isGuestUserActive: boolean = false;
 
+  /**
+   * // ngOnInit is called when the component is initialized.
+   * // it gets the current user id from the usersService.
+   * // it checks if the guest user is active.
+   * // it subscribes to the observable to get the current user data from firestore.
+   * // it subscribes to the observable to get the chat data from firestore.
+   * // it sets the currentUser$ variable to the current user data.
+   */
   async ngOnInit() {
     this.currentUserId$ = this.usersService.getCurrentUserId();
     this.checkIfGuestUserIsActive();
@@ -107,6 +120,9 @@ export class DialogEditUserComponent {
     subscriber.complete();
   });
 
+  /**
+   * // mysubscriber is used to subscribe to the observable named observable.
+   */
   mysubscriber = {
     next: (data) => {
       this.counter++;
@@ -133,6 +149,10 @@ export class DialogEditUserComponent {
     this.cancelEdit(field);
   }
 
+  /**
+   * // selectedFile represents the file that is selected by the user.
+   * // onFileSelected is called when the user selects a file.
+   */
   selectedFile: File;
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -155,13 +175,21 @@ export class DialogEditUserComponent {
     await uploadBytes(storageRef, this.selectedFile);
   }
 
+  /**
+   * returns the download url of the uploaded file.
+   * @param fileName 
+   * @returns storageRef as string
+   */
   private async getDownloadURL(fileName: string): Promise<string> {
     const storage = getStorage();
     const storageRef = ref(storage, fileName);
     return getDownloadURL(storageRef);
   }
 
-
+/**
+ * cancelEdit is called when the user clicks on the cancel button to stopp editing.
+ * @param field 
+ */
   cancelEdit(field) {
     if (this.isEditing[field]) {
       this.isEditing[field] = false;
@@ -170,7 +198,10 @@ export class DialogEditUserComponent {
     }
 }
 
-
+/**
+ * startEdit is called when the user clicks on the edit button to start editing.
+ * @param field 
+ */
   startEdit(field) {
     if (this.isEditing[field] === undefined) {
       throw new Error(`Cannot start editing unknown field: ${field}`);

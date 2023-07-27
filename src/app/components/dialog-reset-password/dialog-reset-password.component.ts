@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-reset-password.component.scss'],
 })
 export class DialogResetPasswordComponent {
-  // dialogRef: any;
+
   constructor (private authService: AuthService, public dialogRef: MatDialogRef<DialogResetPasswordComponent>) { }
   email: string = '';
 
