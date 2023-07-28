@@ -6,13 +6,13 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class GlobalService {
-  chatOpened: boolean = false;
-  channelOpened: boolean = true;
-  threadsRightSideOpened: boolean = false;
-  usersShortcutOpened: boolean = false;
-  threadsShortcutOpened: boolean = false;
-  private isSidebarOpenSubject = new Subject<boolean>();
-  isSidebarOpen$ = this.isSidebarOpenSubject.asObservable();
+  chatOpened: boolean = false; // handles if chat is open
+  channelOpened: boolean = true; // handles if channel is open
+  threadsRightSideOpened: boolean = false; // handles if threads is right sided of channels
+  usersShortcutOpened: boolean = false; // handles if usershortcut is open
+  threadsShortcutOpened: boolean = false; // handles if threadsshortcut is open
+  private isSidebarOpenSubject = new Subject<boolean>(); 
+  isSidebarOpen$ = this.isSidebarOpenSubject.asObservable(); // handles if sidebar is open
   private isSidebarOpen = true;
   public menuIcon = 'menu_open';
 
@@ -30,6 +30,10 @@ export class GlobalService {
       });
   }
 
+  /**
+   * toggles sidebar form open to close and
+   * 
+   */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.isSidebarOpenSubject.next(this.isSidebarOpen);
@@ -81,11 +85,7 @@ export class GlobalService {
    * @param component - name of the component to open
    */
   openComponent(component: string) {
-    this.chatOpened = false;
-    this.channelOpened = false;
-    this.usersShortcutOpened = false;
-    this.threadsShortcutOpened = false;
-
+    this.setAllComponentsFalse();
     switch (component) {
       case 'chat':
         this.chatOpened = true;
@@ -104,5 +104,16 @@ export class GlobalService {
       default:
         break;
     }
+  }
+
+  /**
+   * resets all Components to false
+   * 
+   */
+  setAllComponentsFalse() {
+    this.chatOpened = false;
+    this.channelOpened = false;
+    this.usersShortcutOpened = false;
+    this.threadsShortcutOpened = false;
   }
 }
