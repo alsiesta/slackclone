@@ -1,11 +1,14 @@
 <div class="dialog-container">
     <mat-icon class="close-icon" fontIcon="close" mat-button mat-dialog-close></mat-icon>
+    <!-- Dialog Top Section -->
     <div class="dialog-top">
         <h1>Invite People to a Chat</h1>
     </div>
+    <!-- Dialog Main Section -->
     <div class="dialog-main">
         <div class="dialog-main-box">
             <h4>To:</h4>
+            <!-- Dialog Form Section -->
             <form (ngSubmit)="onSubmit()" [formGroup]="dmForm" id="dm-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Name</mat-label>

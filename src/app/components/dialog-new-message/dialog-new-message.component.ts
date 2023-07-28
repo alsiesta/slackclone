@@ -11,6 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class DialogNewMessageComponent {
   time = new Date();
+  
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { user: string; image: string; email: string; id: string },

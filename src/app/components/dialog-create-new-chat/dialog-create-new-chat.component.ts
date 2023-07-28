@@ -25,8 +25,8 @@ export class DialogCreateNewChatComponent {
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private chatService: ChatService,
-    private dialogRef: MatDialogRef<DialogCreateNewChatComponent>)
-    {
+    private dialogRef: MatDialogRef<DialogCreateNewChatComponent>) {
+      
     // Create the form group using the formBuilder
     this.dmForm = this.formBuilder.group({
       displayName: ''

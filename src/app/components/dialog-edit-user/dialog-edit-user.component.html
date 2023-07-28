@@ -1,10 +1,12 @@
+<!-- Dialog Top Section -->
 <div class="dialog-top" mat-dialog-title>
   <span class="title">View and edit your profile </span>
   <mat-icon  mat-button mat-dialog-close>close</mat-icon>
 </div>
 
 <div class="dialog-container" mat-dialog-content>
-
+  
+  <!-- Dialog Main Section -->
   <div class="dialog-main table-grid">
 
     <div *ngIf="currentUser?.photoURL"><img src="{{currentUser?.photoURL}}" class="profile-image">

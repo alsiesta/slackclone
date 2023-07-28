@@ -1,4 +1,5 @@
 <div class="message-container">
+    <!-- Message Top Section -->
     <div class="message-container-top">
         <div class="profil-box">
             <img class="profil-image" src="{{ this.data.image || 'assets/img/user/profile-picture.png' }}">
@@ -13,6 +14,7 @@
                 '2-digit', minute:'2-digit'}) }} local time</span>
         </div>
     </div>
+    <!-- Message Bottom Section -->
     <div class="message-container-bottom">
         <button class="message-button"
             (click)="this.chatService.openChat(this.data.id); dialogRef.close(); this.globalService.openComponent('chat')"
