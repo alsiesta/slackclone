@@ -31,7 +31,7 @@ export class GlobalService {
   }
 
   /**
-   * toggles sidebar form open to close and
+   * toggles sidebar from open to close and otherwise
    * 
    */
   toggleSidebar() {
