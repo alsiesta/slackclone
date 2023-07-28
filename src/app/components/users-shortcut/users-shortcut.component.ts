@@ -14,13 +14,14 @@ export class UsersShortcutComponent {
   constructor(
     private usersService: UsersService,
     private channelService: ChannelService,
-    public searchService: SearchService
-  ) {
+    public searchService: SearchService) {
+
     // Retrieve the user list from the usersService and deletes the currentUser from it.
     this.userList = this.usersService.currentUsers;
     this.searchService.unfilteredUsers = this.userList;
     let currentUser = this.usersService.currentUserId$;
     this.userList = this.userList.filter(user => user.uid !== currentUser);
+
     // Event listener for the search function
     this.searchService.searchUsersStatus.subscribe(status => {
       if (status) {
@@ -31,6 +32,14 @@ export class UsersShortcutComponent {
     })
   }
 
+  /**
+   * Opens the DialogNewMessageComponent
+   * 
+   * @param displayName - string of the users displayname
+   * @param photoURL - string of the users photoURL
+   * @param email - string of the users email
+   * @param uid - string of the users userid
+   */
   openDialog(displayName, photoURL, email, uid) {
     this.channelService.messageDialogOpen(displayName, photoURL, email, uid)
   }

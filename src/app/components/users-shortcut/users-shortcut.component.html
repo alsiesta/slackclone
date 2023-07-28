@@ -1,9 +1,11 @@
 <div class="user-shortcut-container">
+    <!-- Header -->
     <div class="content-header">
         <mat-icon>numbers</mat-icon>
         <span>Users</span>
     </div>
 
+    <!-- Users Container -->
     <div class="content-container">
         <div *ngFor="let user of userList" class="user-container" (click)="openDialog(user.displayName, user.photoURL, user.email, user.uid)">
             <img src="{{ user.photoURL || 'assets/img/user/profile-picture.png' }}">

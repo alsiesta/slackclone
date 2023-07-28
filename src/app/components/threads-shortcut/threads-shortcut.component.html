@@ -1,9 +1,10 @@
 <div class="container">
-
+    <!-- header -->
     <div class="title-and-channel ">
         <div class="title">Threads</div>
     </div>
 
+    <!-- content -->
     <div class="threads-container">
         <div *ngFor="let threadCurrentUser of threadsFromCurrentUser; let i = index">
             <div class="channel"># {{ threadCurrentUser.channel }}</div>
