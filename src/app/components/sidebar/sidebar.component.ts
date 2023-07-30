@@ -224,12 +224,6 @@ export class SidebarComponent implements OnInit {
    * 
    */
   getChatsFromFirestore() {
-    // this.chatService.getChatPartners().subscribe( chatPartners => {
-    //     this.chatPartners = chatPartners;
-
-    //     console.log(this.chatPartners)
-    // })
-
     this.firestoreService.getChatList().subscribe((chats) => {
       const uniqueUserIds = new Set<string>();
       this.chats = chats.filter(

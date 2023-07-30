@@ -13,7 +13,7 @@
   .text-editor {
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 0;
     right: 0;
     padding: 0 16px;
@@ -29,6 +29,10 @@
     align-items: center;
     background-color: $darkgrey;
     z-index: 1;
+
+    mat-icon {
+      transform: translateY(6px);
+    }
 
     span {
       font-size: $fonttitle;

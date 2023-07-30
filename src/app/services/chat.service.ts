@@ -3,7 +3,6 @@ import { FirestoreService } from './firestore.service';
 import { Chat } from '../models/chat.class';
 import { UsersService } from './users.service';
 import { GlobalService } from './global.service';
-import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -228,43 +227,12 @@ export class ChatService {
   sendChatMessage(content: string, imageURLs: string[]) {
     const user = this.userService.currentUserId$;
     const message = content;
-    const images = imageURLs
+    const images = imageURLs;
 
     this.firestoreService
       .addChatMessage(this.chat.chatId, user, message, images)
       .then(() => {
         this.scrollStatus.emit(true);
       });
-  }
-
-  /**
-   * Retrieves the chat partners for the current user.
-   * @returns - an observable emitting an array of chat partners.
-   */
-  getChatPartners(): Observable<any[]> {
-    return this.firestoreService.getChatList().pipe(
-      map((chats) => {
-        const uniqueUserIds = new Set<string>();
-        const chatPartners: any[] = [];
-
-        chats.forEach((chat) => {
-          chat.chatUsers.forEach((user) => {
-            if (
-              user !== this.userService.currentUserId$ &&
-              !uniqueUserIds.has(user)
-            ) {
-              uniqueUserIds.add(user);
-              const user$ = this.userService.getUserById$(user);
-              user$.subscribe((userData) => {
-                console.log(userData);
-                chatPartners.push(userData);
-              });
-            }
-          });
-        });
-
-        return chatPartners;
-      })
-    );
   }
 }
