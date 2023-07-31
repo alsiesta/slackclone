@@ -201,7 +201,6 @@ export class CommentfieldComponent implements OnInit {
       }
     });
     input.click();
-    const content = this.editorForm.get('editor').value;
   };
 
   /**
