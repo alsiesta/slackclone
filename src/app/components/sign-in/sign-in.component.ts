@@ -83,14 +83,4 @@ export class SignInComponent {
     }
   }
 
-  // // via Observable
-  // this.authService.login(email, password).pipe(
-  //   this.toast.observe({
-  //     success: 'Logged in successfully',
-  //     loading: 'Logging in...',
-  //     error:'There was an error'
-  //   })
-  // ).subscribe(() => {
-  //   this.router.navigate(['/home']);
-  // });
 }

@@ -18,12 +18,10 @@ import { Channel } from '../models/channel.class';
 import { UsersService } from './users.service';
 import {
   AuthProvider,
-  getAdditionalUserInfo,
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import { UserTemplate } from '../models/usertemplate.class';
 
-// import { GoogleAuthProvider } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -34,9 +32,7 @@ export class AuthService {
     private firestoreService: FirestoreService,
     private auth: Auth,
     private toast: HotToastService,
-    private router: Router,
-    private usersService: UsersService,
-    private googleAuthProvider: GoogleAuthProvider
+    private router: Router
   ) {}
 
   user = new UserTemplate();
@@ -49,6 +45,14 @@ export class AuthService {
   providerTwitter = new TwitterAuthProvider();
   providerGithub = new GithubAuthProvider();
 
+  /**
+   * This method is used to sign up a new user. It creates a new user in the authentication service
+   * and adds the user to the users collection in Firestore. It also updates the displayName of the
+   * user in the authentication service.
+   * @param email 
+   * @param password 
+   * @param name 
+   */
   signUp = async (email: string, password: string, name: any) => {
     try {
       await createUserWithEmailAndPassword(this.auth, email, password).then(
@@ -69,6 +73,15 @@ export class AuthService {
     }
   };
 
+
+  /**
+   * This method is used to sign in a user. It signs in the user in the authentication service.
+   * It also sets the isUserLoggedIn property to true. If the sign in fails, it sets the isUserLoggedIn
+   * property to false.
+   * @param email 
+   * @param password 
+   * @returns 
+   */
   signIn = async (email: string, password: string) => {
     const userCredentials = await signInWithEmailAndPassword(
       this.auth,
@@ -92,6 +105,12 @@ export class AuthService {
     return userCredentials;
   };
 
+
+  /**
+   * Regular expression for email validation
+   * @param errorCode 
+   * @returns 
+   */
   getErrorMessage = (errorCode: string) => {
     if (errorCode === 'auth/user-not-found') {
       return `Sorry. This user doesn't exist. Permission denied.`;
@@ -102,11 +121,23 @@ export class AuthService {
     }
   };
 
+
+  /**
+   * Allows the user to sign in with Google. It uses the signInWithPopup method from the authentication
+   * service. It also sets the isUserLoggedIn property to true. If the sign in fails, it sets the isUserLoggedIn
+   * property to false.
+   * @returns 
+   */
   async signInWithGoogle(): Promise<any> {
     const user = await this.signInWithPopup(this.providerGoogle);
     return user;
   }
 
+  /**
+   * Userd by signInWithGoogle() 
+   * @param provider 
+   * @returns 
+   */
   async signInWithPopup(provider: AuthProvider): Promise<any> {
     const auth = getAuth();
     let providerUser;
@@ -117,7 +148,6 @@ export class AuthService {
         providerUser = this.onSuccess(result);
       },
       (error) => {
-        console.log(error.message);
         this.toast.error(error.message);
       }
     );
@@ -125,10 +155,15 @@ export class AuthService {
     return providerUser;
   }
 
+  /**
+   * Updates the user object with the data from the authentication service. It also sets the isUserLoggedIn
+   * property to true.
+   * @param result 
+   * @returns 
+   */
   onSuccess(result: any) {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
-    // The signed-in user info.
     const user = result.user;
     this.user.displayName = user.displayName;
     this.user.email = user.email;
@@ -138,6 +173,10 @@ export class AuthService {
     return user;
   }
 
+  /**
+   * Method sends a password reset email to the user.
+   * @param email 
+   */
   resetPassword(email: string) {
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)
@@ -149,39 +188,10 @@ export class AuthService {
       });
   }
 
-  // Note when going into production, you should check that the redirect URL matches the one you specified when you enabled the sign-in method.
-  // Sign in with redirect: is recommended for mobile devices
-  // When you use signInWithRedirect, the sign-in flow is completed on a separate page and then returns to your page.
-  // as soon as we have a solution for the redirect, we can use it
-
-  // try {
-  //   await signInWithRedirect(auth, provider);
-  //   debugger;
-  //   const result = await getRedirectResult(auth);
-  //   console.log('Google Sign-In 1');
-  //   // This gives you a Google Access Token. You can use it to access Google APIs.
-  //   const credential = GoogleAuthProvider.credentialFromResult(result);
-  //   const token = credential.accessToken;
-
-  //   // The signed-in user info.
-  //   const user = result.user;
-  //   this.toast.info(`Hi ${user.displayName}! You are signed in.`);
-  //   this.isUserLoggedIn = true;
-  //   console.log('Google Sign-In 2');
-  //   this.router.navigate(['/home']);
-  //   console.log('Google Sign-In 3');
-  // } catch (error) {
-  //   // Handle Errors here.
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // The email of the user's account used.
-  //   const email = error.customData.email;
-  //   // The AuthCredential type that was used.
-  //   const credential = GoogleAuthProvider.credentialFromError(error);
-  //   // ...
-  // }
-  // }
-
+/**
+ * Updates the displayName of the user in the authentication service.
+ * @param dName 
+ */
   updateAuthdisplayName(dName) {
     console.log('update Profile DisplayName');
     const auth = getAuth();
@@ -196,6 +206,10 @@ export class AuthService {
       });
   }
 
+  /**
+   * Updates the photoURL of the user in the authentication service.
+   * @param photoName 
+   */
   updateAuthPhoto(photoName) {
     console.log('update ProfilePhoto');
     const auth = getAuth();
@@ -210,6 +224,10 @@ export class AuthService {
       });
   }
 
+  /**
+   * Gets the authenticated user from the authentication service.
+   * @returns 
+   */
   getAuthCredentials() {
     const auth = getAuth();
     const user = auth.currentUser;

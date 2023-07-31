@@ -8,11 +8,11 @@
             <mat-form-field>
                 <input matInput placeholder="Email address" formControlName="email">
                 <mat-error *ngIf="email?.errors?.['required']">Email is required</mat-error>
-                <mat-error *ngIf="email?.errors?.['email']">Please enter a correct email format!</mat-error>
+                <mat-error *ngIf="email?.errors?.['email']">Wrong email format!</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <input matInput placeholder="Password" formControlName="password" type="password">
-                <mat-error *ngIf="password?.errors?.['required']">Please enter a correct password</mat-error>
+                <mat-error *ngIf="password?.errors?.['required']">Wrong password</mat-error>
 
             </mat-form-field><br>
             <div class="center margin-top16">

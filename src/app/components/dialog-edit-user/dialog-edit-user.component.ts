@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/users.service';
 import { UserTemplate } from 'src/app/models/usertemplate.class';
 import { Observable } from 'rxjs';
+import { HotToastService } from '@ngneat/hot-toast';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import {
@@ -46,7 +47,8 @@ export class DialogEditUserComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public usersService: UsersService,
     public firestoreService: FirestoreService,
-    public authService: AuthService
+    public authService: AuthService,
+    private toast: HotToastService,
   ) {}
 
   currentUserData$: UserTemplate;
@@ -128,7 +130,7 @@ export class DialogEditUserComponent {
       this.counter++;
     },
     error: (error) => {
-      console.error('An error occurred:', error);
+      this.toast.error(`Error: ${error}`);
     },
     complete: () => {},
   };
@@ -194,7 +196,7 @@ export class DialogEditUserComponent {
     if (this.isEditing[field]) {
       this.isEditing[field] = false;
     } else {
-      console.error("cancelEdit called for a field that was not being edited:", field);
+      this.toast.error(`Sorry, the field ${field} was not being edited.`);
     }
 }
 

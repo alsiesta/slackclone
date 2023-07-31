@@ -7,6 +7,8 @@ import {
   uploadString,
 } from 'firebase/storage';
 import { UsersService } from './users.service';
+import { HotToastService } from '@ngneat/hot-toast';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,8 @@ import { UsersService } from './users.service';
 export class UploadImagesService {
   constructor(
     public firestoreService: FirestoreService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private toast: HotToastService,
   ) { }
   
   currentUserId$: any;
@@ -79,7 +82,7 @@ export class UploadImagesService {
         this.downloadURL = url;
       })
       .catch((error) => {
-        console.log('DownloadURL error: ', error);
+        this.toast.error(error.message);
       });
   }
 }
