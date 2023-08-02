@@ -19,6 +19,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.usersService.keepUsersUptodate();
+    this.authService.reauthUser();
   }
   
   logOut() {

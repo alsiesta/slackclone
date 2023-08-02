@@ -242,4 +242,17 @@ export class AuthService {
   logOut() {
     return this.auth.signOut();
   }
+
+  /**
+   * reauth user if user is logged in on page reload
+   */
+  reauthUser(): void {
+    const unsubscribe = this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.isUserLoggedIn = true;
+        this.router.navigate(['/home']);
+      }
+    });
+    unsubscribe();
+  }
 }
