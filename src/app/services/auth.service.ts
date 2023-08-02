@@ -68,6 +68,7 @@ export class AuthService {
       );
       this.toast.info(`Hi ${name}. Your were successfully signed up`);
       this.isUserLoggedIn = true;
+      this.router.navigate(['/home']);
     } catch (err) {
       this.toast.error(err.message);
     }

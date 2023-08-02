@@ -26,6 +26,10 @@
                 <mat-error *ngIf="password.errors?.['required']">
                     Password is required
                 </mat-error>
+                <mat-error *ngIf="password.errors?.['minlength']">
+                    Minimum 6 characters
+                </mat-error>
+
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" />

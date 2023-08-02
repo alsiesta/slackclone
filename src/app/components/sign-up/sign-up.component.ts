@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
     {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
     },
     { validators: passwordsMatchValidator() }
@@ -53,6 +53,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  
   get email() {
     return this.signUpForm.get('email');
   }
@@ -75,7 +76,6 @@ export class SignUpComponent implements OnInit {
       return;
     }
     this.authService.signUp(email, password, name);
-    this.router.navigate(['/home']);
   }
 
 }
