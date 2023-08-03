@@ -11,10 +11,6 @@ mat-toolbar-row {
   padding: 16px !important;
 }
 
-// .mdc-dialog__title {
-//   padding-top: 9px;
-// }
-
 .dialog-panel
   .mat-mdc-dialog-container
   .mdc-dialog__container
@@ -23,16 +19,6 @@ mat-toolbar-row {
   border: 1px solid $silvergrey;
   border-radius: 8px;
 
-  // .mat-mdc-dialog-title {
-  //   padding: 9px 24px 9px 24px;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   flex-direction: row;
-  //   @media (max-width: $breakpointCompact) {
-  //     flex-direction: column;
-  //   }
-  // }
   .mdc-dialog__title::before {
     display: inline-block;
     width: 0;

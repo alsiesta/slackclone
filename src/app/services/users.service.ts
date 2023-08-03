@@ -115,11 +115,9 @@ export class UsersService {
     const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
     if (docSnap.exists()) {
       this.currentUserData$ = docSnap.data();
-      // return docSnap.data();
       return this.currentUserData$;
     } else {
       console.log('No such User in Firestore!');
-      //hier muss der Error noch abgefangen werden
       return null;
     }
   }

@@ -262,7 +262,6 @@ export class SidebarComponent implements OnInit {
           });
         })
         .catch((error) => {
-          // Errormessage
         });
     });
   }

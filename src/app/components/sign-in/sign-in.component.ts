@@ -61,7 +61,6 @@ export class SignInComponent {
   openDialog($event) {
     $event.preventDefault();
     const dialogRef = this.dialog.open(DialogResetPasswordComponent, {
-      // panelClass: 'dialog-panel', // Aad a custom panel class
     });
 
     dialogRef.afterClosed().subscribe((result) => {

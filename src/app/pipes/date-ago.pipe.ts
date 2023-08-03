@@ -45,16 +45,9 @@ export class DateAgoPipe implements PipeTransform {
           if (counter > 0) {
             if (counter === 1) {
               return counter + ' ' + i + ' ago';
-          } else {
+            } else {
               return counter + ' ' + i + 's ago';
-          }
-            // if (counter === 1) {
-            //   return `vor ${counter} ${i}`;
-            // } else if (counter > 1 && (i === 'Jahr' || i === 'Monat' || i === 'Tag')) {
-            //   return `vor ${counter} ${i}en`;
-            // } else if (counter > 1 && (i === 'Woche' || i === 'Minute' || i === 'Sekunde' || i === 'Stunde')) {
-            //   return `vor ${counter} ${i}n`;
-            // }
+            }
           }
         }
       }

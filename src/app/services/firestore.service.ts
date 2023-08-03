@@ -304,7 +304,6 @@ export class FirestoreService {
   uunsubscribe = onSnapshot(this.query, (querySnapshot) => {
     const threads = [];
     querySnapshot.forEach((doc) => {
-      //  threads.push(doc.data()['channel']);
       threads.push(doc.data());
     });
     this.threadList = threads;
