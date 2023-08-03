@@ -9,7 +9,7 @@
 #   # RewriteRule ^(?!.*\.).*$ index.html [NC,L]
 
 #   # Redirect to subdirectory index.html files
-#   RewriteRule ^ring-of-fire/$ /ring-of-fire/index.html/ [L,NC]
+#   RewriteRule ^sub/$ /sub/index.html/ [L,NC]
 
 # </IfModule>
 
@@ -18,4 +18,4 @@ RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
-RewriteRule ^(.*) /index.html [NC,L]
+RewriteRule ^/home/$ /home/index.html/ [NC,L]

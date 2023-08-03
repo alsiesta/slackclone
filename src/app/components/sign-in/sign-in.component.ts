@@ -41,7 +41,7 @@ export class SignInComponent {
   }
 
   async guestSignIn() {
-    await this.authService.signIn('guest@wayne-enterprise.com', '123456');
+    await this.authService.signIn('bruce@wayne-enterprise.com', '123456');
     this.router.navigate(['/home']);
   }
 
