@@ -4,7 +4,7 @@
     <mat-icon class="menu-icon" (click)="toggleSidebar()">{{ globalService.menuIcon }}</mat-icon>
     <input id="searchbar" type="text" [(ngModel)]="searchText" [placeholder]="this.searchService.activeComponent">
     <div>
-      <span [style.displayName]="true">{{currentUserName$}}</span>
+      <span class="menu-display-name" [style.displayName]="true">{{currentUserName$}}</span>
       <span>
         <button mat-button [mat-menu-trigger-for]="userMenu">
           <img class="profile-image" src="{{currentUserPhoto || '/assets/img/user/profile-picture.png' }}" alt="User Profile Image">

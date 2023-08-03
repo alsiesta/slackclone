@@ -39,11 +39,21 @@ select {
 @media (max-width: $menuBreakpoint) {
 
     input[type=text],select {
-        width: 50%;
+        width: 60%;
     }
 
     .menu-icon {
         display: flex;
+    }
+}
+
+@media (max-width: $breakpointCompact) {
+    .menu-display-name {
+        display: none;
+    }
+
+    .menu-icon {
+        width: 72px;
     }
 }
 
