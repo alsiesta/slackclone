@@ -76,7 +76,7 @@ export class GlobalService {
    * returns an array of threads sorted by time (descending)
    */
   sortThreadsByTime(threadList: Array<any>) {
-    threadList.sort((a, b) => a.time.localeCompare(b.time));
+    threadList.sort((a, b) => a.date.localeCompare(b.date));
     return threadList;
   }
 
