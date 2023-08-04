@@ -58,6 +58,14 @@ export class CommentfieldComponent implements OnInit {
           emoji: function () { },
         },
       },
+      keyboard: {
+        bindings: {
+          enter: {
+            key: 13, // Disable handling of Enter key
+            handler: () => { },
+          },
+        }
+      }
     };
   }
 
@@ -68,10 +76,10 @@ export class CommentfieldComponent implements OnInit {
     this.getCurrentUserId();
   }
 
-   /**
-   * Function to remove the <img> tag from the editor content.
-   */
-   removeImgTagFromEditorContent(editorContent: string): string {
+  /**
+  * Function to remove the <img> tag from the editor content.
+  */
+  removeImgTagFromEditorContent(editorContent: string): string {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = editorContent;
     const imgElements = tempDiv.getElementsByTagName('img');
@@ -90,7 +98,7 @@ export class CommentfieldComponent implements OnInit {
       alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
     } else {
       this.editorContent = this.editorForm.get('editor').value;
-       this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
+      this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
       if (this.base64Array.length > 0) {
         for (let i = 0; i < this.base64Array.length; i++) {
           const file = this.base64Array[i];
@@ -103,12 +111,12 @@ export class CommentfieldComponent implements OnInit {
     }
   }
 
-   /**
-   * push image urls to array
-   * @param base64Array - array of base64 images
-   * @returns - array of image urls
-   */
-   pushImgageUrlsToArray(base64Array: any) {
+  /**
+  * push image urls to array
+  * @param base64Array - array of base64 images
+  * @returns - array of image urls
+  */
+  pushImgageUrlsToArray(base64Array: any) {
     let imageURLs: string[] = [];
     for (let i = 0; i < base64Array.length; i++) {
       imageURLs.push(base64Array[i].url);
@@ -243,6 +251,14 @@ export class CommentfieldComponent implements OnInit {
     }
     if (index >= 0 && index < this.base64Array.length) {
       this.base64Array.splice(index, 1);
+    }
+  }
+
+  onEnterKey(event: Event) {
+    const keyboardEvent = event as KeyboardEvent;
+    if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
+      keyboardEvent.preventDefault(); // Prevent new line from being added
+      this.onSubmit(); // Submit the message
     }
   }
 }
