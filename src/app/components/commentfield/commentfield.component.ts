@@ -94,20 +94,22 @@ export class CommentfieldComponent implements OnInit {
    * button to send messages
    */
   async onSubmit() {
-    if (this.base64Attachement.length > 4) {
-      alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
-    } else {
-      this.editorContent = this.editorForm.get('editor').value;
-      this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
-      if (this.base64Array.length > 0) {
-        for (let i = 0; i < this.base64Array.length; i++) {
-          const file = this.base64Array[i];
-          await this.onFileSelected(file, i);
+    this.editorContent = this.editorForm.get('editor').value;
+    if (this.editorContent != null) {
+      if (this.base64Attachement.length > 4) {
+        alert('You have exceeded the maximum number of images. You can upload a maximum of four images.');
+      } else {
+        this.editorContent = this.removeImgTagFromEditorContent(this.editorContent);
+        if (this.base64Array.length > 0) {
+          for (let i = 0; i < this.base64Array.length; i++) {
+            const file = this.base64Array[i];
+            await this.onFileSelected(file, i);
+          }
         }
+        this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
+        this.handleParentAction();
+        this.clearTextEditor();
       }
-      this.imageURLs = this.pushImgageUrlsToArray(this.base64Array);
-      this.handleParentAction();
-      this.clearTextEditor();
     }
   }
 
