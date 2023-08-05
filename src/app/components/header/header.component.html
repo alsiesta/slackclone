@@ -6,9 +6,9 @@
     <div>
       <span class="menu-display-name" [style.displayName]="true">{{currentUserName$}}</span>
       <span>
-        <button mat-button [mat-menu-trigger-for]="userMenu">
+        <button class="menu-mat-button" mat-button [mat-menu-trigger-for]="userMenu">
           <img class="profile-image" src="{{currentUserPhoto || '/assets/img/user/profile-picture.png' }}" alt="User Profile Image">
-          <mat-icon>expand_more</mat-icon>
+          <mat-icon class="menu-mat-icon">expand_more</mat-icon>
         </button>
       </span>
     </div>

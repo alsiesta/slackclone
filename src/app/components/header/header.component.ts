@@ -67,6 +67,7 @@ export class HeaderComponent {
       data: {
         emailVerified: this.authUser$.emailVerified,
       },
+      maxWidth: '100vw',
     });
   }
 

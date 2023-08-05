@@ -34,6 +34,15 @@ select {
 
 .menu-icon {
     display: none;
+    font-size: 32px;
+    width: 32px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu-mat-button {
+    padding: 0 3px 0 0;
+    justify-content: flex-end;
 }
 
 @media (max-width: $menuBreakpoint) {
@@ -52,8 +61,12 @@ select {
         display: none;
     }
 
+    .menu-mat-icon {
+        display: none !important;
+    }
+
     .menu-icon {
-        width: 72px;
+        width: 64px;
     }
 }
 
