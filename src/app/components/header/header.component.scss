@@ -40,6 +40,11 @@ select {
     justify-content: flex-start;
 }
 
+.menu-mat-icon {
+    display: flex;
+    align-items: center;
+}
+
 .menu-mat-button {
     padding: 0 3px 0 0;
     justify-content: flex-end;
